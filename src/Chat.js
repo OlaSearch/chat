@@ -14,10 +14,11 @@ class Chat extends React.Component {
       <div className='olachat'>
         <Header />
         <Input
-          onSubmit={() => {
+          onSubmit={(text) => {
+            this.props.addMessage(text)
             return new Promise((resolve, reject) => {
               setTimeout(() => {
-                this.props.addMessage()
+                /* Now update the status of the message */
                 resolve()
               }, 1000)
             })
@@ -42,8 +43,8 @@ class Chat extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    messages: state.ChatState.messages,
-    isLoading: state.ChatState.isLoading
+    messages: state.Conversation.messages,
+    isLoading: state.Conversation.isLoading
   }
 }
 

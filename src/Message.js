@@ -1,5 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
+import { createHTMLMarkup } from './utils'
 
 const Message = ({ message }) => {
   let { userId, text, time } = message
@@ -9,9 +10,7 @@ const Message = ({ message }) => {
   })
   return (
     <div className={messageClass}>
-      <div className='olachat-message-content'>
-        {text}
-      </div>
+      <div className='olachat-message-content' dangerouslySetInnerHTML={createHTMLMarkup(text)} />
       <div className='olachat-message-time'>
         {time}
       </div>

@@ -34,16 +34,23 @@ class Input extends React.Component {
 
     /* Set submit flag */
     this.setState({
-      submitting: true
+      submitting: true,
+      text: ''
     })
 
     /* Submit the message */
-    this.props.onSubmit()
+    this.props.onSubmit(this.state.text)
       .then(() => {
         this.setState({
           submitting: false
         })
       })
+  };
+  onKeyDown = (event) => {
+    if (event.nativeEvent.which === 13 && !event.nativeEvent.shiftKey) {
+      this.onSubmit()
+      event.preventDefault()
+    }
   };
   render () {
     let { submitting } = this.state
@@ -54,11 +61,12 @@ class Input extends React.Component {
             onChange={this.onVoiceChange}
             onFinal={this.onVoiceFinal}
           />
-          <input
+          <textarea
             type='text'
             placeholder='Type a message...'
-            value={this.state.text}
             onChange={this.onChange}
+            onKeyDown={this.onKeyDown}
+            value={this.state.text}
           />
         </div>
         <button disabled={submitting}>Send</button>

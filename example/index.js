@@ -7,7 +7,7 @@ import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
 
 const logger = createLogger({ collapsed: true});
-const store = createStore(combineReducers({ ChatState: ChatReducer }), applyMiddleware(thunk, logger))
+const store = createStore(combineReducers({ Conversation: ChatReducer }), applyMiddleware(thunk, logger))
 
 require('./style/chat.scss')
 
