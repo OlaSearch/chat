@@ -32,6 +32,8 @@ class Input extends React.Component {
     /* Stop form submission */
     event && event.preventDefault()
 
+    if (!this.state.text) return event
+
     /* Set submit flag */
     this.setState({
       submitting: true,

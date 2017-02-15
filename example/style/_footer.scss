@@ -8,7 +8,7 @@
   .olachat-input {
     flex: 1;
 
-    input[type='text'] {
+    input[type='text'], textarea {
       width: 100%;
     }
   }
