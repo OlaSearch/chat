@@ -41,7 +41,10 @@ class Chat extends React.Component {
 }
 
 function mapStateToProps (state) {
-  return state
+  return {
+    messages: state.ChatState.messages,
+    isLoading: state.ChatState.isLoading
+  }
 }
 
 export default connect(mapStateToProps, { addMessage })(Chat)
