@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Message from './Message'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 /**
  * Message interface
@@ -131,7 +132,13 @@ class Messages extends React.Component {
     return (
       <div className='olachat-messages'>
         {flipped ? loadingSpinner : null}
-        {messagesComponent}
+        <ReactCSSTransitionGroup
+          transitionName='messages'
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}
+        >
+          {messagesComponent}
+        </ReactCSSTransitionGroup>
         {flipped ? null : loadingSpinner}
       </div>
     )
