@@ -1,0 +1,28 @@
+.olachat {
+  height: 600px;
+  width: 400px;
+  background: #eee;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 2px 1px rgba(0,0,0,0.3);
+}
+
+  /**
+   * Header
+   */
+  .olachat-header {
+    // height: 40px;
+    background: #ddd;
+    padding: 1em;
+  }
+
+  /**
+   * Input
+   */
+  .olachat-footer {
+    padding: 1em;
+  }
+
+@import 'footer';
+@import 'messages';
+@import 'header';

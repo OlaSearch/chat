@@ -1,0 +1,14 @@
+.olachat-footer {
+  display: flex;
+}
+
+  /**
+   * Input
+   */
+  .olachat-input {
+    flex: 1;
+
+    input[type='text'] {
+      width: 100%;
+    }
+  }

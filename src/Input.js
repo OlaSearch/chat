@@ -1,0 +1,70 @@
+import React from 'react'
+import Voice from './Voice'
+
+class Input extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      text: '',
+      submitting: false
+    }
+  }
+  onChange = (event) => {
+    this.setState({
+      text: event.target.value
+    })
+  };
+  onVoiceChange = (text, callback) => {
+    this.setState({
+      text
+    }, callback)
+  };
+  onVoiceFinal = (text) => {
+    this.onVoiceChange(() => console.log('called'))
+  };
+  onSubmit = (event) => {
+    /**
+     * Flow
+     * 1. Immediate add to the messages redux atore
+     * 2. Sync the message to the server
+     * 3. Update sync status in redux store
+     */
+    /* Stop form submission */
+    event && event.preventDefault()
+
+    /* Set submit flag */
+    this.setState({
+      submitting: true
+    })
+
+    /* Submit the message */
+    this.props.onSubmit()
+      .then(() => {
+        this.setState({
+          submitting: false
+        })
+      })
+  };
+  render () {
+    let { submitting } = this.state
+    return (
+      <form className='olachat-footer' onSubmit={this.onSubmit}>
+        <div className='olachat-input'>
+          <Voice
+            onChange={this.onVoiceChange}
+            onFinal={this.onVoiceFinal}
+          />
+          <input
+            type='text'
+            placeholder='Type a message...'
+            value={this.state.text}
+            onChange={this.onChange}
+          />
+        </div>
+        <button disabled={submitting}>Send</button>
+      </form>
+    )
+  }
+}
+
+export default Input

@@ -1,0 +1,3 @@
+module.exports = {
+  REQUEST_ADD_MESSAGE: 'REQUEST_ADD_MESSAGE'
+}
