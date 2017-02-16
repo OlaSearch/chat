@@ -13,10 +13,7 @@ class Voice extends React.Component {
   };
   componentDidMount () {
     const { emitter } = this.context
-    const { voiceAdapter: VoiceAdapter } = this.props
-    this.voiceAdapter = new VoiceAdapter({
-      emitter
-    })
+    const { voiceAdapter } = this.props
 
     emitter.on('onResult', (text) => {
       this.props.onResult(text)
@@ -25,7 +22,7 @@ class Voice extends React.Component {
     emitter.on('onFinalResult', (text) => {
       this.props.onFinalResult(text, (message) => {
         /* Play audio */
-        this.voiceAdapter.speak(text, () => {
+        voiceAdapter.speak(text, () => {
           /* Then continue voice recognition after audio stop */
           // this.voiceAdapter.start()
         })
@@ -52,9 +49,9 @@ class Voice extends React.Component {
   }
   handleSpeechStart = () => {
     if (this.state.isRecording) {
-      this.voiceAdapter.stop()
+      this.props.voiceAdapter.stop()
     } else {
-      this.voiceAdapter.start()
+      this.props.voiceAdapter.start()
     }
   };
   render () {

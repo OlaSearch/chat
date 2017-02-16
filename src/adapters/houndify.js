@@ -17,7 +17,7 @@ const adapter = ({ emitter }) => {
       }
     },
     onError : () => {
-
+      emitter.emit('onStop')
     },
     onTranscriptionUpdate: function(trObj) {
       emitter.emit('onResult', trObj.PartialTranscript)

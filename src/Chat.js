@@ -8,6 +8,17 @@ import { addMessage } from './actions'
 import houndify from './adapters/houndify'
 import mitt from 'mitt'
 
+/* Create an emitter */
+/**
+ * Same emitter is shared by context
+ * @type {[type]}
+ */
+const emitter = mitt()
+/* Create a voiceadapter */
+const voiceAdapter = houndify({
+  emitter
+})
+
 class Chat extends React.Component {
   static defaultProps = {
     flipped: false
@@ -17,7 +28,7 @@ class Chat extends React.Component {
   };
   getChildContext () {
     return {
-      emitter: mitt()
+      emitter
     }
   }
   addMessage = (...args) => {
@@ -33,7 +44,7 @@ class Chat extends React.Component {
         <Header />
         <Input
           onSubmit={this.addMessage}
-          voiceAdapter={houndify}
+          voiceAdapter={voiceAdapter}
         />
         <Messages
           messages={this.props.messages}
