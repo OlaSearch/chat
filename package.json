@@ -39,9 +39,12 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "mitt": "^1.0.1",
     "react-addons-css-transition-group": "^15.4.2",
     "react-redux": "^5.0.2",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "reqwest": "git+ssh://git@gitlab.com/olasearch/reqwest.git",
+    "watson-html5-speech-recognition": "^0.6.6"
   }
 }

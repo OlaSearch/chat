@@ -14,15 +14,17 @@ class Input extends React.Component {
       text: event.target.value
     })
   };
-  onVoiceChange = (text, callback) => {
+  onVoiceChange = (text) => {
     this.setState({
       text
-    }, callback)
+    })
   };
-  onVoiceFinal = (text) => {
-    this.onVoiceChange(() => console.log('called'))
+  onVoiceFinal = (text, cb) => {
+    this.setState({
+      text
+    }, () => this.onSubmit(null, cb))
   };
-  onSubmit = (event) => {
+  onSubmit = (event, callback) => {
     /**
      * Flow
      * 1. Immediate add to the messages redux atore
@@ -32,7 +34,8 @@ class Input extends React.Component {
     /* Stop form submission */
     event && event.preventDefault()
 
-    if (!this.state.text) return event
+    /* Stop submitting if text is empty */
+    if (!this.state.text || this.state.submitting) return
 
     /* Set submit flag */
     this.setState({
@@ -41,16 +44,21 @@ class Input extends React.Component {
     })
 
     /* Submit the message */
-    this.props.onSubmit(this.state.text)
-      .then(() => {
+    return this.props.onSubmit({ text: this.state.text })
+      .then((message) => {
         this.setState({
           submitting: false
         })
+
+        /* We should scroll to top */
+
+        /* Callbacks */
+        callback && typeof callback === 'function' && callback(message)
       })
   };
   onKeyDown = (event) => {
     if (event.nativeEvent.which === 13 && !event.nativeEvent.shiftKey) {
-      this.onSubmit()
+      this.onSubmit(event)
       event.preventDefault()
     }
   };
@@ -60,8 +68,9 @@ class Input extends React.Component {
       <form className='olachat-footer' onSubmit={this.onSubmit}>
         <div className='olachat-input'>
           <Voice
-            onChange={this.onVoiceChange}
-            onFinal={this.onVoiceFinal}
+            onResult={this.onVoiceChange}
+            onFinalResult={this.onVoiceFinal}
+            voiceAdapter={this.props.voiceAdapter}
           />
           <textarea
             type='text'

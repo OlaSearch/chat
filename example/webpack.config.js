@@ -14,18 +14,20 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    // new webpack.NoErrorsPlugin()
   ],
   resolve: {
     alias: {
-      'olachat': path.resolve(__dirname, './../src'),
+      'olachat': path.resolve(__dirname, './../src')
     },
-    fallback: path.resolve(__dirname, './node_modules')
+    modules: [
+      'node_modules', path.resolve(__dirname, './node_modules')
+    ]
   },
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js?/,
-      loaders: ['babel-loader'],
+      use: ['babel-loader'],
       exclude: /node_modules/,
       include: [
         path.join(__dirname, './'),
@@ -34,8 +36,11 @@ module.exports = {
     },
     {
       test: /(\.scss|\.css)$/,
-      loader: 'style!css!sass'
+      use: ['style-loader', 'css-loader', 'sass-loader']
     }
     ]
+  },
+  externals: {
+    'houndify-web-sdk': 'Houndify'
   }
 };

@@ -1,17 +1,26 @@
 var path = require('path')
 var webpack = require('webpack')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+
+var path = require('path')
+var webpack = require('webpack')
 
 module.exports = {
+  // devtool: 'cheap-module-eval-source-map',
   entry: [
     './index'
   ],
   output: {
-    path: path.join(__dirname, '/'),
-    filename: 'convo.min.js',
-    publicPath: '/static/'
+    path: path.join(__dirname, './../demo'),
+    filename: 'olachat.min.js',
+    publicPath: '/'
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new ExtractTextPlugin({
+      filename: 'style.min.css',
+      disable: false,
+      allChunks: true
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
@@ -19,27 +28,41 @@ module.exports = {
     }),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
-        warnings: true
+        warnings: false
       }
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
     })
   ],
   resolve: {
     alias: {
-      'convo': path.resolve(__dirname, './../convo'),
-      'parseForm': path.resolve(__dirname, './../parseForm')
+      'olachat': path.resolve(__dirname, './../src')
     },
-    fallback: path.resolve(__dirname, './node_modules')
+    modules: [
+      'node_modules', path.resolve(__dirname, './node_modules')
+    ]
   },
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js?/,
-      loaders: ['babel-loader'],
-      include: path.join(__dirname, './../')
+      use: ['babel-loader'],
+      exclude: /node_modules/,
+      include: [
+        path.join(__dirname, './'),
+        path.join(__dirname, './../src')
+      ],
     },
     {
       test: /(\.scss|\.css)$/,
-      loader: 'style!css!sass'
+      loader: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: ['css-loader', 'sass-loader']
+      })
     }
     ]
+  },
+  externals: {
+    'houndify-web-sdk': 'Houndify'
   }
-};
+}

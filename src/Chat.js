@@ -4,33 +4,46 @@ import Input from './Input'
 import Messages from './Messages'
 import { connect } from 'react-redux'
 import { addMessage } from './actions'
+// import watson from './adapters/watson'
+import houndify from './adapters/houndify'
+import mitt from 'mitt'
 
 class Chat extends React.Component {
   static defaultProps = {
     flipped: false
+  };
+  static childContextTypes = {
+    emitter: React.PropTypes.object
+  };
+  getChildContext () {
+    return {
+      emitter: mitt()
+    }
+  }
+  addMessage = (...args) => {
+    /* Scroll to Top */
+    this.refs.msg.scrollToView()
+
+    /* Add message */
+    return this.props.addMessage(...args)
   };
   render () {
     return (
       <div className='olachat'>
         <Header />
         <Input
-          onSubmit={(text) => {
-            this.props.addMessage(text)
-            return new Promise((resolve, reject) => {
-              setTimeout(() => {
-                /* Now update the status of the message */
-                resolve()
-              }, 1000)
-            })
-          }}
+          onSubmit={this.addMessage}
+          voiceAdapter={houndify}
         />
         <Messages
           messages={this.props.messages}
           flipped={this.props.flipped}
+          isTyping={this.props.isTyping}
+          ref='msg'
           onLoad={() => {
             return new Promise((resolve, reject) => {
               setTimeout(() => {
-                console.log('called')
+                // console.log('called')
                 resolve()
               }, 1000)
             })
@@ -44,7 +57,7 @@ class Chat extends React.Component {
 function mapStateToProps (state) {
   return {
     messages: state.Conversation.messages,
-    isLoading: state.Conversation.isLoading
+    isTyping: state.Conversation.isTyping
   }
 }
 

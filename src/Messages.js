@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Message from './Message'
+import TypingIndicator from './TypingIndicator'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 /**
@@ -30,7 +31,7 @@ class Messages extends React.Component {
     this.previousScrollTop = 0
     this.scrollHeight = undefined
     this.state = {
-      isLoading: false
+      isInfiniteLoading: false
     }
   }
   static defaultProps = {
@@ -58,7 +59,7 @@ class Messages extends React.Component {
       this.rafRequestId = window.requestAnimationFrame(this.pollScroll)
     }
   }
-  componentDidUpdate () {
+  componentDidUpdate (nextProps) {
     this.updateScrollTop()
   }
   pollScroll = () => {
@@ -78,9 +79,9 @@ class Messages extends React.Component {
 
     if (domNode.scrollTop !== this.scrollTop) {
       if (this.shouldTriggerLoad(domNode)) {
-        this.setState({ isLoading: true })
+        this.setState({ isInfiniteLoading: true })
         var p = this.props.onLoad()
-        p.then(() => this.setState({ isLoading: false }))
+        p.then(() => this.setState({ isInfiniteLoading: false }))
       }
       // the dom is ahead of the state
       this.updateScrollTop()
@@ -111,20 +112,23 @@ class Messages extends React.Component {
     if (this.props.flipped && scrollHeightDifference > 0) {
       newScrollTop += scrollHeightDifference
     }
-
     if (newScrollTop !== scrollableDomEl.scrollTop) {
       scrollableDomEl.scrollTop = newScrollTop
     }
     this.scrollTop = scrollableDomEl.scrollTop
     this.scrollHeight = scrollableDomEl.scrollHeight
   };
+  scrollToView = () => {
+    var scrollableDomEl = ReactDOM.findDOMNode(this)
+    scrollableDomEl.scrollTop = this.props.flipped ? this.scrollHeight : 0
+  };
   render () {
-    let { messages, flipped, messageComponent } = this.props
-    let { isLoading } = this.state
+    let { messages, flipped, messageComponent, isTyping } = this.props
+    let { isInfiniteLoading } = this.state
     if (!flipped) {
       messages = messages.slice().reverse()
     }
-    let loadingSpinner = isLoading ? <div>Loading</div> : null
+    let loadingSpinner = isInfiniteLoading ? <div>Loading</div> : null
     let messagesComponent = messageComponent
       ? messages.map(messageComponent)
       : messages.map((message) => <Message message={message} key={message.id} />)
@@ -132,14 +136,18 @@ class Messages extends React.Component {
     return (
       <div className='olachat-messages'>
         {flipped ? loadingSpinner : null}
+        {isTyping ? flipped ? null : <TypingIndicator /> : null}
         <ReactCSSTransitionGroup
           transitionName='messages'
+          transitionAppear
+          transitionAppearTimeout={300}
           transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}
+          transitionLeave={false}
         >
           {messagesComponent}
         </ReactCSSTransitionGroup>
         {flipped ? null : loadingSpinner}
+        {isTyping ? flipped ? <TypingIndicator /> : null : null}
       </div>
     )
   }

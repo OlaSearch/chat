@@ -10,9 +10,12 @@ const Message = ({ message }) => {
   })
   return (
     <div className={messageClass}>
-      <div className='olachat-message-content' dangerouslySetInnerHTML={createHTMLMarkup(text)} />
-      <div className='olachat-message-time'>
-        {time}
+      <span className='olachat-message-avatar'>asdas</span>
+      <div className='olachat-message-body'>
+        <div className='olachat-message-content' dangerouslySetInnerHTML={createHTMLMarkup(text)} />
+        <div className='olachat-message-time'>
+          {time}
+        </div>
       </div>
     </div>
   )

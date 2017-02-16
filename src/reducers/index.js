@@ -63,7 +63,7 @@ const initialState = {
       time: '2 minutes ago',
     }
   ],
-  isLoading: false,
+  isTyping: false,
 }
 
 export default (state = initialState, action) => {
@@ -71,7 +71,19 @@ export default (state = initialState, action) => {
     case types.REQUEST_ADD_MESSAGE:
       return {
         ...state,
-        messages: [ ...state.messages, action.message ]
+        messages: [ ...state.messages, action.message ],
+      }
+
+    case types.SHOW_TYPING_INDICATOR:
+      return {
+        ...state,
+        isTyping: true
+      }
+
+    case types.HIDE_TYPING_INDICATOR:
+      return {
+        ...state,
+        isTyping: false
       }
     default:
       return state

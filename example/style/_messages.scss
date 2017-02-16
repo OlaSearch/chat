@@ -14,9 +14,9 @@
     // max-width: 80%;
     padding-bottom: 1em;
     font-size: 14px;
-    align-items: flex-start;
-    flex-direction: column;
-    flex-shrink: 0;
+    justify-content: flex-start;
+    flex-direction: row;
+    // flex-shrink: 0;
   }
 
     /**
@@ -25,17 +25,35 @@
     .olachat-message-content{
       background: blue;
       color: white;
-      max-width: 80%;
       border-radius: 5px;
       padding: 8px;
       margin-bottom: 8px;
+    }
+
+    /**
+     * body
+     */
+    .olachat-message-body {
+      // flex: 1;
+      max-width: 60%;
+      min-width: 50px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /**
+     * Avatar
+     */
+    .olachat-message-avatar {
+      width: 40px;
     }
 
 /**
  * Bot message
  */
 .olachat-message-bot {
-  align-items: flex-end;
+  // justify-content: flex-end;
+  flex-direction: row-reverse;
   .olachat-message-content {
     background: white;
     color: #333;
@@ -45,11 +63,11 @@
 /**
  * Animation
  */
-.messages-enter {
+.messages-enter, .messages-appear {
   opacity: 0.01;
 }
 
-.messages-enter.messages-enter-active {
+.messages-enter.messages-enter-active, .messages-appear.messages-appear-active {
   opacity: 1;
   transition: opacity 200ms ease-in;
 }
