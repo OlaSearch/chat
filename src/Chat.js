@@ -1,11 +1,14 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import Header from './Header'
 import Input from './Input'
 import Messages from './Messages'
 import { connect } from 'react-redux'
 import { addMessage } from './actions'
-// import watson from './adapters/watson'
+import watson from './adapters/watson'
 import houndify from './adapters/houndify'
+import google from './adapters/google'
+import webkit from './adapters/webkit'
 import mitt from 'mitt'
 
 /* Create an emitter */
@@ -15,7 +18,7 @@ import mitt from 'mitt'
  */
 const emitter = mitt()
 /* Create a voiceadapter */
-const voiceAdapter = houndify({
+const voiceAdapter = webkit({
   emitter
 })
 
@@ -33,10 +36,13 @@ class Chat extends React.Component {
   }
   addMessage = (...args) => {
     /* Scroll to Top */
-    this.refs.msg.scrollToView()
+    this.MessageContainer.scrollToView()
 
     /* Add message */
-    return this.props.addMessage(...args)
+    return this.props.addMessage(...args).then(() => {
+      /* Scroll to Top after bot replies */
+      this.MessageContainer.scrollToView()
+    })
   };
   render () {
     return (
@@ -50,7 +56,7 @@ class Chat extends React.Component {
           messages={this.props.messages}
           flipped={this.props.flipped}
           isTyping={this.props.isTyping}
-          ref='msg'
+          ref={(el) => this.MessageContainer = el}
           onLoad={() => {
             return new Promise((resolve, reject) => {
               setTimeout(() => {

@@ -1,5 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
+import Avatar from './Avatar'
 import { createHTMLMarkup } from './utils'
 
 const Message = ({ message }) => {
@@ -10,7 +11,10 @@ const Message = ({ message }) => {
   })
   return (
     <div className={messageClass}>
-      <span className='olachat-message-avatar'>asdas</span>
+      <Avatar
+        isBot={isBot}
+        userId={userId}
+      />
       <div className='olachat-message-body'>
         <div className='olachat-message-content' dangerouslySetInnerHTML={createHTMLMarkup(text)} />
         <div className='olachat-message-time'>

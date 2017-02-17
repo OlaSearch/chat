@@ -22,9 +22,9 @@ class Input extends React.Component {
   onVoiceFinal = (text, cb) => {
     this.setState({
       text
-    }, () => this.onSubmit(null, cb))
+    }, () => this.onSubmit(null, cb, 300))
   };
-  onSubmit = (event, callback) => {
+  onSubmit = (event, callback, textClearingDelay = 0) => {
     /**
      * Flow
      * 1. Immediate add to the messages redux atore
@@ -35,13 +35,23 @@ class Input extends React.Component {
     event && event.preventDefault()
 
     /* Stop submitting if text is empty */
-    if (!this.state.text || this.state.submitting) return
+    if (!this.state.text) {
+      return this.Input.focus()
+    }
+    if (this.state.submitting) return
 
     /* Set submit flag */
     this.setState({
       submitting: true,
-      text: ''
     })
+
+    /* Clear the final text input after 100ms */
+    /* To simulate delay */
+    setTimeout(() => {
+      this.setState({
+        text: ''
+      })
+    }, textClearingDelay)
 
     /* Submit the message */
     return this.props.onSubmit({ text: this.state.text })
@@ -49,8 +59,6 @@ class Input extends React.Component {
         this.setState({
           submitting: false
         })
-
-        /* We should scroll to top */
 
         /* Callbacks */
         callback && typeof callback === 'function' && callback(message)
@@ -78,6 +86,7 @@ class Input extends React.Component {
             onChange={this.onChange}
             onKeyDown={this.onKeyDown}
             value={this.state.text}
+            ref={(el) => this.Input = el}
           />
         </div>
         <button disabled={submitting}>Send</button>

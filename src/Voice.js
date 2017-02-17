@@ -20,7 +20,11 @@ class Voice extends React.Component {
     })
 
     emitter.on('onFinalResult', (text) => {
+      /* Stop recording if no text in final result */
+      if (!text) voiceAdapter.stop()
+
       this.props.onFinalResult(text, (message) => {
+        voiceAdapter.stop()
         /* Play audio */
         voiceAdapter.speak(text, () => {
           /* Then continue voice recognition after audio stop */

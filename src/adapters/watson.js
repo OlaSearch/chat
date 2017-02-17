@@ -14,6 +14,7 @@ const adapter = ({ emitter }) => {
           this._sttToken = token
           this.stream = watsonSpeechRecognizer({
             token: token,
+            // model: 'en-US_BroadbandModel',
             continuous: false, // false = automatically stop transcription the first time a pause is detected
             objectMode: true // send objects instead of text
           })
@@ -26,7 +27,6 @@ const adapter = ({ emitter }) => {
             emitter.emit('onResult', text)
             if (isFinal) {
               emitter.emit('onFinalResult', text)
-              this.stop()
             }
           })
         })
