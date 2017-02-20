@@ -9,6 +9,7 @@ import watson from './adapters/watson'
 import houndify from './adapters/houndify'
 import google from './adapters/google'
 import webkit from './adapters/webkit'
+import bing from './adapters/bing'
 import mitt from 'mitt'
 
 /* Create an emitter */
@@ -18,7 +19,7 @@ import mitt from 'mitt'
  */
 const emitter = mitt()
 /* Create a voiceadapter */
-const voiceAdapter = webkit({
+const voiceAdapter = bing({
   emitter
 })
 

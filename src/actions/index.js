@@ -9,7 +9,7 @@ export function addMessage ({ text }) {
     id: Math.random(),
     text: text,
     userId: typeof userId === 'undefined' ? Math.random() : userId,
-    time: '2 minutes ago',
+    date: 'January 29, 2017',
   })
 
   return (dispatch, getState) => {

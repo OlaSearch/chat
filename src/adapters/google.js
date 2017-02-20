@@ -38,6 +38,9 @@ const adapter = ({ emitter }) => {
 
   return {
     start () {
+      if (this.audio) {
+        this.audio.pause()
+      }
       createStream()
         .then(() => {
           if (!navigator.getUserMedia)
@@ -53,13 +56,13 @@ const adapter = ({ emitter }) => {
           } else alert('getUserMedia not supported in this browser.');
         })
     },
-    listen (e) {
+    listen (stream) {
       const audioContext = window.AudioContext || window.webkitAudioContext;
       const context = new audioContext();
-      audioStream = e
+      audioStream = stream
 
       // the sample rate is in context.sampleRate
-      const audioInput = context.createMediaStreamSource(e);
+      const audioInput = context.createMediaStreamSource(stream);
 
       var bufferSize = 2048;
       const recorder = context.createScriptProcessor(bufferSize, 1, 1);
@@ -78,7 +81,9 @@ const adapter = ({ emitter }) => {
       recording = false
       if (window.Stream) {
         window.Stream.end()
-        audioStream.getAudioTracks()[0].stop()
+        for (let i = 0; i < audioStream.getAudioTracks().length; i++) {
+          audioStream.getAudioTracks()[i].stop()
+        }
       }
       emitter.emit('onStop')
     },
@@ -97,13 +102,13 @@ const adapter = ({ emitter }) => {
       this.getTtsToken()
       .then((token) => {
         this._ttsToken = token
-        const audio = TextToSpeech.synthesize({
+        this.audio = TextToSpeech.synthesize({
           text,
           token,
           autoPlay: false
         })
-        audio.play()
-        audio.addEventListener('ended', () =>{
+        this.audio.play()
+        this.audio.addEventListener('ended', () =>{
           callback && callback()
         })
       })

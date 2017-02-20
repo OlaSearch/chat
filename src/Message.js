@@ -4,7 +4,7 @@ import Avatar from './Avatar'
 import { createHTMLMarkup } from './utils'
 
 const Message = ({ message }) => {
-  let { userId, text, time } = message
+  let { userId, text, date } = message
   let isBot = !userId
   let messageClass = cx('olachat-message', {
     'olachat-message-bot': isBot
@@ -17,8 +17,8 @@ const Message = ({ message }) => {
       />
       <div className='olachat-message-body'>
         <div className='olachat-message-content' dangerouslySetInnerHTML={createHTMLMarkup(text)} />
-        <div className='olachat-message-time'>
-          {time}
+        <div className='olachat-message-date'>
+          {date}
         </div>
       </div>
     </div>

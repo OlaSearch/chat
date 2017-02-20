@@ -45,8 +45,10 @@ const adapter = ({ emitter }) => {
 
   return {
     start () {
+      if (this.audio) {
+        this.audio.pause()
+      }
       recog.start()
-
       emitter.emit('onStart')
     },
     stop () {
@@ -70,13 +72,13 @@ const adapter = ({ emitter }) => {
       this.getTtsToken()
       .then((token) => {
         this._ttsToken = token
-        const audio = TextToSpeech.synthesize({
+        this.audio = TextToSpeech.synthesize({
           text,
           token,
           autoPlay: false
         })
-        audio.play()
-        audio.addEventListener('ended', () =>{
+        this.audio.play()
+        this.audio.addEventListener('ended', () =>{
           callback && callback()
         })
       })

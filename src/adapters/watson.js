@@ -9,6 +9,9 @@ const adapter = ({ emitter }) => {
   var activeSTT
   return {
     start () {
+      if (this.audio) {
+        this.audio.pause()
+      }
       return this.getSttToken()
         .then((token) => {
           this._sttToken = token
@@ -64,13 +67,13 @@ const adapter = ({ emitter }) => {
       this.getTtsToken()
       .then((token) => {
         this._ttsToken = token
-        const audio = TextToSpeech.synthesize({
+        this.audio = TextToSpeech.synthesize({
           text,
           token,
           autoPlay: false
         })
-        audio.play()
-        audio.addEventListener('ended', () =>{
+        this.audio.play()
+        this.audio.addEventListener('ended', () =>{
           callback && callback()
         })
       })
