@@ -11,6 +11,14 @@
     left: 0;
     top: 0;
     height: auto;
+    @include media (desktop) {
+      bottom: 80px;
+      right: 0;
+      position: absolute;
+      left: auto;
+      top: auto;
+      height: 600px;
+    }
   }
 }
 
