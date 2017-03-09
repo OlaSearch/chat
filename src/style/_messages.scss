@@ -169,7 +169,11 @@
 
 
   .olachat-message {
-    overflow: hidden;
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
     .olachat-message-body {
       float: right;
     }
