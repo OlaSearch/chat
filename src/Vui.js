@@ -8,6 +8,7 @@ import TypingIndicator from './TypingIndicator'
 import { connect } from 'react-redux'
 import { addMessage } from './actions'
 import { Actions, Settings } from 'olasearch'
+import { checkIfAwaitingResponse } from './utils'
 
 const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
 /**
@@ -41,16 +42,6 @@ class Vui extends React.Component {
       emitter
     }
   }
-  componentDidMount() {
-    this.props.addMessage({ singleLoop: true, immediate: true }, {
-      intent: 'maternity-leave'
-    }).then((response) => {
-      /* Speak initial message */
-      this.voiceAdapter.speak(response.answer.reply_voice, this.props.isPhone, () => {
-        this.voiceAdapter.start()
-      })
-    })
-  }
   addScrollListener = () => {
     let lastScrollTop = 0
     window.addEventListener('scroll',() => {
@@ -77,11 +68,12 @@ class Vui extends React.Component {
       text
     })
   };
-  onVoiceFinal = (text, cb) => {
+  onVoiceFinal = (text, cb, params) => {
     this.props.updateQueryTerm(text, Settings.SEARCH_INPUTS.VOICE)
-    return this.onSubmit(null, cb, 300)
+    return this.onSubmit(null, cb, 300, params)
   };
-  onSubmit = (event, callback, textClearingDelay = 0) => {
+  onSubmit = (event, callback, textClearingDelay = 0, params) => {
+    if (typeof params === 'undefined') params = { vui: true }
     /**
      * Flow
      * 1. Immediate add to the messages redux atore
@@ -97,16 +89,20 @@ class Vui extends React.Component {
     /* To simulate delay */
     setTimeout(() => {
       this.setState({
-        text: '',
+        // text: '',
         scrollDirection: null
       })
     }, textClearingDelay)
 
     /* Submit the message */
-    return this.props.addMessage({ singleLoop: true })
+    return this.props.addMessage(params)
       .then((response) => {
         /* Scroll to top */
         this.scrollToView()
+        /* Delete text state */
+        this.setState({
+          text: ''
+        })
         callback && typeof callback === 'function' && callback(response)
       })
 
@@ -125,6 +121,7 @@ class Vui extends React.Component {
     let voiceContainerClass = scrollDirection
       ? `olachat-voice-scroll-${scrollDirection}`
       : ''
+    let initialPayload = { vui: true, immediate: true, intent: this.props.initialIntent }
 
     return (
       <div className='olachat-vui'>
@@ -144,6 +141,7 @@ class Vui extends React.Component {
             hasUsedVoice={this.props.hasUsedVoice}
             searchInput={this.props.searchInput}
             showListening
+            initialPayload={initialPayload}
           />
           : null
         }

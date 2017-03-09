@@ -18,7 +18,7 @@ const adapter = ({ emitter }) => {
         emitter.emit('onFinalResult', res.FormattedTranscription)
       }
     },
-    onError : () => {
+    onError : (err) => {
       emitter.emit('onStop')
     },
     onTranscriptionUpdate: function(trObj) {

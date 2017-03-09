@@ -7,5 +7,8 @@ module.exports = {
     return {
       message: text
     }
+  },
+  checkIfAwaitingResponse (response) {
+    return response.answer && 'awaiting_user_input' in response.answer && response.answer.awaiting_user_input === false
   }
 }

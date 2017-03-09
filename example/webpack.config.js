@@ -49,6 +49,7 @@ module.exports = {
     ]
   },
   externals: {
-    'houndify-web-sdk': 'Houndify'
+    'houndify-web-sdk': 'Houndify',
+    'binaryjs': 'BinaryClient'
   }
 };

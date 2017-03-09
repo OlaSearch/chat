@@ -1,5 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
+import { checkIfAwaitingResponse } from './utils'
 
 /* All voice events */
 const VOICE_EVENTS = ['onResult', 'onFinalResult', 'onStart', 'onEnd', 'onStop']
@@ -29,19 +30,24 @@ class Voice extends React.Component {
     for (let i = 0; i < VOICE_EVENTS.length; i++) {
       emitter.on(VOICE_EVENTS[i], this[VOICE_EVENTS[i]])
     }
+
+    if (this.props.initialPayload) {
+      this.onFinalResult(undefined, this.props.initialPayload)
+    }
   }
   onResult = (text) => {
     this.props.onResult(text)
   };
-  onFinalResult = (text) => {
+  onFinalResult = (text, initialPayload) => {
     const { voiceAdapter } = this.props
     /* Stop recording if no text in final result */
-    if (!text) return voiceAdapter.stop()
+    if (typeof text !== 'undefined' && !text) return voiceAdapter.stop()
 
     /* Set context field */
     this.props.addContextField('hasUsedVoice', true)
 
-    this.props.onFinalResult(text, ({ answer }) => {
+    this.props.onFinalResult(text, (response) => {
+      let { answer } = response
       /* Stop voice */
       voiceAdapter.stop()
 
@@ -52,21 +58,29 @@ class Voice extends React.Component {
 
       /* Check if fullfilled */
       let isFulfilled = answer.fulfilled
+
+      /* Check if awaiting user reply */
+      let isAwaitingReply = checkIfAwaitingResponse (response)
+
       /* Play audio */
       this.setState({
         isSpeaking: true
       })
       voiceAdapter.speak(reply, this.props.isPhone, () => {
         /* Then continue voice recognition after audio stop */
-        if (!isFulfilled) {
+        if (!isFulfilled && !isAwaitingReply) {
           voiceAdapter.start()
+        }
+
+        if (isAwaitingReply) {
+          this.onFinalResult()
         }
 
         this.setState({
           isSpeaking: false
         })
       })
-    })
+    }, initialPayload)
   };
   onStart = () => {
     this.setState({

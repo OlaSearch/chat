@@ -1,7 +1,9 @@
 import { TextToSpeech }  from 'watson-speech'
 import reqwest from 'reqwest'
-const ttsTokenUrl = 'http://localhost:3003/api/speech-to-text/token/tts'
 
+/* Using watson for tts */
+const ttsTokenUrl = 'https://olasearch.com/api/speech-to-text/token/tts'
+const sttTokenUrl = 'https://olasearch.com/api/speech-to-text/houndifyAuth'
 const END_OF_AUDIO = ['ENDPOINTER_EVENT_UNSPECIFIED', 'END_OF_SPEECH']
 const socketUrl = 'ws://localhost:9002'
 

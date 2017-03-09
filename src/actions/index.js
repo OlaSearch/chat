@@ -1,18 +1,20 @@
 import types from './../ActionTypes'
+import { checkIfAwaitingResponse } from './../utils'
 import { ActionTypes, utilities } from 'olasearch'
 
 const CHAT_DELAY = 200
 const CHAT_REPLY_DELAY = 500
 
-export function addMessage (payload, params) {
+export function addMessage (payload) {
   return (dispatch, getState) => {
     var state = getState()
     var query = state.QueryState
     var context = state.Context
-    var singleLoop = payload ? payload.singleLoop : false
+    var vui = payload ? payload.vui : false
     var immediate = payload ? payload.immediate : false
+    var intent = payload ? payload.intent : null
 
-    if (!singleLoop) {
+    if (!vui && query.q) {
       dispatch({
         type: types.REQUEST_ADD_MESSAGE,
         message: {
@@ -24,10 +26,10 @@ export function addMessage (payload, params) {
       })
     }
 
-    if (params) {
+    if (intent) {
       query = {
         ...query,
-        ...params
+        intent
       }
     }
 
@@ -51,6 +53,12 @@ export function addMessage (payload, params) {
 
           /* Hide typing indicator */
           dispatch(hideTypingIndicator())
+
+          /* Check if more messages should be requested */
+          if (checkIfAwaitingResponse(response) && !vui) {
+            delete payload['intent']
+            dispatch(addMessage(payload))
+          }
 
           return resolve(response)
 

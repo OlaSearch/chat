@@ -25,9 +25,6 @@ class Chat extends React.Component {
 
     /* Create a voiceadapter */
     this.voiceAdapter = houndify({ emitter }) //: webkit({ emitter })
-
-    /* Remove rubber band scrolling */
-    // props.isPhone && document.body.addEventListener('touchmove', (e) => e.preventDefault())
   }
   static defaultProps = {
     flipped: true,
@@ -42,14 +39,8 @@ class Chat extends React.Component {
       emitter
     }
   }
-  componentWillUnmount() {
-    /* Unbind */
-    // this.props.isPhone && document.body.removeEventListener('touchmove')
-  }
   componentDidMount() {
-    this.props.addMessage({ singleLoop: true }, {
-      intent: 'maternity-leave'
-    })
+    this.props.addMessage({ intent: this.props.initialIntent })
   }
   addMessage = (...args) => {
     /* Scroll to Top */

@@ -35,10 +35,11 @@ class Bot extends Component {
     }
   };
   render () {
+    const initialIntent = 'maternity-leave'
     const component = this.state.isActive
       ? supportsVoice
-        ? <Vui onHide={this.toggleActive} {...this.props.headerProps} />
-        : <Chat onHide={this.toggleActive} {...this.props.headerProps} />
+        ? <Vui onHide={this.toggleActive} {...this.props.headerProps} initialIntent={initialIntent} />
+        : <Chat onHide={this.toggleActive} {...this.props.headerProps} initialIntent={initialIntent} />
       : null
     return (
       <div className='olachat-bot'>
