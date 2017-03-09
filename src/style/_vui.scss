@@ -7,6 +7,7 @@
   background: $lightblue;
   @include flexbox;
   flex-direction: column;
+  -webkit-flex-direction: column;
   border: 1px #ccc solid;
   box-shadow: $small-box-shadow;
   position: relative;

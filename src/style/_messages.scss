@@ -1,5 +1,6 @@
 .olachat-messages {
   flex: 1;
+  -webkit-flex: 1;
   padding-bottom: 1em;
   // background: #eee;
   // padding: 1em;
@@ -35,6 +36,8 @@
     font-size: 14px;
     justify-content: flex-start;
     flex-direction: row-reverse;
+    -webkit-justify-content: flex-start;
+    -webkit-flex-direction: row-reverse;
     // flex-direction: row;
     // flex-shrink: 0;
   }
@@ -60,6 +63,7 @@
       min-width: 50px;
       @include flexbox;
       flex-direction: column;
+      -webkit-flex-direction: column;
     }
 
     /**
@@ -123,6 +127,7 @@
   // flex: 1;
   // min-height: 100%;
   justify-content: flex-end;
+  -webkit-justify-content: flex-end;
 }
 
 /**

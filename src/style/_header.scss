@@ -7,12 +7,14 @@
   position: relative;
   @include flexbox;
   align-items: center;
+  -webkit-align-items: center;
   // justify-content: center;
 }
 
 .olachat-header-title{
   margin: 0;
   flex: 1;
+  -webkit-flex: 1;
 }
 
 /**

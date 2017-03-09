@@ -10,6 +10,7 @@ $gutter: 12px;
    */
   .olachat-input {
     flex: 1;
+    -webkit-flex: 1;
     @include flexbox;
 
     input[type='text'], textarea {
