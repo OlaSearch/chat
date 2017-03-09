@@ -14,7 +14,8 @@ const adapter = ({ emitter }) => {
     enableVAD: true,
     onResponse: (response, info) => {
       if (response.AllResults && response.AllResults[0] !== undefined) {
-        emitter.emit('onFinalResult', response.AllResults[0].FormattedTranscription)
+        let res = response.AllResults[0]
+        emitter.emit('onFinalResult', res.FormattedTranscription)
       }
     },
     onError : () => {
