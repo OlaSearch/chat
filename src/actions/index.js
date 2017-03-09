@@ -2,13 +2,15 @@ import types from './../ActionTypes'
 import { ActionTypes, utilities } from 'olasearch'
 
 const CHAT_DELAY = 200
+const CHAT_REPLY_DELAY = 500
 
-export function addMessage (payload, params, overwriteDelay) {
+export function addMessage (payload, params) {
   return (dispatch, getState) => {
     var state = getState()
     var query = state.QueryState
     var context = state.Context
     var singleLoop = payload ? payload.singleLoop : false
+    var immediate = payload ? payload.immediate : false
 
     if (!singleLoop) {
       dispatch({
@@ -30,7 +32,7 @@ export function addMessage (payload, params, overwriteDelay) {
     }
 
     /* Simulate delay - Show typing indicator */
-    setTimeout(() => dispatch(showTypingIndicator()), typeof overwriteDelay !== 'undefined' ? 0 : CHAT_DELAY)
+    setTimeout(() => dispatch(showTypingIndicator()), immediate ? 0 : CHAT_DELAY)
 
     return new Promise((resolve, reject) => {
       /* Simulate delay */
@@ -53,7 +55,7 @@ export function addMessage (payload, params, overwriteDelay) {
           return resolve(response)
 
         })
-      }, typeof overwriteDelay !== 'undefined' ? overwriteDelay : CHAT_DELAY + 500)
+      }, immediate ? 0 : CHAT_DELAY + CHAT_REPLY_DELAY)
     })
 
   }

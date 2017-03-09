@@ -40,6 +40,7 @@ module.exports = {
       // 'olachat': path.resolve(__dirname, './../src'),
       'olasearch': path.join(__dirname, './../../npm-olasearch'),
       'olasearch-solr-adapter': path.join(__dirname, './../../npm-olasearch-solr-adapter'),
+      'olasearch-logger-middleware': path.join(__dirname, './../../olasearch-logger-middleware'),
       'olachat': path.resolve(__dirname, './../src'),
       // 'react': path.join(__dirname, './../node_modules/react'),
       // 'react-dom': path.join(__dirname, './../node_modules/react-dom'),

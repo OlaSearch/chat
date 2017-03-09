@@ -42,9 +42,9 @@ class Vui extends React.Component {
     }
   }
   componentDidMount() {
-    this.props.addMessage({ singleLoop: true }, {
+    this.props.addMessage({ singleLoop: true, immediate: true }, {
       intent: 'maternity-leave'
-    }, 0).then((response) => {
+    }).then((response) => {
       /* Speak initial message */
       this.voiceAdapter.speak(response.answer.reply_voice, this.props.isPhone, () => {
         this.voiceAdapter.start()

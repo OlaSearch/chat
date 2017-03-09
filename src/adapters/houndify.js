@@ -45,6 +45,8 @@ const adapter = ({ emitter }) => {
       } else {
         client.voiceSearch.startRecording(requestInfo)
       }
+      /* Get tts token */
+      this.getTtsToken()
     },
     stop () {
       client.voiceSearch.stop()
