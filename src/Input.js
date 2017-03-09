@@ -56,7 +56,7 @@ class Input extends React.Component {
       this.Input.autoGrow()
 
       /* Focus */
-      this.Input.refs.textarea.focus()
+      // this.Input.refs.textarea.focus()
 
     }, textClearingDelay)
 
