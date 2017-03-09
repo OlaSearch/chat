@@ -1,14 +1,29 @@
 .olachat-messages {
   flex: 1;
-  display: flex;
   padding-bottom: 1em;
-  flex-direction: column;
   // background: #eee;
   // padding: 1em;
   border: 1px #ccc solid;
   border-width: 1px 0;
-  overflow: auto;
+  
+  position: relative;
 }
+
+  .olachat-messages-wrapper {
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: flex-end;
+    // height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
 
   /**
    * Message
@@ -102,9 +117,9 @@
  */
 
 .olachat-messages-list {
-  @include flexbox;
-  flex-direction: column;
-  flex: 1;
+  // @include flexbox;
+  // flex-direction: column;
+  // flex: 1;
   // min-height: 100%;
   justify-content: flex-end;
 }

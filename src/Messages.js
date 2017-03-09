@@ -135,6 +135,7 @@ class Messages extends React.Component {
 
     return (
       <div className='olachat-messages'>
+        <div className='olachat-messages-wrapper'>
         {flipped ? loadingSpinner : null}
         {isTyping ? flipped ? null : <TypingIndicator /> : null}
         <ReactCSSTransitionGroup
@@ -150,6 +151,7 @@ class Messages extends React.Component {
         </ReactCSSTransitionGroup>
         {flipped ? null : loadingSpinner}
         {isTyping ? flipped ? <TypingIndicator /> : null : null}
+        </div>
       </div>
     )
   }
