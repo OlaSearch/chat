@@ -5,13 +5,13 @@ import Bubble from './Bubble'
 import Chat from './Chat'
 import Vui from './Vui'
 
-const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+const supportsVoice = false //navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
 
 class Bot extends Component {
   constructor (props) {
     super (props)
     this.state = {
-      isActive: false
+      isActive: true
     }
   }
   toggleActive = () => {

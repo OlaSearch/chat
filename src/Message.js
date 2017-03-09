@@ -5,11 +5,12 @@ import { createHTMLMarkup } from './utils'
 import { DateParser } from 'olasearch'
 
 const Message = ({ message }) => {
-  let { userId, timestamp } = message
+  let { userId, timestamp, awaitingUserInput } = message
   let isBot = !userId
   let text = isBot ? message.reply : message.message
   let messageClass = cx('olachat-message', {
-    'olachat-message-bot': isBot
+    'olachat-message-bot': isBot,
+    'olachat-message-collapse': typeof awaitingUserInput !== 'undefined' && !awaitingUserInput
   })
   return (
     <div className={messageClass}>

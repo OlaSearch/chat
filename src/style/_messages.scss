@@ -179,7 +179,7 @@
 
 
 
-
+  /* Simple message stack */
   .olachat-message {
     &:after {
       content: "";
@@ -202,3 +202,27 @@
         float: left;
       }
     }
+
+  /**
+   * Collapse message
+   */
+
+  .olachat-message-collapse {
+    padding-bottom: 0;
+
+    & + .olachat-message {
+      padding-top: 0;
+      top: -12px;
+      position: relative;
+      clear: both;
+      .olachat-message-avatar {
+        visibility: hidden;
+      }
+
+      .olachat-message-content {
+        &:after, &:before {
+          display: none;
+        }
+      }
+    }
+  }
