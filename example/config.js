@@ -37,7 +37,15 @@ module.exports = {
         suggest: "https://steptwo.olasearch.com/solr/steptwo/select"
     },
     logger: {
-        enabled: false
+        enabled:!0,
+        engine:["logstash"],
+        url:"https://steptwo.olasearch.com/log",
+        headers:{},
+        fields:{
+            title:"title_t",
+            url:"url_s"
+        },
+        params:{projectId:"5873426eb6d5a31147429072"}
     },
     // defaultSnippet: customSnippet,
     mapping: [

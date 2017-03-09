@@ -69,7 +69,9 @@ class Vui extends React.Component {
     })
   };
   onVoiceFinal = (text, cb, params) => {
-    this.props.updateQueryTerm(text, Settings.SEARCH_INPUTS.VOICE)
+    if (typeof text !== 'undefined') {
+      this.props.updateQueryTerm(text, Settings.SEARCH_INPUTS.VOICE)
+    }
     return this.onSubmit(null, cb, 300, params)
   };
   onSubmit = (event, callback, textClearingDelay = 0, params) => {
