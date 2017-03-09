@@ -5,7 +5,7 @@ import Bubble from './Bubble'
 import Chat from './Chat'
 import Vui from './Vui'
 
-const supportsVoice = false//navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
 
 class Bot extends Component {
   constructor (props) {
