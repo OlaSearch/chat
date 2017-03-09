@@ -26,7 +26,7 @@ class Vui extends React.Component {
     }
 
     /* Create a voiceadapter */
-    this.voiceAdapter = houndify({ emitter })
+    this.voiceAdapter = webkit({ emitter })
 
     /* Add scroll event */
     // this.addScrollListener()

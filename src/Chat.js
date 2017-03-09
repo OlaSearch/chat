@@ -24,7 +24,7 @@ class Chat extends React.Component {
     super (props)
 
     /* Create a voiceadapter */
-    this.voiceAdapter = houndify({ emitter }) //: webkit({ emitter })
+    this.voiceAdapter = webkit({ emitter }) //: webkit({ emitter })
   }
   static defaultProps = {
     flipped: true,
