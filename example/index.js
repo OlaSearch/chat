@@ -20,7 +20,7 @@ require('olachat/style/chat.scss')
 ReactDOM.render(
   <OlaProvider config={config} store={store}>
     <div className='full-wrapper'>
-      <Bot />
+      <Chat />
     </div>
   </OlaProvider>
   , document.getElementById('root')
