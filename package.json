@@ -1,10 +1,11 @@
 {
-  "name": "ola-chat-react",
+  "name": "olachat",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "babel --watch src --out-dir lib",
     "standard": "standard --verbose --fix src/*"
   },
   "author": "",
@@ -25,26 +26,26 @@
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.1.1",
-    "babel-loader": "^6.2.10",
+    "babel-loader": "^6.4.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-0": "^6.16.0",
-    "css-loader": "^0.26.1",
+    "css-loader": "^0.26.4",
     "node-sass": "^4.5.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "sass-loader": "^6.0.0",
-    "standard": "^8.6.0",
-    "style-loader": "^0.13.1"
+    "sass-loader": "^6.0.3",
+    "standard": "^9.0.1",
+    "style-loader": "^0.13.2"
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "mitt": "^1.0.1",
-    "react-addons-css-transition-group": "^15.4.2",
-    "react-redux": "^5.0.2",
+    "mitt": "^1.1.0",
+    "olasearch": "git+ssh://git@bitbucket.org/olasearch/olasearch-core.git",
+    "react-flexi-textarea": "0.0.13",
+    "react-redux": "^5.0.3",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "reqwest": "git+ssh://git@gitlab.com/olasearch/reqwest.git",
+    "standalone-react-css-transition-group": "^0.1.6",
     "watson-html5-speech-recognition": "^0.6.6"
   }
 }

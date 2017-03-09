@@ -1,0 +1,39 @@
+.olachat-bot {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+}
+
+.olachat-vui {
+  position: absolute;
+  bottom: 80px;
+  right: 0px;
+}
+
+.olachat-bubble {
+  background: none;
+  border: none;
+  max-width: 300px;
+  text-align: left;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  background: $lightblue;
+  padding: 1em;
+  border-radius: 5px;
+  box-shadow: $small-box-shadow;
+  padding-right: 40px;
+  cursor: pointer;
+
+  &:after {
+    @extend .iconfont;
+    content: 'mic';
+    position: absolute;
+    right: $gutter;
+    top: 50%;
+    margin-top: -17px;
+    color: $blue;
+    font-size: 34px;
+  }
+}

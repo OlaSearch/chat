@@ -1,5 +1,7 @@
 import React from 'react'
 import Voice from './Voice'
+import { Settings } from 'olasearch'
+import Textarea from 'react-flexi-textarea'
 
 class Input extends React.Component {
   constructor (props) {
@@ -22,9 +24,11 @@ class Input extends React.Component {
   onVoiceFinal = (text, cb) => {
     this.setState({
       text
-    }, () => this.onSubmit(null, cb, 300))
+    }, () => this.onSubmit(null, cb, 300, Settings.SEARCH_INPUTS.VOICE ))
   };
-  onSubmit = (event, callback, textClearingDelay = 0) => {
+  onSubmit = (event, callback, textClearingDelay = 0, searchInput = Settings.SEARCH_INPUTS.KEYBOARD) => {
+    this.props.updateQueryTerm(this.state.text, searchInput)
+
     /**
      * Flow
      * 1. Immediate add to the messages redux atore
@@ -36,14 +40,10 @@ class Input extends React.Component {
 
     /* Stop submitting if text is empty */
     if (!this.state.text) {
-      return this.Input.focus()
+      return this.Input.refs.textarea.focus()
     }
-    if (this.state.submitting) return
 
-    /* Set submit flag */
-    this.setState({
-      submitting: true,
-    })
+    // if (this.state.isTyping) return
 
     /* Clear the final text input after 100ms */
     /* To simulate delay */
@@ -51,17 +51,20 @@ class Input extends React.Component {
       this.setState({
         text: ''
       })
+
+      /* Resize height */
+      this.Input.autoGrow()
+
+      /* Focus */
+      this.Input.refs.textarea.focus()
+
     }, textClearingDelay)
 
     /* Submit the message */
-    return this.props.onSubmit({ text: this.state.text })
-      .then((message) => {
-        this.setState({
-          submitting: false
-        })
-
+    return this.props.onSubmit()
+      .then((response) => {
         /* Callbacks */
-        callback && typeof callback === 'function' && callback(message)
+        callback && typeof callback === 'function' && callback(response)
       })
   };
   onKeyDown = (event) => {
@@ -71,25 +74,38 @@ class Input extends React.Component {
     }
   };
   render () {
-    let { submitting } = this.state
+    let supportsVoice = window.SpeechRecognition || window.webkitSpeechRecognition
+    let { isTyping } = this.props
     return (
       <form className='olachat-footer' onSubmit={this.onSubmit}>
         <div className='olachat-input'>
-          <Voice
-            onResult={this.onVoiceChange}
-            onFinalResult={this.onVoiceFinal}
-            voiceAdapter={this.props.voiceAdapter}
-          />
-          <textarea
+          {supportsVoice
+           ? <div className='olachat-input-voice'>
+              <Voice
+                onResult={this.onVoiceChange}
+                onFinalResult={this.onVoiceFinal}
+                voiceAdapter={this.props.voiceAdapter}
+                addContextField={this.props.addContextField}
+                isTyping={isTyping}
+                searchInput={this.props.searchInput}
+              />
+            </div>
+            : null
+          }
+          <Textarea
             type='text'
             placeholder='Type a message...'
             onChange={this.onChange}
             onKeyDown={this.onKeyDown}
             value={this.state.text}
+            rows={1}
+            cols={1}
             ref={(el) => this.Input = el}
           />
         </div>
-        <button disabled={submitting}>Send</button>
+        <button disabled={isTyping} className='olachat-submit'>
+          <span>Send</span>
+        </button>
       </form>
     )
   }

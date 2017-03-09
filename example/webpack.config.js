@@ -18,10 +18,17 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      'olachat': path.resolve(__dirname, './../src')
+      'olasearch': path.join(__dirname, './../../npm-olasearch'),
+      'olasearch-solr-adapter': path.join(__dirname, './../../npm-olasearch-solr-adapter'),
+      'olachat': path.resolve(__dirname, './../src'),
+      // 'react': path.join(__dirname, './../node_modules/react'),
+      // 'react-dom': path.join(__dirname, './../node_modules/react-dom'),
+      'react-addons-css-transition-group': 'standalone-react-css-transition-group',
+      'react-redux': path.join(__dirname, './node_modules/react-redux'),
+      'olasearchconfig': path.join(__dirname, './config')
     },
     modules: [
-      'node_modules', path.resolve(__dirname, './node_modules')
+      'node_modules', path.resolve(__dirname, './node_modules'), path.resolve(__dirname, './../node_modules')
     ]
   },
   module: {

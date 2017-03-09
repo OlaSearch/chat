@@ -1,0 +1,104 @@
+.olachat-messages {
+  flex: 1;
+  background: #eee;
+  padding: 1em;
+  border: 1px #ccc solid;
+  border-width: 1px 0;
+  overflow: auto;
+}
+
+  /**
+   * Message
+   */
+  .olachat-message {
+    @include flexbox;
+    padding-bottom: 1em;
+    font-size: 14px;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+    // flex-direction: row;
+    // flex-shrink: 0;
+  }
+
+    /**
+     * Content
+     */
+    .olachat-message-content{
+      background: blue;
+      color: white;
+      border-radius: 10px;
+      padding: 8px;
+      margin-bottom: 8px;
+    }
+
+    /**
+     * body
+     */
+    .olachat-message-body {
+      // flex: 1;
+      max-width: 60%;
+      min-width: 50px;
+      @include flexbox;
+      flex-direction: column;
+    }
+
+    /**
+     * Avatar
+     */
+    .olachat-message-avatar {
+      width: 40px;
+    }
+
+    /**
+     * Date
+     */
+    .olachat-message-date {
+      font-size: 12px;
+      color: #888;
+    }
+
+/**
+ * Bot message
+ */
+.olachat-message-bot {
+  // justify-content: flex-end;
+  flex-direction: row;
+  .olachat-message-content {
+    background: white;
+    color: #333;
+  }
+}
+
+/**
+ * Animation
+ */
+.messages-enter, .messages-appear {
+  opacity: 0.01;
+}
+
+.messages-enter.messages-enter-active, .messages-appear.messages-appear-active {
+  opacity: 1;
+  transition: opacity 200ms ease-in;
+}
+
+.messages-leave {
+  opacity: 1;
+}
+
+.messages-leave.messages-leave-active {
+  opacity: 0.01;
+  transition: opacity 200ms ease-in;
+}
+
+
+/**
+ * Message list
+ */
+
+.olachat-messages-list {
+  @include flexbox;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100%;
+  justify-content: flex-end;
+}

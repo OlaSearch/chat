@@ -2,8 +2,8 @@ import reqwest from 'reqwest'
 import { TextToSpeech }  from 'watson-speech'
 const watsonSpeechRecognizer = require('watson-speech/speech-to-text/recognize-microphone');
 
-const sttTokenUrl = 'http://localhost:3003/api/speech-to-text/token'
-const ttsTokenUrl = 'http://localhost:3003/api/speech-to-text/token/tts'
+const sttTokenUrl = 'http://localhost:9003/api/speech-to-text/token'
+const ttsTokenUrl = 'http://localhost:9003/api/speech-to-text/token/tts'
 
 const adapter = ({ emitter }) => {
   var activeSTT

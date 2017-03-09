@@ -1,0 +1,50 @@
+@import 'variables';
+
+
+html {
+  line-height: 1.4;
+}
+
+.olachat {
+  height: 600px;
+  width: 100%;
+  @include media (tablet) {
+    width: 375px;
+  }
+  background: #eee;
+  @include flexbox;
+  flex-direction: column;
+  border: 1px #ccc solid;
+  box-shadow: $small-box-shadow;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+.full-wrapper {
+  @include media(desktop) {
+    display: flex;
+    justify-content: space-between;
+    > * {
+      flex-basis: 23%;
+    }
+  }
+}
+
+
+
+@import 'icons';
+@import 'animation';
+@import 'footer';
+@import 'messages';
+@import 'header';
+@import 'typingindicator';
+@import 'avatar';
+@import 'voice';
+@import 'vui';
+@import 'bubble';

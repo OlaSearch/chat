@@ -1,44 +1,63 @@
 import types from './../ActionTypes'
+import { ActionTypes, utilities } from 'olasearch'
 
-const myArray = [null, 12312321]
-export function addMessage ({ text }) {
-  /* Replace carriage return with line break */
-  text = text.replace(/(\r\n|\n|\r)/g,"<br />")
+const CHAT_DELAY = 200
 
-  let message = (userId) => ({
-    id: Math.random(),
-    text: text,
-    userId: typeof userId === 'undefined' ? Math.random() : userId,
-    date: 'January 29, 2017',
-  })
-
+export function addMessage (payload, params) {
   return (dispatch, getState) => {
-    dispatch({
-      type: types.REQUEST_ADD_MESSAGE,
-      message: message()
-    })
+    var state = getState()
+    var query = state.QueryState
+    var context = state.Context
+    var singleLoop = payload ? payload.singleLoop : false
 
-    /* Show typing indicator after 1 second */
-    setTimeout(() => dispatch(showTypingIndicator()), 500)
+    if (!singleLoop) {
+      dispatch({
+        type: types.REQUEST_ADD_MESSAGE,
+        message: {
+          id: utilities.uuid(),
+          userId: context.userId,
+          message: query.q,
+          timestamp: state.Timestamp.timestamp
+        }
+      })
+    }
+
+    if (params) {
+      query = {
+        ...query,
+        ...params
+      }
+    }
+
+    /* Simulate delay - Show typing indicator */
+    setTimeout(() => dispatch(showTypingIndicator()), CHAT_DELAY)
 
     return new Promise((resolve, reject) => {
+      /* Simulate delay */
       setTimeout(() => {
-        /* Hide typing indicator */
-        dispatch(hideTypingIndicator())
+        return dispatch({
+          types: [
+            ActionTypes.REQUEST_SEARCH,
+            ActionTypes.REQUEST_SEARCH_SUCCESS,
+            ActionTypes.REQUEST_SEARCH_FAILURE
+          ],
+          query,
+          context,
+          api: 'search',
+          payload
+        }).then((response) => {
 
-        /* Add new message retrieved from the server */
-        dispatch({
-          type: types.REQUEST_ADD_MESSAGE,
-          message: message(null)
+          /* Hide typing indicator */
+          dispatch(hideTypingIndicator())
+
+          return resolve(response)
+
         })
-        /* Send the message object returned by the server */
-        resolve(message(null))
-      }, 2000)
-
+      }, CHAT_DELAY + 100)
     })
+
   }
 }
-
 
 export function showTypingIndicator () {
   return {

@@ -1,0 +1,84 @@
+$gutter: 12px;
+.olachat-footer {
+  @include flexbox;
+  padding: 12px;
+  background: white;
+}
+
+  /**
+   * Input
+   */
+  .olachat-input {
+    flex: 1;
+    @include flexbox;
+
+    input[type='text'], textarea {
+      width: 100%;
+      border: 1px #eee solid;
+      padding: 10px 8px;
+      font-size: 14px;
+      margin-right: $gutter;
+      max-height: 100px;
+
+      &:focus {
+        outline: none;
+        border: 1px $blue solid;
+      }
+    }
+  }
+
+  /**
+   * Submit
+   */
+  .olachat-submit {
+    border: none;
+    background: none;
+    color: $blue;
+    cursor: pointer;
+    width: 35px;
+
+    &:before {
+      @extend .iconfont;
+      content: 'send';
+    }
+
+    span {
+      display: none;
+    }
+  }
+
+    /* Voice */
+
+  .olachat-input-voice {
+    // position: absolute;
+    @include flexbox;
+    justify-content: center;
+    align-items: center;
+    margin-right: $gutter;
+
+    .olachat-voice  {
+      background: transparent;
+      width: auto;
+      height: auto;
+      box-shadow: none;
+      padding: 8px;
+    }
+
+    .olachat-mic {
+      color: $blue;
+      width: auto;
+      height: auto;
+
+      &:before {
+        font-size: 24px;
+      }
+    }
+
+    /* When recording */
+    .olachat-voice-isrecording {
+      background-color: #eee;
+    }
+    .olachat-mic-isrecording {
+      color: red;
+    }
+  }

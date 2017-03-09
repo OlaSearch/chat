@@ -1,6 +1,6 @@
 import { TextToSpeech }  from 'watson-speech'
 import reqwest from 'reqwest'
-const ttsTokenUrl = 'http://localhost:3003/api/speech-to-text/token/tts'
+const ttsTokenUrl = 'https://olasearch.com/api/speech-to-text/token/tts'
 
 const adapter = ({ emitter }) => {
   let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
@@ -68,7 +68,34 @@ const adapter = ({ emitter }) => {
         url: ttsTokenUrl
       })
     },
-    speak (text, callback) {
+    speak (text, isPhone = false, callback) {
+      if (isPhone) {
+        if (!window.speechSynthesis) return
+        var utterance = new SpeechSynthesisUtterance()
+        utterance.lang = 'en-GB'
+        utterance.pitch = 0.8
+        utterance.rate = 1
+        utterance.volume = 1
+
+        utterance.text = text
+
+        /* Say */
+        window.speechSynthesis.speak(utterance)
+
+        /* Call end */
+        const _wait = () => {
+          if ( ! window.speechSynthesis.speaking ) {
+            callback && callback()
+            if (timeout) clearInterval(timeout)
+            return
+          }
+          const timeout = window.setTimeout(_wait, 200)
+        }
+        _wait()
+
+        return
+      }
+
       this.getTtsToken()
       .then((token) => {
         this._ttsToken = token
@@ -78,7 +105,7 @@ const adapter = ({ emitter }) => {
           autoPlay: false
         })
         this.audio.play()
-        this.audio.addEventListener('ended', () =>{
+        this.audio.addEventListener('ended', () => {
           callback && callback()
         })
       })

@@ -1,71 +1,32 @@
 import types from './../ActionTypes'
+import { ActionTypes } from 'olasearch'
 
 const initialState = {
-  messages: [
-    {
-      id: 1,
-      text: 'Hello, how are you?',
-      userId: 2,
-      date: 'January 29, 2016',
-    },
-    {
-      id: 2,
-      text: 'Hello, how are you?',
-      userId: 2,
-      date: 'January 29, 2017',
-    },
-    {
-      id: 3,
-      text: 'I am fine. My name is chatterbot',
-      userId: null,
-      date: 'January 29, 2017',
-    },
-    {
-      id: 11,
-      text: 'Hello, how are you?',
-      userId: 2,
-      date: 'January 29, 2017',
-    },
-    {
-      id: 22,
-      text: 'Hello, how are you?',
-      userId: 2,
-      date: 'January 29, 2017',
-    },
-    {
-      id: 33,
-      text: 'I am fine. My name is chatterbot',
-      userId: null,
-      date: 'January 29, 2017',
-    },
-    {
-      id: 111,
-      text: 'Hello, how are you?',
-      userId: 2,
-      date: 'January 29, 2017',
-    },
-    {
-      id: 222,
-      text: 'Hello, how are you?',
-      userId: 2,
-      date: 'January 29, 2017',
-    },
-    {
-      id: 333,
-      text: 'I am fine. My name is chatterbot',
-      userId: null,
-      date: 'January 29, 2017',
-    },
-  ],
-  isTyping: false,
+  messages: [],
+  isTyping: false
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
+
     case types.REQUEST_ADD_MESSAGE:
       return {
         ...state,
-        messages: [ ...state.messages, action.message ],
+        messages: [...state.messages, action.message]
+      }
+
+    case ActionTypes.REQUEST_SEARCH_SUCCESS:
+      if (!action.answer || !action.answer.reply) return state
+      return {
+        ...state,
+        messages: [...state.messages, {
+          id: action.answer.id,
+          reply: action.answer.reply,
+          reply_voice: action.answer.reply_voice,
+          timestamp: action.answer.timestamp,
+          intent: action.answer.intent,
+          message: action.answer.message
+        }],
       }
 
     case types.SHOW_TYPING_INDICATOR:
@@ -79,6 +40,7 @@ export default (state = initialState, action) => {
         ...state,
         isTyping: false
       }
+
     default:
       return state
   }

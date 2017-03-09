@@ -4,7 +4,7 @@ import Avatar from './Avatar'
 
 const TypingIndicator = (props) => {
   return (
-    <div className='olachat-message olachat-message-bot'>
+    <div className='olachat-message olachat-message-bot ola-chat-progress'>
       <Avatar
         isBot
       />

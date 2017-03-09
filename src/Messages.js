@@ -131,7 +131,7 @@ class Messages extends React.Component {
     let loadingSpinner = isInfiniteLoading ? <div>Loading</div> : null
     let messagesComponent = messageComponent
       ? messages.map(messageComponent)
-      : messages.map((message) => <Message message={message} key={message.id} />)
+      : messages.map((message, idx) => <Message message={message} key={message.id} />)
 
     return (
       <div className='olachat-messages'>
@@ -143,6 +143,8 @@ class Messages extends React.Component {
           transitionAppearTimeout={300}
           transitionEnterTimeout={500}
           transitionLeave={false}
+          component='div'
+          className='olachat-messages-list'
         >
           {messagesComponent}
         </ReactCSSTransitionGroup>

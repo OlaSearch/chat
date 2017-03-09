@@ -1,0 +1,36 @@
+/**
+ * Header
+ */
+.olachat-header {
+  background: white;
+  padding: $gutter;
+  position: relative;
+  @include flexbox;
+  align-items: center;
+  // justify-content: center;
+}
+
+.olachat-header-title{
+  margin: 0;
+  flex: 1;
+}
+
+/**
+ * Hide button
+ */
+
+.olachat-header-hide {
+  border: none;
+  background: none;
+
+  &:before {
+    @extend .iconfont;
+    content: 'close';
+    vertical-align: middle;
+    font-size: 20px;
+  }
+
+  span {
+    display: none;
+  }
+}

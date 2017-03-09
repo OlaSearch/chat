@@ -3,10 +3,11 @@ import reqwest from 'reqwest'
 import Houndify from 'houndify-web-sdk'
 
 /* Using watson for tts */
-const ttsTokenUrl = 'http://localhost:3003/api/speech-to-text/token/tts'
-const sttTokenUrl = 'http://localhost:3003/api/speech-to-text/houndifyAuth'
+const ttsTokenUrl = 'https://olasearch.com/api/speech-to-text/token/tts'
+const sttTokenUrl = 'https://olasearch.com/api/speech-to-text/houndifyAuth'
 const adapter = ({ emitter }) => {
-  var clientID = '9ALURR6Jwu_tNlNrXt4xxA=='
+  // var clientID = '9ALURR6Jwu_tNlNrXt4xxA=='
+  var clientID = 'XtaMCHjUQ26sSPMPcXamLw=='
   var client = new Houndify.HoundifyClient({
     clientId: clientID,
     authURL: sttTokenUrl,
@@ -46,6 +47,9 @@ const adapter = ({ emitter }) => {
     },
     stop () {
       client.voiceSearch.stop()
+      if (this.audio) {
+        this.audio.pause()
+      }
     },
     getTtsToken () {
       /* Cache tts token */
@@ -58,7 +62,34 @@ const adapter = ({ emitter }) => {
         url: ttsTokenUrl
       })
     },
-    speak (text, callback) {
+    speak (text, isPhone = false, callback) {
+      if (isPhone) {
+        if (!window.speechSynthesis) return
+        var utterance = new SpeechSynthesisUtterance()
+        utterance.lang = 'en-GB'
+        utterance.pitch = 0.8
+        utterance.rate = 1
+        utterance.volume = 1
+
+        utterance.text = text
+
+        /* Say */
+        window.speechSynthesis.speak(utterance)
+
+        /* Call end */
+        const _wait = () => {
+          if ( ! window.speechSynthesis.speaking ) {
+            callback && callback()
+            if (timeout) clearInterval(timeout)
+            return
+          }
+          const timeout = window.setTimeout(_wait, 200)
+        }
+        _wait()
+
+        return
+      }
+
       this.getTtsToken()
       .then((token) => {
         this._ttsToken = token

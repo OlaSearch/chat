@@ -1,0 +1,58 @@
+.olachat-vui {
+  height: 600px;
+  width: 100%;
+  @include media (tablet) {
+    width: 375px;
+  }
+  background: $lightblue;
+  @include flexbox;
+  flex-direction: column;
+  border: 1px #ccc solid;
+  box-shadow: $small-box-shadow;
+  position: relative;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+
+  .olachat-voice  {
+    position: absolute;
+    bottom: 2 * $gutter;
+    left: 50%;
+    margin-left: -40px;
+  }
+
+  /* Header */
+
+  .olachat-header {
+    background-color: transparent;
+    text-align: center;
+  }
+  .olachat-header-title {
+    text-transform: uppercase;
+    color: #666;
+    padding-top: 1em;
+  }
+}
+
+
+/**
+ * Message
+ */
+.olachat-vui-reply {
+  text-align: center;
+  font-size: 20px;
+  padding: 2em 1em 1em 1em;
+}
+
+.olachat-vui-message {
+  font-size: 20px;
+  text-align: center;
+  padding: 1em 1em;
+  font-weight: 100;
+}

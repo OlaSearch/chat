@@ -5,27 +5,34 @@ import Input from './Input'
 import Messages from './Messages'
 import { connect } from 'react-redux'
 import { addMessage } from './actions'
-import watson from './adapters/watson'
+// import watson from './adapters/watson'
+// import bing from './adapters/bing'
+// import google from './adapters/google'
 import houndify from './adapters/houndify'
-import google from './adapters/google'
 import webkit from './adapters/webkit'
-import bing from './adapters/bing'
 import mitt from 'mitt'
+import { Actions, Settings } from 'olasearch'
 
-/* Create an emitter */
 /**
  * Same emitter is shared by context
  * @type {[type]}
  */
 const emitter = mitt()
-/* Create a voiceadapter */
-const voiceAdapter = bing({
-  emitter
-})
 
 class Chat extends React.Component {
+  constructor (props) {
+    super (props)
+
+    /* Create a voiceadapter */
+    this.voiceAdapter = houndify({ emitter }) //: webkit({ emitter })
+
+    /* Remove rubber band scrolling */
+    // props.isPhone && document.body.addEventListener('touchmove', (e) => e.preventDefault())
+  }
   static defaultProps = {
-    flipped: false
+    flipped: true,
+    title: 'Ola Bot',
+    onLoad: () => new Promise((resolve, reject) => resolve())
   };
   static childContextTypes = {
     emitter: React.PropTypes.object
@@ -35,37 +42,49 @@ class Chat extends React.Component {
       emitter
     }
   }
+  componentWillUnmount() {
+    /* Unbind */
+    // this.props.isPhone && document.body.removeEventListener('touchmove')
+  }
+  componentDidMount() {
+    this.props.addMessage({ singleLoop: true }, {
+      intent: 'maternity-leave'
+    })
+  }
   addMessage = (...args) => {
     /* Scroll to Top */
     this.MessageContainer.scrollToView()
 
     /* Add message */
-    return this.props.addMessage(...args).then(() => {
+    return this.props.addMessage().then((reply) => {
       /* Scroll to Top after bot replies */
       this.MessageContainer.scrollToView()
+
+      return reply
     })
   };
   render () {
     return (
       <div className='olachat'>
-        <Header />
-        <Input
-          onSubmit={this.addMessage}
-          voiceAdapter={voiceAdapter}
+        <Header
+          onHide={this.props.onHide}
+          title={this.props.title}
         />
         <Messages
           messages={this.props.messages}
           flipped={this.props.flipped}
           isTyping={this.props.isTyping}
           ref={(el) => this.MessageContainer = el}
-          onLoad={() => {
-            return new Promise((resolve, reject) => {
-              setTimeout(() => {
-                // console.log('called')
-                resolve()
-              }, 1000)
-            })
-          }}
+          onLoad={this.props.onLoad}
+        />
+        <Input
+          onSubmit={this.addMessage}
+          voiceAdapter={this.voiceAdapter}
+          updateQueryTerm={this.props.updateQueryTerm}
+          addContextField={this.props.addContextField}
+          isTyping={this.props.isTyping}
+          searchInput={this.props.searchInput}
+          ref={(el) => this.InputContainer = el}
         />
       </div>
     )
@@ -75,8 +94,10 @@ class Chat extends React.Component {
 function mapStateToProps (state) {
   return {
     messages: state.Conversation.messages,
-    isTyping: state.Conversation.isTyping
+    isTyping: state.Conversation.isTyping,
+    isPhone: state.Device.isPhone,
+    searchInput: state.QueryState.searchInput
   }
 }
 
-export default connect(mapStateToProps, { addMessage })(Chat)
+export default connect(mapStateToProps, { addMessage, updateQueryTerm: Actions.Search.updateQueryTerm, addContextField: Actions.Context.addContextField })(Chat)

@@ -1,9 +1,16 @@
 import React from 'react'
 
-const Header = () => {
+const Header = ({ onHide, title }) => {
+  if (!title && !onHide) return null
   return (
     <div className='olachat-header'>
-      <p className='olachat-header-title'>Ola Chatbot</p>
+      <p className='olachat-header-title'>{title}</p>
+      {onHide
+        ? <button className='olachat-header-hide' onClick={onHide}>
+            <span>Hide</span>
+          </button>
+        : null
+      }
     </div>
   )
 }

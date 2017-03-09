@@ -1,0 +1,90 @@
+/**
+ * Wrapper
+ */
+.olachat-voice {
+  // justify-content: center;
+  // @include flexbox;
+  padding: 1em;
+  background: lighten(#2464af, 10%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  // position: fixed;
+  // right: 50%;
+  // margin-right: -40px;
+  // bottom: 20px;
+  // z-index: 101;
+  box-shadow: 0 0px 6px 0px rgba(0,0,0,0.6);
+  cursor: pointer;
+  text-align: center;
+}
+
+  .olachat-voice-isrecording {
+    background-color: #01499d;
+  }
+
+  .olachat-mic-loader {
+    animation: spin .5s infinite linear;
+    border: 2px #ccc solid;
+    background-color: rgba(0,0,0,0);
+    border: 5px solid rgba(255,255,255,0.6);
+    opacity: .9;
+    border-top: 5px solid rgba(0,0,0,0);
+    border-left: 5px solid rgba(0,0,0,0);
+    border-radius: 50px;
+    box-shadow: 0 0 35px #2187e7;
+    position: absolute;
+    left: -3px;
+    top: -3px;
+    right: -3px;
+    bottom: -3px;
+  }
+
+/**
+ * Mic button
+ */
+.olachat-mic {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  padding: 0;
+  outline: none;
+  position: relative;
+  color: white;
+  cursor: pointer;
+
+  &:before {
+    @extend .iconfont;
+    content: 'mic';
+    font-size: 40px;
+    vertical-align: middle;
+  }
+
+  .olachat-mic-text {
+    display: none;
+  }
+}
+
+  .olachat-mic-isrecording {
+    animation: pulse 1.2s infinite;
+    animation-delay: 0.5s;
+  }
+
+
+/**
+ * Listening
+ */
+
+.olachat-mic-listening {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  margin-top: -0.5em;
+  margin-right: 2em;
+  color: #F5A623;
+}
