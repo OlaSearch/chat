@@ -30,6 +30,7 @@ module.exports = {
     proxy: true,
     projectId: "5873426eb6d5a31147429072",
     env: 'staging',
+    namespace: "steptwo",
     api: {
         fuzzySuggest: "https://steptwo.olasearch.com/solr/steptwo/suggest",
         intent: "https://steptwo.olasearch.com/search",
