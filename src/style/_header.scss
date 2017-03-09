@@ -22,6 +22,9 @@
 .olachat-header-hide {
   border: none;
   background: none;
+  position: absolute;
+  top: 12px;
+  right: 14px;
 
   &:before {
     @extend .iconfont;

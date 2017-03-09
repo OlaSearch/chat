@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import { addMessage } from './actions'
 import { Actions, Settings } from 'olasearch'
 
+const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
 /**
  * Same emitter is shared by context
  * @type {[type]}
@@ -119,7 +120,6 @@ class Vui extends React.Component {
     })
   };
   render () {
-    let supportsVoice = window.SpeechRecognition || window.webkitSpeechRecognition
     let { isTyping, messages } = this.props
     let { scrollDirection, text } = this.state
     let voiceContainerClass = scrollDirection

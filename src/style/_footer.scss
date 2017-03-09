@@ -16,7 +16,11 @@ $gutter: 12px;
       width: 100%;
       border: 1px #eee solid;
       padding: 10px 8px;
-      font-size: 14px;
+      font-size: 16px;
+
+      @include media (desktop) {
+        font-size: 14px;
+      }
       margin-right: $gutter;
       max-height: 100px;
 

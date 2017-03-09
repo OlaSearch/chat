@@ -3,6 +3,8 @@ import Voice from './Voice'
 import { Settings } from 'olasearch'
 import Textarea from 'react-flexi-textarea'
 
+const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+
 class Input extends React.Component {
   constructor (props) {
     super(props)
@@ -74,7 +76,6 @@ class Input extends React.Component {
     }
   };
   render () {
-    let supportsVoice = window.SpeechRecognition || window.webkitSpeechRecognition
     let { isTyping } = this.props
     return (
       <form className='olachat-footer' onSubmit={this.onSubmit}>

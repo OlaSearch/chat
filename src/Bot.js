@@ -5,6 +5,8 @@ import Bubble from './Bubble'
 import Chat from './Chat'
 import Vui from './Vui'
 
+const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+
 class Bot extends Component {
   constructor (props) {
     super (props)
@@ -28,7 +30,6 @@ class Bot extends Component {
     }
   };
   render () {
-    const supportsVoice = window.SpeechRecognition || window.webkitSpeechRecognition
     const component = this.state.isActive
       ? supportsVoice
         ? <Vui onHide={this.toggleActive} {...this.props.headerProps} />
