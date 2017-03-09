@@ -53,7 +53,7 @@ export function addMessage (payload, params) {
           return resolve(response)
 
         })
-      }, CHAT_DELAY + 1000)
+      }, CHAT_DELAY + 500)
     })
 
   }
