@@ -33,8 +33,8 @@ const adapter = ({ emitter }) => {
 
   return {
     start () {
-      if (this.audio) {
-        this.audio.pause()
+      if (window.OlaAudio) {
+        window.OlaAudio.pause()
       }
       var requestInfo = {
         ClientID: clientID
@@ -47,8 +47,8 @@ const adapter = ({ emitter }) => {
     },
     stop () {
       client.voiceSearch.stop()
-      if (this.audio) {
-        this.audio.pause()
+      if (window.OlaAudio) {
+        window.OlaAudio.pause()
       }
     },
     getTtsToken () {
@@ -93,13 +93,13 @@ const adapter = ({ emitter }) => {
       this.getTtsToken()
       .then((token) => {
         this._ttsToken = token
-        this.audio = TextToSpeech.synthesize({
+        window.OlaAudio = TextToSpeech.synthesize({
           text,
           token,
           autoPlay: false
         })
-        this.audio.play()
-        this.audio.addEventListener('ended', () =>{
+        window.OlaAudio.play()
+        window.OlaAudio.addEventListener('ended', () =>{
           callback && callback()
         })
       })

@@ -15,6 +15,11 @@ class Bot extends Component {
     }
   }
   toggleActive = () => {
+    /* Pause all audio */
+    if (window.OlaAudio) {
+      window.OlaAudio.pause()
+    }
+
     this.setState({
       isActive: !this.state.isActive
     })
