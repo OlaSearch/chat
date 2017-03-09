@@ -24,7 +24,7 @@ class Bot extends Component {
     }
   };
   render () {
-    const supportsVoice = window.SpeechRecognition || window.webkitSpeechRecognition
+    const supportsVoice = false //window.SpeechRecognition || window.webkitSpeechRecognition
     const component = this.state.isActive
       ? supportsVoice
         ? <Vui onHide={this.toggleActive} {...this.props.headerProps} />
