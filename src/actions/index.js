@@ -70,3 +70,9 @@ export function hideTypingIndicator () {
     type: types.HIDE_TYPING_INDICATOR
   }
 }
+
+export function clearMessages () {
+  return {
+    type: types.CLEAR_MESSAGES
+  }
+}

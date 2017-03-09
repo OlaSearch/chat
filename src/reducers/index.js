@@ -29,6 +29,12 @@ export default (state = initialState, action) => {
         }],
       }
 
+    case types.CLEAR_MESSAGES:
+      return {
+        ...state,
+        messages: []
+      }
+
     case types.SHOW_TYPING_INDICATOR:
       return {
         ...state,

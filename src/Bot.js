@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { clearMessages } from './actions'
 import Bubble from './Bubble'
 import Chat from './Chat'
 import Vui from './Vui'
@@ -14,6 +16,8 @@ class Bot extends Component {
     this.setState({
       isActive: !this.state.isActive
     })
+
+    this.props.dispatch(clearMessages())
 
     /* Stop all audio */
   };
@@ -43,4 +47,4 @@ class Bot extends Component {
   }
 }
 
-module.exports = Bot
+module.exports = connect()(Bot)

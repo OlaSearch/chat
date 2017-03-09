@@ -94,6 +94,16 @@ class Voice extends React.Component {
     this.playPing()
   };
   playPing = () => {
+    if (this.props.isPhone) {
+      var utterance = new SpeechSynthesisUtterance()
+      utterance.pitch = 0.8
+      utterance.rate = 1
+      utterance.volume = 1
+      utterance.text = 'a'
+      /* Say */
+      window.speechSynthesis.speak(utterance)
+      return
+    }
     var audio = new Audio()
     audio.crossOrigin = true
     audio.src = '/tap.mp3'
