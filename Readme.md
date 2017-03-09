@@ -36,3 +36,10 @@ ReactDOM.render(
 )
 
 ````
+
+
+cd  /var/www/bot-engine
+source .venv/bin/activate
+pip install -e git+ssh://git@gitlab.com/olasearch/datextractor.git#egg=datextractor
+sudo systemctl restart bot-engine
+ssh -i ./ola-backend-api.pem ubuntu@54.169.15.62
