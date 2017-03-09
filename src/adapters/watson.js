@@ -2,8 +2,8 @@ import reqwest from 'reqwest'
 import { TextToSpeech }  from 'watson-speech'
 const watsonSpeechRecognizer = require('watson-speech/speech-to-text/recognize-microphone');
 
-const sttTokenUrl = 'http://localhost:9003/api/speech-to-text/token'
-const ttsTokenUrl = 'http://localhost:9003/api/speech-to-text/token/tts'
+const ttsTokenUrl = 'https://olasearch.com/api/speech-to-text/token/tts'
+const sttTokenUrl = 'https://olasearch.com/api/speech-to-text/token'
 
 const adapter = ({ emitter }) => {
   var activeSTT
@@ -63,7 +63,7 @@ const adapter = ({ emitter }) => {
         url: ttsTokenUrl
       })
     },
-    speak (text, callback) {
+    speak (text, isPhone = false, callback) {
       this.getTtsToken()
       .then((token) => {
         this._ttsToken = token
