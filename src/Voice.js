@@ -95,13 +95,13 @@ class Voice extends React.Component {
   };
   playPing = () => {
     if (this.props.isPhone) {
-      var utterance = new SpeechSynthesisUtterance()
-      utterance.pitch = 0.8
-      utterance.rate = 1
-      utterance.volume = 1
-      utterance.text = 'a'
-      /* Say */
-      window.speechSynthesis.speak(utterance)
+      // var utterance = new SpeechSynthesisUtterance()
+      // utterance.pitch = 0.2
+      // utterance.rate = 0.1
+      // utterance.volume = 1.0
+      // utterance.text = 'ph'
+      // /* Say */
+      // window.speechSynthesis.speak(utterance)
       return
     }
     var audio = new Audio()

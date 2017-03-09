@@ -3,7 +3,7 @@ import { ActionTypes, utilities } from 'olasearch'
 
 const CHAT_DELAY = 200
 
-export function addMessage (payload, params) {
+export function addMessage (payload, params, overwriteDelay) {
   return (dispatch, getState) => {
     var state = getState()
     var query = state.QueryState
@@ -30,7 +30,7 @@ export function addMessage (payload, params) {
     }
 
     /* Simulate delay - Show typing indicator */
-    setTimeout(() => dispatch(showTypingIndicator()), CHAT_DELAY)
+    setTimeout(() => dispatch(showTypingIndicator()), typeof overwriteDelay !== 'undefined' ? 0 : CHAT_DELAY)
 
     return new Promise((resolve, reject) => {
       /* Simulate delay */
@@ -53,7 +53,7 @@ export function addMessage (payload, params) {
           return resolve(response)
 
         })
-      }, CHAT_DELAY + 500)
+      }, typeof overwriteDelay !== 'undefined' ? overwriteDelay : CHAT_DELAY + 500)
     })
 
   }
