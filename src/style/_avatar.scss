@@ -1,11 +1,13 @@
 .olachat-message-avatar {
   min-width: 50px;
   margin-left: $gutter;
+  display: none;
 }
 
   .olachat-avatar-bot {
     margin-left: 0;
     margin-right: $gutter;
+    display: block;
   }
 
 .olachat-avatar {

@@ -11,7 +11,7 @@ html {
   @include media (tablet) {
     width: 375px;
   }
-  background: #eee;
+  background: #F0F3F8;
   @include flexbox;
   flex-direction: column;
   border: 1px #ccc solid;
