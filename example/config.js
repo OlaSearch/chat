@@ -28,25 +28,25 @@ module.exports = {
     searchPageUrl: '/',
     history: 'pushState',
     proxy: true,
-    projectId: "5873426eb6d5a31147429072",
+    projectId: "58c215cb60c69a76fb286fd2",
     env: 'staging',
-    namespace: "steptwo",
+    namespace: "mom",
     api: {
-        fuzzySuggest: "https://steptwo.olasearch.com/solr/steptwo/suggest",
-        intent: "https://steptwo.olasearch.com/search",
-        search: "https://steptwo.olasearch.com/solr/steptwo/select",
-        suggest: "https://steptwo.olasearch.com/solr/steptwo/select"
+        fuzzySuggest: "https://mom.olasearch.com/solr/steptwo/suggest",
+        intent: "https://mom.olasearch.com/search",
+        search: "https://mom.olasearch.com/solr/steptwo/select",
+        suggest: "https://mom.olasearch.com/solr/steptwo/select"
     },
     logger: {
         enabled:!0,
         engine:["logstash"],
-        url:"https://steptwo.olasearch.com/log",
+        url:"https://mom.olasearch.com/log",
         headers:{},
         fields:{
             title:"title_t",
             url:"url_s"
         },
-        params:{projectId:"5873426eb6d5a31147429072"}
+        params:{projectId:"58c215cb60c69a76fb286fd2"}
     },
     // defaultSnippet: customSnippet,
     mapping: [

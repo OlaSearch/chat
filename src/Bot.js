@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { clearMessages } from './actions'
-import webkit from './adapters/webkit'
+// import webkit from './adapters/webkit'
 import houndify from './adapters/houndify'
 // import watson from './adapters/watson'
 // import bing from './adapters/bing'
@@ -21,7 +21,7 @@ const emitter = mitt()
 
 class Bot extends Component {
   constructor (props) {
-    super (props)
+    super(props)
     this.state = {
       isActive: false
     }
@@ -56,10 +56,17 @@ class Bot extends Component {
   };
   render () {
     const initialIntent = 'maternity-leave'
+    const passProps = {
+      onHide: this.toggleActive,
+      ...this.props.headerProps,
+      initialIntent,
+      voiceAdapter: this.voiceAdapter,
+      emitter
+    }
     const component = this.state.isActive
       ? supportsVoice
-        ? <Vui onHide={this.toggleActive} {...this.props.headerProps} initialIntent={initialIntent} voiceAdapter={this.voiceAdapter} emitter={emitter} />
-        : <Chat onHide={this.toggleActive} {...this.props.headerProps} initialIntent={initialIntent} voiceAdapter={this.voiceAdapter} emitter={emitter} />
+        ? <Vui {...passProps} />
+        : <Chat {...passProps} />
       : null
     return (
       <div className='olachat-bot'>

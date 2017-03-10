@@ -1,11 +1,9 @@
 import React from 'react'
 import Header from './Header'
 import Voice from './Voice'
-import TypingIndicator from './TypingIndicator'
 import { connect } from 'react-redux'
 import { addMessage } from './actions'
 import { Actions, Settings } from 'olasearch'
-import { checkIfAwaitingResponse } from './utils'
 
 const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
 
@@ -22,9 +20,9 @@ class Vui extends React.Component {
   };
   addScrollListener = () => {
     let lastScrollTop = 0
-    window.addEventListener('scroll',() => {
+    window.addEventListener('scroll', () => {
       var st = window.pageYOffset || document.documentElement.scrollTop
-      if (st > lastScrollTop){
+      if (st > lastScrollTop) {
         if (this.state.scrollDirection !== 'down') {
           this.setState({
             scrollDirection: 'down'
@@ -85,10 +83,9 @@ class Vui extends React.Component {
         })
         callback && typeof callback === 'function' && callback(response)
       })
-
   };
   scrollToView = () => {
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
   };
   handleVoiceButtonClick = () => {
     this.setState({
@@ -96,7 +93,7 @@ class Vui extends React.Component {
     })
   };
   render () {
-    let { isTyping, messages } = this.props
+    let { messages } = this.props
     let { scrollDirection, text } = this.state
     let voiceContainerClass = scrollDirection
       ? `olachat-voice-scroll-${scrollDirection}`
@@ -127,7 +124,7 @@ class Vui extends React.Component {
         }
         {messages
           .filter((el, i) => i === messages.length - 1)
-          .map(({ message, reply, userId } , idx) => {
+          .map(({ message, reply, userId }, idx) => {
             let isBot = !userId
             let text = isBot ? reply : message
             return (

@@ -26,7 +26,7 @@ class Input extends React.Component {
   onVoiceFinal = (text, cb) => {
     this.setState({
       text
-    }, () => this.onSubmit(null, cb, 300, Settings.SEARCH_INPUTS.VOICE ))
+    }, () => this.onSubmit(null, cb, 300, Settings.SEARCH_INPUTS.VOICE))
   };
   onSubmit = (event, callback, textClearingDelay = 0, searchInput = Settings.SEARCH_INPUTS.KEYBOARD) => {
     this.props.updateQueryTerm(this.state.text, searchInput)
@@ -59,7 +59,6 @@ class Input extends React.Component {
 
       /* Focus */
       // this.Input.refs.textarea.focus()
-
     }, textClearingDelay)
 
     /* Submit the message */
@@ -75,6 +74,9 @@ class Input extends React.Component {
       event.preventDefault()
     }
   };
+  registerRef = (el) => {
+    this.Input = el
+  };
   render () {
     let { isTyping } = this.props
     return (
@@ -82,15 +84,15 @@ class Input extends React.Component {
         <div className='olachat-input'>
           {supportsVoice
            ? <div className='olachat-input-voice'>
-              <Voice
-                onResult={this.onVoiceChange}
-                onFinalResult={this.onVoiceFinal}
-                voiceAdapter={this.props.voiceAdapter}
-                addContextField={this.props.addContextField}
-                isTyping={isTyping}
-                searchInput={this.props.searchInput}
+             <Voice
+               onResult={this.onVoiceChange}
+               onFinalResult={this.onVoiceFinal}
+               voiceAdapter={this.props.voiceAdapter}
+               addContextField={this.props.addContextField}
+               isTyping={isTyping}
+               searchInput={this.props.searchInput}
               />
-            </div>
+           </div>
             : null
           }
           <Textarea
@@ -101,7 +103,7 @@ class Input extends React.Component {
             value={this.state.text}
             rows={1}
             cols={1}
-            ref={(el) => this.Input = el}
+            ref={this.registerRef}
           />
         </div>
         <button disabled={isTyping} className='olachat-submit'>

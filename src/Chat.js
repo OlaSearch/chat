@@ -1,22 +1,18 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import Header from './Header'
 import Input from './Input'
 import Messages from './Messages'
 import { connect } from 'react-redux'
 import { addMessage } from './actions'
-import { Actions, Settings } from 'olasearch'
+import { Actions } from 'olasearch'
 
 class Chat extends React.Component {
-  constructor (props) {
-    super (props)
-  }
   static defaultProps = {
     flipped: true,
     title: 'Ola Bot',
     onLoad: () => new Promise((resolve, reject) => resolve())
   };
-  componentDidMount() {
+  componentDidMount () {
     this.props.addMessage({ intent: this.props.initialIntent })
   }
   addMessage = (...args) => {
@@ -31,6 +27,9 @@ class Chat extends React.Component {
       return reply
     })
   };
+  registerRef = (el) => {
+    this.MessageContainer = el
+  };
   render () {
     return (
       <div className='olachat'>
@@ -42,7 +41,7 @@ class Chat extends React.Component {
           messages={this.props.messages}
           flipped={this.props.flipped}
           isTyping={this.props.isTyping}
-          ref={(el) => this.MessageContainer = el}
+          ref={this.registerRef}
           onLoad={this.props.onLoad}
         />
         <Input
@@ -52,7 +51,6 @@ class Chat extends React.Component {
           addContextField={this.props.addContextField}
           isTyping={this.props.isTyping}
           searchInput={this.props.searchInput}
-          ref={(el) => this.InputContainer = el}
         />
       </div>
     )

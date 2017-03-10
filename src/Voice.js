@@ -1,3 +1,4 @@
+/* global Audio */
 import React from 'react'
 import cx from 'classnames'
 import { checkIfAwaitingResponse } from './utils'
@@ -19,7 +20,7 @@ class Voice extends React.Component {
   static defaultProps = {
     showListening: false
   };
-  componentWillUnmount() {
+  componentWillUnmount () {
     const { emitter } = this.context
     for (let i = 0; i < VOICE_EVENTS.length; i++) {
       emitter.off(VOICE_EVENTS[i], this[VOICE_EVENTS[i]])
@@ -60,7 +61,7 @@ class Voice extends React.Component {
       let isFulfilled = answer.fulfilled
 
       /* Check if awaiting user reply */
-      let isAwaitingReply = checkIfAwaitingResponse (response)
+      let isAwaitingReply = checkIfAwaitingResponse(response)
 
       /* Play audio */
       this.setState({
@@ -144,7 +145,7 @@ class Voice extends React.Component {
     })
     let containerKlass = cx('olachat-voice', {
       [`${containerClass}`]: hasUsedVoice && !isSpeaking && !isRecording,
-      'olachat-voice-isrecording': isRecording && !isTyping,
+      'olachat-voice-isrecording': isRecording && !isTyping
     })
     let showLoadingIndicator = isTyping && searchInput === 'voice'
     return (
@@ -160,7 +161,7 @@ class Voice extends React.Component {
             ? <span className='olachat-mic-listening'>Listening<em>...</em></span>
             : null
           }
-          {showLoadingIndicator && <span className='olachat-mic-loader'/>}
+          {showLoadingIndicator && <span className='olachat-mic-loader' />}
         </button>
       </div>
     )
