@@ -27,6 +27,9 @@ class Bot extends Component {
     }
     /* Create a voiceadapter */
     this.voiceAdapter = houndify({ emitter })
+
+    /* Lazy load tokens */
+    this.voiceAdapter.prefetchToken()
   }
   static childContextTypes = {
     emitter: React.PropTypes.object

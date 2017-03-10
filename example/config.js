@@ -46,7 +46,7 @@ module.exports = {
             title:"title_t",
             url:"url_s"
         },
-        params:{projectId:"58c215cb60c69a76fb286fd2"}
+        params:{projectId:"58c215cb60c69a76fb286fd2", bot: true}
     },
     // defaultSnippet: customSnippet,
     mapping: [

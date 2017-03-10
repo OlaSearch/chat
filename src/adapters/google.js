@@ -89,6 +89,10 @@ const adapter = ({ emitter }) => {
       }
       emitter.emit('onStop')
     },
+    prefetchToken () {
+      this.getTtsToken()
+        .then((token) =>  this._ttsToken = token)
+    },
     getTtsToken () {
       /* Cache tts token */
       if (this._ttsToken) {
