@@ -6,8 +6,15 @@
   // padding: 1em;
   border: 1px #ccc solid;
   border-width: 1px 0;
-  overflow: auto;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
   position: relative;
+  @include media (phablet) {
+    height: calc(100% + 1px);
+  }
+  @include media (desktop) {
+    overflow: auto;
+  }
 }
 
   .olachat-messages-wrapper {
@@ -16,6 +23,7 @@
     right: 0;
     left: 0;
     max-height: 100%;
+    // height: calc(100% + 1px);
   }
 
   /**

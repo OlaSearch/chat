@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { clearMessages } from './actions'
+import { Actions } from 'olasearch'
 // import webkit from './adapters/webkit'
 import houndify from './adapters/houndify'
 // import watson from './adapters/watson'
@@ -47,7 +48,9 @@ class Bot extends Component {
       isActive: !this.state.isActive
     })
 
+    /* Reset */
     this.props.dispatch(clearMessages())
+    this.props.dispatch(Actions.Search.clearQueryTerm())
 
     /* Stop all audio */
   };

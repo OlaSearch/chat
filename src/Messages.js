@@ -136,7 +136,7 @@ class Messages extends React.Component {
     return (
       <div className='olachat-messages'>
         <div className='olachat-messages-wrapper'>
-          {flipped ? loadingSpinner : null}
+          {/*flipped ? loadingSpinner : null*/}
           {isTyping ? flipped ? null : <TypingIndicator /> : null}
           <ReactCSSTransitionGroup
             transitionName='messages'
