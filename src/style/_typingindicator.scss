@@ -3,7 +3,8 @@
   // padding-bottom: 0;
 }
 .typing-indicator {
-  background-color: #ccc;
+  background-color: white;
+  border: 1px $msgborder solid;
   width: auto;
   border-radius: 40px;
   padding: 8px;
@@ -35,7 +36,7 @@
   width: 8px;
   float: left;
   margin: 0 1px;
-  background-color: #9E9EA1;
+  background-color: $blue;
   display: block;
   border-radius: 50%;
   opacity: 0.4;
