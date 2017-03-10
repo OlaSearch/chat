@@ -33,6 +33,7 @@ class Voice extends React.Component {
     }
 
     if (this.props.initialPayload) {
+      /* Empty message to bot */
       this.onFinalResult(undefined, this.props.initialPayload)
     }
   }
@@ -74,7 +75,8 @@ class Voice extends React.Component {
         }
 
         if (isAwaitingReply) {
-          this.onFinalResult()
+          /* Empty message to bot */
+          this.onFinalResult(undefined)
         }
 
         this.setState({

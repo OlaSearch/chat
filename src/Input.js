@@ -24,11 +24,27 @@ class Input extends React.Component {
     })
   };
   onVoiceFinal = (text, cb) => {
+    /* Set text to empty */
+    if (typeof text === 'undefined') text = ''
+
+    /* Update text */
     this.setState({
       text
     }, () => this.onSubmit(null, cb, 300, Settings.SEARCH_INPUTS.VOICE))
   };
+  onFormSubmit = (event) => {
+    /* Stop submitting if text is empty */
+    if (!this.state.text) {
+      return this.Input.refs.textarea.focus()
+    }
+
+    /* Stop form submission */
+    event && event.preventDefault()
+
+    this.onSubmit()
+  };
   onSubmit = (event, callback, textClearingDelay = 0, searchInput = Settings.SEARCH_INPUTS.KEYBOARD) => {
+    /* Update query term */
     this.props.updateQueryTerm(this.state.text, searchInput)
 
     /**
@@ -37,13 +53,6 @@ class Input extends React.Component {
      * 2. Sync the message to the server
      * 3. Update sync status in redux store
      */
-    /* Stop form submission */
-    event && event.preventDefault()
-
-    /* Stop submitting if text is empty */
-    if (!this.state.text) {
-      return this.Input.refs.textarea.focus()
-    }
 
     // if (this.state.isTyping) return
 
@@ -80,7 +89,7 @@ class Input extends React.Component {
   render () {
     let { isTyping } = this.props
     return (
-      <form className='olachat-footer' onSubmit={this.onSubmit}>
+      <form className='olachat-footer' onSubmit={this.onFormSubmit}>
         <div className='olachat-input'>
           {supportsVoice
            ? <div className='olachat-input-voice'>

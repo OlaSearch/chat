@@ -11,11 +11,11 @@ export function addMessage (payload) {
     var query = state.QueryState
     var { messages } = state.Conversation
     var context = state.Context
-    var vui = payload ? payload.vui : false
     var immediate = payload ? payload.immediate : false
     var intent = payload && payload.intent ? { intent: payload.intent } : {}
     var msgId = utilities.uuid()
     var in_response_to = messages.length ? messages[messages.length - 1]['id'] : null
+    var { searchInput } = query
 
     /* Add this to ui */
     if (query.q) {
@@ -61,7 +61,7 @@ export function addMessage (payload) {
           dispatch(hideTypingIndicator())
 
           /* Check if more messages should be requested */
-          if (checkIfAwaitingResponse(response) && !vui) {
+          if (checkIfAwaitingResponse(response) && searchInput !== 'voice') {
             /* Remove intent */
             if (payload && 'intent' in payload) delete payload['intent']
             /* Clear previous query */

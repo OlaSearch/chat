@@ -81,9 +81,9 @@ class Bot extends Component {
         {isActive
           ? null
           : <Bubble
-              onClick={this.toggleActive}
-              isActive={this.state.isActive}
-              {...this.props.bubbleProps}
+            onClick={this.toggleActive}
+            isActive={this.state.isActive}
+            {...this.props.bubbleProps}
             />
         }
         {component}

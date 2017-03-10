@@ -45,21 +45,19 @@ class Vui extends React.Component {
     })
   };
   onVoiceFinal = (text, cb, params) => {
-    if (typeof text !== 'undefined') {
-      this.props.updateQueryTerm(text, Settings.SEARCH_INPUTS.VOICE)
-    }
-    return this.onSubmit(null, cb, 300, params)
+    /* Set text to empty */
+    if (typeof text === 'undefined') text = ''
+    /* Update query term */
+    this.props.updateQueryTerm(text, Settings.SEARCH_INPUTS.VOICE)
+    return this.onSubmit(cb, 300, params)
   };
-  onSubmit = (event, callback, textClearingDelay = 0, params) => {
-    if (typeof params === 'undefined') params = { vui: true }
+  onSubmit = (callback, textClearingDelay = 0, params = {}) => {
     /**
      * Flow
      * 1. Immediate add to the messages redux atore
      * 2. Sync the message to the server
      * 3. Update sync status in redux store
      */
-    /* Stop form submission */
-    event && event.preventDefault()
 
     if (this.props.isTyping) return
 
@@ -152,5 +150,6 @@ function mapStateToProps (state) {
 export default connect(mapStateToProps, {
   addMessage,
   updateQueryTerm: Actions.Search.updateQueryTerm,
+  clearQueryTerm: Actions.Search.clearQueryTerm,
   addContextField: Actions.Context.addContextField
 })(Vui)
