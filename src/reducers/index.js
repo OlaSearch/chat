@@ -26,7 +26,8 @@ export default (state = initialState, action) => {
           timestamp: action.answer.timestamp,
           intent: action.answer.intent,
           message: action.answer.message,
-          awaitingUserInput: action.answer.awaiting_user_input
+          awaitingUserInput: action.answer.awaiting_user_input,
+          in_response_to: action.answer.in_response_to
         }],
       }
 

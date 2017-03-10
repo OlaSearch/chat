@@ -6,7 +6,6 @@ import Houndify from 'houndify-web-sdk'
 const ttsTokenUrl = 'https://olasearch.com/api/speech-to-text/token/tts'
 const sttTokenUrl = 'https://olasearch.com/api/speech-to-text/houndifyAuth'
 const adapter = ({ emitter }) => {
-  // var clientID = '9ALURR6Jwu_tNlNrXt4xxA=='
   var clientID = 'XtaMCHjUQ26sSPMPcXamLw=='
   var client = new Houndify.HoundifyClient({
     clientId: clientID,

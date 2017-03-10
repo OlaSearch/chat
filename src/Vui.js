@@ -99,7 +99,7 @@ class Vui extends React.Component {
       ? `olachat-voice-scroll-${scrollDirection}`
       : ''
     let initialPayload = { vui: true, immediate: true, intent: this.props.initialIntent }
-
+    let msgs = messages.filter((msg) => !msg.userId)
     return (
       <div className='olachat-vui'>
         <Header
@@ -122,8 +122,8 @@ class Vui extends React.Component {
           />
           : null
         }
-        {messages
-          .filter((el, i) => i === messages.length - 1)
+        {msgs
+          .filter((msg, i) => i === msgs.length - 1)
           .map(({ message, reply, userId }, idx) => {
             let isBot = !userId
             let text = isBot ? reply : message
