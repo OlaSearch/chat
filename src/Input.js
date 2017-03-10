@@ -33,13 +33,13 @@ class Input extends React.Component {
     }, () => this.onSubmit(null, cb, 300, Settings.SEARCH_INPUTS.VOICE))
   };
   onFormSubmit = (event) => {
+    /* Stop form submission */
+    event && event.preventDefault()
+
     /* Stop submitting if text is empty */
     if (!this.state.text) {
       return this.Input.refs.textarea.focus()
     }
-
-    /* Stop form submission */
-    event && event.preventDefault()
 
     this.onSubmit()
   };
@@ -79,8 +79,7 @@ class Input extends React.Component {
   };
   onKeyDown = (event) => {
     if (event.nativeEvent.which === 13 && !event.nativeEvent.shiftKey) {
-      this.onSubmit(event)
-      event.preventDefault()
+      this.onFormSubmit(event)
     }
   };
   registerRef = (el) => {
