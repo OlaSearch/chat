@@ -1,11 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { clearMessages } from './actions'
+import webkit from './adapters/webkit'
+import houndify from './adapters/houndify'
+// import watson from './adapters/watson'
+// import bing from './adapters/bing'
+// import google from './adapters/google'
+import mitt from 'mitt'
 import Bubble from './Bubble'
 import Chat from './Chat'
 import Vui from './Vui'
 
 const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+
+/**
+ * Same emitter is shared by context
+ * @type {[type]}
+ */
+const emitter = mitt()
 
 class Bot extends Component {
   constructor (props) {
@@ -13,12 +25,20 @@ class Bot extends Component {
     this.state = {
       isActive: false
     }
+    /* Create a voiceadapter */
+    this.voiceAdapter = houndify({ emitter })
+  }
+  static childContextTypes = {
+    emitter: React.PropTypes.object
+  };
+  getChildContext () {
+    return {
+      emitter
+    }
   }
   toggleActive = () => {
     /* Pause all audio */
-    if (window.OlaAudio) {
-      window.OlaAudio.pause()
-    }
+    this.voiceAdapter.stopSpeaking()
 
     this.setState({
       isActive: !this.state.isActive
@@ -38,8 +58,8 @@ class Bot extends Component {
     const initialIntent = 'maternity-leave'
     const component = this.state.isActive
       ? supportsVoice
-        ? <Vui onHide={this.toggleActive} {...this.props.headerProps} initialIntent={initialIntent} />
-        : <Chat onHide={this.toggleActive} {...this.props.headerProps} initialIntent={initialIntent} />
+        ? <Vui onHide={this.toggleActive} {...this.props.headerProps} initialIntent={initialIntent} voiceAdapter={this.voiceAdapter} emitter={emitter} />
+        : <Chat onHide={this.toggleActive} {...this.props.headerProps} initialIntent={initialIntent} voiceAdapter={this.voiceAdapter} emitter={emitter} />
       : null
     return (
       <div className='olachat-bot'>

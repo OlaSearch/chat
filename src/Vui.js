@@ -1,8 +1,5 @@
 import React from 'react'
-import mitt from 'mitt'
 import Header from './Header'
-import webkit from './adapters/webkit'
-import houndify from './adapters/houndify'
 import Voice from './Voice'
 import TypingIndicator from './TypingIndicator'
 import { connect } from 'react-redux'
@@ -11,11 +8,6 @@ import { Actions, Settings } from 'olasearch'
 import { checkIfAwaitingResponse } from './utils'
 
 const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
-/**
- * Same emitter is shared by context
- * @type {[type]}
- */
-const emitter = mitt()
 
 class Vui extends React.Component {
   constructor (props) {
@@ -24,24 +16,10 @@ class Vui extends React.Component {
       text: '',
       scrollDirection: null
     }
-
-    /* Create a voiceadapter */
-    this.voiceAdapter = houndify({ emitter })
-
-    /* Add scroll event */
-    // this.addScrollListener()
   }
   static defaultProps = {
     title: 'Ola Bot'
   };
-  static childContextTypes = {
-    emitter: React.PropTypes.object
-  };
-  getChildContext () {
-    return {
-      emitter
-    }
-  }
   addScrollListener = () => {
     let lastScrollTop = 0
     window.addEventListener('scroll',() => {
@@ -135,7 +113,7 @@ class Vui extends React.Component {
           ? <Voice
             onResult={this.onVoiceChange}
             onFinalResult={this.onVoiceFinal}
-            voiceAdapter={this.voiceAdapter}
+            voiceAdapter={this.props.voiceAdapter}
             isPhone={this.props.isPhone}
             isTyping={this.props.isTyping}
             addContextField={this.props.addContextField}

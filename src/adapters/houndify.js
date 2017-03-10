@@ -34,9 +34,9 @@ const adapter = ({ emitter }) => {
 
   return {
     start () {
-      if (window.OlaAudio) {
-        window.OlaAudio.pause()
-      }
+      /* Stop speaking */
+      this.stopSpeaking()
+
       var requestInfo = {
         ClientID: clientID
       }
@@ -65,9 +65,19 @@ const adapter = ({ emitter }) => {
         url: ttsTokenUrl
       })
     },
+    stopSpeaking () {
+      if (window.OlaAudio) {
+        window.OlaAudio.pause()
+      }
+      if (window.speechSynthesis) {
+        // window.speechSynthesis.cancel()
+        window.speechSynthesis.pause()
+      }
+    },
     speak (text, isPhone = false, callback) {
       if (isPhone) {
         if (!window.speechSynthesis) return
+        if (window.speechSynthesis) window.speechSynthesis.cancel()
         var utterance = new SpeechSynthesisUtterance()
         utterance.lang = 'en-GB'
         utterance.pitch = 0.8

@@ -5,40 +5,17 @@ import Input from './Input'
 import Messages from './Messages'
 import { connect } from 'react-redux'
 import { addMessage } from './actions'
-// import watson from './adapters/watson'
-// import bing from './adapters/bing'
-// import google from './adapters/google'
-import houndify from './adapters/houndify'
-import webkit from './adapters/webkit'
-import mitt from 'mitt'
 import { Actions, Settings } from 'olasearch'
-
-/**
- * Same emitter is shared by context
- * @type {[type]}
- */
-const emitter = mitt()
 
 class Chat extends React.Component {
   constructor (props) {
     super (props)
-
-    /* Create a voiceadapter */
-    this.voiceAdapter = houndify({ emitter }) //: webkit({ emitter })
   }
   static defaultProps = {
     flipped: true,
     title: 'Ola Bot',
     onLoad: () => new Promise((resolve, reject) => resolve())
   };
-  static childContextTypes = {
-    emitter: React.PropTypes.object
-  };
-  getChildContext () {
-    return {
-      emitter
-    }
-  }
   componentDidMount() {
     this.props.addMessage({ intent: this.props.initialIntent })
   }
@@ -70,7 +47,7 @@ class Chat extends React.Component {
         />
         <Input
           onSubmit={this.addMessage}
-          voiceAdapter={this.voiceAdapter}
+          voiceAdapter={this.props.voiceAdapter}
           updateQueryTerm={this.props.updateQueryTerm}
           addContextField={this.props.addContextField}
           isTyping={this.props.isTyping}
