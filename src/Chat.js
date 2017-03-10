@@ -51,6 +51,7 @@ class Chat extends React.Component {
           addContextField={this.props.addContextField}
           isTyping={this.props.isTyping}
           searchInput={this.props.searchInput}
+          isPhone={this.props.isPhone}
         />
       </div>
     )

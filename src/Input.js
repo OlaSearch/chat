@@ -58,7 +58,7 @@ class Input extends React.Component {
       this.Input.autoGrow()
 
       /* Focus */
-      // this.Input.refs.textarea.focus()
+      if (!this.props.isPhone) this.Input.refs.textarea.focus()
     }, textClearingDelay)
 
     /* Submit the message */
@@ -104,6 +104,7 @@ class Input extends React.Component {
             rows={1}
             cols={1}
             ref={this.registerRef}
+            autoFocus={!this.props.isPhone}
           />
         </div>
         <button disabled={isTyping} className='olachat-submit'>
