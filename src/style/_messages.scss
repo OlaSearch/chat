@@ -184,11 +184,11 @@
    */
 
   .olachat-message-collapse {
-    margin-bottom: -12px;
+    // margin-bottom: -12px;
 
     & + .olachat-message {
       top: -8px;
-      margin: 0px 0 -8px 0;
+      // margin: 0px 0 -8px 0;
       position: relative;
       .olachat-message-avatar {
         visibility: hidden;
