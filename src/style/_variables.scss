@@ -3,6 +3,7 @@ $red: #f94d3e;
 $lightblue: #E7F1FC;
 $msgborder: #DFE3E9;
 $small-box-shadow: 0 0 3px 1px rgba(0,0,0,.1);
+$sharp-box-shadow: 0 0 3px 1px rgba(0,0,0,.2);
 $gutter: 12px;
 $desktop-width: 960px;
 
@@ -51,4 +52,12 @@ $breakpoints: (
   display: -ms-flexbox;
   display: -o-flex;
   display: flex;
+}
+
+@mixin clearfix () {
+  &:after, &:before {
+    content: "";
+    display: table;
+    clear: both;
+  }
 }
