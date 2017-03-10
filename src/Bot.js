@@ -71,13 +71,17 @@ class Bot extends Component {
         ? <Vui {...passProps} />
         : <Chat {...passProps} />
       : null
+    const { isActive } = this.state
     return (
       <div className='olachat-bot'>
-        <Bubble
-          onClick={this.toggleActive}
-          isActive={this.state.isActive}
-          {...this.props.bubbleProps}
-        />
+        {isActive
+          ? null
+          : <Bubble
+              onClick={this.toggleActive}
+              isActive={this.state.isActive}
+              {...this.props.bubbleProps}
+            />
+        }
         {component}
       </div>
     )

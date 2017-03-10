@@ -2,25 +2,18 @@
  * Wrapper
  */
 .olachat-voice {
-  // justify-content: center;
-  // @include flexbox;
   padding: 1em;
   background: lighten(#2464af, 10%);
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  // position: fixed;
-  // right: 50%;
-  // margin-right: -40px;
-  // bottom: 20px;
-  // z-index: 101;
   box-shadow: 0 0px 6px 0px rgba(0,0,0,0.6);
   cursor: pointer;
   text-align: center;
 }
 
   .olachat-voice-isrecording {
-    background-color: #f94d3e;
+    background-color: $red;
   }
 
   .olachat-mic-loader {
@@ -86,5 +79,5 @@
   top: 50%;
   margin-top: -0.5em;
   margin-right: 2em;
-  color: #F5A623;
+  color: $red;
 }
