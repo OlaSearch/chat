@@ -1,6 +1,6 @@
 import types from './../ActionTypes'
 import { checkIfAwaitingResponse } from './../utils'
-import { ActionTypes, utilities } from 'olasearch'
+import { ActionTypes, utilities, Actions } from 'olasearch'
 
 const CHAT_DELAY = 200
 const CHAT_REPLY_DELAY = 500
@@ -62,7 +62,11 @@ export function addMessage (payload) {
 
           /* Check if more messages should be requested */
           if (checkIfAwaitingResponse(response) && !vui) {
-            delete payload['intent']
+            /* Remove intent */
+            if (payload && 'intent' in payload) delete payload['intent']
+            /* Clear previous query */
+            dispatch(Actions.Search.clearQueryTerm())
+            /* Ask for more messages */
             dispatch(addMessage(payload))
           }
 
