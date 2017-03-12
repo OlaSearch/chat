@@ -7,7 +7,7 @@ var L16 = require('./webaudio-l16-stream.js')
 
 const ttsTokenUrl = 'https://olasearch.com/api/speech-to-text/token/tts'
 const END_OF_AUDIO = ['END_OF_UTTERANCE']
-const socketUrl = 'ws://olasearch.com/socket'
+const socketUrl = 'wss://olasearch.com/socket'
 const client = new BinaryClient(socketUrl)
 var OlaStream
 
