@@ -6,7 +6,7 @@ import { Actions } from 'olasearch'
 import houndify from './adapters/houndify'
 // import watson from './adapters/watson'
 // import bing from './adapters/bing'
-// import google from './adapters/google'
+import google from './adapters/google'
 import mitt from 'mitt'
 import Bubble from './Bubble'
 import Chat from './Chat'
@@ -27,7 +27,7 @@ class Bot extends Component {
       isActive: false
     }
     /* Create a voiceadapter */
-    this.voiceAdapter = houndify({ emitter })
+    this.voiceAdapter = google({ emitter })
 
     /* Lazy load tokens */
     this.voiceAdapter.prefetchToken()
