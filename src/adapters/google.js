@@ -6,7 +6,7 @@ var MicrophoneStream = require('microphone-stream')
 var L16 = require('./webaudio-l16-stream.js')
 
 const ttsTokenUrl = 'https://olasearch.com/api/speech-to-text/token/tts'
-const END_OF_AUDIO = ['END_OF_UTTERANCE']
+const END_OF_AUDIO = ['END_OF_UTTERANCE', 'END_OF_AUDIO']
 const socketUrl = 'wss://olasearch.com/socket'
 const client = new BinaryClient(socketUrl)
 var OlaStream
@@ -16,7 +16,8 @@ const adapter = ({ emitter }) => {
   var micStream
   return {
     start () {
-      var lastResult = ''
+      var finalResult = null
+      var hasEndReached = false
       var pm = getUserMedia({ video: false, audio: true })
       OlaStream = client.createStream()
       OlaStream.on('data', (data) => {
@@ -24,10 +25,21 @@ const adapter = ({ emitter }) => {
         emitter.emit('onResult', d.results)
 
         if (d.endpointerType === 'ENDPOINTER_EVENT_UNSPECIFIED') {
-          lastResult = d.results.replace(/\s\s+/g, ' ')
+          finalResult = d.results
+          if (hasEndReached) {
+            emitter.emit('onFinalResult', d.results)
+          }
         }
         if (END_OF_AUDIO.indexOf(d.endpointerType) !== -1) {
-          emitter.emit('onFinalResult', lastResult)
+          this.stop()
+          hasEndReached = true
+          if (!finalResult) {
+            /* When we didnt recognize anything */
+            if (d.endpointerType === 'END_OF_UTTERANCE') {
+              // console.log('called')
+            }
+            // this.start()
+          }
         }
       })
       getMicStream = pm.then((mic) => {

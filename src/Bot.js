@@ -12,7 +12,8 @@ import Bubble from './Bubble'
 import Chat from './Chat'
 import Vui from './Vui'
 
-const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+const DEBUG = false
+const supportsVoice = DEBUG ? false : navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
 
 /**
  * Same emitter is shared by context
@@ -24,7 +25,7 @@ class Bot extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isActive: false
+      isActive: DEBUG ? true : false
     }
     /* Create a voiceadapter */
     this.voiceAdapter = google({ emitter })
