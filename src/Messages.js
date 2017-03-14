@@ -146,7 +146,7 @@ class Messages extends React.Component {
             transitionLeave={false}
             component='div'
             className='olachat-messages-list'
-        >
+          >
             {messagesComponent}
           </ReactCSSTransitionGroup>
           {flipped ? null : loadingSpinner}

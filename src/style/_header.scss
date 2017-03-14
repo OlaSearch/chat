@@ -30,8 +30,10 @@
   border: none;
   background: none;
   position: absolute;
-  top: 12px;
-  right: 14px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 60px;
 
   &:before {
     @extend .iconfont;

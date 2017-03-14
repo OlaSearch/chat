@@ -26,3 +26,42 @@
         transform: rotate(360deg);
     };
 }
+
+/**
+ * Animation
+ */
+.messages-enter, .messages-appear {
+  opacity: 0.01;
+}
+
+.messages-enter.messages-enter-active, .messages-appear.messages-appear-active {
+  opacity: 1;
+  transition: opacity 200ms ease-in;
+}
+
+.messages-leave {
+  opacity: 1;
+}
+
+.messages-leave.messages-leave-active {
+  opacity: 0.01;
+  transition: opacity 200ms ease-in;
+}
+
+/**
+ * Quick replies
+ */
+
+.qreply-enter, .qreply-appear {
+  transform: translate3d(0, 70px, 0);
+}
+
+.qreply-enter.qreply-enter-active, .qreply-appear.qreply-appear-active {
+  transform: translate3d(0, 0, 0);
+  transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
+  // transition-delay: 1s;
+}
+
+.olachat-qreply-button {
+
+}

@@ -2,11 +2,11 @@
   flex: 1;
   -webkit-flex: 1;
   padding-bottom: 1em;
-  border: 1px #ccc solid;
-  border-width: 1px 0;
+  border-top: 1px #ccc solid;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
   position: relative;
+  transition: all 0.2s ease-in;
   @include media (phablet) {
     height: calc(100% + 1px);
   }
@@ -79,27 +79,6 @@
     border: 1px $msgborder solid;
     color: #333;
   }
-}
-
-/**
- * Animation
- */
-.messages-enter, .messages-appear {
-  opacity: 0.01;
-}
-
-.messages-enter.messages-enter-active, .messages-appear.messages-appear-active {
-  opacity: 1;
-  transition: opacity 200ms ease-in;
-}
-
-.messages-leave {
-  opacity: 1;
-}
-
-.messages-leave.messages-leave-active {
-  opacity: 0.01;
-  transition: opacity 200ms ease-in;
 }
 
 /**

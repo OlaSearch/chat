@@ -3,6 +3,8 @@ $gutter: 12px;
   @include flexbox;
   padding: 12px;
   background: white;
+  border-top: 1px #ccc solid;
+  position: relative;
 }
 
   /**

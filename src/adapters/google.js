@@ -1,9 +1,9 @@
 import { TextToSpeech }  from 'watson-speech'
 import reqwest from 'reqwest'
 
-var getUserMedia = require('get-user-media-promise')
-var MicrophoneStream = require('microphone-stream')
-var L16 = require('./webaudio-l16-stream.js')
+import getUserMedia from 'get-user-media-promise'
+import MicrophoneStream from 'microphone-stream'
+import L16 from './webaudio-l16-stream.js'
 
 const ttsTokenUrl = 'https://olasearch.com/api/speech-to-text/token/tts'
 const END_OF_AUDIO = ['END_OF_UTTERANCE', 'END_OF_AUDIO']
