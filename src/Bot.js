@@ -13,7 +13,10 @@ import Chat from './Chat'
 import Vui from './Vui'
 
 const DEBUG = false
-const supportsVoice = DEBUG ? false : navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+const HAS_VOICES = window.speechSynthesis.getVoices().length > 0 /* Samsung stock browser doesnt have any voices */
+const supportsVoice = DEBUG
+  ? false
+  : navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
 
 /**
  * Same emitter is shared by context

@@ -83,7 +83,7 @@ const adapter = ({ emitter }) => {
     },
     speak (text, isPhone = false, callback) {
       if (isPhone) {
-        if (!window.speechSynthesis) return
+        if (!window.speechSynthesis || window.speechSynthesis.getVoices().length < 1) return callback ? callback() : false
         if (window.speechSynthesis) window.speechSynthesis.cancel()
         var utterance = new SpeechSynthesisUtterance()
         utterance.lang = 'en-GB'
@@ -98,7 +98,7 @@ const adapter = ({ emitter }) => {
 
         /* Call end */
         const _wait = () => {
-          if ( ! window.speechSynthesis.speaking ) {
+          if (!window.speechSynthesis.speaking) {
             callback && callback()
             if (timeout) clearInterval(timeout)
             return
