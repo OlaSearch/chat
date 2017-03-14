@@ -33,11 +33,13 @@
   .olachat-header {
     background-color: transparent;
     text-align: center;
+    padding-top: 2em;
+    padding-bottom: 2em;
   }
   .olachat-header-title {
     text-transform: uppercase;
     color: #666;
-    margin-top: 2em;
+    // margin-top: 2em;
   }
 }
 
