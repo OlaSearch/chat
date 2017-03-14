@@ -13,7 +13,6 @@ import Chat from './Chat'
 import Vui from './Vui'
 
 const DEBUG = false
-const HAS_VOICES = window.speechSynthesis.getVoices().length > 0 /* Samsung stock browser doesnt have any voices */
 const supportsVoice = DEBUG
   ? false
   : navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
@@ -74,8 +73,9 @@ class Bot extends Component {
       voiceAdapter: this.voiceAdapter,
       emitter
     }
+    const HAS_VOICES = this.props.isPhone ? window.speechSynthesis.getVoices().length > 1 : true
     const component = this.state.isActive
-      ? supportsVoice
+      ? supportsVoice && HAS_VOICES
         ? <Vui {...passProps} />
         : <Chat {...passProps} />
       : null
@@ -96,4 +96,10 @@ class Bot extends Component {
   }
 }
 
-module.exports = connect()(Bot)
+function mapStateToProps (state) {
+  return {
+    isPhone: state.Device.isPhone
+  }
+}
+
+module.exports = connect(mapStateToProps)(Bot)
