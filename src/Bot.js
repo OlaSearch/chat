@@ -64,12 +64,11 @@ class Bot extends Component {
     }
   };
   render () {
-    const initialIntent = 'maternity-leave'
     // const initialIntent = 'start'
     const passProps = {
       onHide: this.toggleActive,
       ...this.props.headerProps,
-      initialIntent,
+      initialIntent: this.props.initialIntent,
       voiceAdapter: this.voiceAdapter,
       emitter
     }

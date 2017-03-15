@@ -1,0 +1,37 @@
+.olachat-qreply {
+  background-color: transparent;
+  // overflow: hidden;
+  // position: absolute;
+  // bottom: 100%;
+  // left: 0;
+  // right: 0;
+  overflow-x: auto;
+}
+
+
+.olachat-qreply-button {
+  background-color: white;
+  border: 1px $blue solid;
+  color: $blue;
+  border-radius: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  min-width: 60px;
+  height: 34px;
+  font-size: 14px;
+  margin-right: 8px;
+
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    background-color: $blue;
+    color: white;
+  }
+}
+
+.olachat-qreply-list {
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+}
