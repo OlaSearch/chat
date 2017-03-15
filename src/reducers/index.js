@@ -6,6 +6,20 @@ const initialState = {
   isTyping: false
 }
 
+const createMessageObj = (answer) => {
+  return {
+    id: answer.id,
+    reply: answer.reply,
+    reply_voice: answer.reply_voice,
+    timestamp: answer.timestamp,
+    intent: answer.intent,
+    message: answer.message,
+    awaitingUserInput: answer.awaiting_user_input,
+    in_response_to: answer.in_response_to,
+    slot_options: answer.slot_options
+  }
+}
+
 export default (state = initialState, action) => {
   switch (action.type) {
 
@@ -17,19 +31,20 @@ export default (state = initialState, action) => {
 
     case ActionTypes.REQUEST_SEARCH_SUCCESS:
       if (!action.answer || !action.answer.reply) return state
+      let { answer } = action
+      let { reply } = answer
+      let messages = []
+      if (Array.isArray(reply)) {
+        for (let i = 0; i < reply.length; i++) {
+          let msg = { ...answer, reply: reply[i], id: answer.id + '_' + i }
+          messages.push(createMessageObj(msg))
+        }
+      } else {
+        messages.push(createMessageObj(answer))
+      }
       return {
         ...state,
-        messages: [...state.messages, {
-          id: action.answer.id,
-          reply: action.answer.reply,
-          reply_voice: action.answer.reply_voice,
-          timestamp: action.answer.timestamp,
-          intent: action.answer.intent,
-          message: action.answer.message,
-          awaitingUserInput: action.answer.awaiting_user_input,
-          in_response_to: action.answer.in_response_to,
-          slot_options: action.answer.slot_options
-        }],
+        messages: [...state.messages, ...messages],
       }
 
     case types.CLEAR_MESSAGES:
