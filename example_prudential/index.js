@@ -28,6 +28,7 @@ ReactDOM.render(
         bubbleProps={{
           label: 'Ask me any questions about Prudential'
         }}
+        initialIntent='prudential-qa'
       />
     </div>
   </OlaProvider>
