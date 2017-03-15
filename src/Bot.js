@@ -75,9 +75,7 @@ class Bot extends Component {
     }
     const HAS_VOICES = this.props.isPhone ? window.speechSynthesis.getVoices().length > 1 : true
     const component = this.state.isActive
-      ? supportsVoice && HAS_VOICES
-        ? <Vui {...passProps} />
-        : <Chat {...passProps} />
+      ? <Chat {...passProps} />
       : null
     const { isActive } = this.state
     return (
