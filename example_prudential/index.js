@@ -21,9 +21,14 @@ require('olachat/style/chat.scss')
 ReactDOM.render(
   <OlaProvider config={config} store={store}>
     <div className='full-wrapper'>
-      <Bot headerProps={{
-        title: 'Prudential Faqs'
-      }} />
+      <Bot
+        headerProps={{
+          title: 'Prudential Faqs'
+        }}
+        bubbleProps={{
+          label: 'Ask me any questions about Prudential'
+        }}
+      />
     </div>
   </OlaProvider>
   , document.getElementById('root')
