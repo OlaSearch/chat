@@ -3,7 +3,6 @@ import cx from 'classnames'
 import Avatar from './Avatar'
 import { createHTMLMarkup } from './utils'
 import { DateParser } from 'olasearch'
-import Tokenizer from 'sentence-tokenizer'
 
 const Message = ({ message }) => {
   let { userId, timestamp, awaitingUserInput } = message
