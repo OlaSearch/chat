@@ -44,6 +44,7 @@ class Chat extends React.Component {
           isTyping={this.props.isTyping}
           ref={this.registerRef}
           onLoad={this.props.onLoad}
+          avatarBot={this.props.avatarBot}
         />
         <QuickReplies
           onSubmit={this.addMessage}

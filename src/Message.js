@@ -4,7 +4,7 @@ import Avatar from './Avatar'
 import { createHTMLMarkup } from './utils'
 import { DateParser } from 'olasearch'
 
-const Message = ({ message }) => {
+const Message = ({ message, avatarBot }) => {
   let { userId, timestamp, awaitingUserInput, fulfilled } = message
   let isBot = !userId
   let text = isBot ? message.reply : message.message
@@ -23,6 +23,7 @@ const Message = ({ message }) => {
       <Avatar
         isBot={isBot}
         userId={userId}
+        avatarBot={avatarBot}
       />
       <div className='olachat-message-body'>
         {paragraphs.length

@@ -17,6 +17,7 @@ let store = createStore(config, { Parser, QueryBuilder, Http }, { Conversation: 
 
 /* Load default css */
 require('olachat/style/chat.scss')
+require('./style.scss')
 
 ReactDOM.render(
   <OlaProvider config={config} store={store}>

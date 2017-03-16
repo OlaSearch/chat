@@ -131,13 +131,13 @@ class Messages extends React.Component {
     let loadingSpinner = isInfiniteLoading ? <div>Loading</div> : null
     let messagesComponent = messageComponent
       ? messages.map(messageComponent)
-      : messages.map((message, idx) => <Message message={message} key={message.id} />)
+      : messages.map((message, idx) => <Message avatarBot={this.props.avatarBot} message={message} key={message.id} />)
 
     return (
       <div className='olachat-messages'>
         <div className='olachat-messages-wrapper'>
           {/* flipped ? loadingSpinner : null */}
-          {isTyping ? flipped ? null : <TypingIndicator /> : null}
+          {isTyping ? flipped ? null : <TypingIndicator avatarBot={this.props.avatarBot} /> : null}
           <ReactCSSTransitionGroup
             transitionName='messages'
             transitionAppear
@@ -150,7 +150,7 @@ class Messages extends React.Component {
             {messagesComponent}
           </ReactCSSTransitionGroup>
           {flipped ? null : loadingSpinner}
-          {isTyping ? flipped ? <TypingIndicator /> : null : null}
+          {isTyping ? flipped ? <TypingIndicator avatarBot={this.props.avatarBot} /> : null : null}
         </div>
       </div>
     )

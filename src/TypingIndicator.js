@@ -7,6 +7,7 @@ const TypingIndicator = (props) => {
     <div className='olachat-message olachat-message-bot ola-chat-progress'>
       <Avatar
         isBot
+        avatarBot={props.avatarBot}
       />
       <div className='olachat-message-body'>
         <ReactCSSTransitionGroup
