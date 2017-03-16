@@ -114,6 +114,13 @@
     margin-top: -7px;
   }
 
+  .olachat-message-children {
+    margin-top: 8px;
+    &:after, &:before {
+      display: none;
+    }
+  }
+
   .olachat-message-bot {
     .olachat-message-content {
       border: 1px solid $msgborder;

@@ -45,6 +45,7 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "reqwest": "git+ssh://git@gitlab.com/olasearch/reqwest.git",
+    "sentence-tokenizer": "0.0.7",
     "standalone-react-css-transition-group": "^0.1.6",
     "watson-html5-speech-recognition": "^0.6.6"
   }

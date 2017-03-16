@@ -23,7 +23,7 @@ ReactDOM.render(
     <div className='full-wrapper'>
       <Bot
         headerProps={{
-          title: 'Prudential Faqs'
+          title: 'Prudential FAQs'
         }}
         bubbleProps={{
           label: 'Ask me any questions about Prudential'

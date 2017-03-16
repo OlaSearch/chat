@@ -8,7 +8,7 @@ import L16 from './webaudio-l16-stream.js'
 const ttsTokenUrl = 'https://olasearch.com/api/speech-to-text/token/tts'
 const END_OF_AUDIO = ['END_OF_UTTERANCE', 'END_OF_AUDIO']
 const socketUrl = 'wss://olasearch.com/socket'
-const client = new BinaryClient(socketUrl)
+var client = new BinaryClient(socketUrl)
 var OlaStream
 
 const adapter = ({ emitter }) => {
@@ -19,6 +19,7 @@ const adapter = ({ emitter }) => {
       var finalResult = null
       var hasEndReached = false
       var pm = getUserMedia({ video: false, audio: true })
+      /* Todo: Reconnect */
       OlaStream = client.createStream()
       OlaStream.on('data', (data) => {
         var d = JSON.parse(data)
