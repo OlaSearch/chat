@@ -15,7 +15,7 @@ const Message = ({ message }) => {
   })
   let paragraphs = []
   if (text && text.length > 80) {
-    paragraphs = text.split(/(\.)['”" \)\n]/g).filter((i) => i && i !== '.')
+    paragraphs = text.split(/(\.)['"" \)\n]/g).filter((i) => i && i !== '.')
   }
   // console.log(text.length, paragraphs)
   return (
