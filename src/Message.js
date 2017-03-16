@@ -5,15 +5,16 @@ import { createHTMLMarkup } from './utils'
 import { DateParser } from 'olasearch'
 
 const Message = ({ message }) => {
-  let { userId, timestamp, awaitingUserInput } = message
+  let { userId, timestamp, awaitingUserInput, fulfilled } = message
   let isBot = !userId
   let text = isBot ? message.reply : message.message
   let messageClass = cx('olachat-message', {
     'olachat-message-bot': isBot,
+    'olachat-message-fulfilled': fulfilled,
     'olachat-message-collapse': typeof awaitingUserInput !== 'undefined' && !awaitingUserInput
   })
   let paragraphs = []
-  if (text && text.length > 80) {
+  if (text && text.length > 160) {
     paragraphs = text.split(/(\.)['"" \)\n]/g).filter((i) => i && i !== '.')
   }
   // console.log(text.length, paragraphs)

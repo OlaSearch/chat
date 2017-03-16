@@ -121,6 +121,12 @@
     }
   }
 
+  .olachat-message-fulfilled {
+    .olachat-message-content{
+      font-weight: bold;
+    }
+  }
+
   .olachat-message-bot {
     .olachat-message-content {
       border: 1px solid $msgborder;
