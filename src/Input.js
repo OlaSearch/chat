@@ -81,6 +81,12 @@ class Input extends React.Component {
     if (event.nativeEvent.which === 13 && !event.nativeEvent.shiftKey) {
       this.onFormSubmit(event)
     }
+    if (event.nativeEvent.which == 27) {
+      /* Close chatbot */
+      if (!this.state.text) {
+        this.props.onRequestClose && this.props.onRequestClose()
+      }
+    }
   };
   registerRef = (el) => {
     this.Input = el

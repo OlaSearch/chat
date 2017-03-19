@@ -57,6 +57,7 @@ class Chat extends React.Component {
           isTyping={this.props.isTyping}
           searchInput={this.props.searchInput}
           isPhone={this.props.isPhone}
+          onRequestClose={this.props.onRequestClose}
         />
       </div>
     )

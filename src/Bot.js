@@ -74,6 +74,7 @@ class Bot extends Component {
       ...this.props.avatarProps,
       initialIntent: this.props.initialIntent,
       voiceAdapter: this.voiceAdapter,
+      onRequestClose:this.toggleActive,
       emitter
     }
     const HAS_VOICES = this.props.isPhone ? window.speechSynthesis.getVoices().length > 1 : true
