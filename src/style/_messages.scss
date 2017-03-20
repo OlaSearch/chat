@@ -173,11 +173,13 @@
     // margin-bottom: -12px;
 
     // & + .olachat-message {
-    //   top: -16px;
+    //   margin-left: 50px + 12px;
+    //   // top: -16px;
     //   // margin: 0px 0 -8px 0;
     //   position: relative;
     //   .olachat-message-avatar {
     //     visibility: hidden;
+    //     display: none;
     //   }
 
     //   .olachat-message-content {
