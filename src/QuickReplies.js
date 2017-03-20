@@ -4,8 +4,8 @@ import { Actions } from 'olasearch'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 class QuickReplies extends Component {
-  handleClick = (label) => {
-    this.props.updateQueryTerm(label)
+  handleClick = (value) => {
+    this.props.updateQueryTerm(value)
     this.props.onSubmit()
   };
   render () {
@@ -13,7 +13,7 @@ class QuickReplies extends Component {
     if (!message) return null
     let { slot_options: options } = this.props.message
     if (!options || !options.length) return null
-    let replies = options.map((option, idx) => <QuickReplyButton key={idx} label={option} handleClick={this.handleClick} />)
+    let replies = options.map(({ label, value }, idx) => <QuickReplyButton key={idx} value={value} label={label} handleClick={this.handleClick} />)
     return (
       <div className='olachat-qreply'>
         <ReactCSSTransitionGroup
@@ -32,9 +32,9 @@ class QuickReplies extends Component {
   }
 }
 
-const QuickReplyButton = ({ label, handleClick }) => {
+const QuickReplyButton = ({ label, value, handleClick }) => {
   function onClick () {
-    handleClick(label)
+    handleClick(value)
   }
   return (
     <button
