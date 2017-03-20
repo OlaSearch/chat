@@ -2,6 +2,8 @@
 import React from 'react'
 import cx from 'classnames'
 import { checkIfAwaitingResponse } from './utils'
+import { connect } from 'react-redux'
+import { Actions } from 'olasearch'
 
 /* All voice events */
 const VOICE_EVENTS = ['onResult', 'onFinalResult', 'onStart', 'onEnd', 'onStop']
@@ -18,7 +20,8 @@ class Voice extends React.Component {
     emitter: React.PropTypes.object
   };
   static defaultProps = {
-    showListening: false
+    showListening: false,
+    containerClass: ''
   };
   componentWillUnmount () {
     const { emitter } = this.context
@@ -28,6 +31,7 @@ class Voice extends React.Component {
   }
   componentDidMount () {
     const { emitter } = this.context
+    if (!emitter) return
     for (let i = 0; i < VOICE_EVENTS.length; i++) {
       emitter.on(VOICE_EVENTS[i], this[VOICE_EVENTS[i]])
     }
@@ -102,6 +106,10 @@ class Voice extends React.Component {
     this.playPing()
   };
   onStop = () => {
+    /* Die if has already stopped recording */
+    if (!this.state.isRecording &&
+      !this.state.isSpeaking) return
+
     this.setState({
       isRecording: false,
       isSpeaking: false
@@ -112,13 +120,6 @@ class Voice extends React.Component {
   };
   playPing = () => {
     if (this.props.isPhone) {
-      // var utterance = new SpeechSynthesisUtterance()
-      // utterance.pitch = 0.2
-      // utterance.rate = 0.1
-      // utterance.volume = 1.0
-      // utterance.text = 'ph'
-      // /* Say */
-      // window.speechSynthesis.speak(utterance)
       return
     }
     var audio = new Audio()
@@ -170,4 +171,14 @@ class Voice extends React.Component {
   }
 }
 
-export default Voice
+function mapStateToProps (state) {
+  return {
+    isTyping: state.Conversation.isTyping,
+    searchInput: state.QueryState.searchInput,
+    hasUsedVoice: state.Context.hasUsedVoice,
+    isPhone: state.Device.isPhone
+  }
+}
+export default connect(mapStateToProps, {
+  addContextField: Actions.Context.addContextField
+})(Voice)

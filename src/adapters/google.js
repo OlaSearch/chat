@@ -11,15 +11,17 @@ const socketUrl = 'wss://olasearch.com/socket'
 var client = new BinaryClient(socketUrl)
 var OlaStream
 
-const adapter = ({ emitter }) => {
+const adapter = ({ emitter, onConnected }) => {
   var getMicStream
   var micStream
+  /* On connection callback */
+  if (onConnected) client.on('open', onConnected)
   return {
     start () {
       var finalResult = null
       var hasEndReached = false
       var pm = getUserMedia({ video: false, audio: true })
-      /* Todo: Reconnect */
+      /* Todo: Connect/Reconnect */
       OlaStream = client.createStream()
       OlaStream.on('data', (data) => {
         var d = JSON.parse(data)

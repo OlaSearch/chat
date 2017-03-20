@@ -109,12 +109,8 @@ class Vui extends React.Component {
             onResult={this.onVoiceChange}
             onFinalResult={this.onVoiceFinal}
             voiceAdapter={this.props.voiceAdapter}
-            isPhone={this.props.isPhone}
-            isTyping={this.props.isTyping}
-            addContextField={this.props.addContextField}
             containerClass={voiceContainerClass}
             hasUsedVoice={this.props.hasUsedVoice}
-            searchInput={this.props.searchInput}
             showListening
             initialPayload={initialPayload}
           />
@@ -141,15 +137,10 @@ class Vui extends React.Component {
 function mapStateToProps (state) {
   return {
     messages: state.Conversation.messages,
-    isTyping: state.Conversation.isTyping,
-    isPhone: state.Device.isPhone,
-    hasUsedVoice: state.Context.hasUsedVoice,
-    searchInput: state.QueryState.searchInput
+    isTyping: state.Conversation.isTyping
   }
 }
 export default connect(mapStateToProps, {
   addMessage,
   updateQueryTerm: Actions.Search.updateQueryTerm,
-  clearQueryTerm: Actions.Search.clearQueryTerm,
-  addContextField: Actions.Context.addContextField
 })(Vui)

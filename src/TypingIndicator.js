@@ -2,13 +2,16 @@ import React from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Avatar from './Avatar'
 
-const TypingIndicator = (props) => {
+const TypingIndicator = ({ avatarBot, isBot }) => {
   return (
     <div className='olachat-message olachat-message-bot ola-chat-progress'>
-      <Avatar
-        isBot
-        avatarBot={props.avatarBot}
-      />
+      {avatarBot
+        ? <Avatar
+            isBot
+            avatarBot={avatarBot}
+          />
+        : null
+      }
       <div className='olachat-message-body'>
         <ReactCSSTransitionGroup
           transitionName='messages'

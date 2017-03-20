@@ -102,9 +102,6 @@ class Input extends React.Component {
                onResult={this.onVoiceChange}
                onFinalResult={this.onVoiceFinal}
                voiceAdapter={this.props.voiceAdapter}
-               addContextField={this.props.addContextField}
-               isTyping={isTyping}
-               searchInput={this.props.searchInput}
               />
            </div>
             : null

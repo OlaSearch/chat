@@ -9,7 +9,7 @@ export function addMessage (payload) {
   return (dispatch, getState) => {
     var state = getState()
     var query = state.QueryState
-    var { messages } = state.Conversation
+    var { messages, language } = state.Conversation
     var context = state.Context
     var immediate = payload ? payload.immediate : false
     var intent = payload && payload.intent ? { intent: payload.intent } : {}
@@ -35,6 +35,7 @@ export function addMessage (payload) {
     query = {
       ...query,
       msgId,
+      language,
       in_response_to,
       ...intent
     }
@@ -94,5 +95,12 @@ export function hideTypingIndicator () {
 export function clearMessages () {
   return {
     type: types.CLEAR_MESSAGES
+  }
+}
+
+export function changeLanguage (language) {
+  return {
+    type: types.CHANGE_LANGUAGE,
+    language
   }
 }

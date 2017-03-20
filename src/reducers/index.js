@@ -3,7 +3,8 @@ import { ActionTypes } from 'olasearch'
 
 const initialState = {
   messages: [],
-  isTyping: false
+  isTyping: false,
+  language: 'en'
 }
 
 const createMessageObj = (answer) => {
@@ -64,6 +65,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isTyping: false
+      }
+
+    case types.CHANGE_LANGUAGE:
+      return {
+        ...state,
+        language: action.language
       }
 
     default:
