@@ -107,7 +107,6 @@ class Input extends React.Component {
             : null
           }
           <Textarea
-            type='text'
             placeholder='Type a message...'
             onChange={this.onChange}
             onKeyDown={this.onKeyDown}
