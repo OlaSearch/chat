@@ -19,12 +19,35 @@ let store = createStore(config, { Parser, QueryBuilder, Http }, { Conversation: 
 require('olachat/style/chat.scss')
 require('./style.scss')
 
-ReactDOM.render(
-  <OlaProvider config={config} store={store}>
-    <div className='full-wrapper'>
-      <Bot initialIntent='maternity-leave' />
-    </div>
-  </OlaProvider>
-  , document.getElementById('root')
-)
+let root_div = document.getElementById('root')
+let fdw_div = document.getElementById('fdw-root')
 
+if (root_div) {
+  ReactDOM.render(
+    <OlaProvider config={config} store={store}>
+      <div className='full-wrapper'>
+        <Bot initialIntent='maternity-leave' />
+      </div>
+    </OlaProvider>
+    , root_div
+  )
+}
+
+if (fdw_div) {
+  ReactDOM.render(
+    <OlaProvider config={config} store={store}>
+      <div className='full-wrapper'>
+        <Bot
+          initialIntent='fdw'
+          headerProps={{
+            title: 'FDW eligibility calculator'
+          }}
+          bubbleProps={{
+            label: 'FDW eligibility calculator'
+          }}
+        />
+      </div>
+    </OlaProvider>
+    , fdw_div
+  )
+}
