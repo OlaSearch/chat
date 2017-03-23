@@ -18,6 +18,7 @@ let store = createStore(config, { Parser, QueryBuilder, Http }, { Conversation: 
 require('olachat/style/chat.scss')
 require('olachat/style/form/form.scss')
 require('./style.scss')
+require('./common.scss')
 
 if (document.getElementById('root')) {
   ReactDOM.render(

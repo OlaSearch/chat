@@ -1,0 +1,372 @@
+@font-face {
+  font-family: 'SC Sans Web';
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-ultra-thin.eot');
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-ultra-thin.eot?#iefix') format('embedded-opentype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-ultra-thin.woff2') format('woff2'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-ultra-thin.woff') format('woff'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-ultra-thin.ttf') format('truetype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-ultra-thin.svg#sc-sans-web-ultra-thin') format('svg');
+  font-weight: 100;
+  font-style: normal;
+  font-stretch: normal;
+}
+
+@font-face {
+  font-family: 'SC Sans Web';
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-ultra-thin-italic.eot');
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-ultra-thin-italic.eot?#iefix') format('embedded-opentype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-ultra-thin-italic.woff2') format('woff2'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-ultra-thin-italic.woff') format('woff'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-ultra-thin-italic.ttf') format('truetype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-ultra-thin-italic.svg#sc-sans-web-ultra-thin-italic') format('svg');
+  font-weight: 100;
+  font-style: italic;
+  font-stretch: normal;
+}
+
+@font-face {
+  font-family: 'SC Sans Web';
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-thin.eot');
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-thin.eot?#iefix') format('embedded-opentype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-thin.woff2') format('woff2'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-thin.woff') format('woff'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-thin.ttf') format('truetype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-thin.svg#sc-sans-web-thin') format('svg');
+  font-weight: 200;
+  font-style: normal;
+  font-stretch: normal;
+}
+
+@font-face {
+  font-family: 'SC Sans Web';
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-thin-italic.eot');
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-thin-italic.eot?#iefix') format('embedded-opentype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-thin-italic.woff2') format('woff2'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-thin-italic.woff') format('woff'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-thin-italic.ttf') format('truetype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-thin-italic.svg#sc-sans-web-thin-italic') format('svg');
+  font-weight: 200;
+  font-style: italic;
+  font-stretch: normal;
+}
+
+@font-face {
+  font-family: 'SC Sans Web';
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-light.eot');
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-light.eot?#iefix') format('embedded-opentype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-light.woff2') format('woff2'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-light.woff') format('woff'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-light.ttf') format('truetype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-light.svg#sc-sans-web-light') format('svg');
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+}
+
+@font-face {
+  font-family: 'SC Sans Web';
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-light-italic.eot');
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-light-italic.eot?#iefix') format('embedded-opentype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-light-italic.woff2') format('woff2'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-light-italic.woff') format('woff'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-light-italic.ttf') format('truetype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-light-italic.svg#sc-sans-web-light-italic') format('svg');
+  font-weight: 300;
+  font-style: italic;
+  font-stretch: normal;
+}
+
+@font-face {
+  font-family: 'SC Sans Web';
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-regular.eot');
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-regular.eot?#iefix') format('embedded-opentype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-regular.woff2') format('woff2'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-regular.woff') format('woff'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-regular.ttf') format('truetype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-regular.svg#sc-sans-web-regular') format('svg');
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+}
+
+@font-face {
+  font-family: 'SC Sans Web';
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-italic.eot');
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-italic.eot?#iefix') format('embedded-opentype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-italic.woff2') format('woff2'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-italic.woff') format('woff'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-italic.ttf') format('truetype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-italic.svg#sc-sans-web-italic') format('svg');
+  font-weight: 400;
+  font-style: italic;
+  font-stretch: normal;
+}
+
+@font-face {
+  font-family: 'SC Sans Web';
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-bold.eot');
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-bold.eot?#iefix') format('embedded-opentype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-bold.woff2') format('woff2'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-bold.woff') format('woff'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-bold.ttf') format('truetype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-bold.svg#sc-sans-web-bold') format('svg');
+  font-weight: 700;
+  font-style: normal;
+  font-stretch: normal;
+}
+
+@font-face {
+  font-family: 'SC Sans Web';
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-bold-italic.eot');
+  src: url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-bold-italic.eot?#iefix') format('embedded-opentype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-bold-italic.woff2') format('woff2'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-bold-italic.woff') format('woff'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-bold-italic.ttf') format('truetype'),
+     url('http://pwsrevamp6.labsls.com/global/typography/sc-sans-web-bold-italic.svg#sc-sans-web-bold-italic') format('svg');
+  font-weight: 700;
+  font-style: italic;
+  font-stretch: normal;
+}
+
+body {
+  font-family: 'SC Sans Web', 'Helvetica Neue', 'M Hei', 'MHei', 'Noto Sans TC', 'Noto Sans SC', 'Microsoft Yahei', '微软雅黑', STXihei, 'Noto Sans Thai', 'Noto Kufi Arabic', 'Arial', 'Arial Unicode MS', sans-serif; 
+  font-size: 16px;
+
+}
+
+
+.switchery{background-color:#fff;border:1px solid #dfdfdf;border-radius:20px;cursor:pointer;display:inline-block;height:30px;position:relative;vertical-align:middle;width:50px;-moz-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none;box-sizing:content-box;background-clip:content-box}.switchery>small{background:#fff;border-radius:100%;box-shadow:0 1px 3px rgba(0,0,0,0.4);height:30px;position:absolute;top:0;width:30px}.switchery-small{border-radius:20px;height:20px;width:33px}.switchery-small>small{height:20px;width:20px}.switchery-large{border-radius:40px;height:40px;width:66px}.switchery-large>small{height:40px;width:40px}
+
+
+* {
+  box-sizing : border-box
+}
+h2.form-head {
+  font-size:30px;
+  font-weight:300;
+}
+.container {
+  max-width: 100%;
+  width: 990px;
+  margin: 0 auto;
+  padding: 0 15px;
+  font-family: 'SC Sans Web', Helvetica, Arial, sans-serif;
+}
+input.half-content {
+  width: 49%;
+  display: inline-block;
+  padding: 15px;
+  border: 1px solid #ccc;
+  height: 70px;
+  font-size: 16px;
+  font-family: 'SC Sans Web', Helvetica, Arial, sans-serif;
+}
+input.half-content.lft {
+  border-left: 0px;
+  border-right: 0px;
+}
+input.half-content.rght {
+  border-right: 0px;
+  margin-left: -5px;
+}
+input.half-content.tp {
+  border-bottom: 0px;
+}
+input.half-content:focus {
+  outline:0;
+}
+.form-inner-contents {
+  padding-bottom: 19px;
+}
+.switchery {
+  -moz-user-select: none;
+  background-clip: content-box;
+  background-color: #fff;
+  box-sizing: content-box;
+  cursor: pointer;
+  display: inline-block;
+  height: 51px;
+  position: relative;
+  transition: none 0s ease 0s !important;
+  vertical-align: middle;
+  width: 100px;
+  border-radius: 50px !important;
+  margin-left: -17px;
+  margin-right: 15px;
+}
+.switchery.swicth-on {
+  // background: transparent url("../images/switchery-Image.png") no-repeat !important;
+  border: medium none !important;
+  border-radius: 0;
+  box-shadow: none !important;
+  height: 51px !important;
+  width: 100px !important;
+  background-position: -217px -3px !important;
+  border:0px !important;
+  box-shadow: none !important;
+}
+.switchery.swicth-on small {
+  // background: transparent url("../images/switchery-Image.png") no-repeat !important;
+  height: 51px !important;
+  left: 51px !important;
+  width: 51px !important;
+  background-position:0px -3px !important;
+  ;
+  border:0px !important;
+  box-shadow: none !important;
+}
+.switchery.swicth-off {
+  // background: transparent url("../images/switchery-Image.png") no-repeat !important;
+  height: 51px !important;
+  width: 100px !important;
+  background-position: -112px -3px !important;
+  border:0px !important;
+  box-shadow: none !important;
+}
+.switchery.swicth-off small {
+  // background: transparent url("../images/switchery-Image.png") no-repeat !important;
+  height: 51px !important;
+  left: 6px !important;
+  top: 3px !important;
+  width: 54px !important;
+  background-position:-56px -3px !important;
+  border:0px !important;
+  box-shadow: none !important;
+}
+.left-side, .right-side {
+  position: relative;
+  float: left;
+  width: 50%;
+  line-height: 50px;
+}
+.existing-cutomer-text {
+  float: left;
+  text-align: right;
+  width: 70%;
+      font-size: 15px;
+}
+.existing-cutomer-button {
+  float: right;
+}
+.right-side {
+  float:right;
+}
+p.small-txt {
+  color: #aaa;
+  font-size: 14px;
+  margin-bottom:0px;
+  margin-top:0px;
+}
+a.long-button {
+  background: none repeat scroll 0 0 #10ace1;
+  border: medium none;
+  border-radius: 0;
+  box-shadow: none;
+  color: #fff;
+  filter: none;
+  font-family: 'SC Sans Web', Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  height: 75px;
+  line-height: 75px;
+  padding-top: 0px;
+  width: 100%;
+  padding: 0px 38px 0px;
+  display: block;
+  text-decoration: none;
+  text-align:center;
+}
+.button-submit {
+  margin-top:20px;
+}
+.cf:before, .cf:after {
+  content: " "; /* 1 */
+  display: table; /* 2 */
+}
+.cf:after {
+  clear: both;
+}
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+ *zoom: 1;
+}
+  
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+ color: #000000;
+}
+::-moz-placeholder { /* Firefox 19+ */
+ color: #000000;
+}
+:-ms-input-placeholder { /* IE 10+ */
+ color: #000000;
+}
+:-moz-placeholder { /* Firefox 18- */
+ color: #000000;
+}
+.olachat-form {
+  margin: auto;
+  display: block;
+  float: none;
+  width: 999px;
+  padding: 0 15px;
+  padding-top: 30px;
+  padding-bottom: 10px;
+  max-width: 100%;
+}
+.olachat-form > button {
+  background: none repeat scroll 0 0 #10ace1;
+  border: medium none;
+  border-radius: 0;
+  box-shadow: none;
+  color: #fff;
+  filter: none;
+  font-family: HelveticaNeue-Light, "Helvetica Neue Light", HelveticaNeueW01-45Ligh, "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px;
+  height: 35px;
+  line-height: 30px;
+  width: 100%;
+  cursor: pointer;
+  max-width: 185px;
+  font-size: 14px;
+  width: 100%;
+  display: inline-block;
+}
+.olachat-form .olachat-vui {
+  z-index: 999;
+}
+ @media(max-width:767px) {
+ input.half-content {
+ width:100%;
+ border-left: 0px;
+}
+input.half-content.lft {
+ border-bottom: 0px;
+}
+.left-side, .right-side {
+ width:100%;
+ line-height:inherit;
+ margin-bottom:20px;
+}
+.existing-cutomer-text {
+ text-align:left;
+ width: 60%;
+ line-height:20px;
+}
+ .existing-cutomer-text label {
+ text-align:left;
+}
+a.long-button{
+    height: 55px;
+    line-height: 55px;
+}
+
+input.half-content.rght{
+  margin-left:0px;
+  }
+.button-submit {
+    padding-bottom: 30px;
+} 
+ }
