@@ -27,7 +27,7 @@ class Bot extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isActive: DEBUG ? true : false
+      isActive: !!DEBUG
     }
     /* Create a voiceadapter */
     this.voiceAdapter = google({ emitter })
@@ -58,6 +58,7 @@ class Bot extends Component {
     /* Stop all audio */
   };
   static defaultProps = {
+    vui: false,
     bubbleProps: {},
     headerProps: {
       title: 'Calculate maternity leave'
@@ -74,12 +75,14 @@ class Bot extends Component {
       ...this.props.avatarProps,
       initialIntent: this.props.initialIntent,
       voiceAdapter: this.voiceAdapter,
-      onRequestClose:this.toggleActive,
+      onRequestClose: this.toggleActive,
       emitter
     }
     const HAS_VOICES = this.props.isPhone ? window.speechSynthesis.getVoices().length > 1 : true
     const component = this.state.isActive
-      ? <Chat {...passProps} />
+      ? this.props.vui
+        ? <Vui {...passProps} />
+        : <Chat {...passProps} />
       : null
     const { isActive } = this.state
     return (
@@ -87,9 +90,9 @@ class Bot extends Component {
         {isActive
           ? null
           : <Bubble
-              onClick={this.toggleActive}
-              isActive={this.state.isActive}
-              {...this.props.bubbleProps}
+            onClick={this.toggleActive}
+            isActive={this.state.isActive}
+            {...this.props.bubbleProps}
             />
         }
         {component}

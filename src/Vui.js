@@ -142,5 +142,5 @@ function mapStateToProps (state) {
 }
 export default connect(mapStateToProps, {
   addMessage,
-  updateQueryTerm: Actions.Search.updateQueryTerm,
+  updateQueryTerm: Actions.Search.updateQueryTerm
 })(Vui)

@@ -26,7 +26,10 @@ if (root_div) {
   ReactDOM.render(
     <OlaProvider config={config} store={store}>
       <div className='full-wrapper'>
-        <Bot initialIntent='maternity-leave' />
+        <Bot
+          initialIntent='maternity-leave'
+          vui
+        />
       </div>
     </OlaProvider>
     , root_div

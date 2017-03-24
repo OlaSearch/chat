@@ -7,8 +7,8 @@ const TypingIndicator = ({ avatarBot, isBot }) => {
     <div className='olachat-message olachat-message-bot ola-chat-progress'>
       {avatarBot
         ? <Avatar
-            isBot
-            avatarBot={avatarBot}
+          isBot
+          avatarBot={avatarBot}
           />
         : null
       }

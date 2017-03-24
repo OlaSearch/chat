@@ -25,7 +25,7 @@ class QuickReplies extends Component {
           component='div'
           className='olachat-qreply-list'
         >
-        {replies}
+          {replies}
         </ReactCSSTransitionGroup>
       </div>
     )
@@ -42,7 +42,7 @@ const QuickReplyButton = ({ label, handleClick }) => {
       type='button'
       onClick={onClick}
     >
-    {label}
+      {label}
     </button>
   )
 }
