@@ -80,7 +80,7 @@ class Bot extends Component {
     }
     const HAS_VOICES = this.props.isPhone ? window.speechSynthesis.getVoices().length > 1 : true
     const component = this.state.isActive
-      ? this.props.vui && HAS_VOICES
+      ? this.props.vui && supportsVoice && HAS_VOICES
         ? <Vui {...passProps} />
         : <Chat {...passProps} />
       : null
