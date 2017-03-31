@@ -10,49 +10,67 @@ const END_OF_AUDIO = ['END_OF_UTTERANCE', 'END_OF_AUDIO']
 const socketUrl = 'wss://olasearch.com/socket'
 var client = new BinaryClient(socketUrl)
 var OlaStream
+var connected = false
+
+const checkIfConnected = (callback) => {
+  if (!client || connected) return callback ? callback() : false
+  if (!connected) {
+    client = new BinaryClient(socketUrl)
+    client.on('open', () => {
+      connected = true
+      callback && callback()
+    })
+    client.on('close', () => {
+      connected = false
+    })
+  }
+}
 
 const adapter = ({ emitter, onConnected }) => {
   var getMicStream
   var micStream
-  /* On connection callback */
-  if (onConnected) client.on('open', onConnected)
+
   return {
     start () {
       var finalResult = null
       var hasEndReached = false
       var pm = getUserMedia({ video: false, audio: true })
       /* Todo: Connect/Reconnect */
-      OlaStream = client.createStream()
-      OlaStream.on('data', (data) => {
-        var d = JSON.parse(data)
-        emitter.emit('onResult', d.results)
+      checkIfConnected (() => {
+        /* Connected callback */
+        onConnected && onConnected()
+        OlaStream = client.createStream()
+        OlaStream.on('data', (data) => {
+          var d = JSON.parse(data)
+          emitter.emit('onResult', d.results)
 
-        if (d.endpointerType === 'ENDPOINTER_EVENT_UNSPECIFIED') {
-          finalResult = d.results
-          if (hasEndReached) {
-            emitter.emit('onFinalResult', d.results)
-          }
-        }
-        if (END_OF_AUDIO.indexOf(d.endpointerType) !== -1) {
-          this.stop()
-          hasEndReached = true
-          if (!finalResult) {
-            /* When we didnt recognize anything */
-            if (d.endpointerType === 'END_OF_UTTERANCE') {
-              // console.log('called')
+          if (d.endpointerType === 'ENDPOINTER_EVENT_UNSPECIFIED') {
+            finalResult = d.results
+            if (hasEndReached) {
+              emitter.emit('onFinalResult', d.results)
             }
-            // this.start()
           }
-        }
-      })
-      getMicStream = pm.then((mic) => {
-        var l16Stream = new L16({ writableObjectMode: true })
-        micStream = new MicrophoneStream(mic, {
-          objectMode: true,
-          // bufferSize: options.bufferSize
+          if (END_OF_AUDIO.indexOf(d.endpointerType) !== -1) {
+            this.stop()
+            hasEndReached = true
+            if (!finalResult) {
+              /* When we didnt recognize anything */
+              if (d.endpointerType === 'END_OF_UTTERANCE') {
+                // console.log('called')
+              }
+              // this.start()
+            }
+          }
         })
-        micStream.pipe(l16Stream).pipe(OlaStream)
-        emitter.emit('onStart')
+        getMicStream = pm.then((mic) => {
+          var l16Stream = new L16({ writableObjectMode: true })
+          micStream = new MicrophoneStream(mic, {
+            objectMode: true,
+            // bufferSize: options.bufferSize
+          })
+          micStream.pipe(l16Stream).pipe(OlaStream)
+          emitter.emit('onStart')
+        })
       })
     },
     stop () {
