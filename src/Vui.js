@@ -4,6 +4,7 @@ import Voice from './Voice'
 import { connect } from 'react-redux'
 import { addMessage } from './actions'
 import { Actions, Settings } from 'olasearch'
+import { createHTMLMarkup } from './utils'
 
 const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
 
@@ -128,7 +129,7 @@ class Vui extends React.Component {
             )
           })
         }
-        <span className='olachat-vui-message'>{text}</span>
+        <span className='olachat-vui-message' dangerouslySetInnerHTML={createHTMLMarkup(text)} />
       </div>
     )
   }

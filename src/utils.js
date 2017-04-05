@@ -9,6 +9,7 @@ module.exports = {
     }
   },
   checkIfAwaitingResponse (response) {
+    if (!response) return false
     return response.answer && 'awaiting_user_input' in response.answer && response.answer.awaiting_user_input === false
   },
   convertoFloat32ToInt16 (buffer) {
