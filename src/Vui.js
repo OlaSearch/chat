@@ -123,9 +123,7 @@ class Vui extends React.Component {
             let isBot = !userId
             let text = isBot ? reply : message
             return (
-              <div key={idx} className='olachat-vui-reply'>
-                {text}
-              </div>
+              <div key={idx} className='olachat-vui-reply' dangerouslySetInnerHTML={createHTMLMarkup(text)} />
             )
           })
         }
