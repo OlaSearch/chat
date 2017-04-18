@@ -78,6 +78,26 @@
     background: white;
     border: 1px $msgborder solid;
     color: #333;
+    min-height: 50px; /* Same height as avatar */
+  }
+}
+
+.olachat-message-single {
+  .olachat-message-content{
+    min-height: 0;
+  }
+}
+
+.olachat-message-single.olachat-message-collapse {
+  & + .olachat-message {
+    margin-top: -26px;
+    // margin-bottom: -4px;
+    position: relative;
+    top: -4px;
+  }
+  .olachat-message-content {
+    // line-height: 30px;
+    min-height: 0;
   }
 }
 
@@ -172,20 +192,21 @@
   .olachat-message-collapse {
     // margin-bottom: -12px;
 
-    // & + .olachat-message {
-    //   margin-left: 50px + 12px;
-    //   // top: -16px;
-    //   // margin: 0px 0 -8px 0;
-    //   position: relative;
-    //   .olachat-message-avatar {
-    //     visibility: hidden;
-    //     display: none;
-    //   }
+    & + .olachat-message {
+      margin-left: 50px + 12px;
+      // top: -16px;
+      // margin: 0px 0 -8px 0;
+      position: relative;
+      padding-top: 0;
+      .olachat-message-avatar {
+        visibility: hidden;
+        display: none;
+      }
 
-    //   .olachat-message-content {
-    //     &:after, &:before {
-    //       display: none;
-    //     }
-    //   }
-    // }
+      .olachat-message-content {
+        &:after, &:before {
+          display: none;
+        }
+      }
+    }
   }

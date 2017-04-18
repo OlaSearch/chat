@@ -11,7 +11,8 @@ const Message = ({ message, avatarBot }) => {
   let messageClass = cx('olachat-message', {
     'olachat-message-bot': isBot,
     'olachat-message-fulfilled': fulfilled,
-    'olachat-message-collapse': typeof awaitingUserInput !== 'undefined' && !awaitingUserInput
+    'olachat-message-collapse': typeof awaitingUserInput !== 'undefined' && !awaitingUserInput,
+    'olachat-message-single': text && text.length < 40
   })
   return (
     <div className={messageClass}>
