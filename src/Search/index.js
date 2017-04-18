@@ -5,7 +5,7 @@ import mitt from 'mitt'
 import classNames from 'classnames'
 import google from './../adapters/google'
 import SearchInput from './SearchInput'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { utilities } from 'olasearch'
 import TypingIndicator from './../TypingIndicator'
 import Avatar from './../Avatar'

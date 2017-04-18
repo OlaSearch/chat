@@ -2,7 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Message from './Message'
 import TypingIndicator from './TypingIndicator'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+// import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 /**
  * Message interface
