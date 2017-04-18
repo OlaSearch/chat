@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Chat, ChatReducer, Vui, Bot } from 'olachat'
 import { Provider } from 'react-redux'
-import createLogger from 'redux-logger'
+import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk'
 import { OlaProvider, createStore, Actions } from 'olasearch'
 import config from 'olasearchconfig'
@@ -43,10 +43,10 @@ if (fdw_div) {
         <Bot
           initialIntent='fdw'
           headerProps={{
-            title: 'FDW eligibility calculator'
+            title: 'FDW Eligibility Chatbot'
           }}
           bubbleProps={{
-            label: 'FDW eligibility calculator'
+            label: 'FDW Eligibility Chatbot'
           }}
         />
       </div>

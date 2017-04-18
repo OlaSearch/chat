@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import mitt from 'mitt'
 import google from './../adapters/google'
 import Voice from './../Voice'
@@ -30,7 +31,7 @@ class ChatForm extends React.Component {
     this.voiceAdapter.prefetchToken()
   }
   static childContextTypes = {
-    emitter: React.PropTypes.object
+    emitter: PropTypes.object
   };
   getChildContext () {
     return {

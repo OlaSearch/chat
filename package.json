@@ -23,30 +23,30 @@
     ]
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.21.0",
-    "babel-eslint": "^7.1.1",
-    "babel-loader": "^6.4.0",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.23.0",
-    "babel-preset-stage-0": "^6.16.0",
-    "css-loader": "^0.26.4",
-    "node-sass": "^4.5.0",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.2",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^0.28.0",
+    "node-sass": "^4.5.2",
     "sass-loader": "^6.0.3",
-    "standard": "^9.0.1",
-    "style-loader": "^0.13.2"
+    "standard": "^10.0.1",
+    "style-loader": "^0.16.1"
   },
   "dependencies": {
     "classnames": "^2.2.5",
     "mitt": "^1.1.0",
     "olasearch": "git+ssh://git@bitbucket.org/olasearch/olasearch-core.git",
-    "react-flexi-textarea": "0.0.13",
-    "react-redux": "^5.0.3",
+    "react-flexi-textarea": "^1.0.1",
+    "react-redux": "^5.0.4",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "reqwest": "git+ssh://git@gitlab.com/olasearch/reqwest.git",
     "sentence-tokenizer": "0.0.7",
-    "standalone-react-css-transition-group": "^0.1.6",
+    "standalone-react-css-transition-group": "^15.5.0",
     "watson-html5-speech-recognition": "^0.6.6"
   }
 }

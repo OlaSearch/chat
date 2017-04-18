@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { clearMessages } from './actions'
 import { Actions } from 'olasearch'
@@ -36,7 +37,7 @@ class Bot extends Component {
     this.voiceAdapter.prefetchToken()
   }
   static childContextTypes = {
-    emitter: React.PropTypes.object
+    emitter: PropTypes.object
   };
   getChildContext () {
     return {

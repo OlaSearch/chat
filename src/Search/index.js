@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import mitt from 'mitt'
 import classNames from 'classnames'
@@ -73,7 +74,7 @@ class Search extends Component {
     flipped: true
   };
   static childContextTypes = {
-    emitter: React.PropTypes.object
+    emitter: PropTypes.object
   };
   getChildContext () {
     return {

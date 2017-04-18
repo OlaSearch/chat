@@ -1,5 +1,6 @@
 /* global Audio */
 import React from 'react'
+import PropTypes from 'prop-types'
 import cx from 'classnames'
 import { checkIfAwaitingResponse } from './utils'
 import { connect } from 'react-redux'
@@ -17,7 +18,7 @@ class Voice extends React.Component {
     }
   }
   static contextTypes = {
-    emitter: React.PropTypes.object
+    emitter: PropTypes.object
   };
   static defaultProps = {
     showListening: false,
