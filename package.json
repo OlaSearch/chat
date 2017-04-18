@@ -40,7 +40,7 @@
     "classnames": "^2.2.5",
     "mitt": "^1.1.0",
     "olasearch": "git+ssh://git@bitbucket.org/olasearch/olasearch-core.git",
-    "react-flexi-textarea": "^1.0.1",
+    "react-flexi-textarea": "^1.0.3",
     "react-redux": "^5.0.4",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
