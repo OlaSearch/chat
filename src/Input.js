@@ -67,7 +67,7 @@ class Input extends React.Component {
       this.Input.autoGrow()
 
       /* Focus */
-      if (!this.props.isPhone) this.Input.refs.textarea.focus()
+      if (!this.props.isPhone) this.Input.el.focus()
     }, textClearingDelay)
 
     /* Submit the message */
