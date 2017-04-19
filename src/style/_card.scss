@@ -1,0 +1,32 @@
+.ola-card {
+
+}
+
+.ola-card-template {
+
+}
+
+.ola-card-title {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #006eab;
+
+  &:hover {
+    color: #333;
+  }
+
+  &:before {
+    @extend .iconfont;
+    content: 'open_in_new';
+    margin-right: 8px;
+  }
+  a {
+    text-decoration: none;
+    color: #006eab;
+    &:hover {
+      color: #333;
+    }
+  }
+}

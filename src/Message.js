@@ -1,18 +1,20 @@
 import React from 'react'
 import cx from 'classnames'
 import Avatar from './Avatar'
+import Card from './Card'
 import { createHTMLMarkup } from './utils'
 import { DateParser } from 'olasearch'
 
-const Message = ({ message, avatarBot }) => {
-  let { userId, timestamp, awaitingUserInput, fulfilled } = message
+const Message = ({ message, avatarBot, minTextLength }) => {
+  let { userId, timestamp, awaitingUserInput, fulfilled, card } = message
   let isBot = !userId
   let text = isBot ? message.reply : message.message
   let messageClass = cx('olachat-message', {
     'olachat-message-bot': isBot,
     'olachat-message-fulfilled': fulfilled,
     'olachat-message-collapse': typeof awaitingUserInput !== 'undefined' && !awaitingUserInput,
-    'olachat-message-single': text && text.length < 40
+    'olachat-message-single': text && text.length < minTextLength,
+    'olachat-message-wide': !!card
   })
   return (
     <div className={messageClass}>
@@ -22,13 +24,20 @@ const Message = ({ message, avatarBot }) => {
         avatarBot={avatarBot}
       />
       <div className='olachat-message-body'>
-        <div className='olachat-message-content' dangerouslySetInnerHTML={createHTMLMarkup(text)} />
+        <div className='olachat-message-content'>
+          <div className='olachat-message-reply' dangerouslySetInnerHTML={createHTMLMarkup(text)} />
+          <Card card={card} />
+        </div>
         <div className='olachat-message-date'>
           {DateParser.format(timestamp * 1000, 'DD MMM')}
         </div>
       </div>
     </div>
   )
+}
+
+Message.defaultProps = {
+  minTextLength: 40
 }
 
 export default Message

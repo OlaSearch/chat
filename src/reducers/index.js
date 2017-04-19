@@ -18,7 +18,8 @@ const createMessageObj = (answer) => {
     awaitingUserInput: answer.awaiting_user_input,
     in_response_to: answer.in_response_to,
     slot_options: answer.slot_options,
-    fulfilled: answer.fulfilled
+    fulfilled: answer.fulfilled,
+    card: answer.card
   }
 }
 
@@ -32,7 +33,7 @@ export default (state = initialState, action) => {
       }
 
     case ActionTypes.REQUEST_SEARCH_SUCCESS:
-      if (!action.answer || !action.answer.reply) return state
+      if (!action.answer) return state
       let { answer } = action
       let { reply } = answer
       let messages = []

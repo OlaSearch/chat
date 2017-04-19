@@ -203,10 +203,24 @@
         display: none;
       }
 
+      .olachat-message-body {
+        min-width: 91%;
+      }
+
       .olachat-message-content {
         &:after, &:before {
           display: none;
         }
       }
+    }
+  }
+
+
+  /**
+   * Messages with card
+   */
+  .olachat-message-wide {
+    .olachat-message-body {
+      min-width: 75%;
     }
   }
