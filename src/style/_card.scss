@@ -9,7 +9,7 @@
 .ola-card-title {
   margin: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   font-size: 14px;
   color: #006eab;
 
@@ -41,3 +41,44 @@
   font-size: 12px;
   display: block;
 }
+
+
+/**
+ * Card list
+ */
+
+.ola-card-list {
+  margin: -8px;
+}
+
+.ola-card-list-item {
+  border-top: 1px #ddd solid;
+  padding: 8px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+
+  &:first-child {
+    border-top: none;
+    // padding-top: 0;
+  }
+}
+
+  .ola-card-list-buttons {
+    .ola-card-button {
+      display: block;
+      margin: 0;
+      padding: 8px;
+      border-top: 1px #ddd solid;
+      font-size: 14px;
+      text-align: center;
+      &, &:hover {
+        color: $blue;
+      }
+    }
+  }
+
+  .ola-card-subtitle {
+    font-size: 13px;
+    padding-top: 5px;
+    padding-left: 28px;
+  }
