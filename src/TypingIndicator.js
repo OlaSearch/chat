@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import Avatar from './Avatar'
 
 const TypingIndicator = ({ avatarBot, isBot }) => {

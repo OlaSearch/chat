@@ -53,13 +53,10 @@
 
 .ola-card-list-item {
   border-top: 1px #ddd solid;
-  padding: 8px;
-  padding-bottom: 8px;
-  padding-top: 8px;
+  padding: 8px 8px 12px 8px;
 
   &:first-child {
     border-top: none;
-    // padding-top: 0;
   }
 }
 
@@ -81,4 +78,12 @@
     font-size: 13px;
     padding-top: 5px;
     padding-left: 28px;
+  }
+
+
+  /**
+   * List title
+   */
+  .ola-card-list-title {
+    padding: 8px;
   }

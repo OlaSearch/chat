@@ -23,7 +23,6 @@ const Card = ({ card }) => {
     }
   }
 
-
   return (
     <div className={klass}>
       {pickTemplate(template)}

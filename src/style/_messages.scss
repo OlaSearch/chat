@@ -29,13 +29,17 @@
    */
   .olachat-message {
     // min-height: 62px;
-    padding: 8px 1em 8px 1em;
+    padding: 8px 14px+7px 8px 1em;
     font-size: 14px;
     // justify-content: flex-start;
     // flex-direction: row-reverse;
     // -webkit-justify-content: flex-start;
     // -webkit-flex-direction: row-reverse;
     @include clearfix;
+  }
+
+  .olachat-message-bot {
+    padding-right: 14px;
   }
 
     /**
