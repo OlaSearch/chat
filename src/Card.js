@@ -8,6 +8,11 @@ const Card = ({ card }) => {
   return (
     <div className={klass}>
       <h3 className='ola-card-title'><a target='_blank' href={url}>{title}</a></h3>
+      {buttons.map(({ title: buttonTitle, type, url: buttonUrl }) => {
+        return (
+          <a className='ola-card-button' href={buttonUrl}>{buttonTitle}</a>
+        )
+      })}
     </div>
   )
 }

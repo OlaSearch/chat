@@ -35,7 +35,7 @@ export default (state = initialState, action) => {
     case ActionTypes.REQUEST_SEARCH_SUCCESS:
       if (!action.answer) return state
       let { answer } = action
-      let { reply } = answer
+      let { reply, in_response_to, message } = answer
       let messages = []
       if (Array.isArray(reply)) {
         for (let i = 0; i < reply.length; i++) {
@@ -45,9 +45,19 @@ export default (state = initialState, action) => {
       } else {
         messages.push(createMessageObj(answer))
       }
+
+      /**
+       * Update older messages
+       */
+      let original_messages = state.messages.map((item) => {
+        if (item.id === in_response_to) {
+          item['message'] = message
+        }
+        return item
+      })
       return {
         ...state,
-        messages: [...state.messages, ...messages],
+        messages: [...original_messages, ...messages],
       }
 
     case types.CLEAR_MESSAGES:
