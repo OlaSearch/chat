@@ -10,7 +10,7 @@
   margin: 0;
   display: flex;
   align-items: center;
-  font-size: 16px;
+  font-size: 14px;
   color: #006eab;
 
   &:hover {
@@ -21,12 +21,23 @@
     @extend .iconfont;
     content: 'open_in_new';
     margin-right: 8px;
+    font-size: 20px;
   }
   a {
     text-decoration: none;
     color: #006eab;
+    flex: 1;
     &:hover {
       color: #333;
     }
   }
+}
+
+
+.ola-card-button {
+  text-decoration: none;
+  color: #666;
+  padding-left: 28px;
+  font-size: 12px;
+  display: block;
 }
