@@ -2,7 +2,6 @@
   flex: 1;
   -webkit-flex: 1;
   padding-bottom: 1em;
-  border-top: 1px #ccc solid;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
   position: relative;
@@ -28,13 +27,8 @@
    * Message
    */
   .olachat-message {
-    // min-height: 62px;
-    padding: 8px 14px+7px 8px 1em;
+    padding: 8px 14px+4px 8px 1em;
     font-size: 14px;
-    // justify-content: flex-start;
-    // flex-direction: row-reverse;
-    // -webkit-justify-content: flex-start;
-    // -webkit-flex-direction: row-reverse;
     @include clearfix;
   }
 

@@ -4,7 +4,8 @@ import { ActionTypes } from 'olasearch'
 const initialState = {
   messages: [],
   isTyping: false,
-  language: 'en'
+  language: 'en',
+  shouldPoll: false
 }
 
 const createMessageObj = (answer) => {

@@ -32,10 +32,9 @@ module.exports = {
     env: 'staging',
     namespace: "mom",
     api: {
-        fuzzySuggest: "https://mom.olasearch.com/solr/steptwo/suggest",
-        intent: "https://mom.olasearch.com/search",
-        search: "https://mom.olasearch.com/solr/steptwo/select",
-        suggest: "https://mom.olasearch.com/solr/steptwo/select"
+        intent: "https://api.olasearch.com/intent",
+        search: "https://api.olasearch.com/search",
+        suggest: "https://api.olasearch.com/suggest"
     },
     logger: {
         enabled:!0,

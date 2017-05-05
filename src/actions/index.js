@@ -104,3 +104,11 @@ export function changeLanguage (language) {
     language
   }
 }
+
+export function pollWhenIdle () {
+  return (dispatch, getState) => {
+    let { shouldPoll } = getState().Conversation
+    if (!shouldRetry) return
+    dispatch(addMessage({ intent: 'idle' }))
+  }
+}
