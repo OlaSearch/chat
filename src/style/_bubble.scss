@@ -27,6 +27,8 @@
   right: 0px;
 }
 
+$bubble-size: 30px;
+$bubble-icon-size: 34px;
 .olachat-bubble {
   background: none;
   border: none;
@@ -36,21 +38,22 @@
   bottom: 0;
   right: 0;
   width: 300px;
-  background: $lightblue;
-  padding: 1em;
-  border-radius: 5px;
+  background: $blue;
+  color: white;
+  padding: 0em $bubble-size+ $bubble-icon-size 0em $bubble-size;
+  border-radius: $bubble-size;
+  min-height: $bubble-size * 2;
   box-shadow: $sharp-box-shadow;
-  padding-right: 40px;
   cursor: pointer;
 
   &:after {
     @extend .iconfont;
     content: 'chat';
     position: absolute;
-    right: $gutter;
+    right: $bubble-size;
     top: 50%;
     margin-top: -17px;
-    color: $blue;
+    // color: $blue;
     font-size: 34px;
   }
 }

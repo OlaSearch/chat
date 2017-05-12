@@ -1,10 +1,11 @@
 $gutter: 12px;
 .olachat-footer {
   @include flexbox;
-  padding: 12px;
-  background: white;
+  padding: 0;
+  background: $chatbg;
   border-top: 1px #ccc solid;
   position: relative;
+  box-shadow: 1px -1px 2px rgba(199,199,199,0.5), 0 2px 4px 0 rgba(199,199,199,0.5);
 }
 
   /**
@@ -20,20 +21,24 @@ $gutter: 12px;
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
+      background: transparent;
       width: 100%;
-      border: 1px #ddd solid;
-      padding: 10px 8px;
+      border: none;
+      padding: $gutter $gutter $gutter 16px;
+      @include media (tablet) {
+        padding-left: 20px;
+      }
       font-size: 16px;
 
       @include media (desktop) {
         font-size: 14px;
       }
-      margin-right: $gutter;
+      // margin-right: $gutter;
       max-height: 100px;
+      resize: none;
 
       &:focus {
         outline: none;
-        border: 1px $blue solid;
       }
     }
   }
@@ -46,7 +51,7 @@ $gutter: 12px;
     background: none;
     color: $blue;
     cursor: pointer;
-    // width: 35px;
+    width: 50px;
 
     &:before {
       @extend .iconfont;
@@ -61,11 +66,12 @@ $gutter: 12px;
     /* Voice */
 
   .olachat-input-voice {
-    // position: absolute;
+    position: absolute;
     @include flexbox;
     justify-content: center;
     align-items: center;
     margin-right: $gutter;
+    display: none;
 
     .olachat-voice  {
       background: transparent;

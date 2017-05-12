@@ -132,7 +132,17 @@ class Messages extends React.Component {
     let loadingSpinner = isInfiniteLoading ? <div>Loading</div> : null
     let messagesComponent = messageComponent
       ? messages.map(messageComponent)
-      : messages.map((message, idx) => <Message avatarBot={this.props.avatarBot} message={message} key={message.id} />)
+      : messages.map((message, idx) =>
+          (<Message
+            avatarBot={this.props.avatarBot}
+            message={message}
+            key={message.id}
+            addMessage={this.props.addMessage}
+            isActive={idx === messages.length - 1}
+            botName={this.props.botName}
+            userName={this.props.userName}
+          />)
+        )
 
     return (
       <div className='olachat-messages'>

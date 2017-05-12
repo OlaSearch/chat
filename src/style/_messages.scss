@@ -1,7 +1,7 @@
 .olachat-messages {
   flex: 1;
   -webkit-flex: 1;
-  padding-bottom: 1em;
+  padding: 1em 0 1em 0;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
   position: relative;
@@ -14,211 +14,72 @@
   }
 }
 
-  .olachat-messages-wrapper {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    max-height: 100%;
-    // height: calc(100% + 1px);
-  }
+.olachat-messages-wrapper {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  max-height: 100%;
+}
 
-  /**
-   * Message
-   */
-  .olachat-message {
-    padding: 8px 14px+4px 8px 1em;
-    font-size: 14px;
-    @include clearfix;
-  }
+.olachat-messages-list {
+  padding: 16px 0;
+}
 
-  .olachat-message-bot {
-    padding-right: 14px;
-  }
 
-    /**
-     * Content
-     */
-    .olachat-message-content{
-      background: linear-gradient(to bottom, lighten(#006eab, 5%) 0%,#006eab 100%);
-      color: white;
-      border-radius: 6px;
-      padding: 8px;
-      // margin-bottom: 8px;
-    }
-
-    /**
-     * body
-     */
-    .olachat-message-body {
-      // flex: 1;
-      max-width: 75%;
-      min-width: 50px;
-      @include flexbox;
-      flex-direction: column;
-      -webkit-flex-direction: column;
-    }
-
-    /**
-     * Date
-     */
-    .olachat-message-date {
-      font-size: 12px;
-      color: #888;
-      display: none;
-    }
 
 /**
- * Bot message
+ * Message
  */
-.olachat-message-bot {
-  .olachat-message-content {
-    background: white;
-    border: 1px $msgborder solid;
-    color: #333;
-    min-height: 50px; /* Same height as avatar */
+.olachat-message {
+  padding: 8px 16px 8px 16px;
+  @include media (tablet) {
+    padding-left: 20px;
+    padding-right: 20px;
   }
-}
-
-.olachat-message-single {
-  .olachat-message-content{
-    min-height: 0;
-  }
-}
-
-.olachat-message-single.olachat-message-collapse {
-  & + .olachat-message {
-    margin-top: -26px;
-    // margin-bottom: -4px;
-    position: relative;
-    top: -4px;
-  }
-  .olachat-message-content {
-    // line-height: 30px;
-    min-height: 0;
-  }
+  min-height: 50px;
+  font-size: 14px;
+  @include clearfix;
+  @include flexbox;
 }
 
 /**
- * Message arrow
+ * Content
+ */
+
+.olachat-message-body {
+  flex: 1;
+}
+
+/**
+ * Typing indicator
+ */
+.ola-chat-progress {
+  padding-top: 0;
+  padding-bottom: 16px;
+}
+
+/**
+ * Date
+ */
+.olachat-message-date {
+  display: none;
+}
+
+/**
+ * Name
+ */
+
+.olchat-message-name {
+  font-weight: bold;
+  margin-bottom: 2px;
+  line-height: 1;
+}
+
+/**
+ * Content
  */
 
 .olachat-message-content {
-  position: relative;
+  max-width: 600px;
 }
-
-  .olachat-message-content:after, .olachat-message-content:before {
-    top: 18px;
-    left: 100%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-  }
-
-  .olachat-message-content:after {
-    border-color: rgba(255, 255, 255, 0);
-    border-left-color: $blue;
-    border-width: 6px;
-    margin-top: -6px;
-  }
-  .olachat-message-content:before {
-    border-color: rgba(223, 227, 233, 0);
-    border-left-color: $blue;
-    border-left: none;
-    border-width: 7px;
-    margin-top: -7px;
-  }
-
-  .olachat-message-children {
-    margin-top: 8px;
-    &:after, &:before {
-      display: none;
-    }
-  }
-
-
-  .olachat-message-bot {
-    .olachat-message-content {
-      border: 1px solid $msgborder;
-
-      &:after, &:before {
-        right: 100%;
-        left: auto;
-      }
-
-      &:after {
-        border-right-color: #fff;
-        border-left: none;
-      }
-
-      &:before {
-        border-right-color: $msgborder;
-        border-left: none;
-      }
-    }
-  }
-
-
-
-
-  /* Simple message stack */
-  .olachat-message {
-    .olachat-message-body {
-      float: right;
-    }
-    .olachat-message-avatar {
-      float: right;
-    }
-  }
-
-    .olachat-message-bot {
-      .olachat-message-avatar {
-        float: left;
-      }
-      .olachat-message-body{
-        float: left;
-      }
-    }
-
-  /**
-   * Collapse message
-   */
-
-  .olachat-message-collapse {
-    // margin-bottom: -12px;
-
-    & + .olachat-message-bot {
-      margin-left: 50px + 12px;
-      // top: -16px;
-      // margin: 0px 0 -8px 0;
-      position: relative;
-      padding-top: 0;
-      .olachat-message-avatar {
-        visibility: hidden;
-        display: none;
-      }
-
-      .olachat-message-body {
-        min-width: 91%;
-      }
-
-      .olachat-message-content {
-        &:after, &:before {
-          display: none;
-        }
-      }
-    }
-  }
-
-
-  /**
-   * Messages with card
-   */
-  .olachat-message-wide {
-    .olachat-message-body {
-      min-width: 75%;
-    }
-  }

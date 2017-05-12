@@ -1,41 +1,72 @@
 .olachat-qreply {
-  background-color: transparent;
-  // overflow: hidden;
-  // position: absolute;
-  // bottom: 100%;
-  // left: 0;
-  // right: 0;
-  overflow-x: auto;
-  display: flex;
+  background: white;
+  border-radius: 20px;
+  border: 1px $msgborder solid;
+  width: 100%;
+  @include media (tablet) {
+    max-width: 320px;
+  }
+  max-width: 100%;
+  font-size: 14px;
+  margin-top: $gutter;
 }
 
-
 .olachat-qreply-button {
-  background-color: white;
-  border: 1px $blue solid;
+  border: none;
+  border-bottom: 1px $msgborder solid;
+  display: block;
+  width: 100%;
+  background: none;
   color: $blue;
-  border-radius: 20px;
-  padding-left: 16px;
-  padding-right: 16px;
-  // min-width: 60px;
-  height: 34px;
-  font-size: 14px;
-  margin-right: 4px;
-  margin-left: 4px;
-  white-space: nowrap;
+  min-height: 40px;
 
-  &:focus {
-    outline: none;
+  &:last-child {
+    border-bottom: none;
   }
-  &:hover {
+
+  &:active {
     background-color: $blue;
     color: white;
   }
 }
+// .olachat-qreply {
+//   background-color: transparent;
+//   // overflow: hidden;
+//   // position: absolute;
+//   // bottom: 100%;
+//   // left: 0;
+//   // right: 0;
+//   overflow-x: auto;
+//   display: flex;
+// }
 
-.olachat-qreply-list {
-  display: flex;
-  padding: 10px;
-  justify-content: center;
-  flex: 1;
-}
+
+// .olachat-qreply-button {
+//   background-color: white;
+//   border: 1px $blue solid;
+//   color: $blue;
+//   border-radius: 20px;
+//   padding-left: 16px;
+//   padding-right: 16px;
+//   // min-width: 60px;
+//   height: 34px;
+//   font-size: 14px;
+//   margin-right: 4px;
+//   margin-left: 4px;
+//   white-space: nowrap;
+
+//   &:focus {
+//     outline: none;
+//   }
+//   &:hover {
+//     background-color: $blue;
+//     color: white;
+//   }
+// }
+
+// .olachat-qreply-list {
+//   display: flex;
+//   padding: 10px;
+//   justify-content: center;
+//   flex: 1;
+// }

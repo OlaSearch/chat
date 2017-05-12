@@ -2,7 +2,6 @@ import React from 'react'
 import Header from './Header'
 import Input from './Input'
 import Messages from './Messages'
-import QuickReplies from './QuickReplies'
 import { connect } from 'react-redux'
 import { addMessage } from './actions'
 import { Actions } from 'olasearch'
@@ -45,9 +44,9 @@ class Chat extends React.Component {
           ref={this.registerRef}
           onLoad={this.props.onLoad}
           avatarBot={this.props.avatarBot}
-        />
-        <QuickReplies
-          onSubmit={this.addMessage}
+          addMessage={this.addMessage}
+          botName={this.props.botName}
+          userName={this.props.userName}
         />
         <Input
           onSubmit={this.addMessage}

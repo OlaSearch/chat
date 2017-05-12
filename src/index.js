@@ -5,7 +5,6 @@ import Chat from './Chat'
 import Vui from './Vui'
 import Bot from './Bot'
 import Search from './Search'
-import ChatForm from './ChatForm'
 import ChatReducer from './reducers'
 import ChatActions from './actions'
 
@@ -15,7 +14,6 @@ export {
   Messages,
   Search,
   Chat,
-  ChatForm,
   Vui,
   Bot,
   ChatReducer,

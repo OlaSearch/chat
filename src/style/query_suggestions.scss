@@ -1,0 +1,35 @@
+.olachat-query-suggestions {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  box-shadow: 1px -2px 2px 0 rgba(0,0,0,0.2);
+  margin-bottom: 2px;
+  background-color: $chatbg;
+  font-size: 14px;
+}
+
+/**
+ * Item
+ */
+.olachat-query-suggestion {
+  border: none;
+  background: none;
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 20px;
+
+  &:hover {
+    background-color: #eee;
+  }
+
+  font-weight: bold;
+  strong {
+    font-weight: normal;
+  }
+
+  &.is-active {
+    background: #eee;
+  }
+}

@@ -28,7 +28,9 @@ if (root_div) {
       <div className='full-wrapper'>
         <Bot
           initialIntent='maternity-leave'
-          vui
+          bubbleProps={{
+            label: 'Ask us anything'
+          }}
         />
       </div>
     </OlaProvider>

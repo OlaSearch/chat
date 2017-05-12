@@ -34,7 +34,7 @@ module.exports = {
     api: {
         intent: "https://api.olasearch.com/intent",
         search: "https://api.olasearch.com/search",
-        suggest: "https://api.olasearch.com/suggest"
+        suggest: "http://54.254.254.191:8983/solr/steptwo/suggest"
     },
     logger: {
         enabled:!0,

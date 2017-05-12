@@ -1,7 +1,9 @@
 import React from 'react'
 import Voice from './Voice'
-import { Settings } from 'olasearch'
+import { Settings, Actions } from 'olasearch'
 import Textarea from 'react-flexi-textarea'
+import QuerySuggestions from './QuerySuggestions'
+import { connect } from 'react-redux'
 
 const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
 
@@ -10,17 +12,42 @@ class Input extends React.Component {
     super(props)
     this.state = {
       text: '',
-      submitting: false
+      suggestions: [],
+      submitting: false,
+      suggestedIndex: null,
+      suggestedTerm: null,
     }
   }
   onChange = (event) => {
+    let text = event.target.value
     this.setState({
-      text: event.target.value
+      text
     })
+
+    if (text) {
+      this.props.dispatch(Actions.AutoSuggest.executeFuzzyAutoSuggest(text))
+        .then((values) => {
+          if (!values) return this.closeSuggestion()
+          this.setState({
+            suggestions: values.map((item) => ({ term: item.term })),
+            suggestedTerm: null,
+            suggestedIndex: null,
+          })
+        })
+    } else {
+      this.closeSuggestion()
+    }
+
+    this.props.onChange && this.props.onChange(text)
   };
   onVoiceChange = (text) => {
     this.setState({
       text
+    })
+  };
+  clearText = () => {
+    this.setState({
+      text: ''
     })
   };
   onVoiceFinal = (text, cb) => {
@@ -35,13 +62,20 @@ class Input extends React.Component {
   onFormSubmit = (event) => {
     /* Stop form submission */
     event && event.preventDefault()
+    /* Check if suggestedTerm is active */
+    if (this.state.suggestedTerm) {
+      this.setState({
+        text: this.state.suggestedTerm.term
+      })
+      this.closeSuggestion()
+    }
 
     /* Stop submitting if text is empty */
     if (!this.state.text) {
-      return this.Input.refs.textarea.focus()
+      return this.Input.el.focus()
     }
 
-    this.onSubmit()
+    setTimeout(this.onSubmit, 0)
   };
   onSubmit = (event, callback, textClearingDelay = 0, searchInput = Settings.SEARCH_INPUTS.KEYBOARD) => {
     /* Update query term */
@@ -77,24 +111,92 @@ class Input extends React.Component {
         callback && typeof callback === 'function' && callback(response)
       })
   };
+  closeSuggestion = () => {
+    this.setState({
+      suggestions: [],
+      suggestedIndex: null,
+      suggestedTerm: null
+    })
+  };
   onKeyDown = (event) => {
-    if (event.nativeEvent.which === 13 && !event.nativeEvent.shiftKey) {
-      this.onFormSubmit(event)
+    let index = null
+    switch (event.nativeEvent.which) {
+      case 13: // Enter key
+        this.closeSuggestion()
+        if (!event.nativeEvent.shiftKey) {
+          this.onFormSubmit(event)
+        }
+        break
+
+      case 27: // Escape
+        /* Check if suggestion is active */
+        if (this.state.suggestedIndex || this.state.suggestions.length) {
+          return this.closeSuggestion()
+        }
+        /* Close chatbot */
+        if (!this.state.text) {
+          this.props.onRequestClose && this.props.onRequestClose()
+        } else {
+          return this.clearText()
+        }
+        break
+
+      case 38: // Up
+
+        if (this.state.suggestedIndex === null) {
+          index = this.state.suggestions.length - 1
+        } else {
+          let i = this.state.suggestedIndex - 1
+          if (i < 0) {
+            index = null
+          } else {
+            index = i
+          }
+        }
+        this.setState({
+          suggestedIndex: index,
+          suggestedTerm: index === null ? null : this.state.suggestions[index]
+        })
+        break
+      case 40: // Down
+        if (this.state.suggestedIndex === null) {
+          index = 0
+        } else {
+          let i = this.state.suggestedIndex + 1
+          if (i >= this.state.suggestions.length) {
+            index = null
+          } else {
+            index = i
+          }
+        }
+        this.setState({
+          suggestedIndex: index,
+          suggestedTerm: index === null ? null : this.state.suggestions[index]
+        })
+        break
     }
-    if (event.nativeEvent.which === 27) {
-      /* Close chatbot */
-      if (!this.state.text) {
-        this.props.onRequestClose && this.props.onRequestClose()
-      }
-    }
+
   };
   registerRef = (el) => {
     this.Input = el
   };
+  onSuggestionChange = (text) => {
+    this.setState({ text, suggestedIndex: null, suggestedTerm: null,  suggestions: [] }, () => {
+      this.onFormSubmit()
+    })
+  };
   render () {
     let { isTyping } = this.props
+    let { suggestions, suggestedIndex, suggestedTerm, text } = this.state
+    let inputValue = suggestedTerm ? suggestedTerm.term : text
     return (
       <form className='olachat-footer' onSubmit={this.onFormSubmit}>
+        <QuerySuggestions
+          onChange={this.onSuggestionChange}
+          suggestions={suggestions}
+          activeIndex={suggestedIndex}
+          queryTerm={text}
+        />
         <div className='olachat-input'>
           {supportsVoice
            ? <div className='olachat-input-voice'>
@@ -107,10 +209,10 @@ class Input extends React.Component {
             : null
           }
           <Textarea
-            placeholder='Type a message...'
+            placeholder='Type here...'
             onChange={this.onChange}
             onKeyDown={this.onKeyDown}
-            value={this.state.text}
+            value={inputValue}
             rows={1}
             cols={1}
             ref={this.registerRef}
@@ -125,4 +227,4 @@ class Input extends React.Component {
   }
 }
 
-export default Input
+export default connect(null)(Input)

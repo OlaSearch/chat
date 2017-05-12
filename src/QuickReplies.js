@@ -9,9 +9,7 @@ class QuickReplies extends Component {
     this.props.onSubmit()
   };
   render () {
-    let { message } = this.props
-    if (!message) return null
-    let { slot_options: options } = this.props.message
+    let { options } = this.props
     if (!options || !options.length) return null
     let replies = options.map(({ label }, idx) => <QuickReplyButton key={idx} label={label} handleClick={this.handleClick} />)
     return (
@@ -47,10 +45,4 @@ const QuickReplyButton = ({ label, handleClick }) => {
   )
 }
 
-function mapStateToProps (state) {
-  return {
-    message: state.Conversation.messages[state.Conversation.messages.length - 1]
-  }
-}
-
-export default connect(mapStateToProps, { updateQueryTerm: Actions.Search.updateQueryTerm })(QuickReplies)
+export default connect(null, { updateQueryTerm: Actions.Search.updateQueryTerm })(QuickReplies)

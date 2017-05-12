@@ -61,6 +61,10 @@ class Bot extends Component {
   static defaultProps = {
     vui: false,
     bubbleProps: {},
+    botProps: {
+      botName: 'MOMBot',
+      userName: 'You',
+    },
     headerProps: {
       title: 'Calculate maternity leave'
     },
@@ -74,6 +78,7 @@ class Bot extends Component {
       onHide: this.toggleActive,
       ...this.props.headerProps,
       ...this.props.avatarProps,
+      ...this.props.botProps,
       initialIntent: this.props.initialIntent,
       voiceAdapter: this.voiceAdapter,
       onRequestClose: this.toggleActive,

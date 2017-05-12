@@ -2,21 +2,22 @@
 
 
 html {
-  line-height: 1.4;
+  line-height: 1.5;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .olachat {
   height: 600px;
   width: 100%;
   @include media (tablet) {
-    width: 375px;
+    width: 860px;
+    border: 1px #ccc solid;
+    box-shadow: $small-box-shadow;
   }
-  background: #F0F3F8;
+  background: $chatbg;
   @include flexbox;
   flex-direction: column;
   -webkit-flex-direction: column;
-  border: 1px #ccc solid;
-  box-shadow: $small-box-shadow;
 
   * {
     box-sizing: border-box;
@@ -52,3 +53,4 @@ html {
 @import 'quickreplies';
 @import 'search';
 @import 'card';
+@import 'query_suggestions';
