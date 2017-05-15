@@ -135,6 +135,7 @@ class Messages extends React.Component {
       : messages.map((message, idx) =>
           (<Message
             avatarBot={this.props.avatarBot}
+            avatarUser={this.props.avatarUser}
             message={message}
             key={message.id}
             addMessage={this.props.addMessage}

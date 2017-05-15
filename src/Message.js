@@ -6,7 +6,7 @@ import { createHTMLMarkup } from './utils'
 import { DateParser } from 'olasearch'
 import QuickReplies from './QuickReplies'
 
-const Message = ({ message, avatarBot, addMessage, botName, userName, minTextLength, isActive }) => {
+const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName, minTextLength, isActive }) => {
   let { userId, timestamp, awaitingUserInput, fulfilled, card, slot_options: options } = message
   let isBot = !userId
   let text = isBot ? message.reply : message.message
@@ -23,6 +23,7 @@ const Message = ({ message, avatarBot, addMessage, botName, userName, minTextLen
         isBot={isBot}
         userId={userId}
         avatarBot={avatarBot}
+        avatarUser={avatarUser}
       />
       <div className='olachat-message-body'>
         <div className='olchat-message-name'>

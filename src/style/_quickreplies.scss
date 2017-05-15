@@ -1,72 +1,52 @@
 .olachat-qreply {
-  background: white;
-  border-radius: 20px;
-  border: 1px $msgborder solid;
-  width: 100%;
-  @include media (tablet) {
-    max-width: 320px;
-  }
-  max-width: 100%;
-  font-size: 14px;
-  margin-top: $gutter;
+  background-color: transparent;
+  // overflow: hidden;
+  // position: absolute;
+  // bottom: 100%;
+  // left: 0;
+  // right: 0;
+  overflow-x: auto;
+  display: flex;
 }
+
 
 .olachat-qreply-button {
-  border: none;
-  border-bottom: 1px $msgborder solid;
+  background-color: white;
+  border: 1px #555459 solid;
+  color: #555459;
+  font-weight: 500;
+  border-radius: 5px;
+  padding-left: 16px;
+  padding-right: 16px;
+  height: 32px;
+  font-size: 14px;
+  margin: 0 8px 8px 0;
+  white-space: nowrap;
+
+
   display: block;
   width: 100%;
-  background: none;
-  color: $blue;
-  min-height: 40px;
 
-  &:last-child {
-    border-bottom: none;
+  @include media (tablet) {
+    width: auto;
   }
 
-  &:active {
-    background-color: $blue;
-    color: white;
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    // background-color: $blue;
+    // color: white;
   }
 }
-// .olachat-qreply {
-//   background-color: transparent;
-//   // overflow: hidden;
-//   // position: absolute;
-//   // bottom: 100%;
-//   // left: 0;
-//   // right: 0;
-//   overflow-x: auto;
-//   display: flex;
-// }
 
+.olachat-qreply-list {
+  display: flex;
+  padding: 8px 0 0 0;
+  flex: 1;
+  flex-wrap: wrap;
 
-// .olachat-qreply-button {
-//   background-color: white;
-//   border: 1px $blue solid;
-//   color: $blue;
-//   border-radius: 20px;
-//   padding-left: 16px;
-//   padding-right: 16px;
-//   // min-width: 60px;
-//   height: 34px;
-//   font-size: 14px;
-//   margin-right: 4px;
-//   margin-left: 4px;
-//   white-space: nowrap;
-
-//   &:focus {
-//     outline: none;
-//   }
-//   &:hover {
-//     background-color: $blue;
-//     color: white;
-//   }
-// }
-
-// .olachat-qreply-list {
-//   display: flex;
-//   padding: 10px;
-//   justify-content: center;
-//   flex: 1;
-// }
+  @include media (tablet) {
+    flex-wrap: nowrap;
+  }
+}

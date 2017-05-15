@@ -5,10 +5,8 @@
   background: $blue;
   color: white;
   padding: $gutter 16px;
-  @include media (tablet) {
-
-  }
   position: relative;
+  z-index: 1;
   @include flexbox;
   align-items: center;
   -webkit-align-items: center;

@@ -44,6 +44,7 @@ class Chat extends React.Component {
           ref={this.registerRef}
           onLoad={this.props.onLoad}
           avatarBot={this.props.avatarBot}
+          avatarUser={this.props.avatarUser}
           addMessage={this.addMessage}
           botName={this.props.botName}
           userName={this.props.userName}

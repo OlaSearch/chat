@@ -8,6 +8,7 @@ import { OlaProvider, createStore, Actions } from 'olasearch'
 import config from 'olasearchconfig'
 import { Parser, QueryBuilder, Http } from 'olasearch-solr-adapter'
 import { createLoggerMiddleware } from 'olasearch-logger-middleware'
+import { bot, user } from './avatars'
 
 const logger = createLogger({ collapsed: true});
 // const store = createStore(combineReducers({ Conversation: ChatReducer }), applyMiddleware(thunk, logger))
@@ -31,6 +32,10 @@ if (root_div) {
           bubbleProps={{
             label: 'Ask us anything'
           }}
+          avatarProps={{
+            avatarBot: bot,
+            avatarUser: user,
+          }}
         />
       </div>
     </OlaProvider>
@@ -46,6 +51,10 @@ if (fdw_div) {
           initialIntent='fdw'
           headerProps={{
             title: 'FDW Eligibility Chatbot'
+          }}
+          avatarProps={{
+            avatarBot: bot,
+            avatarUser: user,
           }}
           bubbleProps={{
             label: 'FDW Eligibility Chatbot'

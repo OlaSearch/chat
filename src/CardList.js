@@ -11,11 +11,16 @@ const CardList = ({ title, elements, buttons }) => {
           let { url } = defaultAction
           return (
             <div className='ola-card-list-item' key={idx}>
-              <h3 className='ola-card-title'>
-                <a target='_blank' href={url}>{title}</a>
-              </h3>
-              <div className='ola-card-subtitle'>
-                {stripHtml(subtitle)}
+              <div className='ola-card-list-inner'>
+                <h3 className='ola-card-title'>
+                  <a target='_blank' href={url}>{title}</a>
+                </h3>
+                <div className='ola-card-subtitle'>
+                  {stripHtml(subtitle)}
+                </div>
+                <div className='ola-card-action'>
+                  <a href={url}>{url}</a>
+                </div>
               </div>
             </div>
           )

@@ -37,6 +37,10 @@
   font-size: 14px;
   @include clearfix;
   @include flexbox;
+
+  &:hover {
+    // background-color: #f8f8f8;
+  }
 }
 
 /**
