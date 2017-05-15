@@ -57,12 +57,16 @@
 }
 
 .qreply-enter.qreply-enter-active, .qreply-appear.qreply-appear-active {
-  // transform: translate3d(0, 0, 0);
   opacity: 1;
   transition: opacity 200ms ease-in;
   transition-delay: 0.1s;
 }
 
-.olachat-qreply-button {
+.qreply-leave {
+  opacity: 1;
+}
 
+.qreply-leave.qreply-leave-active {
+  opacity: 0.01;
+  transition: opacity 200ms ease-in;
 }
