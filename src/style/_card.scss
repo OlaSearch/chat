@@ -22,15 +22,20 @@
   padding-bottom: 8px;
 }
 .ola-card-list-items {
+  @include flexbox;
+  flex-wrap: wrap;
+  flex-direction: column;
   @include media (tablet) {
-    @include flexbox;
-    flex-wrap: wrap;
+    flex-direction: row;
   }
 }
 
 .ola-card-list-item {
   font-size: 14px;
   padding: 0em 8px 1em 0;
+  max-width: 250px;
+
+
   @include media (tablet) {
     width: 50%;
   }
@@ -75,6 +80,21 @@
         text-overflow: ellipsis;
         overflow: hidden;
       }
+      /* These are technically the same, but use both */
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+
+      -ms-word-break: break-all;
+      /* This is the dangerous one in WebKit, as it breaks things wherever */
+      word-break: break-all;
+      /* Instead use this non-standard one: */
+      word-break: break-word;
+
+      /* Adds a hyphen where the word breaks, if supported (No Blink) */
+      -ms-hyphens: auto;
+      -moz-hyphens: auto;
+      -webkit-hyphens: auto;
+      hyphens: auto;
       color: #9B9B9B;
       text-decoration: none;
     }
