@@ -31,7 +31,7 @@ class Input extends React.Component {
         .then((values) => {
           if (!values) return this.closeSuggestion()
           this.setState({
-            suggestions: values.map((item) => ({ term: item.term })),
+            suggestions: values.slice(0, 5).map((item) => ({ term: item.term })),
             suggestedTerm: null,
             suggestedIndex: null,
           })
@@ -199,7 +199,6 @@ class Input extends React.Component {
           activeIndex={suggestedIndex}
           queryTerm={text}
         />
-        
         <HelpMenu />
         <div className='olachat-input'>
           {supportsVoice
