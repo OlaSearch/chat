@@ -19,12 +19,12 @@ let store = createStore(config, { Parser, QueryBuilder, Http }, { Conversation: 
 /* Help menu */
 config.helpItems = [
   {
-    label: 'Help',
-    url: 'http://mom'
+    label: 'Feedback',
+    url: 'https://services.mom.gov.sg/efeedback/Forms/efeedback.aspx'
   },
   {
-    label: 'Contact us',
-    url: 'http://mom/'
+    label: 'Help',
+    url: 'http://www.mom.gov.sg/contact-us'
   }
 ]
 

@@ -5,7 +5,7 @@ import Textarea from 'react-flexi-textarea'
 import QuerySuggestions from './QuerySuggestions'
 import { connect } from 'react-redux'
 import HelpMenu from './HelpMenu'
-
+import listensToClickOutside from 'react-onclickoutside'
 
 const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
 
@@ -20,6 +20,9 @@ class Input extends React.Component {
       suggestedTerm: null,
     }
   }
+  handleClickOutside = (event) => {
+    this.closeSuggestion()
+  };
   onChange = (event) => {
     let text = event.target.value
     this.setState({
@@ -27,15 +30,24 @@ class Input extends React.Component {
     })
 
     if (text) {
-      this.props.dispatch(Actions.AutoSuggest.executeFuzzyAutoSuggest(text))
-        .then((values) => {
-          if (!values) return this.closeSuggestion()
-          this.setState({
-            suggestions: values.slice(0, 5).map((item) => ({ term: item.term })),
-            suggestedTerm: null,
-            suggestedIndex: null,
+      /**
+       * Auto suggest queries
+       */
+      let lastMsg = this.props.messages[this.props.messages.length - 1]
+      let hasQuickReply = lastMsg && lastMsg.slot_options && lastMsg.slot_options.length
+
+      if (!hasQuickReply) {
+        this.props.dispatch(Actions.AutoSuggest.executeFuzzyAutoSuggest(text))
+          .then((values) => {
+            if (!values) return this.closeSuggestion()
+
+            this.setState({
+              suggestions: values.slice(0, 5).map((item) => ({ term: item.term })),
+              suggestedTerm: null,
+              suggestedIndex: null,
+            })
           })
-        })
+      }
     } else {
       this.closeSuggestion()
     }
@@ -230,4 +242,4 @@ class Input extends React.Component {
   }
 }
 
-export default connect(null)(Input)
+export default connect(null)(listensToClickOutside(Input))
