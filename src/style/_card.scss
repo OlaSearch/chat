@@ -22,14 +22,18 @@
   padding-bottom: 8px;
 }
 .ola-card-list-items {
-  @include flexbox;
-  flex-wrap: wrap;
+  @include media (tablet) {
+    @include flexbox;
+    flex-wrap: wrap;
+  }
 }
 
 .ola-card-list-item {
   font-size: 14px;
-  padding: 0em 1em 1em 0;
-  width: 50%;
+  padding: 0em 8px 1em 0;
+  @include media (tablet) {
+    width: 50%;
+  }
 }
 
   .ola-card-list-inner {
@@ -66,9 +70,11 @@
     font-size: 12px;
     a {
       display: block;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
+      @include media (tablet) {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
       color: #9B9B9B;
       text-decoration: none;
     }

@@ -36,7 +36,7 @@ class Input extends React.Component {
       let lastMsg = this.props.messages[this.props.messages.length - 1]
       let hasQuickReply = lastMsg && lastMsg.slot_options && lastMsg.slot_options.length
 
-      if (!hasQuickReply) {
+      if (!hasQuickReply || this.props.isTyping) {
         this.props.dispatch(Actions.AutoSuggest.executeFuzzyAutoSuggest(text))
           .then((values) => {
             if (!values) return this.closeSuggestion()
@@ -47,6 +47,8 @@ class Input extends React.Component {
               suggestedIndex: null,
             })
           })
+      } else {
+        this.closeSuggestion()
       }
     } else {
       this.closeSuggestion()
