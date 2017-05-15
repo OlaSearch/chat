@@ -9,7 +9,17 @@ html {
 
 .olachat {
   height: 600px;
+  max-height: 100%;
   width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 2s ease-in;
+
+  .olachat-bot-active & {
+    opacity: 1;
+    visibility: visible;
+  }
+
   @include media (tablet) {
     width: 860px;
     border: 1px #ccc solid;
@@ -57,3 +67,4 @@ html {
 @import 'query_suggestions';
 @import 'helpmenu';
 @import 'dropdown';
+@import 'smartsuggestions';

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { clearMessages } from './actions'
 import { Actions } from 'olasearch'
+import classNames from 'classnames'
 // import webkit from './adapters/webkit'
 // import houndify from './adapters/houndify'
 // import watson from './adapters/watson'
@@ -92,8 +93,9 @@ class Bot extends Component {
         : <Chat {...passProps} />
       : null
     const { isActive } = this.state
+    const botClass = classNames('olachat-bot', { 'olachat-bot-active': isActive })
     return (
-      <div className='olachat-bot'>
+      <div className={botClass}>
         {isActive
           ? null
           : <Bubble

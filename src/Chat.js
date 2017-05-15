@@ -5,6 +5,7 @@ import Messages from './Messages'
 import { connect } from 'react-redux'
 import { addMessage } from './actions'
 import { Actions } from 'olasearch'
+import SmartSuggestions from './SmartSuggestions'
 
 class Chat extends React.Component {
   static defaultProps = {
@@ -48,6 +49,9 @@ class Chat extends React.Component {
           addMessage={this.addMessage}
           botName={this.props.botName}
           userName={this.props.userName}
+        />
+        <SmartSuggestions
+          onSubmit={this.addMessage}
         />
         <Input
           onSubmit={this.addMessage}

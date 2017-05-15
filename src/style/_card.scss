@@ -1,4 +1,17 @@
 /**
+ * generic
+ */
+.ola-card {
+  padding-top: 8px;
+  font-size: 14px;
+  .ola-card-inner {
+    border: 1px #d8d8d7 solid;
+    background: white;
+    padding: 1em;
+    border-radius: 5px;
+  }
+}
+/**
  * Title
  */
 .ola-card-list-title {
@@ -55,4 +68,13 @@
       color: #9B9B9B;
       text-decoration: none;
     }
+  }
+
+  .ola-card-button {
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #9B9B9B;
+    text-decoration: none;
   }

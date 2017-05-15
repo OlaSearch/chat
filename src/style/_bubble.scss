@@ -2,6 +2,7 @@
   position: fixed;
   right: 20px;
   bottom: 20px;
+  top: 0;
 
   .olachat, .olachat-vui {
     position: fixed;
@@ -53,7 +54,6 @@ $bubble-icon-size: 34px;
     right: $bubble-size;
     top: 50%;
     margin-top: -17px;
-    // color: $blue;
     font-size: 34px;
   }
 }

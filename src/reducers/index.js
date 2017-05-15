@@ -19,6 +19,7 @@ const createMessageObj = (answer) => {
     awaitingUserInput: answer.awaiting_user_input,
     in_response_to: answer.in_response_to,
     slot_options: answer.slot_options,
+    quick_replies: answer.quick_replies,
     fulfilled: answer.fulfilled,
     card: answer.card
   }

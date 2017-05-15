@@ -15,7 +15,7 @@ const Card = ({ card }) => {
 
       default:
         return (
-          <div>
+          <div className='ola-card-inner'>
             <h3 className='ola-card-title'><a target='_blank' href={url}>{title}</a></h3>
             {buttons.map((button, idx) => <CardButton {...button} key={idx} />)}
           </div>

@@ -6,6 +6,7 @@ import QuerySuggestions from './QuerySuggestions'
 import { connect } from 'react-redux'
 import HelpMenu from './HelpMenu'
 
+
 const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
 
 class Input extends React.Component {
@@ -198,6 +199,7 @@ class Input extends React.Component {
           activeIndex={suggestedIndex}
           queryTerm={text}
         />
+        
         <HelpMenu />
         <div className='olachat-input'>
           {supportsVoice

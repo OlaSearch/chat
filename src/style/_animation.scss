@@ -32,19 +32,21 @@
  */
 .messages-enter, .messages-appear {
   opacity: 0.01;
+  // transform: translate3d(0, 10px, 0)
 }
 
 .messages-enter.messages-enter-active, .messages-appear.messages-appear-active {
   opacity: 1;
-  transition: opacity 200ms ease-in;
+  // transform: translate3d(0,0,0);
+  transition: opacity 0.2s ease-in;
 }
 
 .messages-leave {
-  opacity: 1;
+  // opacity: 1;
 }
 
 .messages-leave.messages-leave-active {
-  opacity: 0.01;
+  // opacity: 0.01;
   transition: opacity 200ms ease-in;
 }
 

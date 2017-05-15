@@ -162,7 +162,7 @@ class Messages extends React.Component {
             {messagesComponent}
           </ReactCSSTransitionGroup>
           {flipped ? null : loadingSpinner}
-          {isTyping ? flipped ? <TypingIndicator avatarBot={this.props.avatarBot} /> : null : null}
+          {isTyping ? flipped ? <ReactCSSTransitionGroup transitionEnterTimeout={300} transitionLeave={false} transitionAppearTimeout={300} transitionAppear transitionName='messages'><TypingIndicator avatarBot={this.props.avatarBot} /></ReactCSSTransitionGroup> : null : null}
         </div>
       </div>
     )
