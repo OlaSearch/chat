@@ -33,10 +33,6 @@
  */
 .olachat-message {
   padding: 8px 16px 8px 16px;
-  @include media (tablet) {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
   min-height: 50px;
   font-size: 14px;
   @include clearfix;

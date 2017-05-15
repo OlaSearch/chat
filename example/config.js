@@ -32,8 +32,8 @@ module.exports = {
     env: 'staging',
     namespace: "mom",
     api: {
-        intent: "https://api.olasearch.com/intent",
-        search: "https://api.olasearch.com/search",
+        intent: "https://api.staging.olasearch.com/intent",
+        search: "https://api.staging.olasearch.com/search",
         suggest: "http://54.254.254.191:8983/solr/steptwo/suggest"
     },
     logger: {

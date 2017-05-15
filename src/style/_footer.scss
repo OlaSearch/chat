@@ -25,10 +25,8 @@ $gutter: 12px;
       width: 100%;
       border: none;
       padding: $gutter $gutter $gutter 16px;
-      @include media (tablet) {
-        padding-left: 20px;
-      }
       font-size: 16px;
+      padding-left: 0;
 
       @include media (desktop) {
         font-size: 14px;
@@ -52,6 +50,7 @@ $gutter: 12px;
     color: $blue;
     cursor: pointer;
     width: 50px;
+    line-height: 1;
 
     &:before {
       @extend .iconfont;

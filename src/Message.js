@@ -38,13 +38,10 @@ const Message = ({ message, avatarBot, addMessage, botName, userName, minTextLen
         <div className='olachat-message-date'>
           {DateParser.format(timestamp * 1000, 'DD MMM')}
         </div>
-        {isActive
-          ? <QuickReplies
-              onSubmit={addMessage}
-              options={options}
-            />
-          : null
-        }
+        <QuickReplies
+          onSubmit={addMessage}
+          options={options}
+        />
       </div>
     </div>
   )

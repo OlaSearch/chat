@@ -4,6 +4,7 @@ import { Settings, Actions } from 'olasearch'
 import Textarea from 'react-flexi-textarea'
 import QuerySuggestions from './QuerySuggestions'
 import { connect } from 'react-redux'
+import HelpMenu from './HelpMenu'
 
 const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
 
@@ -197,6 +198,7 @@ class Input extends React.Component {
           activeIndex={suggestedIndex}
           queryTerm={text}
         />
+        <HelpMenu />
         <div className='olachat-input'>
           {supportsVoice
            ? <div className='olachat-input-voice'>
