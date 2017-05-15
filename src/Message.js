@@ -42,6 +42,7 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
         <QuickReplies
           onSubmit={addMessage}
           options={options}
+          isActive={isActive}
         />
       </div>
     </div>

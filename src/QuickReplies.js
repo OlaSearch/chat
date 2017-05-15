@@ -9,9 +9,10 @@ class QuickReplies extends Component {
     this.props.onSubmit()
   };
   render () {
-    let { options } = this.props
+    let { options, isActive } = this.props
+    if (!isActive) return null
     if (!options || !options.length) return null
-    let replies = options.map(({ label }, idx) => <QuickReplyButton key={idx} label={label} handleClick={this.handleClick} />)
+    let replies = options.map(({ label }, idx) => <QuickReplyButton key={idx} label={label} isActive={isActive} handleClick={this.handleClick} />)
     return (
       <div className='olachat-qreply'>
         <ReactCSSTransitionGroup
@@ -30,7 +31,7 @@ class QuickReplies extends Component {
   }
 }
 
-const QuickReplyButton = ({ label, handleClick }) => {
+const QuickReplyButton = ({ label, handleClick, isActive }) => {
   function onClick () {
     handleClick(label)
   }
@@ -39,6 +40,7 @@ const QuickReplyButton = ({ label, handleClick }) => {
       className='olachat-qreply-button'
       type='button'
       onClick={onClick}
+      disabled={!isActive}
     >
       {label}
     </button>
