@@ -13,7 +13,7 @@ import Bubble from './Bubble'
 import Chat from './Chat'
 import Vui from './Vui'
 
-const DEBUG = true
+const DEBUG = false
 const supportsVoice = DEBUG
   ? false
   : navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
