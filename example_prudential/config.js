@@ -32,9 +32,9 @@ module.exports = {
     env: 'staging',
     namespace: "mom",
     api: {
-        intent: "https://api.olasearch.com/intent",
-        search: "https://api.olasearch.com/search",
-        suggest: "https://api.olasearch.com/suggest"
+        intent: "https://api.staging.olasearch.com/intent",
+        search: "https://api.staging.olasearch.com/search",
+        suggest: "https://api.staging.olasearch.com/suggest"
     },
     logger: {
         enabled:!0,
