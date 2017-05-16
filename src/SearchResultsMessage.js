@@ -39,6 +39,8 @@ class SearchResultsMessage extends React.Component {
     let { AppState, QueryState, Device, dispatch, isActive, message, results } = this.props
     let { bookmarks, totalResults, isLoading } = AppState
     let { search } = message
+    let { isPhone } = Device
+    let maxResults = isPhone ? 1 : 3
     /* If there is no search */
 
     if (!results.length && !search) return null
@@ -55,11 +57,10 @@ class SearchResultsMessage extends React.Component {
     }
 
     if (!isActive && !this.state.isActive) {
-      results = results.filter((item, idx) => idx < 3)
+      results = results.filter((item, idx) => idx < maxResults)
     }
 
     let { page, per_page } = QueryState
-    let { isPhone } = Device
     let klass = classNames('olachat-results', {
       'olachat-results-stack': !isActive && !this.state.isActive
     })
