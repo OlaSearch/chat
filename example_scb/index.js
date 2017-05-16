@@ -14,6 +14,18 @@ const logger = createLogger({ collapsed: true});
 let loggerMiddleware = createLoggerMiddleware({ logger: config.logger })
 let store = createStore(config, { Parser, QueryBuilder, Http }, { Conversation: ChatReducer }, [ loggerMiddleware ])
 
+/* Help menu */
+config.helpItems = [
+  {
+    label: 'Feedback',
+    url: 'https://services.mom.gov.sg/efeedback/Forms/efeedback.aspx'
+  },
+  {
+    label: 'Help',
+    url: 'http://www.mom.gov.sg/contact-us'
+  }
+]
+
 /* Load default css */
 require('olachat/style/chat.scss')
 require('olachat/style/form/form.scss')
