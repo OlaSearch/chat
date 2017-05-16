@@ -1,0 +1,25 @@
+.olachat-helpmenu {
+  width: 30px + 16px + 12px;
+  position: relative;
+}
+
+.olachat-helpmenu-button {
+  background: none;
+  padding: 0;
+  border: none;
+  color: $blue;
+  width: 100%;
+  text-align: center;
+  height: 40px;
+  line-height: 1;
+  outline: none;
+
+  span {
+    font-size: 0;
+  }
+
+  &:before {
+    @extend .iconfont;
+    content: 'menu';
+  }
+}

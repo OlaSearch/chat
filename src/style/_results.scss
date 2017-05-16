@@ -1,0 +1,163 @@
+/**
+ * Main wrapper
+ */
+
+.olachat-results {
+  position: relative;
+}
+
+  /**
+   * Wrapper
+   */
+  .olachat-results-wrapper {
+    position: relative;
+  }
+
+  /**
+   * Overlay
+   */
+  .olachat-results-overlay {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(255,255,255,1);
+    background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,0.79) 47%, rgba(237,237,237,0.55) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(47%, rgba(246,246,246,0.79)), color-stop(100%, rgba(237,237,237,0.55)));
+    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,0.79) 47%, rgba(237,237,237,0.55) 100%);
+    background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,0.79) 47%, rgba(237,237,237,0.55) 100%);
+    background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,0.79) 47%, rgba(237,237,237,0.55) 100%);
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(246,246,246,0.79) 47%, rgba(237,237,237,0.55) 100%);
+        border-radius: 5px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease-in;
+
+    .olachat-results-stack & {
+      visibility: visible;
+      opacity: 0.6;
+    }
+  }
+
+/**
+ * Search results
+ */
+.ola-results {
+  display: flex;
+  flex-direction: column;
+
+  @include media (tablet) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  justify-content: space-between;
+}
+
+  .ola-snippet {
+    @include media(tablet) {
+      width: 32%;
+    }
+    border: 1px #d8d8d7 solid;
+    background: white;
+    padding: 1em;
+    border-radius: 5px;
+    margin-bottom: 16px;
+    // margin: 0 16px 16px 0;
+  }
+
+  /**
+   * Card title
+   */
+  .ola-field-title {
+    font-size: 14px;
+    margin: 0 0 8px 0;
+    > a {
+      color: $blue;
+      text-decoration: none;
+    }
+  }
+
+  /**
+   * Summary
+   */
+  .ola-field-summary {
+    p {
+      margin: 0 0 10px 0;
+    }
+  }
+
+  .ola-link-bookmark-action {
+    display: none;
+  }
+
+  /**
+   * Load more
+   */
+  .ola-link-load-more {
+    text-align: center;
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    color: $blue;
+    outline: none;
+
+    .olachat-results-stack & {
+      opacity: 0.2;
+    }
+
+    &:hover {
+      color: $base-color;
+    }
+
+    &:after {
+      @extend .iconfont;
+      content: 'keyboard_arrow_down';
+      vertical-align: middle;
+      line-height: 1;
+      font-size: 18px;
+    }
+
+    &.ola-link-load-more-active {
+      opacity: 0.5;
+    }
+  }
+
+
+  /**
+   * See all button
+   */
+
+  .olachat-results-seeall {
+    position: absolute;
+    top: 50%;
+    background: #F3F9FF;
+    color: $blue;
+    width: 180px;
+    height: 50px;
+    border: 1px $blue solid;
+    border-radius: 5px;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    left: 50%;
+    margin-left: -90px;
+    margin-top: -20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease-in;
+    font-size: 20px;
+    font-weight: 500;
+
+    &:hover {
+      color: $base-color;
+      border-color: $base-color;
+    }
+
+    .olachat-results-stack & {
+      visibility: visible;
+      opacity: 1;
+    }
+  }

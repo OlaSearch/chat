@@ -5,9 +5,10 @@ import Card from './Card'
 import { createHTMLMarkup } from './utils'
 import { DateParser } from 'olasearch'
 import QuickReplies from './QuickReplies'
+import SearchResultsMessage from './SearchResultsMessage'
 
 const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName, minTextLength, isActive }) => {
-  let { userId, timestamp, awaitingUserInput, fulfilled, card, slot_options: options } = message
+  let { userId, timestamp, awaitingUserInput, fulfilled, card, slot_options: options, results } = message
   let isBot = !userId
   let text = isBot ? message.reply : message.message
   let messageClass = cx('olachat-message', {
@@ -15,7 +16,8 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
     'olachat-message-fulfilled': fulfilled,
     'olachat-message-collapse': typeof awaitingUserInput !== 'undefined' && !awaitingUserInput,
     'olachat-message-single': text && text.length < minTextLength,
-    'olachat-message-wide': !!card
+    'olachat-message-wide': !!card,
+    'olachat-message-with-search': results && results.length > 0
   })
   return (
     <div className={messageClass}>
@@ -34,7 +36,15 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
         </div>
         <div className='olachat-message-content'>
           <div className='olachat-message-reply' dangerouslySetInnerHTML={createHTMLMarkup(text)} />
-          <Card card={card} />
+          <Card
+            card={card}
+          />
+          <SearchResultsMessage
+            results={results}
+            botName={botName}
+            isActive={isActive}
+            message={message}
+          />
         </div>
         <div className='olachat-message-date'>
           {DateParser.format(timestamp * 1000, 'DD MMM')}

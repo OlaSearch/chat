@@ -28,6 +28,10 @@ config.helpItems = [
   }
 ]
 
+/* Set per page */
+
+store.dispatch(Actions.Search.changePerPage(3))
+
 /* Load default css */
 require('olachat/style/chat.scss')
 require('./style.scss')

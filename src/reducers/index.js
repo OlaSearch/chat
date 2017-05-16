@@ -8,7 +8,7 @@ const initialState = {
   shouldPoll: false
 }
 
-const createMessageObj = (answer) => {
+const createMessageObj = (answer, results) => {
   return {
     id: answer.id,
     reply: answer.reply,
@@ -21,7 +21,9 @@ const createMessageObj = (answer) => {
     slot_options: answer.slot_options,
     quick_replies: answer.quick_replies,
     fulfilled: answer.fulfilled,
-    card: answer.card
+    card: answer.card,
+    search: answer.search,
+    results
   }
 }
 
@@ -36,7 +38,23 @@ export default (state = initialState, action) => {
 
     case ActionTypes.REQUEST_SEARCH_SUCCESS:
       if (!action.answer) return state
-      let { answer } = action
+      let { answer, results, payload } = action
+
+      if (payload.appendResult) {
+        return {
+          ...state,
+          messages: state.messages.map((item, idx) => {
+            if (idx + 1 === state.messages.length) {
+              return {
+                ...item,
+                results: [...item.results, ...results]
+              }
+            }
+            return item
+          })
+        }
+      }
+
       let { reply, in_response_to, message } = answer
       let messages = []
       if (Array.isArray(reply)) {
@@ -45,7 +63,7 @@ export default (state = initialState, action) => {
           messages.push(createMessageObj(msg))
         }
       } else {
-        messages.push(createMessageObj(answer))
+        messages.push(createMessageObj(answer, results))
       }
 
       /**
