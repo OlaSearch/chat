@@ -42,7 +42,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "mitt": "^1.1.2",
-    "olasearch": "git+ssh://git@bitbucket.org/olasearch/olasearch-core.git",
+    "olasearch": "git+ssh://gitlab-ci-token:iNkSh25Xh9h9fts8dqTp@gitlab.com:olasearch/olasearch-core.git",
     "react-flexi-textarea": "^1.0.3",
     "react-onclickoutside": "^5.11.1",
     "react-redux": "^5.0.4",
