@@ -7,6 +7,7 @@ import Bot from './Bot'
 import Search from './Search'
 import ChatReducer from './reducers'
 import ChatActions from './actions'
+import version from './Version'
 
 export {
   Input,
@@ -17,5 +18,6 @@ export {
   Vui,
   Bot,
   ChatReducer,
-  ChatActions
+  ChatActions,
+  version
 }
