@@ -39,7 +39,7 @@ module.exports = {
     logger: {
         enabled:!0,
         engine:["logstash", "google"],
-        url:"https://mom.olasearch.com/log",
+        url:"https://api.staging.olasearch.com/log",
         headers:{},
         fields:{
             title:"title_t",

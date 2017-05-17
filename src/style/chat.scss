@@ -16,6 +16,9 @@ p {
   max-height: 100%;
   width: 100%;
   animation: 0.2s ease-out 0s 1 fadeIn;
+  -webkit-animation: 0.2s ease-out 0s 1 fadeIn;
+  -ms-animation: 0.2s ease-out 0s 1 fadeIn;
+  -moz-animation: 0.2s ease-out 0s 1 fadeIn;
 
   @include media (tablet) {
     width: 860px;
