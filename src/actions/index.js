@@ -11,7 +11,7 @@ export function addMessage (payload) {
     var query = state.QueryState
     var { messages, language } = state.Conversation
     var context = state.Context
-    var immediate = payload ? payload.immediate : false
+
     var intent = payload && payload.intent ? { intent: payload.intent } : {}
     var msgId = utilities.uuid()
     var in_response_to = messages.length ? messages[messages.length - 1]['id'] : null
@@ -41,7 +41,7 @@ export function addMessage (payload) {
     }
 
     /* Simulate delay - Show typing indicator */
-    setTimeout(() => dispatch(showTypingIndicator()), immediate ? 0 : CHAT_DELAY)
+    setTimeout(() => dispatch(showTypingIndicator()), payload && payload.start ? 0 : CHAT_DELAY)
 
     return new Promise((resolve, reject) => {
       /* Simulate delay */
@@ -64,7 +64,10 @@ export function addMessage (payload) {
           /* Check if more messages should be requested */
           if (checkIfAwaitingResponse(response) && searchInput !== 'voice') {
             /* Remove intent */
-            if (payload && 'intent' in payload) delete payload['intent']
+            if (payload && 'intent' in payload) {
+              delete payload['intent'] /* Remove intent */
+              if ('start' in payload) delete payload['start'] /* Remove start flag */
+            }
             /* Clear previous query */
             dispatch(Actions.Search.clearQueryTerm())
             /* Ask for more messages */
@@ -74,7 +77,7 @@ export function addMessage (payload) {
           return resolve(response)
 
         })
-      }, immediate ? 0 : CHAT_DELAY + CHAT_REPLY_DELAY)
+      }, CHAT_DELAY + CHAT_REPLY_DELAY)
     })
 
   }

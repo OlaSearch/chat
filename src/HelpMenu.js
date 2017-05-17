@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 class HelpMenu extends React.Component {
   constructor (props) {
-    super (props)
+    super(props)
     this.state = {
       isOpen: false
     }

@@ -17,7 +17,7 @@ class Input extends React.Component {
       suggestions: [],
       submitting: false,
       suggestedIndex: null,
-      suggestedTerm: null,
+      suggestedTerm: null
     }
   }
   handleClickOutside = (event) => {
@@ -44,7 +44,7 @@ class Input extends React.Component {
             this.setState({
               suggestions: values.slice(0, 5).map((item) => ({ term: item.term })),
               suggestedTerm: null,
-              suggestedIndex: null,
+              suggestedIndex: null
             })
           })
       } else {
@@ -191,13 +191,12 @@ class Input extends React.Component {
         })
         break
     }
-
   };
   registerRef = (el) => {
     this.Input = el
   };
   onSuggestionChange = (text) => {
-    this.setState({ text, suggestedIndex: null, suggestedTerm: null,  suggestions: [] }, () => {
+    this.setState({ text, suggestedIndex: null, suggestedTerm: null, suggestions: [] }, () => {
       this.onFormSubmit()
     })
   };

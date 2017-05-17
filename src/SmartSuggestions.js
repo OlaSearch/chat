@@ -33,7 +33,6 @@ class SmartSuggestions extends React.Component {
   }
 }
 
-
 const QuickReplyButton = ({ label, handleClick, isActive }) => {
   function onClick () {
     handleClick(label)

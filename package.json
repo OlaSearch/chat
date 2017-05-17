@@ -4,15 +4,15 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "BABEL_ENV=production mocha --compilers js:babel-register --recursive --require ./test/setup.js",
     "watch": "babel --watch src --out-dir lib",
     "standard": "standard --verbose --fix src/*"
   },
   "author": "",
-  "license": "ISC",
+  "license": "Copyright Ola Search Pte Ltd",
   "peerDependencies": {
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
   },
   "standard": {
     "parser": "babel-eslint",
@@ -31,6 +31,9 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.1",
+    "expect": "^1.20.2",
+    "jsdom": "^10.1.0",
+    "mocha": "^3.4.1",
     "node-sass": "^4.5.2",
     "sass-loader": "^6.0.5",
     "standard": "^10.0.2",
@@ -46,9 +49,7 @@
     "react-transition-group": "^1.1.3",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
-    "reqwest": "git+ssh://git@gitlab.com/olasearch/reqwest.git",
     "sentence-tokenizer": "0.0.7",
-    "standalone-react-css-transition-group": "^15.5.0",
     "watson-html5-speech-recognition": "^0.6.6"
   }
 }

@@ -1,0 +1,9 @@
+image: node:6.4
+before_script:
+  - npm install -g npm --silence
+  - npm install
+
+test:
+  script:
+  - npm run standard
+  - npm run test

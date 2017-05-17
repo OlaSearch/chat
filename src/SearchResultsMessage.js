@@ -1,23 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import {
-  Actions,
-  AutoComplete,
-  SearchResults,
-  SearchFooter,
-  SearchFilters,
-  SelectedFilters,
-  Decorators,
-  SearchTitle,
-  NoResults,
-  SpellSuggestion,
-  TermSuggestion
-} from 'olasearch';
+import { SearchFooter, SearchResults } from 'olasearch'
 
 class SearchResultsMessage extends React.Component {
   constructor (props) {
-    super (props)
+    super(props)
     this.state = {
       isActive: false
     }
@@ -45,14 +33,14 @@ class SearchResultsMessage extends React.Component {
 
     if (!results.length && !search) return null
 
-    let { title, no_result } = search
+    let { title, no_result: noResultsText } = search
 
     /* If no results */
     if (!results.length && search) {
       return (
         <div
           className='olachat-message-reply'
-        >{no_result}</div>
+        >{noResultsText}</div>
       )
     }
 
@@ -60,7 +48,7 @@ class SearchResultsMessage extends React.Component {
       results = results.filter((item, idx) => idx < maxResults)
     }
 
-    let { page, per_page } = QueryState
+    let { page, per_page: perPage } = QueryState
     let klass = classNames('olachat-results', {
       'olachat-results-stack': !isActive && !this.state.isActive
     })
@@ -79,13 +67,13 @@ class SearchResultsMessage extends React.Component {
 
           {isActive
             ? <SearchFooter
-                totalResults={totalResults}
-                currentPage={page}
-                perPage={per_page}
-                dispatch={dispatch}
-                isPhone={isPhone}
-                isLoading={isLoading}
-                beforeChangePage={this.onChangePage}
+              totalResults={totalResults}
+              currentPage={page}
+              perPage={perPage}
+              dispatch={dispatch}
+              isPhone={isPhone}
+              isLoading={isLoading}
+              beforeChangePage={this.onChangePage}
               />
             : null
           }
@@ -95,7 +83,7 @@ class SearchResultsMessage extends React.Component {
   }
 }
 
-function mapStateToProps( state ){
+function mapStateToProps (state) {
   return {
     AppState: state.AppState,
     QueryState: state.QueryState,

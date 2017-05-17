@@ -14,7 +14,7 @@ class Chat extends React.Component {
     onLoad: () => new Promise((resolve, reject) => resolve())
   };
   componentDidMount () {
-    this.props.addMessage({ intent: this.props.initialIntent })
+    this.props.addMessage({ intent: this.props.initialIntent, start: true })
   }
   addMessage = (...args) => {
     /* Scroll to Top */

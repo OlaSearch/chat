@@ -64,7 +64,7 @@ class Bot extends Component {
     bubbleProps: {},
     botProps: {
       botName: 'MOMBot',
-      userName: 'You',
+      userName: 'You'
     },
     headerProps: {
       title: 'Calculate maternity leave'
