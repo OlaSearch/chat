@@ -17,21 +17,33 @@ npm install olachat --save
 ````
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Chat, ChatReducer } from 'olachat'
-import { Provider } from 'react-redux'
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import createLogger from 'redux-logger'
-import thunk from 'redux-thunk'
+import { Chat, ChatReducer, Vui, Bot } from 'olachat'
+import { OlaProvider, createStore, Actions } from 'olasearch'
+import config from 'olasearchconfig'
+import { Parser, QueryBuilder, Http } from 'olasearch-solr-adapter'
+import { createLoggerMiddleware } from 'olasearch-logger-middleware'
+import { bot, user } from './avatars'
 
-const logger = createLogger({ collapsed: true});
-const store = createStore(combineReducers({ ChatState: ChatReducer }), applyMiddleware(thunk, logger))
+/* Optional loggerMiddleware */
+let loggerMiddleware = createLoggerMiddleware({ logger: config.logger })
+let store = createStore(config, { Parser, QueryBuilder, Http }, { Conversation: ChatReducer }, [ loggerMiddleware ])
 
-require('./style/chat.scss')
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Chat />
-  </Provider>
+  <OlaProvider config={config} store={store}>
+    <div className='full-wrapper'>
+      <Bot
+        initialIntent='maternity-leave'
+        bubbleProps={{
+          label: 'Ask us anything'
+        }}
+        avatarProps={{
+          avatarBot: bot,
+          avatarUser: user,
+        }}
+      />
+    </div>
+  </OlaProvider>
   , document.getElementById('root')
 )
 
