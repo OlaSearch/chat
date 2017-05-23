@@ -52,6 +52,7 @@ if (root_div) {
             avatarBot: bot,
             avatarUser: user,
           }}
+          vui
         />
       </div>
     </OlaProvider>

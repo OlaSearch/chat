@@ -45,7 +45,8 @@ if (document.getElementById('root')) {
             label: 'Calculate how much you have to save for your childs education.'
           }}
           botProps={{
-            botName: 'SCB'
+            botName: 'Bot',
+            userName: 'User'
           }}
           initialIntent='scb.education_calculator'
           avatarProps={{
