@@ -7,7 +7,7 @@ import { DateParser } from 'olasearch'
 import QuickReplies from './QuickReplies'
 import SearchResultsMessage from './SearchResultsMessage'
 
-const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName, minTextLength, isActive }) => {
+const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName, minTextLength, isActive, isSearchActive }) => {
   let { userId, timestamp, awaitingUserInput, fulfilled, card, slot_options: options, results } = message
   let isBot = !userId
   let text = isBot ? message.reply : message.message
@@ -42,7 +42,7 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
           <SearchResultsMessage
             results={results}
             botName={botName}
-            isActive={isActive}
+            isActive={isSearchActive}
             message={message}
           />
         </div>

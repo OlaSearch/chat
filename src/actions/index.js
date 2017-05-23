@@ -83,6 +83,22 @@ export function addMessage (payload) {
   }
 }
 
+export function loadMore (message) {
+  return (dispatch, getState) => {
+    var currentPage = getState().QueryState.page
+    dispatch(Actions.Search.changePage(++currentPage))
+    dispatch(Actions.Search.executeSearch({
+      routeChange: false,
+      appendResult: true,
+      extraParams: {
+        /* Additional params */
+        q: message.search.q,
+        msgId: message.id
+      }
+    }))
+  }
+}
+
 export function showTypingIndicator () {
   return {
     type: types.SHOW_TYPING_INDICATOR

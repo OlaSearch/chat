@@ -44,7 +44,7 @@ export default (state = initialState, action) => {
         return {
           ...state,
           messages: state.messages.map((item, idx) => {
-            if (idx + 1 === state.messages.length) {
+            if (item.id === answer.in_response_to) {
               return {
                 ...item,
                 results: [...item.results, ...results]

@@ -31,7 +31,6 @@
   max-width: 60%;
   @include clearfix;
   clear: both;
-  // float: right;
 }
 
   .olachat-search-message-bot {
@@ -42,28 +41,12 @@
       float: left;
       margin-left: 0;
     }
-    // background-color: $blue;
-    // color: white;
-    // float: left;
   }
 
-/**
- * Delete this
- */
-.ola-snippet {
-  font-size: 14px;
-  display: flex;
-  border-bottom: 1px #ccc solid;
-  padding: 1em 0;
-
-  img {
-    max-width: 200px;
-    height: auto;
-    margin-right: 1em;
-  }
-}
-  .ola-field-title {
-    margin: 0 0 8px 0;
+  .ola-snippet {
+    img {
+      max-width: 100%;
+    }
   }
 
 

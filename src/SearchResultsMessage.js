@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import { SearchFooter, SearchResults } from 'olasearch'
+import { SearchFooter, SearchResults, Actions } from 'olasearch'
+import { loadMore } from './actions'
 
 class SearchResultsMessage extends React.Component {
   constructor (props) {
@@ -18,10 +19,8 @@ class SearchResultsMessage extends React.Component {
       isActive: !this.state.isActive
     })
   };
-  onChangePage = () => {
-    // let { search: { q } } = this.props.message
-    // this.props.dispatch(Actions.Search.updateQueryTerm(q, null, false))
-    /* Third paramater helps forcePageReset = false */
+  onLoadMore = () => {
+    this.props.loadMore(this.props.message)
   };
   render () {
     let { AppState, QueryState, Device, dispatch, isActive, message, results } = this.props
@@ -44,13 +43,14 @@ class SearchResultsMessage extends React.Component {
       )
     }
 
-    if (!isActive && !this.state.isActive) {
+    let isStacked = !isActive && !this.state.isActive
+    if (isStacked) {
       results = results.filter((item, idx) => idx < maxResults)
     }
 
     let { page, per_page: perPage } = QueryState
     let klass = classNames('olachat-results', {
-      'olachat-results-stack': !isActive && !this.state.isActive
+      'olachat-results-stack': isStacked
     })
     return (
       <div className={klass}>
@@ -67,13 +67,13 @@ class SearchResultsMessage extends React.Component {
 
           {isActive
             ? <SearchFooter
-              totalResults={totalResults}
-              currentPage={page}
-              perPage={perPage}
-              dispatch={dispatch}
-              isPhone={isPhone}
-              isLoading={isLoading}
-              beforeChangePage={this.onChangePage}
+                totalResults={totalResults}
+                currentPage={page}
+                perPage={perPage}
+                dispatch={dispatch}
+                isPhone={isPhone}
+                isLoading={isLoading}
+                onLoadMore={this.onLoadMore}
               />
             : null
           }
@@ -91,4 +91,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)(SearchResultsMessage)
+export default connect(mapStateToProps, { loadMore })(SearchResultsMessage)

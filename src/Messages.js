@@ -132,17 +132,23 @@ class Messages extends React.Component {
     let loadingSpinner = isInfiniteLoading ? <div>Loading</div> : null
     let messagesComponent = messageComponent
       ? messages.map(messageComponent)
-      : messages.map((message, idx) =>
-          (<Message
-            avatarBot={this.props.avatarBot}
-            avatarUser={this.props.avatarUser}
-            message={message}
-            key={message.id}
-            addMessage={this.props.addMessage}
-            isActive={idx === messages.length - 1}
-            botName={this.props.botName}
-            userName={this.props.userName}
-          />)
+      : messages.map((message, idx) => {
+            let nextMsgs = messages.slice(idx)
+            let isSearchActive = nextMsgs.filter((msg) => !msg.userId).length === nextMsgs.length
+            return (
+              <Message
+                avatarBot={this.props.avatarBot}
+                avatarUser={this.props.avatarUser}
+                message={message}
+                key={message.id}
+                addMessage={this.props.addMessage}
+                isActive={idx === messages.length - 1}
+                isSearchActive={isSearchActive}
+                botName={this.props.botName}
+                userName={this.props.userName}
+              />
+            )
+          }
         )
 
     return (
