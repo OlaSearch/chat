@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import { SearchFooter, SearchResults, Actions } from 'olasearch'
+import { SearchFooter, SearchResults } from 'olasearch'
 import { loadMore } from './actions'
 
 class SearchResultsMessage extends React.Component {
@@ -67,13 +67,13 @@ class SearchResultsMessage extends React.Component {
 
           {isActive
             ? <SearchFooter
-                totalResults={totalResults}
-                currentPage={page}
-                perPage={perPage}
-                dispatch={dispatch}
-                isPhone={isPhone}
-                isLoading={isLoading}
-                onLoadMore={this.onLoadMore}
+              totalResults={totalResults}
+              currentPage={page}
+              perPage={perPage}
+              dispatch={dispatch}
+              isPhone={isPhone}
+              isLoading={isLoading}
+              onLoadMore={this.onLoadMore}
               />
             : null
           }
