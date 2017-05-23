@@ -51,6 +51,10 @@
 
   .ola-component-Thumbnail {
     margin: -1em -1em 1em -1em;
+    border-bottom: 1px #d8d8d7 solid;
+    img {
+      border-radius: 5px 5px 0 0;
+    }
   }
 
 
