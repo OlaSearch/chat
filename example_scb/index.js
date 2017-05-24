@@ -46,7 +46,7 @@ if (document.getElementById('root')) {
           }}
           botProps={{
             botName: 'Ola Bot',
-            userName: 'User'
+            userName: 'You'
           }}
           initialIntent='scb.education_calculator'
           avatarProps={{
