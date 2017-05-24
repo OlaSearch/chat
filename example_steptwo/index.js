@@ -47,14 +47,14 @@ if (root_div) {
             label: 'Ask us anything'
           }}
           headerProps={{
-            title: 'Step two'
+            title: 'Awards 2017'
           }}
           avatarProps={{
             avatarBot: bot,
             avatarUser: user,
           }}
           botProps={{
-            botName: 'Step two',
+            botName: 'Ola Bot',
             userName: 'You'
           }}
         />
