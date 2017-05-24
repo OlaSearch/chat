@@ -96,6 +96,7 @@ class Bot extends Component {
     const botClass = classNames('olachat-bot', { 'olachat-bot-active': isActive })
     return (
       <div className={botClass}>
+        <div className='olachat-bot-overlay' />
         {isActive
           ? null
           : <Bubble
