@@ -93,6 +93,7 @@ export function loadMore (message) {
       extraParams: {
         /* Additional params */
         q: message.search.q,
+        facet_query: message.search.facet_query,
         msgId: message.id
       }
     }))
