@@ -4,7 +4,23 @@
   bottom: 20px;
   top: 0;
 
-  .olachat, .olachat-vui {
+  .olachat {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    height: auto;
+    @include media (desktop) {
+      bottom: 0px;
+      right: 0;
+      position: absolute;
+      left: auto;
+      top: 20px;
+    }
+  }
+
+  .olachat-vui {
     position: fixed;
     right: 0;
     bottom: 0;
