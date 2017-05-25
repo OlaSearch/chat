@@ -44,17 +44,17 @@ if (root_div) {
         <Bot
           initialIntent='steptwo'
           bubbleProps={{
-            label: 'Ask us anything'
+            label: 'Chat & find'
           }}
           headerProps={{
-            title: 'Awards 2017'
+            title: 'Step two'
           }}
           avatarProps={{
             avatarBot: bot,
             avatarUser: user,
           }}
           botProps={{
-            botName: 'Ola Bot',
+            botName: 'Step two',
             userName: 'You'
           }}
         />

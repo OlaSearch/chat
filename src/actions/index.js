@@ -94,7 +94,8 @@ export function loadMore (message) {
         /* Additional params */
         q: message.search.q,
         facet_query: message.search.facet_query,
-        msgId: message.id
+        msgId: message.id,
+        searchAdapterOptions: message.search.searchAdapterOptions
       }
     }))
   }
