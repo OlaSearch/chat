@@ -83,8 +83,9 @@ class Input extends React.Component {
       this.setState({
         text: this.state.suggestedTerm.term
       })
-      this.closeSuggestion()
     }
+    /* Close any suggestions */
+    this.closeSuggestion()
 
     /* Stop submitting if text is empty */
     if (!this.state.text) {
@@ -128,6 +129,7 @@ class Input extends React.Component {
       })
   };
   closeSuggestion = () => {
+    console.log('called')
     this.setState({
       suggestions: [],
       suggestedIndex: null,
