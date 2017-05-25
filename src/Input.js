@@ -129,7 +129,6 @@ class Input extends React.Component {
       })
   };
   closeSuggestion = () => {
-    console.log('called')
     this.setState({
       suggestions: [],
       suggestedIndex: null,
