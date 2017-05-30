@@ -53,9 +53,11 @@
   .ola-component-Thumbnail {
     margin: -1em -1em 1em -1em;
     border-bottom: 1px #d8d8d7 solid;
-    // height: 200px;
-    // overflow: hidden;
-    // display: flex;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
     img {
       border-radius: 5px 5px 0 0;
     }
