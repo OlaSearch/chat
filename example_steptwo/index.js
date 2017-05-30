@@ -47,14 +47,14 @@ if (root_div) {
             label: 'Chat & find'
           }}
           headerProps={{
-            title: 'Step two'
+            title: 'Step Two'
           }}
           avatarProps={{
             avatarBot: bot,
             avatarUser: user,
           }}
           botProps={{
-            botName: 'Step two',
+            botName: 'Step Two',
             userName: 'You'
           }}
         />
