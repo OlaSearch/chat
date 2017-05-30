@@ -40,6 +40,9 @@ export default (state = initialState, action) => {
       if (!action.answer) return state
       let { answer, results, payload } = action
 
+      /* Check if the answer is empty */
+      if (answer.empty) return state
+
       if (payload.appendResult) {
         return {
           ...state,
