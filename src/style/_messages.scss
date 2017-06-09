@@ -37,11 +37,18 @@
   font-size: 14px;
   @include clearfix;
   @include flexbox;
+  position: relative;
 
   &:hover {
-    // background-color: #f8f8f8;
+    background-color: #f8f8f8;
   }
 }
+
+  .olachat-bot-testing {
+    .olachat-message:hover {
+      background-color: #ddd;
+    }
+  }
 
 /**
  * Content

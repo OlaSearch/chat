@@ -14,7 +14,7 @@ import Bubble from './Bubble'
 import Chat from './Chat'
 import Vui from './Vui'
 
-const DEBUG = false
+const DEBUG = true
 const supportsVoice = DEBUG
   ? false
   : navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
@@ -38,11 +38,13 @@ class Bot extends Component {
     this.voiceAdapter.prefetchToken()
   }
   static childContextTypes = {
-    emitter: PropTypes.object
+    emitter: PropTypes.object,
+    env: PropTypes.string
   };
   getChildContext () {
     return {
-      emitter
+      emitter,
+      env: this.props.env
     }
   }
   toggleActive = () => {
@@ -93,7 +95,10 @@ class Bot extends Component {
         : <Chat {...passProps} />
       : null
     const { isActive } = this.state
-    const botClass = classNames('olachat-bot', { 'olachat-bot-active': isActive })
+    const botClass = classNames('olachat-bot', {
+      'olachat-bot-active': isActive,
+      'olachat-bot-testing': this.props.env === 'testing'
+    })
     return (
       <div className={botClass}>
         <div className='olachat-bot-overlay' />

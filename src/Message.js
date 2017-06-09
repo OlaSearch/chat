@@ -6,6 +6,7 @@ import { createHTMLMarkup } from './utils'
 import { DateParser } from 'olasearch'
 import QuickReplies from './QuickReplies'
 import SearchResultsMessage from './SearchResultsMessage'
+import MessageFeedback from './MessageFeedback'
 
 const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName, minTextLength, isActive, isSearchActive }) => {
   let { userId, timestamp, awaitingUserInput, fulfilled, card, slot_options: options, results } = message
@@ -43,6 +44,10 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
             results={results}
             botName={botName}
             isActive={isSearchActive}
+            message={message}
+          />
+          <MessageFeedback
+            isBot={isBot}
             message={message}
           />
         </div>

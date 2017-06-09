@@ -1,0 +1,45 @@
+.olachat-message-feedback {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in;
+}
+
+  .olachat-message:hover .olachat-message-feedback {
+    opacity: 1;
+    visibility: visible;
+  }
+
+/** Feedback */
+.olachat-message-feedback-positive, .olachat-message-feedback-negative {
+  background: transparent;
+  border: none;
+  padding: 8px 0;
+  margin-right: 8px;
+  color: #888;
+
+  &:hover {
+    color: $base-color;
+  }
+  span {
+    font-size: 0;
+  }
+  &:before {
+    @extend .iconfont;
+    font-size: 18px;
+  }
+}
+
+.olachat-message-feedback-positive {
+  &:before {
+    content: 'thumb_up';
+  }
+}
+
+.olachat-message-feedback-negative {
+  &:before {
+    content: 'thumb_down';
+  }
+}

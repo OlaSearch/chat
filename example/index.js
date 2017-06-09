@@ -44,6 +44,7 @@ if (root_div) {
     <OlaProvider config={config} store={store}>
       <div className='full-wrapper'>
         <Bot
+          env='testing'
           initialIntent='maternity-leave'
           bubbleProps={{
             label: 'Ask us anything'
