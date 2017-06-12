@@ -63,6 +63,7 @@ class Chat extends React.Component {
           isPhone={this.props.isPhone}
           onRequestClose={this.props.onRequestClose}
           messages={this.props.messages}
+          feedback={this.props.feedback}
         />
       </div>
     )
@@ -74,7 +75,8 @@ function mapStateToProps (state) {
     messages: state.Conversation.messages,
     isTyping: state.Conversation.isTyping,
     isPhone: state.Device.isPhone,
-    searchInput: state.QueryState.searchInput
+    searchInput: state.QueryState.searchInput,
+    feedback: state.Conversation.feedback
   }
 }
 

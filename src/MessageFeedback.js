@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Decorators } from 'olasearch'
+import { activateFeedback } from './actions'
 
 class MessageFeedback extends React.Component {
   constructor (props) {
@@ -14,24 +15,17 @@ class MessageFeedback extends React.Component {
     env: PropTypes.string
   }
   onPositiveClick = () => {
-    this.props.log({
-      eventType: 'C',
-      eventCategory: 'Feedback',
-      eventAction: 'click',
+    this.props.activateFeedback({
       eventLabel: 'positive',
       messageId: this.props.message.id
     })
-
     this.setState({
       submitted: true
     }, this.activateFeedback)
   };
   onNegativeClick = () => {
-    this.props.log({
-      eventType: 'C',
-      eventCategory: 'Feedback',
-      eventAction: 'click',
-      eventLabel: 'negative',
+    this.props.activateFeedback({
+      eventLabel: 'positive',
       messageId: this.props.message.id
     })
     this.setState({
@@ -82,4 +76,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(Decorators.withLogger(MessageFeedback))
+module.exports = connect(mapStateToProps, { activateFeedback })(Decorators.withLogger(MessageFeedback))

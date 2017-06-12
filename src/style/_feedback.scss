@@ -43,3 +43,9 @@
     content: 'thumb_down';
   }
 }
+
+.olachat-message-isfeedback {
+  .olachat-message-feedback {
+    display: none;
+  }
+}

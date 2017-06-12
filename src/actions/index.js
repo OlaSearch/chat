@@ -9,9 +9,8 @@ export function addMessage (payload) {
   return (dispatch, getState) => {
     var state = getState()
     var query = state.QueryState
-    var { messages, language } = state.Conversation
+    var { messages, language, feedback } = state.Conversation
     var context = state.Context
-
     var intent = payload && payload.intent ? { intent: payload.intent } : {}
     var msgId = utilities.uuid()
     var in_response_to = messages.length ? messages[messages.length - 1]['id'] : null
@@ -30,6 +29,8 @@ export function addMessage (payload) {
         }
       })
     }
+
+    if (feedback) return dispatch(logFeedback(query.q))
 
     /* Add more params to query */
     query = {
@@ -131,5 +132,68 @@ export function pollWhenIdle () {
     let { shouldPoll } = getState().Conversation
     if (!shouldRetry) return
     dispatch(addMessage({ intent: 'idle' }))
+  }
+}
+
+
+export function activateFeedback (feedback) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: types.REQUEST_ADD_MESSAGE,
+      message: {
+        id: utilities.uuid(),
+        userId: null,
+        reply: 'Please enter your feedback',
+        isFeedback: true
+      }
+    })
+
+    dispatch({
+      type: types.FEEDBACK_SET_ACTIVE,
+      feedback
+    })
+  }
+}
+
+export function logFeedback (eventMessage) {
+  return (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+      let { feedback } = getState().Conversation
+
+      dispatch(Actions.Logger.log({
+        eventType: 'C',
+        eventCategory: 'Feedback',
+        eventAction: 'click',
+        eventLabel: feedback.eventLabel,
+        eventMessage,
+        messageId: feedback.messageId,
+        debounce: false
+      }))
+
+      /* Show typing */
+      dispatch(showTypingIndicator())
+
+      setTimeout(() => {
+        dispatch({
+          type: types.REQUEST_ADD_MESSAGE,
+          message: {
+            id: utilities.uuid(),
+            userId: null,
+            reply: 'Thank you for the feedback',
+            isFeedback: true
+          }
+        })
+
+        /* Hide typing indicator */
+        dispatch(hideTypingIndicator())
+
+        dispatch({
+          type: types.FEEDBACK_SET_DISABLE
+        })
+
+      }, CHAT_REPLY_DELAY)
+
+      resolve()
+    })
   }
 }

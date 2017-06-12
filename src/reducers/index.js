@@ -5,7 +5,8 @@ const initialState = {
   messages: [],
   isTyping: false,
   language: 'en',
-  shouldPoll: false
+  shouldPoll: false,
+  feedback: null
 }
 
 const createMessageObj = (answer, results) => {
@@ -105,6 +106,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         language: action.language
+      }
+
+    case types.FEEDBACK_SET_ACTIVE:
+      return {
+        ...state,
+        feedback: action.feedback
+      }
+
+    case types.FEEDBACK_SET_DISABLE:
+      return {
+        ...state,
+        feedback: null
       }
 
     default:

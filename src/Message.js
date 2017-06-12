@@ -18,7 +18,8 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
     'olachat-message-collapse': typeof awaitingUserInput !== 'undefined' && !awaitingUserInput,
     'olachat-message-single': text && text.length < minTextLength,
     'olachat-message-wide': !!card,
-    'olachat-message-with-search': results && results.length > 0
+    'olachat-message-with-search': results && results.length > 0,
+    'olachat-message-isfeedback': message.isFeedback
   })
   return (
     <div className={messageClass}>
