@@ -143,7 +143,7 @@ export function activateFeedback (feedback) {
       message: {
         id: utilities.uuid(),
         userId: null,
-        reply: 'Please enter your feedback',
+        reply: 'Please tell us how we can improve.',
         isFeedback: true
       }
     })
