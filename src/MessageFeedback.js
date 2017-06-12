@@ -1,12 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Decorators } from 'olasearch'
 import { activateFeedback } from './actions'
 
 class MessageFeedback extends React.Component {
   constructor (props) {
-    super (props)
+    super(props)
     this.state = {
       submitted: false
     }
@@ -40,29 +39,30 @@ class MessageFeedback extends React.Component {
     }, 5000)
   };
   render () {
-    let { isBot, log } = this.props
+    let { isBot } = this.props
     if (!isBot) return null
     let { env } = this.context
     let { submitted } = this.state
+    if (env !== 'testing') return null
     return (
       <div className='olachat-message-feedback'>
         {!submitted
           ? <div>
-              <button
-                type='button'
-                className='olachat-message-feedback-positive'
-                onClick={this.onPositiveClick}
+            <button
+              type='button'
+              className='olachat-message-feedback-positive'
+              onClick={this.onPositiveClick}
               >
-                <span>Positive</span>
-              </button>
-              <button
-                type='button'
-                className='olachat-message-feedback-negative'
-                onClick={this.onNegativeClick}
+              <span>Positive</span>
+            </button>
+            <button
+              type='button'
+              className='olachat-message-feedback-negative'
+              onClick={this.onNegativeClick}
               >
-                <span>Negative</span>
-              </button>
-            </div>
+              <span>Negative</span>
+            </button>
+          </div>
           : <div className='olachat-message-done'>Thank you for the feedback</div>
         }
       </div>
@@ -76,4 +76,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, { activateFeedback })(Decorators.withLogger(MessageFeedback))
+module.exports = connect(mapStateToProps, { activateFeedback })(MessageFeedback)
