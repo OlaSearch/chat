@@ -66,6 +66,7 @@ if (fdw_div) {
     <OlaProvider config={config} store={store}>
       <div className='full-wrapper'>
         <Bot
+          env='testing'
           initialIntent='fdw'
           headerProps={{
             title: 'FDW Eligibility Chatbot'
