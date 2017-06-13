@@ -57,6 +57,11 @@
 .olachat-message-body {
   flex: 1;
   flex-shrink: 0;
+  padding-right: 50px;
+
+  @include media (tablet) {
+    padding-right: 0;
+  }
 }
 
 /**

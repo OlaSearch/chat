@@ -43,7 +43,6 @@ class MessageFeedback extends React.Component {
     if (!isBot) return null
     let { env } = this.context
     let { submitted } = this.state
-    console.log(this.context)
     if (env !== 'testing') return null
     return (
       <div className='olachat-message-feedback'>
