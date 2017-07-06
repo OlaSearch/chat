@@ -45,7 +45,7 @@
  * Search results
  */
 $space: 8px;
-.ola-results {
+.olachat .ola-results {
   display: flex;
   flex-direction: column;
 
@@ -58,7 +58,7 @@ $space: 8px;
   margin: 0 -1 * $space;
 }
 
-  .ola-snippet {
+  .olachat .ola-snippet {
     @include media(tablet) {
       width: 31%;
     }
@@ -73,7 +73,7 @@ $space: 8px;
   /**
    * Card title
    */
-  .ola-field-title {
+  .olachat .ola-field-title {
     font-size: 14px;
     margin: 0 0 8px 0;
     > a {
@@ -85,7 +85,7 @@ $space: 8px;
   /**
    * Summary
    */
-  .ola-field-summary {
+  .olachat .ola-field-summary {
     p {
       margin: 0 0 10px 0;
     }
@@ -98,7 +98,7 @@ $space: 8px;
   /**
    * Load more
    */
-  .ola-link-load-more {
+  .olachat .ola-link-load-more {
     text-align: center;
     display: block;
     width: 100%;
