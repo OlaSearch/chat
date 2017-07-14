@@ -30,8 +30,6 @@ export function addMessage (payload) {
       })
     }
 
-    if (feedback) return dispatch(logFeedback(query.q))
-
     /* Add more params to query */
     query = {
       ...query,
@@ -136,64 +134,40 @@ export function pollWhenIdle () {
 }
 
 
-export function activateFeedback (feedback) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: types.REQUEST_ADD_MESSAGE,
-      message: {
-        id: utilities.uuid(),
-        userId: null,
-        reply: 'Please tell us how we can improve.',
-        isFeedback: true
-      }
-    })
-
-    dispatch({
-      type: types.FEEDBACK_SET_ACTIVE,
-      feedback
-    })
+export function activateFeedback () {
+  return {
+    type: types.FEEDBACK_SET_ACTIVE
   }
 }
 
-export function logFeedback (eventMessage) {
+export function disabledFeedback () {
+  return {
+    type: types.FEEDBACK_SET_DISABLE
+  }
+}
+
+export function logFeedback (eventMessage, messageId) {
   return (dispatch, getState) => {
-    return new Promise((resolve, reject) => {
-      let { feedback } = getState().Conversation
+    // return new Promise((resolve, reject) => {
 
-      dispatch(Actions.Logger.log({
-        eventType: 'C',
-        eventCategory: 'Feedback',
-        eventAction: 'click',
-        eventLabel: feedback.eventLabel,
-        eventMessage,
-        messageId: feedback.messageId,
-        debounce: false
-      }))
+    //   return dispatch(Actions.Logger.log({
+    //     eventType: 'C',
+    //     eventCategory: 'Feedback',
+    //     eventAction: 'click',
+    //     eventMessage,
+    //     messageId,
+    //     debounce: false
+    //   }))
 
-      /* Show typing */
-      dispatch(showTypingIndicator())
-
-      setTimeout(() => {
-        dispatch({
-          type: types.REQUEST_ADD_MESSAGE,
-          message: {
-            id: utilities.uuid(),
-            userId: null,
-            reply: 'Thank you for the feedback',
-            isFeedback: true
-          }
-        })
-
-        /* Hide typing indicator */
-        dispatch(hideTypingIndicator())
-
-        dispatch({
-          type: types.FEEDBACK_SET_DISABLE
-        })
-
-      }, CHAT_REPLY_DELAY)
-
-      resolve()
-    })
+    //   resolve()
+    // })
+    dispatch(Actions.Logger.log({
+      eventType: 'C',
+      eventCategory: 'Feedback',
+      eventAction: 'click',
+      eventMessage,
+      messageId,
+      debounce: false
+    }))
   }
 }

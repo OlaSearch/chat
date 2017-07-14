@@ -1,51 +1,77 @@
-.olachat-message-feedback {
-  position: absolute;
-  right: 8px;
-  top: 8px;
-  // opacity: 0;
-  // visibility: hidden;
-  transition: opacity 0.2s ease-in;
+/**
+ * Feedback
+ */
+
+.olachat-feedback {
+  font-size: 12px;
+  text-align: right;
+  padding-top: 8px;
+
+  a {
+    color: $blue;
+    cursor: pointer;
+
+    &:focus, &:hover {
+      color: $base-color;
+    }
+  }
 }
 
-  .olachat-message:hover .olachat-message-feedback {
-    opacity: 1;
-    visibility: visible;
+/**
+ * Feedback footer
+ */
+
+.olachat-footer-feedback {
+  textarea {
+    padding-left: 1em;
   }
 
-/** Feedback */
-.olachat-message-feedback-positive, .olachat-message-feedback-negative {
+  .olachat-submit {
+    color: #f57c00;
+  }
+}
+
+/**
+ * Active feedback
+ */
+
+.olachat-messages-overlay {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #000;
+    z-index: 10;
+    transition: all 0.2s ease-in;
+    opacity: 0;
+    visibility: hidden;
+    &.olachat-messages-overlay-active {
+      opacity: 0.2;
+      visibility: visible;
+    }
+}
+
+
+/**
+ * Cancel button
+ */
+
+.olachat-button-cancel {
   background: transparent;
   border: none;
-  padding: 8px 0;
-  margin-right: 8px;
-  color: #888;
-
-  &:hover {
-    color: $base-color;
-  }
-  span {
-    font-size: 0;
-  }
-  &:before {
-    @extend .iconfont;
-    font-size: 18px;
-  }
+  font-size: 14px;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
-.olachat-message-feedback-positive {
-  &:before {
-    content: 'thumb_up';
-  }
-}
 
-.olachat-message-feedback-negative {
-  &:before {
-    content: 'thumb_down';
-  }
-}
+/**
+ * Thank you
+ */
 
-.olachat-message-isfeedback {
-  .olachat-message-feedback {
-    display: none;
-  }
+.olachat-feedback-thankyou {
+  font-size: 14px;
+  padding: 10px 1em;
 }

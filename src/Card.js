@@ -4,13 +4,19 @@ import CardList from './CardList'
 import CardButton from './CardButton'
 import AnswerWordMap from 'olasearch/lib/components/Answer/AnswerWordMap'
 import AnswerMap from 'olasearch/lib/components/Answer/AnswerMap'
+// import AnswerChart from 'olasearch/lib/components/Answer/AnswerChart'
 
-const Card = ({ card }) => {
+const Card = ({ card, templates }) => {
   if (!card) return null
   let { title, url, buttons, template } = card
   let klass = cx('ola-card', `ola-card-template-${template}`)
 
   function pickTemplate (template) {
+    /* Check for user defined templates */
+    if (templates && templates.hasOwnProperty(template)) {
+      let Component = templates[template]
+      return <Component {...card} />
+    }
     switch (template) {
       case 'list':
         return <CardList {...card} />
@@ -30,6 +36,12 @@ const Card = ({ card }) => {
             data={card.elements}
           />
         )
+      // case 'line_chart':
+      //   return (
+      //     <AnswerChart
+      //       data={card}
+      //     />
+      //   )
 
       default:
         return (

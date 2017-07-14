@@ -9,6 +9,7 @@
   @include media (phablet) {
     height: calc(100% + 1px);
   }
+  position: relative;
   @include media (desktop) {
     overflow: auto;
   }

@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Message from './Message'
 import TypingIndicator from './TypingIndicator'
+import classNames from 'classnames'
 // import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
@@ -143,16 +144,22 @@ class Messages extends React.Component {
             key={message.id}
             addMessage={this.props.addMessage}
             isActive={idx === messages.length - 1}
+            messageIdx={idx}
             isSearchActive={isSearchActive}
             botName={this.props.botName}
             userName={this.props.userName}
-              />
+            isTyping={isTyping}
+          />
         )
       }
-        )
+    )
+    let overlayKlass = classNames('olachat-messages-overlay', {
+      'olachat-messages-overlay-active': this.props.feedbackActive
+    })
 
     return (
       <div className='olachat-messages'>
+        <div className={overlayKlass} onClick={this.props.dismissModal} />
         <div className='olachat-messages-wrapper'>
           {/* flipped ? loadingSpinner : null */}
           {isTyping ? flipped ? null : <TypingIndicator avatarBot={this.props.avatarBot} /> : null}

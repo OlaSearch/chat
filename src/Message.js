@@ -8,7 +8,7 @@ import QuickReplies from './QuickReplies'
 import SearchResultsMessage from './SearchResultsMessage'
 import MessageFeedback from './MessageFeedback'
 
-const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName, minTextLength, isActive, isSearchActive }) => {
+const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName, minTextLength, isActive, isSearchActive, isTyping, messageIdx }) => {
   let { userId, timestamp, awaitingUserInput, fulfilled, card, slot_options: options, results } = message
   let isBot = !userId
   let text = isBot ? message.reply : message.message
@@ -47,10 +47,6 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
             isActive={isSearchActive}
             message={message}
           />
-          <MessageFeedback
-            isBot={isBot}
-            message={message}
-          />
         </div>
         <div className='olachat-message-date'>
           {DateParser.format(timestamp * 1000, 'DD MMM')}
@@ -59,6 +55,13 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
           onSubmit={addMessage}
           options={options}
           isActive={isActive}
+        />
+        <MessageFeedback
+          isBot={isBot}
+          message={message}
+          isActive={isActive}
+          isTyping={isTyping}
+          messageIdx={messageIdx}
         />
       </div>
     </div>
