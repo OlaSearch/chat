@@ -44,7 +44,7 @@ if (root_div) {
     <OlaProvider config={config} store={store}>
       <div className='full-wrapper'>
         <Bot
-          initialIntent='maternity-leave'
+          initialIntent='mom.maternity_leave'
           bubbleProps={{
             label: 'Ask us anything'
           }}
@@ -64,7 +64,7 @@ if (fdw_div) {
     <OlaProvider config={config} store={store}>
       <div className='full-wrapper'>
         <Bot
-          initialIntent='fdw'
+          initialIntent='mom.fdw'
           headerProps={{
             title: 'FDW Eligibility Chatbot'
           }}

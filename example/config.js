@@ -28,7 +28,7 @@ module.exports = {
     searchPageUrl: '/',
     history: 'pushState',
     proxy: true,
-    projectId: "58c215cb60c69a76fb286fd2",
+    projectId: "59116d96300397120cfecdc0",
     env: 'staging',
     namespace: "mom",
     api: {
@@ -45,7 +45,7 @@ module.exports = {
             title:"title_t",
             url:"url_s"
         },
-        params:{projectId:"58c215cb60c69a76fb286fd2", bot: true}
+        params:{bot: true}
     },
     // defaultSnippet: customSnippet,
     mapping: [
