@@ -156,10 +156,13 @@ class Messages extends React.Component {
     let overlayKlass = classNames('olachat-messages-overlay', {
       'olachat-messages-overlay-active': this.props.feedbackActive
     })
+    let messagesKlass = classNames('olachat-messages', {
+      'olachat-messages-feedback-active': this.props.feedbackActive
+    })
 
     return (
-      <div className='olachat-messages'>
-        <div className={overlayKlass} onClick={this.props.dismissModal} />
+      <div className={messagesKlass}>
+        {/*<div className={overlayKlass} onClick={this.props.dismissModal} /> */}
         <div className='olachat-messages-wrapper'>
           {/* flipped ? loadingSpinner : null */}
           {isTyping ? flipped ? null : <TypingIndicator avatarBot={this.props.avatarBot} /> : null}
