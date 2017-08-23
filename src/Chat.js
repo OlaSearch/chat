@@ -16,6 +16,7 @@ class Chat extends React.Component {
   };
   componentDidMount () {
     this.props.addMessage({ intent: this.props.initialIntent, start: true })
+    this.props.changePerPage(3)
   }
   addMessage = (...args) => {
     /* Scroll to Top */
@@ -88,4 +89,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, { addMessage, updateQueryTerm: Actions.Search.updateQueryTerm, addContextField: Actions.Context.addContextField, disabledFeedback })(Chat)
+export default connect(mapStateToProps, { addMessage, updateQueryTerm: Actions.Search.updateQueryTerm, addContextField: Actions.Context.addContextField, disabledFeedback, changePerPage: Actions.Search.changePerPage })(Chat)

@@ -10,9 +10,6 @@ class HelpMenu extends React.Component {
       isOpen: false
     }
   }
-  static contextTypes = {
-    config: PropTypes.object
-  };
   handleClickOutside = (event) => {
     this.setState({
       isOpen: false
@@ -23,7 +20,7 @@ class HelpMenu extends React.Component {
     let klass = classNames('olachat-helpmenu', {
       'olachat-helpmenu-open': this.state.isOpen
     })
-    let { helpItems } = this.context.config
+    let { helpItems } = this.props
     if (!helpItems || !helpItems.length) return null
     return (
       <div className={klass}>
@@ -45,4 +42,13 @@ class HelpMenu extends React.Component {
   }
 }
 
-export default listensToClickOutside(HelpMenu)
+const HelpMenuContainer = listensToClickOutside(HelpMenu)
+const HelpMenuWrapper = (props, { config: { helpItems } }) => {
+  if (helpItems && helpItems.length) return <HelpMenuContainer {...props} helpItems={helpItems} />
+  return null
+}
+HelpMenuWrapper.contextTypes = {
+  config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
+}
+
+module.exports = HelpMenuWrapper

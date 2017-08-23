@@ -1,6 +1,7 @@
 .olachat-helpmenu {
   width: 30px + 16px + 12px;
   position: relative;
+  vertical-align: middle;
 }
 
 .olachat-helpmenu-button {
@@ -8,11 +9,16 @@
   padding: 0;
   border: none;
   color: $blue;
-  width: 100%;
+  // width: 100%;
   text-align: center;
-  height: 100%;
+  // height: 100%;
   line-height: 1;
   outline: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
   span {
     font-size: 0;

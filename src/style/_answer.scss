@@ -1,0 +1,253 @@
+/**
+ * Answer
+ */
+
+.ola-snippet-answer {
+  // box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  background: white;
+  position: relative;
+  // z-index: 1;
+  padding: 0;
+  margin-bottom: 1em;
+}
+
+.ola-answer {
+  box-shadow: none;
+  padding: 0;
+  @include clearfix;
+
+  sup {
+    font-size: 16px;
+    top: auto;
+    // vertical-align: middle;
+  }
+}
+.ola-answer-suggestion {
+  padding-bottom: 1em;
+}
+
+.ola-answer-title {
+  margin-top: 0;
+  font-size: 20px;
+  margin-bottom: 0;
+  color: #333;
+  background-color: #03ade0;
+}
+
+.ola-answer-table-caption, .ola-answer-title {
+  background-color: #03ade0;
+  color: white;
+  padding: 0.8em 1em;
+  margin: 0;
+  border-bottom: 2px solid #666;
+}
+
+.ola-answer-item {
+  padding-bottom: 1.5em;
+}
+
+/**
+ * Generic
+ */
+
+.ola-answer-template-generic {
+  .ola-answer-item {
+    padding-bottom: 0;
+  }
+
+  .ola-answer-subtitle {
+    padding: 1em;
+  }
+}
+/**
+ * Rows
+ */
+
+.ola-answer-row {
+  @include flexbox;
+  padding: 2px 0;
+  font-size: 14px;
+  -ms-word-break: break-all;
+   word-break: break-all;
+
+   /* Non standard for WebKit */
+   word-break: break-word;
+
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+      hyphens: auto;
+}
+  .ola-answer-keyvalue {
+    padding: 1em 0;
+  }
+
+  .ola-answer-label {
+    font-weight: 500;
+    min-width: 120px;
+    &:after {
+      content: ": "
+    }
+  }
+
+
+/**
+ * Caption
+ */
+
+.ola-card-template-line_chart, .ola-card-template-item_detail, .ola-card-template-generic {
+  padding: 0;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  border-radius: 5px;
+  // margin: -1em -1em 0 -1em;
+}
+
+.olachat-message-reply + .ola-card {
+  margin-top: 1em;
+}
+
+.ola-answer-table-wrapper, .ola-answer-description {
+  overflow: auto;
+  background-color: white;
+  padding: 1em;
+
+  table {
+    width: 100%;
+  }
+
+  th {
+    text-align: left;
+  }
+}
+.ola-card-table {
+  background-color: white;
+  border-top: none;
+}
+
+.ola-card-description {
+  font-size: 20px;
+  color: #666;
+}
+
+/* ios fix where label was not clickable */
+.ola-search label > * { pointer-events:none; }
+
+
+/**
+ * Source
+ */
+
+.ola-card-source {
+  font-size: 12px;
+  max-width: 70%;
+  > a {
+    text-decoration: underline;
+    // color: #666;
+  }
+}
+
+/**
+ * Button
+ */
+
+.ola-answer-link-more {
+  background: #002569;
+  color: white;
+  text-transform: none;
+  border: none;
+  padding: 8px 1em;
+  font-size: 16px;
+  margin: 0;
+  min-width: 120px;
+  text-align: center;
+  margin-right: 1em;
+  margin-left: 1em;
+  margin-bottom: 1em;
+  @include media (tablet) {
+    // margin-bottom: -1.5em;
+    float: right;
+  }
+}
+
+
+/**
+ * Personal listing
+ */
+
+.ola-snippet-template-person_info_detail {
+  box-shadow: none;
+  padding: 0;
+}
+  .ola-answer-template-person_info_detail {
+    padding: 0;
+  }
+  .ola-answer-list-items {
+    @include media (tablet) {
+      @include flexbox;
+      flex-wrap: wrap;
+      -webkit-flex-wrap: wrap;
+      align-content: space-between;
+      -webkit-align-content: space-between;
+    }
+
+    .ola-answer-item-wrapper {
+      box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+      background: white;
+      position: relative;
+      padding: 1em;
+      margin-right: 1em;
+      min-height: 100%;
+    }
+
+    .ola-answer-item {
+      margin-bottom: 1em;
+      padding-bottom: 0;
+
+      @include media (tablet) {
+        width: 33.333%;
+      }
+
+      &:nth-child(3n+1) {
+        margin-left: 0;
+      }
+    }
+
+    .ola-answer-title {
+      margin: -16px -16px 0 -16px;
+      font-size: 16px;
+      border: none;
+    }
+  }
+
+  .ola-answer-subtitle {
+    font-size: 14px;
+    opacity: 0.8;
+  }
+
+  .ola-answer-email {
+    display: block;
+    border-top: 1px #ccc solid;
+    padding: 8px 0;
+    font-size: 14px;
+    text-decoration: underline;
+    color: #007db6;
+
+  }
+
+
+/**
+ * List template
+ */
+
+.ola-answer-template-list {
+  box-shadow: none;
+}
+
+
+/**
+ * Footnote
+ */
+
+.ola-answer-footnote {
+  padding: 1em;
+  font-size: 12px;
+}

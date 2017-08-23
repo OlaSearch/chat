@@ -8,7 +8,6 @@ import classNames from 'classnames'
 // import houndify from './adapters/houndify'
 // import watson from './adapters/watson'
 // import bing from './adapters/bing'
-import google from './adapters/google'
 import mitt from 'mitt'
 import Bubble from './Bubble'
 import Chat from './Chat'
@@ -31,11 +30,17 @@ class Bot extends Component {
     this.state = {
       isActive: !!DEBUG
     }
-    /* Create a voiceadapter */
-    this.voiceAdapter = google({ emitter })
+    let { speechRecognitionProvider, speechOutputProvider } = props
 
-    /* Lazy load tokens */
-    this.voiceAdapter.prefetchToken()
+    if (speechRecognitionProvider) {
+      /* Create a voiceadapter */
+      // this.voiceAdapter = require('./adapters/google')({ emitter })
+
+      /* Lazy load tokens */
+      this.voiceAdapter.prefetchToken()
+    } else {
+      this.voiceadapter = null
+    }
   }
   static childContextTypes = {
     emitter: PropTypes.object,
@@ -49,7 +54,7 @@ class Bot extends Component {
   }
   toggleActive = () => {
     /* Pause all audio */
-    this.voiceAdapter.stopSpeaking()
+    this.voiceAdapter && this.voiceAdapter.stopSpeaking()
 
     this.setState({
       isActive: !this.state.isActive
@@ -65,7 +70,7 @@ class Bot extends Component {
     vui: false,
     bubbleProps: {},
     botProps: {
-      botName: 'MOMBot',
+      botName: 'Bot',
       userName: 'You'
     },
     headerProps: {

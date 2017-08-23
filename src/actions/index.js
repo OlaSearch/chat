@@ -9,6 +9,8 @@ export function addMessage (payload) {
   return (dispatch, getState) => {
     var state = getState()
     var query = state.QueryState
+    var { projectId, env } = query
+    if (!env) env = 'staging'
     var { messages, language, feedback } = state.Conversation
     var context = state.Context
     var intent = payload && payload.intent ? { intent: payload.intent } : {}
@@ -54,6 +56,7 @@ export function addMessage (payload) {
           query,
           context,
           api: 'search',
+          forceIntentEngine: true,
           payload
         }).then((response) => {
 

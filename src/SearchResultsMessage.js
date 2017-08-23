@@ -74,6 +74,7 @@ class SearchResultsMessage extends React.Component {
               isPhone={isPhone}
               isLoading={isLoading}
               onLoadMore={this.onLoadMore}
+              infiniteScroll
               />
             : null
           }

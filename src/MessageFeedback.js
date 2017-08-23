@@ -1,9 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { activateFeedback } from './actions'
+import { activateFeedback, disabledFeedback } from './actions'
 
 class FeedBack extends React.Component {
+  componentWillUnmount() {
+    this.props.disabledFeedback()
+  }
   render () {
     let { isActive, isBot, isTyping, messageIdx, message: { awaitingUserInput } } = this.props
     if (!isActive || !isBot || isTyping || !awaitingUserInput || messageIdx < 1) return null
@@ -15,4 +18,4 @@ class FeedBack extends React.Component {
   }
 }
 
-module.exports = connect(null, { activateFeedback })(FeedBack)
+module.exports = connect(null, { activateFeedback, disabledFeedback })(FeedBack)
