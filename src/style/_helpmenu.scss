@@ -4,12 +4,16 @@
   vertical-align: middle;
 }
 
+.olachat-helpmenu + .olachat-input > textarea {
+  padding-left: 0;
+}
+
 .olachat-helpmenu-button {
   background: none;
   padding: 0;
   border: none;
   color: $blue;
-  // width: 100%;
+  width: 100%;
   text-align: center;
   // height: 100%;
   line-height: 1;

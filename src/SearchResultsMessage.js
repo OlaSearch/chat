@@ -30,7 +30,7 @@ class SearchResultsMessage extends React.Component {
     let maxResults = isPhone ? 1 : 3
     /* If there is no search */
 
-    if (!results.length || !search) return null
+    if (!search) return null
 
     let { title, no_result: noResultsText } = search
 
