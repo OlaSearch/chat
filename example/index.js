@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Chat, ChatReducer, Vui, Bot } from 'olachat'
+import { Chat, ChatReducer, Vui, BotFrame, Bot } from 'olachat'
 import { Provider } from 'react-redux'
 import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk'
@@ -44,7 +44,7 @@ if (root_div) {
     <OlaProvider config={config} store={store}>
       <div className='full-wrapper'>
         <Bot
-          initialIntent='mom.maternity_leave'
+          initialIntent='mom.maternity_leaves'
           bubbleProps={{
             label: 'Ask us anything'
           }}

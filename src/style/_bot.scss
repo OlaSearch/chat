@@ -1,50 +1,50 @@
+.olachat {
+  height: 600px;
+  max-height: 100%;
+  animation: 0.2s ease-out 0s 1 fadeIn;
+  -webkit-animation: 0.2s ease-out 0s 1 fadeIn;
+  -ms-animation: 0.2s ease-out 0s 1 fadeIn;
+  -moz-animation: 0.2s ease-out 0s 1 fadeIn;
+
+  @include media (tablet) {
+    border: 1px #ccc solid;
+    box-shadow: $small-box-shadow;
+  }
+  background: $chatbg;
+  @include flexbox;
+  flex-direction: column;
+  -webkit-flex-direction: column;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
 .olachat-bot {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  top: 0;
-  z-index: 99999;
   @include prefix(animation, .2s ease-out 0s 1 fadeIn, (ms,webkit,moz));
+}
 
-  .olachat {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    top: 0;
-    height: auto;
-    @include media (desktop) {
-      bottom: 0px;
-      right: 0;
-      position: absolute;
-      left: auto;
+.olachat-bot .olachat, .olachat-bot .olachat-vui {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  height: auto;
+}
+
+  .olachat-bot-desktop.olachat-bot-active {
+    .olachat, .olachat-vui {
       top: 20px;
+      right: 20px;
+      bottom: 20px;
+      left: 20px;
     }
   }
-
-  .olachat-vui {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    top: 0;
-    height: auto;
-    @include media (desktop) {
-      bottom: 0px;
-      right: 0;
-      position: absolute;
-      left: auto;
-      top: auto;
-      height: 600px;
-    }
-  }
-}
-
-.olachat-vui {
-  position: absolute;
-  bottom: 80px;
-  right: 0px;
-}
 
 $bubble-size: 30px;
 $bubble-icon-size: 34px;
@@ -52,10 +52,9 @@ $bubble-icon-size: 34px;
   background: none;
   border: none;
   text-align: left;
-  position: absolute;
-  bottom: 0;
-  right: 0;
+  position: relative;
   width: 300px;
+  margin-top: 5px;
   background: $blue;
   color: white;
   padding: 0em $bubble-size+ $bubble-icon-size 0em $bubble-size;
@@ -77,11 +76,13 @@ $bubble-icon-size: 34px;
 
 /**
  * Iframe
+ * Restrict width
  */
-
+.olachat {
+  max-width: 800px;
+}
 .olachat-bot-iframe {
-  position: static;
-  top: auto;
-  right: auto;
-  z-index: auto;
+  .olachat {
+    max-width: none;
+  }
 }

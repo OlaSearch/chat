@@ -1,9 +1,4 @@
 .olachat-vui {
-  height: 600px;
-  width: 100%;
-  @include media (tablet) {
-    width: 375px;
-  }
   background: $lightblue;
   @include flexbox;
   flex-direction: column;

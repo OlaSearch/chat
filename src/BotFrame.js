@@ -1,6 +1,7 @@
 import React from 'react'
 import Bot from './Bot'
 import Frame from 'react-frame-component'
+import { connect } from 'react-redux'
 
 class BotFrame extends React.Component {
   constructor(props) {
@@ -15,25 +16,46 @@ class BotFrame extends React.Component {
     })
   };
   static defaultProps = {
-    width: 300,
-    widthActive: 870,
-    height: 60,
-    heightActive: 'calc(100% - 40px)',
+    width: 320,
+    widthActive: 880,
+    height: 80,
+    heightActive: '100%',
+    inline: false,
+    zIndex: 9999,
     iframeStyle: {
-      position: 'fixed',
-      right: 20,
-      bottom: 20,
-      zIndex: 99999,
       border: 'none',
-      // padding: 3
+      maxWidth: '100%'
     }
   }
   render () {
     let { isActive } = this.state
-    let { iframeStyle, width, widthActive, height, heightActive } = this.props
+    let { iframeStyle, width, widthActive, height, heightActive, inline, zIndex, isDesktop } = this.props
     let frameStyles = {
       ...iframeStyle,
-      ...isActive ? { height: heightActive, width: widthActive } : { height, width }
+      ...isActive
+        ? {
+          top: 0,
+          bottom: 0,
+          right: 0,
+          position: 'fixed',
+          width: isDesktop ? widthActive : '100%',
+          height: heightActive,
+          zIndex
+        }
+        : {
+          ...inline
+            ? {}
+            : {
+              bottom: 0,
+              top: 'auto',
+              right: 0,
+              left: 'auto',
+              width,
+              height,
+              zIndex,
+              position: 'fixed',
+            }
+        }
     }
     return (
       <Frame
@@ -50,4 +72,10 @@ class BotFrame extends React.Component {
   }
 }
 
-module.exports = BotFrame
+function mapStateToProps (state) {
+  return {
+    isDesktop: state.Device.isDesktop
+  }
+}
+
+module.exports = connect(mapStateToProps)(BotFrame)

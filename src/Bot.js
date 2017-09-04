@@ -31,10 +31,9 @@ class Bot extends Component {
       isActive: !!props.debug
     }
     let { speechRecognitionProvider, speechOutputProvider } = props
-
     if (speechRecognitionProvider) {
       /* Create a voiceadapter */
-      // this.voiceAdapter = require('./adapters/google')({ emitter })
+      this.voiceAdapter = require('./adapters/google').default({ emitter })
 
       /* Lazy load tokens */
       this.voiceAdapter.prefetchToken()
@@ -66,7 +65,7 @@ class Bot extends Component {
       isActive: !this.state.isActive
     }, () => {
       /* Handle active status */
-      this.props.onBubbleClick(this.state.isActive)
+      this.props.onBubbleClick && this.props.onBubbleClick(this.state.isActive)
     })
   };
   static defaultProps = {
@@ -107,6 +106,9 @@ class Bot extends Component {
     const botClass = classNames('olachat-bot', {
       'olachat-bot-active': isActive,
       'olachat-bot-iframe': this.props.iFrame,
+      'olachat-bot-mobile': this.props.isPhone,
+      'olachat-bot-tablet': this.props.isTablet,
+      'olachat-bot-desktop': this.props.isDesktop,
       'olachat-bot-testing': this.props.env === 'testing'
     })
     return (
@@ -128,7 +130,9 @@ class Bot extends Component {
 
 function mapStateToProps (state) {
   return {
-    isPhone: state.Device.isPhone
+    isPhone: state.Device.isPhone,
+    isTablet: state.Device.isTablet,
+    isDesktop: state.Device.isDesktop,
   }
 }
 
