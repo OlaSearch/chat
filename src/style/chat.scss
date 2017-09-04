@@ -1,5 +1,5 @@
 @import 'variables';
-
+@import 'reset';
 
 html {
   line-height: 1.5;
@@ -74,3 +74,4 @@ p {
 @import 'feedback';
 @import 'chart';
 @import 'answer';
+@import 'intentsuggestions';

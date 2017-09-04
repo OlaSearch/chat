@@ -4,11 +4,13 @@ import CardList from './CardList'
 import CardButton from './CardButton'
 import AnswerWordMap from 'olasearch/lib/components/Answer/AnswerWordMap'
 import AnswerMap from 'olasearch/lib/components/Answer/AnswerMap'
+import { Fields } from 'olasearch'
 // import AnswerChart from 'olasearch/lib/components/Answer/AnswerChart'
 
 const Card = ({ card, templates }) => {
   if (!card) return null
-  let { title, url, buttons, template } = card
+  if (!card.title) return null
+  let { title, subtitle, url, buttons=[], template } = card
   let klass = cx('ola-card', `ola-card-template-${template}`)
 
   function pickTemplate (template) {
@@ -47,6 +49,7 @@ const Card = ({ card, templates }) => {
         return (
           <div className='ola-card-inner'>
             <h3 className='ola-card-title'><a target='_blank' href={url}>{title}</a></h3>
+            <Fields.TextField field='subtitle' result={card} />
             {buttons.map((button, idx) => <CardButton {...button} key={idx} />)}
           </div>
         )

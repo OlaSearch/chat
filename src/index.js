@@ -4,6 +4,8 @@ import Header from './Header'
 import Chat from './Chat'
 import Vui from './Vui'
 import Bot from './Bot'
+import BotFrame from './BotFrame'
+import Card from './Card'
 // import Search from './Search'
 import ChatReducer from './reducers'
 import ChatActions from './actions'
@@ -17,7 +19,9 @@ export {
   Chat,
   Vui,
   Bot,
+  BotFrame,
+  Card,
   ChatReducer,
   ChatActions,
-  version
+  version,
 }

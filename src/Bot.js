@@ -28,7 +28,7 @@ class Bot extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isActive: !!DEBUG
+      isActive: !!props.debug
     }
     let { speechRecognitionProvider, speechOutputProvider } = props
 
@@ -56,19 +56,23 @@ class Bot extends Component {
     /* Pause all audio */
     this.voiceAdapter && this.voiceAdapter.stopSpeaking()
 
-    this.setState({
-      isActive: !this.state.isActive
-    })
-
     /* Reset */
     this.props.dispatch(clearMessages())
     this.props.dispatch(Actions.Search.clearQueryTerm())
 
     /* Stop all audio */
+
+    this.setState({
+      isActive: !this.state.isActive
+    }, () => {
+      /* Handle active status */
+      this.props.onBubbleClick(this.state.isActive)
+    })
   };
   static defaultProps = {
     vui: false,
     bubbleProps: {},
+    onBubbleClick: null,
     botProps: {
       botName: 'Bot',
       userName: 'You'
@@ -102,6 +106,7 @@ class Bot extends Component {
     const { isActive } = this.state
     const botClass = classNames('olachat-bot', {
       'olachat-bot-active': isActive,
+      'olachat-bot-iframe': this.props.iFrame,
       'olachat-bot-testing': this.props.env === 'testing'
     })
     return (
@@ -110,9 +115,9 @@ class Bot extends Component {
         {isActive
           ? null
           : <Bubble
-            onClick={this.toggleActive}
-            isActive={this.state.isActive}
-            {...this.props.bubbleProps}
+              onClick={this.toggleActive}
+              isActive={this.state.isActive}
+              {...this.props.bubbleProps}
             />
         }
         {component}
