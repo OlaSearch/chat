@@ -32,20 +32,21 @@ class BotFrame extends React.Component {
     let doc = ReactDOM.findDOMNode(this).contentDocument
     let messagesEl = doc.querySelector('.olachat-messages')
     if (!messagesEl) return
-    messagesEl.addEventListener('click', (e) => {
-      if (!e.target || e.target.nodeName !== 'A' || !e.target.href) return
-      e.preventDefault()
-      e.stopPropagation()
-      /* Open link in new window */
-      window.open(e.target.href)
-    })
+    messagesEl.addEventListener('click', this.clickListener)
   }
+  clickListener = (e) => {
+    if (!e.target || e.target.nodeName !== 'A' || !e.target.href) return
+    e.preventDefault()
+    e.stopPropagation()
+    /* Open link in new window */
+    window.open(e.target.href)
+  };
   componentWillUnmount () {
     let doc = ReactDOM.findDOMNode(this).contentDocument
     let messagesEl = doc.querySelector('.olachat-messages')
     if (!messagesEl) return
     /* Remove event listener */
-    messagesEl.removeEventListener('click')
+    messagesEl.removeEventListener('click', this.clickListener)
   }
   render () {
     let { isActive } = this.state
