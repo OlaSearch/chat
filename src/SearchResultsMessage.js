@@ -32,7 +32,7 @@ class SearchResultsMessage extends React.Component {
 
     if (!search) return null
 
-    let { title, no_result: noResultsText } = search
+    let { title, no_result: noResultsText, base_url: baseUrl } = search
 
     /* If no results */
     if (!results.length && search) {
@@ -64,6 +64,7 @@ class SearchResultsMessage extends React.Component {
             bookmarks={bookmarks}
             dispatch={dispatch}
             openInNewWindow
+            baseUrl={baseUrl}
           />
 
           {isActive
