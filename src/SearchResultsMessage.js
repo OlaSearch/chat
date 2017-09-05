@@ -63,6 +63,7 @@ class SearchResultsMessage extends React.Component {
             results={results}
             bookmarks={bookmarks}
             dispatch={dispatch}
+            openInNewWindow
           />
 
           {isActive
