@@ -5,8 +5,8 @@ import Frame from 'react-frame-component'
 import { connect } from 'react-redux'
 
 class BotFrame extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       isActive: props.debug
     }
@@ -19,7 +19,7 @@ class BotFrame extends React.Component {
   static defaultProps = {
     width: 320,
     widthActive: 880,
-    height: 80,
+    height: 85,
     heightActive: '100%',
     inline: false,
     zIndex: 9999,
@@ -28,9 +28,11 @@ class BotFrame extends React.Component {
       maxWidth: '100%'
     }
   }
-  componentDidMount() {
+  componentDidMount () {
     let doc = ReactDOM.findDOMNode(this).contentDocument
-    doc.querySelector('.olachat-messages').addEventListener('click', (e) => {
+    let messagesEl = doc.querySelector('.olachat-messages')
+    if (!messagesEl) return
+    messagesEl.addEventListener('click', (e) => {
       if (!e.target || e.target.nodeName !== 'A' || !e.target.href) return
       e.preventDefault()
       e.stopPropagation()
@@ -38,9 +40,12 @@ class BotFrame extends React.Component {
       window.open(e.target.href)
     })
   }
-  componentWillUnmount() {
+  componentWillUnmount () {
     let doc = ReactDOM.findDOMNode(this).contentDocument
-    doc.querySelector('.olachat-messages').removeEventListener('click')
+    let messagesEl = doc.querySelector('.olachat-messages')
+    if (!messagesEl) return
+    /* Remove event listener */
+    messagesEl.removeEventListener('click')
   }
   render () {
     let { isActive } = this.state
@@ -68,7 +73,7 @@ class BotFrame extends React.Component {
               width,
               height,
               zIndex,
-              position: 'fixed',
+              position: 'fixed'
             }
         }
     }

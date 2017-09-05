@@ -10,7 +10,7 @@ import { Fields } from 'olasearch'
 const Card = ({ card, templates }) => {
   if (!card) return null
   if (!card.title) return null
-  let { title, subtitle, url, buttons=[], template } = card
+  let { title, url, buttons = [], template } = card
   let klass = cx('ola-card', `ola-card-template-${template}`)
 
   function pickTemplate (template) {

@@ -20,8 +20,8 @@ const CardList = ({ title, elements, buttons }) => {
                 </h3>
                 {subtitle
                   ? <div className='ola-card-subtitle'>
-                      {stripHtml(subtitle)}
-                    </div>
+                    {stripHtml(subtitle)}
+                  </div>
                   : null
                 }
                 <div className='ola-answer-keyvalue'>
@@ -39,8 +39,8 @@ const CardList = ({ title, elements, buttons }) => {
                 </div>
                 {defaultAction
                   ? <div className='ola-card-action'>
-                      <a href={defaultAction.url}>{defaultAction.url}</a>
-                    </div>
+                    <a href={defaultAction.url}>{defaultAction.url}</a>
+                  </div>
                   : null
                 }
               </div>

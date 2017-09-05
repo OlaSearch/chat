@@ -30,7 +30,7 @@ class Bot extends Component {
     this.state = {
       isActive: !!props.debug
     }
-    let { speechRecognitionProvider, speechOutputProvider } = props
+    let { speechRecognitionProvider } = props /* speechOutputProvider */
     if (speechRecognitionProvider) {
       /* Create a voiceadapter */
       this.voiceAdapter = require('./adapters/google').default({ emitter })
@@ -117,9 +117,9 @@ class Bot extends Component {
         {isActive
           ? null
           : <Bubble
-              onClick={this.toggleActive}
-              isActive={this.state.isActive}
-              {...this.props.bubbleProps}
+            onClick={this.toggleActive}
+            isActive={this.state.isActive}
+            {...this.props.bubbleProps}
             />
         }
         {component}
@@ -132,7 +132,7 @@ function mapStateToProps (state) {
   return {
     isPhone: state.Device.isPhone,
     isTablet: state.Device.isTablet,
-    isDesktop: state.Device.isDesktop,
+    isDesktop: state.Device.isDesktop
   }
 }
 

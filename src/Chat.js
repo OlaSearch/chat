@@ -60,18 +60,18 @@ class Chat extends React.Component {
         />
         {feedbackActive
          ? <InputFeedback
-            messages={this.props.messages}
+           messages={this.props.messages}
             />
          : <Input
-            onSubmit={this.addMessage}
-            voiceAdapter={this.props.voiceAdapter}
-            updateQueryTerm={this.props.updateQueryTerm}
-            addContextField={this.props.addContextField}
-            isTyping={this.props.isTyping}
-            searchInput={this.props.searchInput}
-            isPhone={this.props.isPhone}
-            onRequestClose={this.props.onRequestClose}
-            messages={this.props.messages}
+           onSubmit={this.addMessage}
+           voiceAdapter={this.props.voiceAdapter}
+           updateQueryTerm={this.props.updateQueryTerm}
+           addContextField={this.props.addContextField}
+           isTyping={this.props.isTyping}
+           searchInput={this.props.searchInput}
+           isPhone={this.props.isPhone}
+           onRequestClose={this.props.onRequestClose}
+           messages={this.props.messages}
           />
         }
       </div>
@@ -85,7 +85,7 @@ function mapStateToProps (state) {
     feedbackActive: state.Conversation.feedbackActive,
     isTyping: state.Conversation.isTyping,
     isPhone: state.Device.isPhone,
-    searchInput: state.QueryState.searchInput,
+    searchInput: state.QueryState.searchInput
   }
 }
 

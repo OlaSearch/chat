@@ -109,3 +109,13 @@
       max-width: 100%;
     }
   }
+
+
+/**
+ * Message reply
+ */
+.olachat-message-reply {
+  p:last-child {
+    margin-bottom: 0.5em;
+  }
+}

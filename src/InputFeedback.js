@@ -12,7 +12,7 @@ class InputFeedback extends React.Component {
     }
   }
   onFormSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (!this.state.message) return this.Input.el.focus()
     let lastMessage = this.props.messages[this.props.messages.length - 1]
     this.props.logFeedback(this.state.message, lastMessage.id)
@@ -42,21 +42,21 @@ class InputFeedback extends React.Component {
           {submitted
             ? <span className='olachat-feedback-thankyou'>Thank you for your feedback</span>
             : <Textarea
-                placeholder='Enter your feedback'
-                onChange={this.onChange}
-                value={this.state.message}
-                rows={1}
-                cols={1}
-                autoFocus
-                ref={this.registerRef}
+              placeholder='Enter your feedback'
+              onChange={this.onChange}
+              value={this.state.message}
+              rows={1}
+              cols={1}
+              autoFocus
+              ref={this.registerRef}
               />
           }
         </div>
         {submitted
           ? null
           : <button className='olachat-submit'>
-              <span>Send</span>
-            </button>
+            <span>Send</span>
+          </button>
         }
         <button className='olachat-button-cancel' type='button' onClick={this.cancelFeedback}>
           <span>{submitted ? 'Continue' : 'Cancel' }</span>

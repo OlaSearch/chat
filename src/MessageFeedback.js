@@ -1,10 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import { activateFeedback, disabledFeedback } from './actions'
 
 class FeedBack extends React.Component {
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.props.disabledFeedback()
   }
   render () {
