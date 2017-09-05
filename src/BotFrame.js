@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import Bot from './Bot'
 import Frame from 'react-frame-component'
 import { connect } from 'react-redux'
@@ -7,7 +8,7 @@ class BotFrame extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isActive: false
+      isActive: props.debug
     }
   }
   handleBubbleClick = (isActive) => {
@@ -26,6 +27,20 @@ class BotFrame extends React.Component {
       border: 'none',
       maxWidth: '100%'
     }
+  }
+  componentDidMount() {
+    let doc = ReactDOM.findDOMNode(this).contentDocument
+    doc.querySelector('.olachat-messages').addEventListener('click', (e) => {
+      if (!e.target || e.target.nodeName !== 'A' || !e.target.href) return
+      e.preventDefault()
+      e.stopPropagation()
+      /* Open link in new window */
+      window.open(e.target.href)
+    })
+  }
+  componentWillUnmount() {
+    let doc = ReactDOM.findDOMNode(this).contentDocument
+    doc.querySelector('.olachat-messages').removeEventListener('click')
   }
   render () {
     let { isActive } = this.state
