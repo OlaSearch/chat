@@ -10,6 +10,7 @@ class BotFrame extends React.Component {
     this.state = {
       isActive: props.debug
     }
+    this.addedClickEvtListener = false
   }
   handleBubbleClick = (isActive) => {
     this.setState({
@@ -29,9 +30,17 @@ class BotFrame extends React.Component {
     }
   }
   componentDidMount () {
+    this.checkForListener()
+  }
+  componentDidUpdate () {
+    this.checkForListener()
+  }
+  checkForListener = () => {
+    if (this.addedClickEvtListener) return
     let doc = ReactDOM.findDOMNode(this).contentDocument
     let messagesEl = doc.querySelector('.olachat-messages')
     if (!messagesEl) return
+    this.addedClickEvtListener = true
     messagesEl.addEventListener('click', this.clickListener)
   }
   clickListener = (e) => {
