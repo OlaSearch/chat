@@ -11,7 +11,7 @@ export function addMessage (payload) {
     var query = state.QueryState
     var { projectId, env } = query
     if (!env) env = 'staging'
-    var { messages, language, feedback } = state.Conversation
+    var { messages, language } = state.Conversation
     var context = state.Context
     var intent = payload && payload.intent ? { intent: payload.intent } : {}
     var msgId = utilities.uuid()
@@ -149,27 +149,31 @@ export function disabledFeedback () {
   }
 }
 
-export function logFeedback (eventMessage, messageId) {
+export function setFeedbackMessage (messageId) {
+  return {
+    type: types.SET_FEEDBACK_MESSAGE_ID,
+    messageId
+  }
+}
+
+export function setFeedbackRating (rating) {
+  return {
+    type: types.SET_FEEDBACK_RATING,
+    rating
+  }
+}
+
+export function logFeedback (feedbackMessage) { /* eventMessage => feed */
   return (dispatch, getState) => {
-    // return new Promise((resolve, reject) => {
-
-    //   return dispatch(Actions.Logger.log({
-    //     eventType: 'C',
-    //     eventCategory: 'Feedback',
-    //     eventAction: 'click',
-    //     eventMessage,
-    //     messageId,
-    //     debounce: false
-    //   }))
-
-    //   resolve()
-    // })
+    let { feedbackMessageId, feedbackRating } = getState().Conversation
+    return
     dispatch(Actions.Logger.log({
       eventType: 'C',
       eventCategory: 'Feedback',
       eventAction: 'click',
-      eventMessage,
-      messageId,
+      eventMessage: feedbackMessage,
+      messageId: feedbackMessageId,
+      eventLabel: feedbackRating,
       debounce: false
     }))
   }

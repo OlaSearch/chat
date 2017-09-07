@@ -1,7 +1,6 @@
 import React from 'react'
 import Header from './Header'
 import Input from './Input'
-import InputFeedback from './InputFeedback'
 import Messages from './Messages'
 import { connect } from 'react-redux'
 import { addMessage, disabledFeedback } from './actions'
@@ -58,22 +57,17 @@ class Chat extends React.Component {
         <SmartSuggestions
           onSubmit={this.addMessage}
         />
-        {feedbackActive
-         ? <InputFeedback
-           messages={this.props.messages}
-            />
-         : <Input
-           onSubmit={this.addMessage}
-           voiceAdapter={this.props.voiceAdapter}
-           updateQueryTerm={this.props.updateQueryTerm}
-           addContextField={this.props.addContextField}
-           isTyping={this.props.isTyping}
-           searchInput={this.props.searchInput}
-           isPhone={this.props.isPhone}
-           onRequestClose={this.props.onRequestClose}
-           messages={this.props.messages}
-          />
-        }
+        <Input
+         onSubmit={this.addMessage}
+         voiceAdapter={this.props.voiceAdapter}
+         updateQueryTerm={this.props.updateQueryTerm}
+         addContextField={this.props.addContextField}
+         isTyping={this.props.isTyping}
+         searchInput={this.props.searchInput}
+         isPhone={this.props.isPhone}
+         onRequestClose={this.props.onRequestClose}
+         messages={this.props.messages}
+        />
       </div>
     )
   }

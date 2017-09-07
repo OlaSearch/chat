@@ -52,6 +52,7 @@
     "style-loader": "^0.18.2"
   },
   "dependencies": {
+    "emoji-mart": "^1.0.1",
     "mitt": "^1.1.2",
     "olasearch": "git+https://gitlab-ci-token:iNkSh25Xh9h9fts8dqTp@gitlab.com/olasearch/olasearch-core.git",
     "react-flexi-textarea": "^1.0.3",

@@ -14,8 +14,8 @@ class InputFeedback extends React.Component {
   onFormSubmit = (e) => {
     e.preventDefault()
     if (!this.state.message) return this.Input.el.focus()
-    let lastMessage = this.props.messages[this.props.messages.length - 1]
-    this.props.logFeedback(this.state.message, lastMessage.id)
+    /* Log feedback */
+    this.props.logFeedback(this.state.message)
     this.setState({
       message: '',
       submitted: true

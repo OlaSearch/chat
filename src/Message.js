@@ -7,6 +7,9 @@ import { DateParser } from 'olasearch'
 import SlotOptions from './SlotOptions'
 import SearchResultsMessage from './SearchResultsMessage'
 import MessageFeedback from './MessageFeedback'
+import { EMOJI_LIST } from './Settings'
+
+const regex = /\\[a-z|0-9]+\b/g;
 
 const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName, minTextLength, isActive, isSearchActive, isTyping, messageIdx }) => {
   let { userId, timestamp, awaitingUserInput, fulfilled, card, slot_options: options, results, intent } = message
@@ -18,9 +21,14 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
     'olachat-message-collapse': typeof awaitingUserInput !== 'undefined' && !awaitingUserInput,
     'olachat-message-single': text && text.length < minTextLength,
     'olachat-message-wide': !!card,
-    'olachat-message-with-search': results && results.length > 0,
-    'olachat-message-isfeedback': message.isFeedback
+    'olachat-message-with-search': results && results.length > 0
   })
+  function setMarkup (text) {
+    let t = text.replace(regex, (match) => {
+      return '<span class="' + `${EMOJI_LIST[match]}` + '"></span>'
+    })
+    return createHTMLMarkup(t)
+  }
   return (
     <div className={messageClass}>
       <Avatar
@@ -37,7 +45,7 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
           }
         </div>
         <div className='olachat-message-content'>
-          <div className='olachat-message-reply' dangerouslySetInnerHTML={createHTMLMarkup(text)} />
+          <div className='olachat-message-reply' dangerouslySetInnerHTML={setMarkup(text)} />
           <Card
             card={card}
           />
@@ -63,6 +71,7 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
           isActive={isActive}
           isTyping={isTyping}
           messageIdx={messageIdx}
+          onSubmit={addMessage}
         />
       </div>
     </div>
