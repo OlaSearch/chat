@@ -57,8 +57,8 @@
  */
 
 .olachat-message-body {
-  flex: 1;
-  flex-shrink: 0;
+  @include prefix(flex, 1, (ms,webkit,moz));
+  @include prefix(flex-shrink, 0, (ms,webkit,moz));
 }
 
   .olachat-bot-testing {
