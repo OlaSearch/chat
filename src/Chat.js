@@ -58,15 +58,15 @@ class Chat extends React.Component {
           onSubmit={this.addMessage}
         />
         <Input
-         onSubmit={this.addMessage}
-         voiceAdapter={this.props.voiceAdapter}
-         updateQueryTerm={this.props.updateQueryTerm}
-         addContextField={this.props.addContextField}
-         isTyping={this.props.isTyping}
-         searchInput={this.props.searchInput}
-         isPhone={this.props.isPhone}
-         onRequestClose={this.props.onRequestClose}
-         messages={this.props.messages}
+          onSubmit={this.addMessage}
+          voiceAdapter={this.props.voiceAdapter}
+          updateQueryTerm={this.props.updateQueryTerm}
+          addContextField={this.props.addContextField}
+          isTyping={this.props.isTyping}
+          searchInput={this.props.searchInput}
+          isPhone={this.props.isPhone}
+          onRequestClose={this.props.onRequestClose}
+          messages={this.props.messages}
         />
       </div>
     )
