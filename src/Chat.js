@@ -18,12 +18,12 @@ class Chat extends React.Component {
     this.props.addMessage({ intent: this.props.initialIntent, start: true })
     this.props.changePerPage(3)
   }
-  addMessage = () => {
+  addMessage = (args) => {
     /* Scroll to Top */
     this.MessageContainer.scrollToView()
 
     /* Add message */
-    return this.props.addMessage().then((reply) => {
+    return this.props.addMessage(args).then((reply) => {
       /* Scroll to Top after bot replies */
       this.MessageContainer.scrollToView()
 

@@ -4,12 +4,12 @@ import Avatar from './Avatar'
 import Card from './Card'
 import { createHTMLMarkup } from './utils'
 import { DateParser } from 'olasearch'
-import QuickReplies from './QuickReplies'
+import SlotOptions from './SlotOptions'
 import SearchResultsMessage from './SearchResultsMessage'
 import MessageFeedback from './MessageFeedback'
 
 const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName, minTextLength, isActive, isSearchActive, isTyping, messageIdx }) => {
-  let { userId, timestamp, awaitingUserInput, fulfilled, card, slot_options: options, results } = message
+  let { userId, timestamp, awaitingUserInput, fulfilled, card, slot_options: options, results, intent } = message
   let isBot = !userId
   let text = isBot ? message.reply : message.message
   let messageClass = cx('olachat-message', {
@@ -51,10 +51,11 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
         <div className='olachat-message-date'>
           {DateParser.format(timestamp * 1000, 'DD MMM')}
         </div>
-        <QuickReplies
+        <SlotOptions
           onSubmit={addMessage}
           options={options}
           isActive={isActive}
+          intent={intent}
         />
         <MessageFeedback
           isBot={isBot}
