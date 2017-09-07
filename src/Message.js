@@ -9,7 +9,7 @@ import SearchResultsMessage from './SearchResultsMessage'
 import MessageFeedback from './MessageFeedback'
 import { EMOJI_LIST } from './Settings'
 
-const regex = /\\[a-z|0-9]+\b/g
+const regex = /^\\[a-z|0-9]+\b/g
 
 const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName, minTextLength, isActive, isSearchActive, isTyping, messageIdx }) => {
   let { userId, timestamp, awaitingUserInput, fulfilled, card, slot_options: options, results, intent } = message
