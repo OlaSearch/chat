@@ -75,7 +75,6 @@ if (fdw_div) {
           bubbleProps={{
             label: 'FDW Eligibility Chatbot'
           }}
-          debug
         />
       </div>
     </OlaProvider>
