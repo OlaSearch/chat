@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom'
 import Bot from './Bot'
 import Frame from 'react-frame-component'
 import { connect } from 'react-redux'
+import { triggerMouseEvent } from './utils'
 
+const OLACHAT_IFRAME_ID = 'olachat-iframe'
 class BotFrame extends React.Component {
   constructor (props) {
     super(props)
@@ -37,25 +39,28 @@ class BotFrame extends React.Component {
   }
   checkForListener = () => {
     if (this.addedClickEvtListener) return
-    let doc = ReactDOM.findDOMNode(this).contentDocument
-    let messagesEl = doc.querySelector('.olachat-messages')
-    if (!messagesEl) return
+    this.iFrame = document.getElementById(OLACHAT_IFRAME_ID);
+    this.innerDoc = this.iFrame.contentDocument || this.iFrame.contentWindow.document
+    this.messagesEl = this.innerDoc.querySelector('.olachat-messages')
+
     this.addedClickEvtListener = true
-    messagesEl.addEventListener('click', this.clickListener)
+    if (this.messagesEl) this.messagesEl.addEventListener('click', this.clickListener)
+    if (this.innerDoc) this.innerDoc.addEventListener('click', this.iFrameDispatcher)
   }
+  iFrameDispatcher = (e) => {
+    if (e.defaultPrevented) return
+    if (typeof(document) !== 'undefined') triggerMouseEvent(document, 'mousedown')
+  };
   clickListener = (e) => {
     if (!e.target || e.target.nodeName !== 'A' || !e.target.href) return
     e.preventDefault()
-    e.stopPropagation()
     /* Open link in new window */
     window.open(e.target.href)
   };
   componentWillUnmount () {
-    let doc = ReactDOM.findDOMNode(this).contentDocument
-    let messagesEl = doc.querySelector('.olachat-messages')
-    if (!messagesEl) return
     /* Remove event listener */
-    messagesEl.removeEventListener('click', this.clickListener)
+    if (this.messagesEl) this.messagesEl.removeEventListener('click', this.clickListener)
+    if (this.innerDoc) this.innerDoc.removeEventListener('click', this.iFrameDispatcher)
   }
   render () {
     let { isActive } = this.state
@@ -91,6 +96,7 @@ class BotFrame extends React.Component {
       <Frame
         style={frameStyles}
         head={this.props.head}
+        id={OLACHAT_IFRAME_ID}
       >
         <Bot
           {...this.props}

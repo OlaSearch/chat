@@ -55,7 +55,7 @@
     "emoji-mart": "^1.0.1",
     "mitt": "^1.1.2",
     "olasearch": "git+https://gitlab-ci-token:iNkSh25Xh9h9fts8dqTp@gitlab.com/olasearch/olasearch-core.git",
-    "react-flexi-textarea": "^1.0.3",
+    "react-flexi-textarea": "^1.0.5",
     "react-frame-component": "^1.1.1",
     "react-transition-group": "^1.2.0",
     "watson-html5-speech-recognition": "^0.6.6"

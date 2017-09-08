@@ -15,13 +15,19 @@ class HelpMenu extends React.Component {
       isOpen: false
     })
   };
-  toggle = () => this.setState({ isOpen: !this.state.isOpen });
+  static defaultProps = {
+    helpItems: []
+  };
+  toggle = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    this.setState({ isOpen: !this.state.isOpen })
+  };
   render () {
     let klass = classNames('olachat-helpmenu', {
       'olachat-helpmenu-open': this.state.isOpen
     })
     let { helpItems } = this.props
-    if (!helpItems || !helpItems.length) return null
     return (
       <div className={klass}>
         <button className='olachat-helpmenu-button' onClick={this.toggle} type='button'>
@@ -33,7 +39,7 @@ class HelpMenu extends React.Component {
           </div>
           <div className='olachat-dp-body'>
             {helpItems.map(({ label, url }, idx) => {
-              return <a href={url} key={idx}>{label}</a>
+              return <a href={url} key={idx} target='_blank'>{label}</a>
             })}
           </div>
         </div>
