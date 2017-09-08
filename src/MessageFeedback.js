@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Actions } from 'olasearch'
 import { activateFeedback, disabledFeedback, setFeedbackMessage, setFeedbackRating, logFeedback } from './actions'
+import { FEEDBACK_INTENT } from './Settings'
 
 // const EMOJI_POSITIVE = ':+1:'
 
@@ -26,8 +27,8 @@ class FeedBack extends React.Component {
     this.props.onSubmit({ intent: 'OLA.FeedbackIntent' })
   };
   render () {
-    let { isActive, isBot, isTyping, messageIdx, message: { awaitingUserInput } } = this.props
-    if (!isActive || !isBot || isTyping || !awaitingUserInput || messageIdx < 1) return null
+    let { isActive, isBot, isTyping, messageIdx, message: { awaitingUserInput, intent } } = this.props
+    if (!isActive || !isBot || isTyping || !awaitingUserInput || messageIdx < 1 || intent === FEEDBACK_INTENT) return null
     return (
       <div className='olachat-feedback'>
         <a onClick={this.handlePositive} className='olachat-feedback-positive'>

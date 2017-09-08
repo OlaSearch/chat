@@ -28,6 +28,9 @@ config.helpItems = [
   }
 ]
 
+/* Enable logger */
+config.logger.params.bot = true
+
 /* Set per page */
 
 store.dispatch(Actions.Search.changePerPage(3))
@@ -39,31 +42,12 @@ require('./style.scss')
 let root_div = document.getElementById('root')
 let fdw_div = document.getElementById('fdw-root')
 
-if (root_div) {
-  ReactDOM.render(
-    <OlaProvider config={config} store={store}>
-      <div className='full-wrapper'>
-        <Bot
-          initialIntent='mom.maternity_leaves'
-          bubbleProps={{
-            label: 'Ask us anything'
-          }}
-          avatarProps={{
-            avatarBot: bot,
-            avatarUser: user,
-          }}
-        />
-      </div>
-    </OlaProvider>
-    , root_div
-  )
-}
-
+let script_url = `https://cdn.olasearch.com/${process.env.OLA_ENV === 'staging' ? 'staging': 'production'}/59116d96300397120cfecdc0/olachat.min.css`
 if (fdw_div) {
   ReactDOM.render(
     <OlaProvider config={config} store={store}>
       <div className='full-wrapper'>
-        <Bot
+        <BotFrame
           initialIntent='mom.fdw.welcome'
           headerProps={{
             title: 'FDW Eligibility Chatbot'
@@ -75,6 +59,12 @@ if (fdw_div) {
           bubbleProps={{
             label: 'FDW Eligibility Chatbot'
           }}
+          head={
+            <div>
+              <link rel='stylesheet' href={script_url} />
+              <meta name='viewport' content='width=device-width, initial-scale=1' />
+            </div>
+          }
         />
       </div>
     </OlaProvider>

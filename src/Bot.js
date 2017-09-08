@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { clearMessages } from './actions'
-import { Actions } from 'olasearch'
+import { Actions, Decorators } from 'olasearch'
 import classNames from 'classnames'
 // import webkit from './adapters/webkit'
 // import houndify from './adapters/houndify'
@@ -84,6 +84,16 @@ class Bot extends Component {
       avatarUser: null
     }
   };
+  componentDidMount() {
+    /* Send load log for new user */
+    if (this.props.isNewUser) {
+      this.props.log({
+        eventLabel: 'load',
+        eventCategory: 'bot',
+        eventType: 'O'
+      })
+    }
+  };
   render () {
     // const initialIntent = 'start'
     const passProps = {
@@ -132,8 +142,9 @@ function mapStateToProps (state) {
   return {
     isPhone: state.Device.isPhone,
     isTablet: state.Device.isTablet,
-    isDesktop: state.Device.isDesktop
+    isDesktop: state.Device.isDesktop,
+    isNewUser: state.Context.isNewUser
   }
 }
 
-module.exports = connect(mapStateToProps)(Bot)
+module.exports = connect(mapStateToProps)(Decorators.withLogger(Bot))

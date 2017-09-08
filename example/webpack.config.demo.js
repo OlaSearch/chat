@@ -1,23 +1,43 @@
 var path = require('path')
 var webpack = require('webpack')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+
+var path = require('path')
+var webpack = require('webpack')
 
 module.exports = {
   // devtool: 'cheap-module-eval-source-map',
   entry: [
-    'webpack-hot-middleware/client',
     './index'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/static/'
+    path: path.join(__dirname, './../demo'),
+    filename: 'olachat.min.js',
+    publicPath: '/'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    // new webpack.NoErrorsPlugin()
+    new ExtractTextPlugin({
+      filename: 'style.min.css',
+      disable: false,
+      allChunks: true
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false
+      }
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
+    })
   ],
   resolve: {
     alias: {
+      // 'olachat': path.resolve(__dirname, './../src'),
       'olasearch': path.join(__dirname, './../../npm-olasearch'),
       'olasearch-solr-adapter': path.join(__dirname, './../../npm-olasearch-solr-adapter'),
       'olasearch-logger-middleware': path.join(__dirname, './../../olasearch-logger-middleware'),
@@ -44,12 +64,20 @@ module.exports = {
     },
     {
       test: /(\.scss|\.css)$/,
-      use: ['style-loader', 'css-loader', 'sass-loader']
+      loader: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: ['css-loader', 'sass-loader']
+      })
     }
     ]
   },
   externals: {
     'houndify-web-sdk': 'Houndify',
-    'binaryjs': 'BinaryClient'
+    'olasearchconfig': 'OlaSearchConfig',
+    "react": "React",
+    "react-dom": "ReactDOM",
+    "olasearch": "OlaSearch",
+    "redux": "Redux",
+    "react-redux": "ReactRedux"
   }
-};
+}
