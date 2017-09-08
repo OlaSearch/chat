@@ -1,0 +1,11 @@
+.emoji-thumbs-up {
+  &:after {
+    content: "\01f44d";
+  }
+}
+
+.emoji-thumbs-down {
+  &:after {
+    content: "\01f44e";
+  }
+}
