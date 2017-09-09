@@ -24,6 +24,7 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
     'olachat-message-with-search': results && results.length > 0
   })
   function setMarkup (text) {
+    if (!text) return null
     let t = text.replace(regex, (match) => {
       return '<span class="' + `${EMOJI_LIST[match]}` + '"></span>'
     })

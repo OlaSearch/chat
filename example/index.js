@@ -59,6 +59,10 @@ if (fdw_div) {
           bubbleProps={{
             label: 'FDW Eligibility Chatbot'
           }}
+          botProps={{
+            botName: 'MOMbot',
+            userName: 'You'
+          }}
           head={
             <div>
               <link rel='stylesheet' href={script_url} />
