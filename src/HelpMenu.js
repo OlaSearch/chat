@@ -20,12 +20,11 @@ class HelpMenu extends React.Component {
     event.stopPropagation()
     this.setState({ isOpen: !this.state.isOpen })
   };
-  handleClick = (e) => {
-    if (!event) return
+  handleClick = (event) => {
     if (event.target.href) return
-    e.preventDefault()
+    event.preventDefault()
     this.handleClickOutside()
-    this.props.updateQueryTerm(e.target.text)
+    this.props.updateQueryTerm(event.target.text)
     this.props.onSubmit()
   }
   render () {
