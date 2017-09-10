@@ -3,7 +3,7 @@ import { checkIfAwaitingResponse } from './../utils'
 import { ActionTypes, utilities, Actions } from 'olasearch'
 
 const CHAT_DELAY = 300
-const CHAT_REPLY_DELAY = 400
+const CHAT_REPLY_DELAY = 600
 
 export function addMessage (payload) {
   return (dispatch, getState) => {
