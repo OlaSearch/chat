@@ -2,11 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Actions } from 'olasearch'
 import { activateFeedback, disabledFeedback, setFeedbackMessage, setFeedbackRating, logFeedback } from './actions'
-import { FEEDBACK_INTENT } from './Settings'
+import { FEEDBACK_INTENT, HELP_INTENT } from './Settings'
 
 // const EMOJI_POSITIVE = ':+1:'
 
 // const EMOJI_NEGATIVE = ':-1:'
+const IGNORE_FEEDBACK_INTENTS = [FEEDBACK_INTENT, HELP_INTENT]
 const EMOJI_POSITIVE = '\\01f44d'
 const EMOJI_NEGATIVE = '\\01f44e'
 
@@ -28,7 +29,7 @@ class FeedBack extends React.Component {
   };
   render () {
     let { isActive, isBot, isTyping, messageIdx, message: { awaitingUserInput, intent } } = this.props
-    if (!isActive || !isBot || isTyping || !awaitingUserInput || messageIdx < 1 || intent === FEEDBACK_INTENT) return null
+    if (!isActive || !isBot || isTyping || !awaitingUserInput || messageIdx < 1 || IGNORE_FEEDBACK_INTENTS.indexOf(intent) !== -1) return null
     return (
       <div className='olachat-feedback'>
         <a onClick={this.handlePositive} className='olachat-feedback-positive'>

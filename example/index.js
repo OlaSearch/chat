@@ -39,14 +39,14 @@ if (fdw_div) {
             title: config.chatbotTitle
           }}
           avatarProps={{
-            avatarBot: bot,
-            avatarUser: user,
+            avatarBot: config.botAvatar,
+            avatarUser: config.userAvatar,
           }}
           bubbleProps={{
             label: config.chatbotBubbleLabel
           }}
           botProps={{
-            botName: 'MOMbot',
+            botName: config.botName,
             userName: 'You'
           }}
           head={
