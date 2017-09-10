@@ -84,7 +84,7 @@ class Bot extends Component {
       avatarUser: null
     }
   };
-  componentDidMount() {
+  componentDidMount () {
     /* Send load log for new user */
     if (this.props.isNewUser) {
       this.props.log({

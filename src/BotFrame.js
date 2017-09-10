@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import Bot from './Bot'
 import Frame from 'react-frame-component'
 import { connect } from 'react-redux'
@@ -39,7 +38,7 @@ class BotFrame extends React.Component {
   }
   checkForListener = () => {
     if (this.addedClickEvtListener) return
-    this.iFrame = document.getElementById(OLACHAT_IFRAME_ID);
+    this.iFrame = document.getElementById(OLACHAT_IFRAME_ID)
     this.innerDoc = this.iFrame.contentDocument || this.iFrame.contentWindow.document
     this.messagesEl = this.innerDoc.querySelector('.olachat-messages')
 
@@ -49,7 +48,7 @@ class BotFrame extends React.Component {
   }
   iFrameDispatcher = (e) => {
     if (e.defaultPrevented) return
-    if (typeof(document) !== 'undefined') triggerMouseEvent(document, 'mousedown')
+    if (typeof (document) !== 'undefined') triggerMouseEvent(document, 'mousedown')
   };
   clickListener = (e) => {
     if (!e.target || e.target.nodeName !== 'A' || !e.target.href) return

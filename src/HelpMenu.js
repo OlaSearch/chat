@@ -54,7 +54,7 @@ class HelpMenu extends React.Component {
 
 const HelpMenuContainer = listensToClickOutside(HelpMenu)
 const HelpMenuWrapper = (props, { config: { botMenu } }) => {
-  return <HelpMenuContainer botMenu={botMenu} {...props}  />
+  return <HelpMenuContainer botMenu={botMenu} {...props} />
 }
 HelpMenuWrapper.contextTypes = {
   config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
@@ -66,6 +66,5 @@ HelpMenuWrapper.defaultProps = {
     }
   ]
 }
-
 
 module.exports = HelpMenuWrapper
