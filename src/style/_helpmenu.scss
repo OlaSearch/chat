@@ -23,6 +23,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  cursor: pointer;
 
   span {
     font-size: 0;
@@ -32,4 +33,11 @@
     @extend .iconfont;
     content: 'menu';
   }
+}
+
+/**
+ * Link
+ */
+.olachat-menu-link {
+  cursor: pointer;
 }

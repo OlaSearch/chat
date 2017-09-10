@@ -59,6 +59,7 @@
 .olachat-message-body {
   @include prefix(flex, 1, (ms,webkit,moz));
   @include prefix(flex-shrink, 0, (ms,webkit,moz));
+  position: relative;
 }
 
   .olachat-bot-testing {

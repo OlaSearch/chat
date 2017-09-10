@@ -17,16 +17,16 @@ let loggerMiddleware = createLoggerMiddleware({ logger: config.logger })
 let store = createStore(config, { Parser, QueryBuilder, Http }, { Conversation: ChatReducer }, [ loggerMiddleware ])
 
 /* Help menu */
-config.helpItems = [
-  {
-    label: 'Feedback',
-    url: 'https://services.mom.gov.sg/efeedback/Forms/efeedback.aspx'
-  },
-  {
-    label: 'Help',
-    url: 'http://www.mom.gov.sg/contact-us'
-  }
-]
+// config.helpItems = [
+//   {
+//     label: 'Feedback',
+//     url: 'https://services.mom.gov.sg/efeedback/Forms/efeedback.aspx'
+//   },
+//   {
+//     label: 'Help',
+//     url: 'http://www.mom.gov.sg/contact-us'
+//   }
+// ]
 
 /* Enable logger */
 config.logger.params.bot = true
@@ -37,12 +37,14 @@ store.dispatch(Actions.Search.changePerPage(3))
 
 /* Load default css */
 require('olachat/style/chat.scss')
-require('./style.scss')
+// require('./style.scss')
 
 let root_div = document.getElementById('root')
 let fdw_div = document.getElementById('fdw-root')
 
-let script_url = `https://cdn.olasearch.com/${process.env.OLA_ENV === 'staging' ? 'staging': 'production'}/59116d96300397120cfecdc0/olachat.min.css`
+let css_url = `https://cdn.olasearch.com/${process.env.OLA_ENV === 'staging' ? 'staging': 'production'}/59116d96300397120cfecdc0/olachat.min.css`
+css_url = 'style.css'
+
 if (fdw_div) {
   ReactDOM.render(
     <OlaProvider config={config} store={store}>
@@ -65,10 +67,11 @@ if (fdw_div) {
           }}
           head={
             <div>
-              <link rel='stylesheet' href={script_url} />
+              <link rel='stylesheet' href={css_url} />
               <meta name='viewport' content='width=device-width, initial-scale=1' />
             </div>
           }
+          debug
         />
       </div>
     </OlaProvider>

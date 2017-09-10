@@ -17,7 +17,7 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin({
-      filename: 'style.min.css',
+      filename: 'olachat.min.css',
       disable: false,
       allChunks: true
     }),

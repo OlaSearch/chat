@@ -24,7 +24,7 @@ class Input extends React.Component {
     this.closeSuggestion()
   };
   onChange = (event) => {
-    let text = event.target.value
+    let text = event && event.target ? event.target.value : event
     this.setState({
       text
     })
@@ -213,7 +213,10 @@ class Input extends React.Component {
           activeIndex={suggestedIndex}
           queryTerm={text}
         />
-        <HelpMenu />
+        <HelpMenu
+          onSubmit={this.props.onSubmit}
+          updateQueryTerm={this.props.updateQueryTerm}
+        />
         <div className='olachat-input'>
           {supportsVoice
            ? <div className='olachat-input-voice'>

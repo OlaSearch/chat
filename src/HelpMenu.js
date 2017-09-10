@@ -15,14 +15,18 @@ class HelpMenu extends React.Component {
       isOpen: false
     })
   };
-  static defaultProps = {
-    helpItems: []
-  };
   toggle = (event) => {
     event.preventDefault()
     event.stopPropagation()
     this.setState({ isOpen: !this.state.isOpen })
   };
+  handleClick = (e) => {
+    if (event.target.href) return
+    e.preventDefault()
+    this.handleClickOutside()
+    this.props.updateQueryTerm(e.target.text)
+    this.props.onSubmit()
+  }
   render () {
     let klass = classNames('olachat-helpmenu', {
       'olachat-helpmenu-open': this.state.isOpen
@@ -39,7 +43,7 @@ class HelpMenu extends React.Component {
           </div>
           <div className='olachat-dp-body'>
             {helpItems.map(({ label, url }, idx) => {
-              return <a href={url} key={idx} target='_blank'>{label}</a>
+              return <a className='olachat-menu-link' href={url} key={idx} target='_blank' onClick={this.handleClick}>{label}</a>
             })}
           </div>
         </div>
@@ -50,11 +54,18 @@ class HelpMenu extends React.Component {
 
 const HelpMenuContainer = listensToClickOutside(HelpMenu)
 const HelpMenuWrapper = (props, { config: { helpItems } }) => {
-  if (helpItems && helpItems.length) return <HelpMenuContainer {...props} helpItems={helpItems} />
-  return null
+  return <HelpMenuContainer helpItems={helpItems} {...props}  />
 }
 HelpMenuWrapper.contextTypes = {
   config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
 }
+HelpMenuWrapper.defaultProps = {
+  helpItems: [
+    {
+      label: 'Help'
+    }
+  ]
+}
+
 
 module.exports = HelpMenuWrapper

@@ -5,7 +5,14 @@
 .olachat-feedback {
   font-size: 16px;
   text-align: right;
-  padding-top: 4px;
+  padding-top: 8px;
+
+  @include media (desktop) {
+    position: absolute;
+    right: 8px;
+    bottom: 0;
+    padding-top: 0;
+  }
 
   a {
     color: #ff6b00;
