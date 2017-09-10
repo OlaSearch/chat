@@ -43,7 +43,12 @@ class HelpMenu extends React.Component {
           </div>
           <div className='olachat-dp-body'>
             {botLinks.map(({ title, url }, idx) => {
-              return <a className='olachat-menu-link' href={url} key={idx} target='_blank' onClick={this.handleClick}>{title}</a>
+              return <a
+                className='olachat-menu-link'
+                href={url ? url : null}
+                key={idx}
+                target='_blank'
+                onClick={this.handleClick}>{title}</a>
             })}
           </div>
         </div>
