@@ -11,33 +11,18 @@ import { createLoggerMiddleware } from 'olasearch-logger-middleware'
 import { bot, user } from './avatars'
 
 const logger = createLogger({ collapsed: true});
-// const store = createStore(combineReducers({ Conversation: ChatReducer }), applyMiddleware(thunk, logger))
 /* Optional loggerMiddleware */
 let loggerMiddleware = createLoggerMiddleware({ logger: config.logger })
 let store = createStore(config, { Parser, QueryBuilder, Http }, { Conversation: ChatReducer }, [ loggerMiddleware ])
-
-/* Help menu */
-// config.helpItems = [
-//   {
-//     label: 'Feedback',
-//     url: 'https://services.mom.gov.sg/efeedback/Forms/efeedback.aspx'
-//   },
-//   {
-//     label: 'Help',
-//     url: 'http://www.mom.gov.sg/contact-us'
-//   }
-// ]
 
 /* Enable logger */
 config.logger.params.bot = true
 
 /* Set per page */
-
 store.dispatch(Actions.Search.changePerPage(3))
 
 /* Load default css */
 require('olachat/style/chat.scss')
-// require('./style.scss')
 
 let root_div = document.getElementById('root')
 let fdw_div = document.getElementById('fdw-root')
@@ -49,16 +34,16 @@ if (fdw_div) {
     <OlaProvider config={config} store={store}>
       <div className='full-wrapper'>
         <BotFrame
-          initialIntent='mom.fdw.welcome'
+          initialIntent={config.initialIntent}
           headerProps={{
-            title: 'FDW Eligibility Chatbot'
+            title: config.chatbotTitle
           }}
           avatarProps={{
             avatarBot: bot,
             avatarUser: user,
           }}
           bubbleProps={{
-            label: 'FDW Eligibility Chatbot'
+            label: config.chatbotBubbleLabel
           }}
           botProps={{
             botName: 'MOMbot',
