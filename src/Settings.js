@@ -5,3 +5,4 @@ export const EMOJI_LIST = {
 
 export const FEEDBACK_INTENT = 'OLA.FeedbackIntent'
 export const HELP_INTENT = 'OLA.HelpIntent'
+export const PROFANITY_INTENT = 'OLA.ProfanityIntent'

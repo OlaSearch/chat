@@ -2,12 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Actions } from 'olasearch'
 import { activateFeedback, disabledFeedback, setFeedbackMessage, setFeedbackRating, logFeedback } from './actions'
-import { FEEDBACK_INTENT, HELP_INTENT } from './Settings'
+import { FEEDBACK_INTENT, HELP_INTENT, PROFANITY_INTENT } from './Settings'
 
 // const EMOJI_POSITIVE = ':+1:'
 
 // const EMOJI_NEGATIVE = ':-1:'
-const IGNORE_FEEDBACK_INTENTS = [FEEDBACK_INTENT, HELP_INTENT]
+const IGNORE_FEEDBACK_INTENTS = [FEEDBACK_INTENT, HELP_INTENT, PROFANITY_INTENT]
 const EMOJI_POSITIVE = '\\01f44d'
 const EMOJI_NEGATIVE = '\\01f44e'
 
