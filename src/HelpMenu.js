@@ -31,7 +31,7 @@ class HelpMenu extends React.Component {
     let klass = classNames('olachat-helpmenu', {
       'olachat-helpmenu-open': this.state.isOpen
     })
-    let { helpItems } = this.props
+    let { botMenu } = this.props
     return (
       <div className={klass}>
         <button className='olachat-helpmenu-button' onClick={this.toggle} type='button'>
@@ -42,7 +42,7 @@ class HelpMenu extends React.Component {
             Menu
           </div>
           <div className='olachat-dp-body'>
-            {helpItems.map(({ label, url }, idx) => {
+            {botMenu.map(({ label, url }, idx) => {
               return <a className='olachat-menu-link' href={url} key={idx} target='_blank' onClick={this.handleClick}>{label}</a>
             })}
           </div>
@@ -53,14 +53,14 @@ class HelpMenu extends React.Component {
 }
 
 const HelpMenuContainer = listensToClickOutside(HelpMenu)
-const HelpMenuWrapper = (props, { config: { helpItems } }) => {
-  return <HelpMenuContainer helpItems={helpItems} {...props}  />
+const HelpMenuWrapper = (props, { config: { botMenu } }) => {
+  return <HelpMenuContainer botMenu={botMenu} {...props}  />
 }
 HelpMenuWrapper.contextTypes = {
   config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
 }
 HelpMenuWrapper.defaultProps = {
-  helpItems: [
+  botMenu: [
     {
       label: 'Help'
     }
