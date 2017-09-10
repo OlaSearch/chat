@@ -43,7 +43,7 @@ let root_div = document.getElementById('root')
 let fdw_div = document.getElementById('fdw-root')
 
 let css_url = `https://cdn.olasearch.com/${process.env.OLA_ENV === 'staging' ? 'staging': 'production'}/59116d96300397120cfecdc0/olachat.min.css`
-css_url = 'style.css'
+css_url = 'olachat.min.css'
 
 if (fdw_div) {
   ReactDOM.render(
