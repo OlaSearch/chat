@@ -21,6 +21,7 @@ class HelpMenu extends React.Component {
     this.setState({ isOpen: !this.state.isOpen })
   };
   handleClick = (e) => {
+    if (!event) return
     if (event.target.href) return
     e.preventDefault()
     this.handleClickOutside()

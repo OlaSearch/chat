@@ -13,7 +13,7 @@ const Bubble = ({ onClick, isActive, label }) => {
 }
 
 Bubble.defaultProps = {
-  label: 'Use your voice to calculate your maternity leave dates'
+  label: 'FDW Eligibility chatbot'
 }
 
 module.exports = Bubble
