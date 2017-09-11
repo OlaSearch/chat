@@ -38,7 +38,7 @@ module.exports = {
         suggest: "https://api.staging.olasearch.com/suggest"
     },
     logger: {
-        enabled:false,
+        enabled: true,
         engine:["logstash", "google"],
         url:"https://api.staging.olasearch.com/log",
         headers:{},

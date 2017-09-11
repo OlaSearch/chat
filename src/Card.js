@@ -48,9 +48,25 @@ const Card = ({ card, templates }) => {
       default:
         return (
           <div className='ola-card-inner'>
-            <h3 className='ola-card-title'><a target='_blank' href={url}>{title}</a></h3>
+            <Fields.Title
+              result={card}
+              field='title'
+              openInNewWindow
+              eventLabel={card['title']}
+              eventCategory='card'
+            />
             <Fields.TextField field='subtitle' result={card} />
-            {buttons.map((button, idx) => <CardButton {...button} key={idx} />)}
+            {buttons.map((button, idx) => (
+                <Fields.Button
+                  {...button}
+                  result={card}
+                  eventLabel={card['title']}
+                  key={idx}
+                  openInNewWindow
+                  eventCategory='card'
+                />
+              )
+            )}
           </div>
         )
     }
