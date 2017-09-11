@@ -53,8 +53,8 @@ $bubble-icon-size: 34px;
   border: none;
   text-align: left;
   position: relative;
-  width: 300px;
-  margin-top: 5px;
+  width: 280px;
+  margin-top: 10px;
   background: $blue;
   color: white;
   padding: 0em $bubble-size+ $bubble-icon-size 0em $bubble-size;
@@ -62,6 +62,7 @@ $bubble-icon-size: 34px;
   min-height: $bubble-size * 2;
   box-shadow: $sharp-box-shadow;
   cursor: pointer;
+  margin-left: 20px;
 
   &:after {
     @extend .iconfont;

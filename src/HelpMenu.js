@@ -27,6 +27,9 @@ class HelpMenu extends React.Component {
     this.props.updateQueryTerm(event.target.text)
     this.props.onSubmit()
   }
+  static defaultProps = {
+    botLinks: []
+  };
   render () {
     let klass = classNames('olachat-helpmenu', {
       'olachat-helpmenu-open': this.state.isOpen

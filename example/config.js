@@ -31,6 +31,7 @@ module.exports = {
     projectId: "59116d96300397120cfecdc0",
     env: 'staging',
     namespace: "mom",
+    chatbotBubbleLabel: 'Ask me about FDW eligiblity (Beta 1.0)',
     api: {
         intent: "https://api.staging.olasearch.com/intent",
         search: "https://api.staging.olasearch.com/search",

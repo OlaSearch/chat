@@ -24,7 +24,7 @@ class BotFrame extends React.Component {
     height: 85,
     heightActive: '100%',
     inline: false,
-    zIndex: 9999,
+    zIndex: 99999999,
     iframeStyle: {
       border: 'none',
       maxWidth: '100%'
@@ -80,7 +80,7 @@ class BotFrame extends React.Component {
           ...inline
             ? {}
             : {
-              bottom: 0,
+              bottom: isDesktop ? 5 : 0,
               top: 'auto',
               right: 0,
               left: 'auto',
