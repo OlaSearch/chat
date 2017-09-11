@@ -67,7 +67,7 @@ $bubble-icon-size: 34px;
     @extend .iconfont;
     content: 'chat';
     position: absolute;
-    right: $bubble-size;
+    right: 20px;
     top: 50%;
     margin-top: -17px;
     font-size: 34px;
