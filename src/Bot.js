@@ -66,6 +66,12 @@ class Bot extends Component {
     }, () => {
       /* Handle active status */
       this.props.onBubbleClick && this.props.onBubbleClick(this.state.isActive)
+      /* Log when chatbot opens or closes */
+      this.props.log({
+        eventLabel: this.state.isActive ? 'open' : 'close',
+        eventCategory: 'bot',
+        eventType: 'O'
+      })
     })
   };
   static defaultProps = {
@@ -77,7 +83,7 @@ class Bot extends Component {
       userName: 'You'
     },
     headerProps: {
-      title: 'Calculate maternity leave'
+      title: 'Bot title'
     },
     avatarProps: {
       avatarBot: null,
@@ -127,9 +133,9 @@ class Bot extends Component {
         {isActive
           ? null
           : <Bubble
-            onClick={this.toggleActive}
-            isActive={this.state.isActive}
-            {...this.props.bubbleProps}
+              onClick={this.toggleActive}
+              isActive={this.state.isActive}
+              {...this.props.bubbleProps}
             />
         }
         {component}

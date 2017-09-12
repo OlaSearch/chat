@@ -5,7 +5,7 @@ import Messages from './Messages'
 import { connect } from 'react-redux'
 import { addMessage, disabledFeedback } from './actions'
 import { Actions } from 'olasearch'
-import SmartSuggestions from './SmartSuggestions'
+import QuickReplies from './QuickReplies'
 
 class Chat extends React.Component {
   static defaultProps = {
@@ -54,7 +54,7 @@ class Chat extends React.Component {
           feedbackActive={feedbackActive}
           dismissModal={this.props.disabledFeedback}
         />
-        <SmartSuggestions
+        <QuickReplies
           onSubmit={this.addMessage}
         />
         <Input
