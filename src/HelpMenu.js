@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import listensToClickOutside from 'react-onclickoutside'
 import PropTypes from 'prop-types'
+import { Decorators } from 'olasearch'
 
 class HelpMenu extends React.Component {
   constructor (props) {
@@ -21,7 +22,14 @@ class HelpMenu extends React.Component {
     this.setState({ isOpen: !this.state.isOpen })
   };
   handleClick = (event) => {
-    if (event.target.href && event.target.href !== '') return
+    if (event.target.href && event.target.href !== '') {
+      this.props.log({
+        eventType: 'C',
+        eventCategory: 'menu',
+        eventLabel: event.target.text,
+      })
+      return
+    }
     event.preventDefault()
     this.handleClickOutside()
     this.props.updateQueryTerm(event.target.text)
@@ -68,4 +76,4 @@ HelpMenuWrapper.contextTypes = {
   config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
 }
 
-module.exports = HelpMenuWrapper
+module.exports = Decorators.withLogger(HelpMenuWrapper)

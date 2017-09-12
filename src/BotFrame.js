@@ -2,16 +2,20 @@ import React from 'react'
 import Bot from './Bot'
 import Frame from 'react-frame-component'
 import { connect } from 'react-redux'
-import { triggerMouseEvent } from './utils'
+import { Decorators } from 'olasearch'
+import { triggerMouseEvent, closest } from './utils'
 
 const OLACHAT_IFRAME_ID = 'olachat-iframe'
+const OLACHAT_MESSAGE_ELEMENT = '.olachat-message-reply'
+
 class BotFrame extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       isActive: props.debug
     }
-    this.addedClickEvtListener = false
+    this.addedIframeClickEvent = false
+    this.addedMessageClickEvent = false
   }
   handleBubbleClick = (isActive) => {
     this.setState({
@@ -37,14 +41,21 @@ class BotFrame extends React.Component {
     this.checkForListener()
   }
   checkForListener = () => {
-    if (this.addedClickEvtListener) return
+    if (this.addedIframeClickEvent && this.addedMessageClickEvent) return
+
     this.iFrame = document.getElementById(OLACHAT_IFRAME_ID)
     this.innerDoc = this.iFrame.contentDocument || this.iFrame.contentWindow.document
     this.messagesEl = this.innerDoc.querySelector('.olachat-messages')
 
-    this.addedClickEvtListener = true
-    if (this.messagesEl) this.messagesEl.addEventListener('click', this.clickListener)
-    if (this.innerDoc) this.innerDoc.addEventListener('click', this.iFrameDispatcher)
+    if (this.messagesEl && !this.addedMessageClickEvent) {
+      this.messagesEl.addEventListener('click', this.clickListener)
+      this.addedMessageClickEvent = true
+    }
+
+    if (this.innerDoc && !this.addedIframeClickEvent) {
+      this.innerDoc.addEventListener('click', this.iFrameDispatcher)
+      this.addedIframeClickEvent = true
+    }
   }
   iFrameDispatcher = (e) => {
     if (e.defaultPrevented) return
@@ -52,9 +63,17 @@ class BotFrame extends React.Component {
   };
   clickListener = (e) => {
     if (!e.target || e.target.nodeName !== 'A' || !e.target.href) return
+    /* Check if its outside the message */
+    if (!closest(this.innerDoc, e.target, OLACHAT_MESSAGE_ELEMENT)) return
     e.preventDefault()
     /* Open link in new window */
     window.open(e.target.href)
+    /* Log */
+    this.props.log({
+      eventLabel: e.target.text,
+      eventCategory: 'message_link',
+      eventType: 'C',
+    })
   };
   componentWillUnmount () {
     /* Remove event listener */
@@ -113,4 +132,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(BotFrame)
+module.exports = connect(mapStateToProps)(Decorators.withLogger(BotFrame))
