@@ -4,7 +4,7 @@ import Input from './Input'
 import Messages from './Messages'
 import { connect } from 'react-redux'
 import { addMessage, disabledFeedback } from './actions'
-import { Actions } from 'olasearch'
+import { Actions, Decorators } from 'olasearch'
 import QuickReplies from './QuickReplies'
 
 class Chat extends React.Component {
@@ -30,6 +30,7 @@ class Chat extends React.Component {
     })
   };
   registerRef = (el) => {
+    console.log(el)
     this.MessageContainer = el
   };
   render () {
@@ -53,6 +54,8 @@ class Chat extends React.Component {
           userName={this.props.userName}
           feedbackActive={feedbackActive}
           dismissModal={this.props.disabledFeedback}
+          log={this.props.log}
+          updateQueryTerm={this.props.updateQueryTerm}
         />
         <QuickReplies
           onSubmit={this.addMessage}
@@ -83,4 +86,10 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, { addMessage, updateQueryTerm: Actions.Search.updateQueryTerm, addContextField: Actions.Context.addContextField, disabledFeedback, changePerPage: Actions.Search.changePerPage })(Chat)
+export default connect(mapStateToProps, {
+  addMessage,
+  updateQueryTerm: Actions.Search.updateQueryTerm,
+  addContextField: Actions.Context.addContextField,
+  disabledFeedback,
+  changePerPage: Actions.Search.changePerPage
+})(Decorators.withLogger(Chat))

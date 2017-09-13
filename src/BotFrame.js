@@ -4,9 +4,7 @@ import Frame from 'react-frame-component'
 import { connect } from 'react-redux'
 import { Decorators } from 'olasearch'
 import { triggerMouseEvent, closest } from './utils'
-
-const OLACHAT_IFRAME_ID = 'olachat-iframe'
-const OLACHAT_MESSAGE_ELEMENT = '.olachat-message-reply'
+import { OLACHAT_IFRAME_ID, OLACHAT_MESSAGE_ELEMENT } from './Settings'
 
 class BotFrame extends React.Component {
   constructor (props) {
@@ -47,11 +45,6 @@ class BotFrame extends React.Component {
     this.innerDoc = this.iFrame.contentDocument || this.iFrame.contentWindow.document
     this.messagesEl = this.innerDoc.querySelector('.olachat-messages')
 
-    if (this.messagesEl && !this.addedMessageClickEvent) {
-      this.messagesEl.addEventListener('click', this.clickListener)
-      this.addedMessageClickEvent = true
-    }
-
     if (this.innerDoc && !this.addedIframeClickEvent) {
       this.innerDoc.addEventListener('click', this.iFrameDispatcher)
       this.addedIframeClickEvent = true
@@ -61,23 +54,8 @@ class BotFrame extends React.Component {
     if (e.defaultPrevented) return
     if (typeof (document) !== 'undefined') triggerMouseEvent(document, 'mousedown')
   };
-  clickListener = (e) => {
-    if (!e.target || e.target.nodeName !== 'A' || !e.target.href) return
-    /* Check if its outside the message */
-    if (!closest(this.innerDoc, e.target, OLACHAT_MESSAGE_ELEMENT)) return
-    e.preventDefault()
-    /* Open link in new window */
-    window.open(e.target.href)
-    /* Log */
-    this.props.log({
-      eventLabel: e.target.text,
-      eventCategory: 'message_link',
-      eventType: 'C',
-    })
-  };
   componentWillUnmount () {
     /* Remove event listener */
-    if (this.messagesEl) this.messagesEl.removeEventListener('click', this.clickListener)
     if (this.innerDoc) this.innerDoc.removeEventListener('click', this.iFrameDispatcher)
   }
   render () {

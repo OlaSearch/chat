@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import Message from './Message'
 import TypingIndicator from './TypingIndicator'
 import classNames from 'classnames'
+import { Decorators } from 'olasearch'
 // import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
@@ -60,6 +61,31 @@ class Messages extends React.Component {
     } else {
       this.rafRequestId = window.requestAnimationFrame(this.pollScroll)
     }
+
+    /* Add click listener */
+    this.messagesEl.addEventListener('click', this.clickListener)
+  }
+  clickListener = (e) => {
+    if (!e.target || e.target.nodeName !== 'A') return
+    let href = e.target.getAttribute('href')
+    e.preventDefault()
+
+    if (!href) {
+      this.props.updateQueryTerm(e.target.text)
+      return this.props.addMessage()
+    }
+    /* Open link in new window */
+    window.open(href)
+    /* Log */
+    this.props.log({
+      eventLabel: e.target.text,
+      eventCategory: 'message_link',
+      eventType: 'C',
+      result: { title: e.target.text }
+    })
+  }
+  componentWillUnmount() {
+    if (this.messagesEl) this.messagesEl.removeEventListener('click', this.clickListener)
   }
   componentDidUpdate (nextProps) {
     this.updateScrollTop()
@@ -124,6 +150,9 @@ class Messages extends React.Component {
     var scrollableDomEl = ReactDOM.findDOMNode(this)
     scrollableDomEl.scrollTop = this.props.flipped ? this.scrollHeight : 0
   };
+  registerRef = (el) => {
+    this.messagesEl = el
+  };
   render () {
     let { messages, flipped, messageComponent, isTyping } = this.props
     let { isInfiniteLoading } = this.state
@@ -153,16 +182,9 @@ class Messages extends React.Component {
         )
       }
     )
-    // let overlayKlass = classNames('olachat-messages-overlay', {
-    //   'olachat-messages-overlay-active': this.props.feedbackActive
-    // })
-    let messagesKlass = classNames('olachat-messages', {
-      'olachat-messages-feedback-active': this.props.feedbackActive
-    })
 
     return (
-      <div className={messagesKlass}>
-        {/* <div className={overlayKlass} onClick={this.props.dismissModal} /> */}
+      <div className='olachat-messages' ref={this.registerRef}>
         <div className='olachat-messages-wrapper'>
           {/* flipped ? loadingSpinner : null */}
           {isTyping ? flipped ? null : <TypingIndicator avatarBot={this.props.avatarBot} /> : null}

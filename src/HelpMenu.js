@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import listensToClickOutside from 'react-onclickoutside'
 import PropTypes from 'prop-types'
 import { Decorators } from 'olasearch'
+import { OLACHAT_IFRAME_ID } from './Settings'
 
 class HelpMenu extends React.Component {
   constructor (props) {
@@ -27,6 +28,7 @@ class HelpMenu extends React.Component {
         eventType: 'C',
         eventCategory: 'menu',
         eventLabel: event.target.text,
+        result: { title: label }
       })
       return
     }
@@ -34,7 +36,15 @@ class HelpMenu extends React.Component {
     this.handleClickOutside()
     this.props.updateQueryTerm(event.target.text)
     this.props.onSubmit()
-  }
+  };
+  handlePrint = () => {
+    let iFrame = document.getElementById(OLACHAT_IFRAME_ID)
+    let innerDoc = iFrame.contentWindow
+    if (iFrame && innerDoc) {
+      innerDoc.focus()
+      innerDoc.print()
+    }
+  };
   static defaultProps = {
     botLinks: []
   };
@@ -61,6 +71,7 @@ class HelpMenu extends React.Component {
                 target='_blank'
                 onClick={this.handleClick}>{title}</a>
             })}
+            <a onClick={this.handlePrint}><em className='ola-icon material-icons'>print</em>Print</a>
           </div>
         </div>
       </div>

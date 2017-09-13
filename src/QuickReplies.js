@@ -11,7 +11,8 @@ class QuickReplies extends React.Component {
       eventCategory: 'quick_reply',
       eventLabel: label,
       eventAction: 'click',
-      eventType: 'C'
+      eventType: 'C',
+      result: { title: label }
     })
   };
   static defaultProps = {
