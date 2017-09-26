@@ -30,7 +30,6 @@ class Chat extends React.Component {
     })
   };
   registerRef = (el) => {
-    console.log(el)
     this.MessageContainer = el
   };
   render () {
