@@ -1,7 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Actions, Decorators } from 'olasearch'
-import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
+import TransitionGroup from 'react-transition-group/TransitionGroup'
+import CSSTransition from 'react-transition-group/CSSTransition'
+// import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 class QuickReplies extends React.Component {
   handleClick = (label) => {
@@ -21,20 +23,15 @@ class QuickReplies extends React.Component {
   render () {
     let { quickReplies } = this.props
     if (!quickReplies || !quickReplies.length) return null
-    let replies = quickReplies.map(({ label }, idx) => <QuickReplyButton key={idx} handleClick={this.handleClick} label={label} />)
+    let replies = quickReplies.map(({ label }, idx) => <CSSTransition key={idx} timeout={{ enter: 500, exit: 300 }} classNames='qreply'><QuickReplyButton handleClick={this.handleClick} label={label} /></CSSTransition>)
     return (
       <div className='olachat-smartsuggestions'>
-        <ReactCSSTransitionGroup
-          transitionName='qreply'
-          transitionAppear
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={300}
-          transitionAppearTimeout={300}
-          component='div'
+        <TransitionGroup
           className='olachat-smartsuggestions-list'
+          appear
         >
           {replies}
-        </ReactCSSTransitionGroup>
+        </TransitionGroup>
       </div>
     )
   }

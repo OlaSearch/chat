@@ -1,31 +1,30 @@
 import React from 'react'
-import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
+import TransitionGroup from 'react-transition-group/TransitionGroup'
+import CSSTransition from 'react-transition-group/CSSTransition'
 import Avatar from './Avatar'
 
 const TypingIndicator = ({ avatarBot, isBot }) => {
   return (
     <div className='olachat-message olachat-message-bot ola-chat-progress'>
-      {avatarBot
-        ? <Avatar
-          isBot
-          avatarBot={avatarBot}
-          />
-        : null
-      }
+      <Avatar
+        isBot
+        avatarBot={avatarBot}
+      />
       <div className='olachat-message-body'>
-        <ReactCSSTransitionGroup
-          transitionName='messages'
-          transitionAppear
-          transitionAppearTimeout={500}
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={300}
+        <TransitionGroup
+          appear
         >
-          <div className='typing-indicator'>
-            <span />
-            <span />
-            <span />
-          </div>
-        </ReactCSSTransitionGroup>
+          <CSSTransition
+            classNames='ola-fade'
+            timeout={{ enter: 500, exit: 500 }}
+          >
+            <div className='typing-indicator'>
+              <span />
+              <span />
+              <span />
+            </div>
+          </CSSTransition>
+        </TransitionGroup>
       </div>
     </div>
   )

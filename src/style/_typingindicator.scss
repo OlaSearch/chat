@@ -1,4 +1,9 @@
 .ola-chat-progress {
+  padding-top: 0;
+
+  &:hover {
+    background-color: transparent;
+  }
   // padding-bottom: 0;
   // min-height: 0;
 }
@@ -10,6 +15,7 @@
   padding: 8px;
   display: inline-block;
   margin: 0 auto;
+  margin-top: 1px;
   position: relative;
   -webkit-animation: 2s bulge infinite ease-out;
           animation: 2s bulge infinite ease-out;

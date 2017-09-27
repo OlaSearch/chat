@@ -48,22 +48,22 @@
 /**
  * Animation
  */
-.messages-enter, .messages-appear {
+.ola-fade-enter, .ola-fade-appear {
   opacity: 0.01;
   // transform: translate3d(0, 10px, 0)
 }
 
-.messages-enter.messages-enter-active, .messages-appear.messages-appear-active {
+.ola-fade-enter.ola-fade-enter-active, .ola-fade-appear.ola-fade-appear-active {
   opacity: 1;
   // transform: translate3d(0,0,0);
   transition: opacity 0.2s ease-in;
 }
 
-.messages-leave {
+.ola-fade-exit {
   // opacity: 1;
 }
 
-.messages-leave.messages-leave-active {
+.ola-fade-exit.ola-fade-exit-active {
   // opacity: 0.01;
   transition: opacity 200ms ease-in;
 }
@@ -82,11 +82,11 @@
   transition-delay: 0.1s;
 }
 
-.qreply-leave {
+.qreply-exit {
   opacity: 1;
 }
 
-.qreply-leave.qreply-leave-active {
+.qreply-exit.qreply-exit-active {
   opacity: 0.01;
   transition: opacity 200ms ease-in;
 }

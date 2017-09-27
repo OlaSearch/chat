@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Actions } from 'olasearch'
-import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
+import TransitionGroup from 'react-transition-group/TransitionGroup'
+import CSSTransition from 'react-transition-group/CSSTransition'
 
 const DISAMBIGUATION_INTENT_NAME = 'OLA.DisambiguateIntent'
 class SlotOptions extends Component {
@@ -14,22 +15,17 @@ class SlotOptions extends Component {
   render () {
     let { options, isActive } = this.props
     if (!options || !options.length) return null
-    let replies = options.map(({ label, value }, idx) => <QuickReplyButton key={idx} label={label} value={value} isActive={isActive} handleClick={this.handleClick} />)
+    let replies = options.map(({ label, value }, idx) => <CSSTransition key={idx} timeout={{ enter: 300, exit: 300 }} classNames='qreply'><QuickReplyButton label={label} value={value} isActive={isActive} handleClick={this.handleClick} /></CSSTransition>)
 
     // if (!isActive) replies = null
     return (
       <div className='olachat-qreply'>
-        <ReactCSSTransitionGroup
-          transitionName='qreply'
-          transitionAppear
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={300}
-          transitionAppearTimeout={300}
-          component='div'
+        <TransitionGroup
+          appear
           className='olachat-qreply-list'
         >
-          {replies}
-        </ReactCSSTransitionGroup>
+        {replies}
+        </TransitionGroup>
       </div>
     )
   }

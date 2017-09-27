@@ -4,8 +4,8 @@ import Message from './Message'
 import TypingIndicator from './TypingIndicator'
 import classNames from 'classnames'
 import { Decorators } from 'olasearch'
-// import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
+import TransitionGroup from 'react-transition-group/TransitionGroup'
+import CSSTransition from 'react-transition-group/CSSTransition'
 
 /**
  * Message interface
@@ -166,11 +166,15 @@ class Messages extends React.Component {
         let nextMsgs = messages.slice(idx)
         let isSearchActive = nextMsgs.filter((msg) => !msg.userId).length === nextMsgs.length
         return (
+          <CSSTransition
+            key={message.id}
+            classNames='ola-fade'
+            timeout={{ enter: 500, exit: 300 }}
+          >
           <Message
             avatarBot={this.props.avatarBot}
             avatarUser={this.props.avatarUser}
             message={message}
-            key={message.id}
             addMessage={this.props.addMessage}
             isActive={idx === messages.length - 1}
             messageIdx={idx}
@@ -179,6 +183,7 @@ class Messages extends React.Component {
             userName={this.props.userName}
             isTyping={isTyping}
           />
+          </CSSTransition>
         )
       }
     )
@@ -188,19 +193,16 @@ class Messages extends React.Component {
         <div className='olachat-messages-wrapper'>
           {/* flipped ? loadingSpinner : null */}
           {isTyping ? flipped ? null : <TypingIndicator avatarBot={this.props.avatarBot} /> : null}
-          <ReactCSSTransitionGroup
-            transitionName='messages'
-            transitionAppear
-            transitionAppearTimeout={300}
-            transitionEnterTimeout={500}
-            transitionLeave={false}
-            component='div'
+          <TransitionGroup
+            appear
+            enter
+            exit={false}
             className='olachat-messages-list'
           >
             {messagesComponent}
-          </ReactCSSTransitionGroup>
+          </TransitionGroup>
           {flipped ? null : loadingSpinner}
-          {isTyping ? flipped ? <ReactCSSTransitionGroup transitionEnterTimeout={300} transitionLeave={false} transitionAppearTimeout={300} transitionAppear transitionName='messages'><TypingIndicator avatarBot={this.props.avatarBot} /></ReactCSSTransitionGroup> : null : null}
+          {isTyping ? flipped ? <TypingIndicator avatarBot={this.props.avatarBot} />: null : null}
         </div>
       </div>
     )

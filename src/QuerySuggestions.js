@@ -22,6 +22,7 @@ const QuerySuggestions = ({ suggestions, onChange, activeIndex, queryTerm }) => 
 }
 
 const QuerySuggestionItem = ({ queryTerm, term, onChange, isActive }) => {
+  if (!queryTerm) return null
   function handleChange () {
     onChange && onChange(term)
   }
