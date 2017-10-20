@@ -55,11 +55,26 @@ $gutter: 12px;
 
     &:before {
       @extend .iconfont;
-      content: 'send';
+      // content: 'send';
+      background-position: 0 -48px;
+      background-size: 100% auto;
+      width: 24px;
+      height: 24px;
     }
 
     span {
       display: none;
+    }
+  }
+
+  /* Print icon */
+  .ola-icon-print {
+    &:before {
+      @extend .iconfont;
+      background-position: 0 -120px;
+      background-size: 100% auto;
+      width: 24px;
+      height: 24px;
     }
   }
 

@@ -24,6 +24,7 @@
   font-weight: 600;
   display: block;
   width: 100%;
+  margin-bottom: 1px; /* Border gets cut off because of overflow-x:auto in parent container */
 
   @include media (tablet) {
     width: auto;
@@ -35,10 +36,6 @@
 
   &:focus {
     outline: none;
-  }
-  &:hover {
-    // background-color: $blue;
-    // color: white;
   }
 }
 

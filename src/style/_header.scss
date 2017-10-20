@@ -45,8 +45,10 @@
 
   &:before {
     @extend .iconfont;
-    content: 'close';
-    vertical-align: middle;
+    background-position: 0 -72px;
+    background-size: 100% auto;
+    width: 24px;
+    height: 24px;
   }
 
   span {

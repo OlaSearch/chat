@@ -117,10 +117,10 @@ $space: 8px;
 
     &:after {
       @extend .iconfont;
-      content: 'keyboard_arrow_down';
-      vertical-align: middle;
-      line-height: 1;
-      font-size: 18px;
+      background-position: 0 -73px;
+      background-size: 100% auto;
+      width: 18px;
+      height: 18px;
     }
 
     &.ola-link-load-more-active {
@@ -160,8 +160,11 @@ $space: 8px;
 
     &:before {
       @extend .iconfont;
-      content: 'expand_more';
-      vertical-align: -4px;
+      background-position: 0 -73px;
+      background-size: 100% auto;
+      width: 18px;
+      height: 18px;
+      // vertical-align: -4px;
       margin-right: 5px;
     }
 

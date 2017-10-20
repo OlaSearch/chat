@@ -207,12 +207,15 @@ class Input extends React.Component {
     let inputValue = suggestedTerm ? suggestedTerm.term : text
     return (
       <form className='olachat-footer' onSubmit={this.onFormSubmit}>
-        <QuerySuggestions
-          onChange={this.onSuggestionChange}
-          suggestions={suggestions}
-          activeIndex={suggestedIndex}
-          queryTerm={text}
-        />
+        {suggestions.length && text
+          ? <QuerySuggestions
+              onChange={this.onSuggestionChange}
+              suggestions={suggestions}
+              activeIndex={suggestedIndex}
+              queryTerm={text}
+            />
+          : null
+        }
         <HelpMenu
           onSubmit={this.props.onSubmit}
           updateQueryTerm={this.props.updateQueryTerm}

@@ -11,7 +11,7 @@ import { EMOJI_LIST } from './Settings'
 
 const regex = /^\\[a-z|0-9]+\b/g
 
-const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName, minTextLength, isActive, isSearchActive, isTyping, messageIdx }) => {
+const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName, minTextLength, isActive, isSearchActive, isTyping, messageIdx, log }) => {
   let { userId, timestamp, awaitingUserInput, fulfilled, card, slot_options: options, results, intent } = message
   let isBot = !userId
   let text = isBot ? message.reply : message.message
@@ -65,6 +65,8 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
           options={options}
           isActive={isActive}
           intent={intent}
+          message={message}
+          log={log}
         />
         <MessageFeedback
           isBot={isBot}

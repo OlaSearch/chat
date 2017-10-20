@@ -1,22 +1,33 @@
 .olachat-smartsuggestions {
   font-size: 14px;
   background-color: transparent;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  display: flex;
   animation: 0.4s ease-in-out 0s 1 slideUp;
   margin-top: -0.5em;
+
+  @include media (tablet) {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .olachat-smartsuggestions-button {
-  border-radius: 20px;
+  border-radius: 30px;
   border: 1px $blue solid;
   color: $blue;
   background-color: transparent;
-  height: 34px;
-  padding-left: 12px;
-  padding-right: 12px;
-  margin: 0 6px;
+  // height: 34px;
+  padding: 8px 12px 8px 12px;
+  margin: 0 6px 6px 0;
+
+  display: block;
+  width: 100%;
+
+  @include media (tablet) {
+    display: inline-block;
+    margin-bottom: 0;
+    width: auto;
+  }
 
   &:hover {
     color: white;
@@ -25,10 +36,15 @@
 }
 
 .olachat-smartsuggestions-list {
-  display: flex;
+  
   padding: 12px;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
+  
+
+  @include media (tablet) {
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    display: flex;
+  }
 }

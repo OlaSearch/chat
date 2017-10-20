@@ -71,7 +71,7 @@ class HelpMenu extends React.Component {
                 target='_blank'
                 onClick={this.handleClick}>{title}</a>
             })}
-            <a onClick={this.handlePrint}><em className='ola-icon material-icons'>print</em>Print</a>
+            <a onClick={this.handlePrint}><em className='ola-icon ola-icon-print'></em>Print</a>
           </div>
         </div>
       </div>

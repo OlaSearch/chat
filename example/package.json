@@ -9,6 +9,7 @@
     "build:demo": "NODE_ENV=production webpack --config webpack.config.demo.js --progress",
     "build:staging": "OLA_ENV=staging NODE_ENV=production webpack --config webpack.config.demo.js --progress",
     "main": "NODE_ENV=production webpack --config webpack.config.main.js",
+    "iframe": "NODE_ENV=production webpack --config webpack.config.iframe.js",
     "demo": "npm run main && npm run build:demo && cat ./../polyfill.min.js ./../demo/olasearch.core.min.js ./../demo/olasearch.config.min.js ./../demo/olachat.min.js > ./../demo/olachat.all.min.js",
     "staging": "npm run main && npm run build:staging && cat ./../polyfill.min.js ./../demo/olasearch.core.min.js > ./../demo/olachat.all.staging.min.js"
   },

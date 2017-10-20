@@ -18,6 +18,8 @@ class BotFrame extends React.Component {
   handleBubbleClick = (isActive) => {
     this.setState({
       isActive
+    }, () => {
+      document.documentElement.classList.toggle('ola-chatbot-rootActive', this.state.isActive)
     })
   };
   static defaultProps = {
@@ -34,6 +36,17 @@ class BotFrame extends React.Component {
   }
   componentDidMount () {
     this.checkForListener()
+    /* Add inline css */
+    var style = document.createElement('style')
+    style.id = 'ola-styles'
+    style.type = 'text/css'
+    style.innerHTML = this.props.isDesktop ? `` : `
+      .ola-chatbot-rootActive, .ola-chatbot-rootActive body{
+        -webkit-overflow-scrolling : touch !important;
+        overflow: hidden !important;
+        height: 100% !important;
+    `
+    document.getElementsByTagName('head')[0].appendChild(style)
   }
   componentDidUpdate () {
     this.checkForListener()
@@ -43,7 +56,6 @@ class BotFrame extends React.Component {
 
     this.iFrame = document.getElementById(OLACHAT_IFRAME_ID)
     this.innerDoc = this.iFrame.contentDocument || this.iFrame.contentWindow.document
-    this.messagesEl = this.innerDoc.querySelector('.olachat-messages')
 
     if (this.innerDoc && !this.addedIframeClickEvent) {
       this.innerDoc.addEventListener('click', this.iFrameDispatcher)
@@ -57,6 +69,9 @@ class BotFrame extends React.Component {
   componentWillUnmount () {
     /* Remove event listener */
     if (this.innerDoc) this.innerDoc.removeEventListener('click', this.iFrameDispatcher)
+    /* Remove style */
+    var styleEl = document.getElementById('ola-styles')
+    if (styleEl) styleEl.parentNode.removeChild(styleEl)
   }
   render () {
     let { isActive } = this.state

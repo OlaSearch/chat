@@ -6,16 +6,24 @@ import CSSTransition from 'react-transition-group/CSSTransition'
 
 const DISAMBIGUATION_INTENT_NAME = 'OLA.DisambiguateIntent'
 class SlotOptions extends Component {
-  handleClick = ({ label, value }) => {
-    let { intent } = this.props
-    let args = intent === DISAMBIGUATION_INTENT_NAME ? { intent: value } : {}
+  handleClick = ({ label, value, intent: selectedIntent }) => {
+    let { intent, message } = this.props
+    let args = intent === DISAMBIGUATION_INTENT_NAME ? { intent: selectedIntent } : {}
+    if (intent === DISAMBIGUATION_INTENT_NAME) {
+      /* Log */
+      this.props.log({
+        eventLabel: selectedIntent,
+        eventCategory: 'intent_training',
+        eventType: 'O',
+      })
+    }
     this.props.updateQueryTerm(label)
     this.props.onSubmit(args)
   };
   render () {
     let { options, isActive } = this.props
     if (!options || !options.length) return null
-    let replies = options.map(({ label, value }, idx) => <CSSTransition key={idx} timeout={{ enter: 300, exit: 300 }} classNames='qreply'><QuickReplyButton label={label} value={value} isActive={isActive} handleClick={this.handleClick} /></CSSTransition>)
+    let replies = options.map(({ label, value, intent }, idx) => <CSSTransition key={idx} timeout={{ enter: 300, exit: 300 }} classNames='qreply'><QuickReplyButton intent={intent} label={label} value={value} isActive={isActive} handleClick={this.handleClick} /></CSSTransition>)
 
     // if (!isActive) replies = null
     return (
@@ -31,9 +39,9 @@ class SlotOptions extends Component {
   }
 }
 
-const QuickReplyButton = ({ label, value, handleClick, isActive }) => {
+const QuickReplyButton = ({ label, value, intent, handleClick, isActive }) => {
   function onClick () {
-    handleClick({ label, value })
+    handleClick({ label, value, intent })
   }
   return (
     <button

@@ -36,6 +36,7 @@ class Messages extends React.Component {
     this.state = {
       isInfiniteLoading: false
     }
+    this.isComponentMounted = false
   }
   static defaultProps = {
     flipped: false,
@@ -62,6 +63,8 @@ class Messages extends React.Component {
       this.rafRequestId = window.requestAnimationFrame(this.pollScroll)
     }
 
+    this.isComponentMounted = true
+
     /* Add click listener */
     this.messagesEl.addEventListener('click', this.clickListener)
   }
@@ -85,12 +88,15 @@ class Messages extends React.Component {
     })
   }
   componentWillUnmount() {
+    this.isComponentMounted = false
     if (this.messagesEl) this.messagesEl.removeEventListener('click', this.clickListener)
   }
   componentDidUpdate (nextProps) {
     this.updateScrollTop()
   }
   pollScroll = () => {
+    if (!this.isComponentMounted) return
+    let domNode = ReactDOM.findDOMNode(this)
     this.previousScrollTop = ReactDOM.findDOMNode(this).scrollTop
     this.onScroll()
     this.rafRequestId = window.requestAnimationFrame(this.pollScroll)
@@ -182,6 +188,7 @@ class Messages extends React.Component {
             botName={this.props.botName}
             userName={this.props.userName}
             isTyping={isTyping}
+            log={this.props.log}
           />
           </CSSTransition>
         )
