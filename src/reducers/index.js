@@ -8,7 +8,8 @@ const initialState = {
   shouldPoll: false,
   feedbackActive: false,
   feedbackMessageId: null,
-  feedbackRating: null
+  feedbackRating: null,
+  isBotActive: false
 }
 
 const createMessageObj = (answer, results) => {
@@ -132,6 +133,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         feedbackRating: action.rating
+      }
+    
+    case types.SET_BOT_STATUS:
+      return {
+        ...state,
+        isBotActive: action.status
       }
 
     default:

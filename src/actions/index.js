@@ -178,3 +178,10 @@ export function logFeedback (feedbackMessage) { /* eventMessage => feed */
     }))
   }
 }
+
+export function setBotStatus (status) {
+  return {
+    type: types.SET_BOT_STATUS,
+    status
+  }
+}

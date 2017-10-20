@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { clearMessages } from './actions'
+import { clearMessages, setBotStatus } from './actions'
 import { Actions, Decorators } from 'olasearch'
 import classNames from 'classnames'
 // import webkit from './adapters/webkit'
@@ -27,9 +27,6 @@ const emitter = mitt()
 class Bot extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      isActive: !!props.debug
-    }
     let { speechRecognitionProvider } = props /* speechOutputProvider */
     if (speechRecognitionProvider) {
       /* Create a voiceadapter */
@@ -56,26 +53,26 @@ class Bot extends Component {
     this.voiceAdapter && this.voiceAdapter.stopSpeaking()
 
     /* Reset */
-    this.props.dispatch(clearMessages())
-    this.props.dispatch(Actions.Search.clearQueryTerm())
+    this.props.clearMessages()
+    this.props.clearQueryTerm()
+
+    const currentActiveStatus = !this.props.isBotActive
 
     /* Stop all audio */
-
-    this.setState({
-      isActive: !this.state.isActive
-    }, () => {
-      /* Handle active status */
-      this.props.onBubbleClick && this.props.onBubbleClick(this.state.isActive)
-      /* Log when chatbot opens or closes */
-      this.props.log({
-        eventLabel: this.state.isActive ? 'open' : 'close',
-        eventCategory: 'bot',
-        eventType: 'O'
-      })
+    this.props.setBotStatus(currentActiveStatus)
+    
+    /* Handle active status */
+    this.props.onBubbleClick && this.props.onBubbleClick(currentActiveStatus)
+    /* Log when chatbot opens or closes */
+    this.props.log({
+      eventLabel: currentActiveStatus ? 'open' : 'close',
+      eventCategory: 'bot',
+      eventType: 'O'
     })
   };
   static defaultProps = {
     vui: false,
+    showBubble: true,
     bubbleProps: {},
     onBubbleClick: null,
     botProps: {
@@ -113,14 +110,14 @@ class Bot extends Component {
       emitter
     }
     const HAS_VOICES = this.props.isPhone ? window.speechSynthesis.getVoices().length > 1 : true
-    const component = this.state.isActive
+    const { isBotActive, showBubble } = this.props
+    const component = isBotActive
       ? this.props.vui && supportsVoice && HAS_VOICES
         ? <Vui {...passProps} />
         : <Chat {...passProps} />
       : null
-    const { isActive } = this.state
     const botClass = classNames('olachat-bot', {
-      'olachat-bot-active': isActive,
+      'olachat-bot-active': isBotActive,
       'olachat-bot-iframe': this.props.iFrame,
       'olachat-bot-mobile': this.props.isPhone,
       'olachat-bot-tablet': this.props.isTablet,
@@ -130,13 +127,15 @@ class Bot extends Component {
     return (
       <div className={botClass}>
         <div className='olachat-bot-overlay' />
-        {isActive
+        {isBotActive
           ? null
-          : <Bubble
-              onClick={this.toggleActive}
-              isActive={this.state.isActive}
-              {...this.props.bubbleProps}
-            />
+          : showBubble
+            ? <Bubble
+                onClick={this.toggleActive}
+                isActive={isBotActive}
+                {...this.props.bubbleProps}
+              />
+            : null
         }
         {component}
       </div>
@@ -149,8 +148,13 @@ function mapStateToProps (state) {
     isPhone: state.Device.isPhone,
     isTablet: state.Device.isTablet,
     isDesktop: state.Device.isDesktop,
-    isNewUser: state.Context.isNewUser
+    isNewUser: state.Context.isNewUser,
+    isBotActive: state.Conversation.isBotActive
   }
 }
 
-module.exports = connect(mapStateToProps)(Decorators.withLogger(Bot))
+module.exports = connect(mapStateToProps, {
+  clearMessages,
+  setBotStatus,
+  clearQueryTerm: Actions.Search.clearQueryTerm
+})(Decorators.withLogger(Bot))

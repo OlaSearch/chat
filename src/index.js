@@ -8,7 +8,7 @@ import BotFrame from './BotFrame'
 import Card from './Card'
 // import Search from './Search'
 import ChatReducer from './reducers'
-import ChatActions from './actions'
+import * as ChatActions from './actions'
 import version from './Version'
 
 export {

@@ -11,10 +11,13 @@ class Chat extends React.Component {
   static defaultProps = {
     flipped: true,
     title: 'Ola Bot',
+    sendWelcomeMsg: true,
     onLoad: () => new Promise((resolve, reject) => resolve())
   };
   componentDidMount () {
-    this.props.addMessage({ intent: this.props.initialIntent, start: true })
+    if (this.props.sendWelcomeMsg) {
+      this.props.addMessage({ intent: this.props.initialIntent, start: true })
+    }
     this.props.changePerPage(3)
   }
   addMessage = (args) => {

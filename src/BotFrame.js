@@ -9,19 +9,9 @@ import { OLACHAT_IFRAME_ID, OLACHAT_MESSAGE_ELEMENT } from './Settings'
 class BotFrame extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
-      isActive: props.debug
-    }
     this.addedIframeClickEvent = false
     this.addedMessageClickEvent = false
-  }
-  handleBubbleClick = (isActive) => {
-    this.setState({
-      isActive
-    }, () => {
-      document.documentElement.classList.toggle('ola-chatbot-rootActive', this.state.isActive)
-    })
-  };
+  }  
   static defaultProps = {
     width: 320,
     widthActive: 880,
@@ -32,7 +22,8 @@ class BotFrame extends React.Component {
     iframeStyle: {
       border: 'none',
       maxWidth: '100%'
-    }
+    },
+    activeStyle: {}
   }
   componentDidMount () {
     this.checkForListener()
@@ -48,8 +39,11 @@ class BotFrame extends React.Component {
     `
     document.getElementsByTagName('head')[0].appendChild(style)
   }
-  componentDidUpdate () {
+  componentDidUpdate (prevProps) {
     this.checkForListener()
+    if (prevProps.isBotActive !== this.props.isBotActive) {
+      document.documentElement.classList.toggle('ola-chatbot-rootActive', this.props.isBotActive)
+    }
   }
   checkForListener = () => {
     if (this.addedIframeClickEvent && this.addedMessageClickEvent) return
@@ -74,11 +68,11 @@ class BotFrame extends React.Component {
     if (styleEl) styleEl.parentNode.removeChild(styleEl)
   }
   render () {
-    let { isActive } = this.state
-    let { iframeStyle, width, widthActive, height, heightActive, inline, zIndex, isDesktop } = this.props
+    let { isBotActive } = this.props
+    let { iframeStyle, width, widthActive, height, heightActive, inline, zIndex, isDesktop, activeStyle } = this.props
     let frameStyles = {
       ...iframeStyle,
-      ...isActive
+      ...isBotActive
         ? {
           top: 0,
           bottom: 0,
@@ -86,7 +80,8 @@ class BotFrame extends React.Component {
           position: 'fixed',
           width: isDesktop ? widthActive : '100%',
           height: heightActive,
-          zIndex
+          zIndex,
+          ...activeStyle
         }
         : {
           ...inline
@@ -121,7 +116,8 @@ class BotFrame extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    isDesktop: state.Device.isDesktop
+    isDesktop: state.Device.isDesktop,
+    isBotActive: state.Conversation.isBotActive
   }
 }
 
