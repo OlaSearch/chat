@@ -97,7 +97,7 @@ if (search_div) {
           botProps={{
             botName: config.botName,
             userName: 'You',
-            sendWelcomeMsg: false
+            sendWelcomeMsg: true
           }}
           head={
             <div>
