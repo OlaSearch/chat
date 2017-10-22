@@ -35,32 +35,52 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <style>
-        #chatbot-trigger {
-          background: #eee;
-          padding: 1em;
-          border: 1px #ddd solid;
-          border-radius: 5px;
-          margin-bottom: 8px;
-        }
-        #chatbot-trigger .btn{
-          display: inline-block;
-          padding: 8px 1em;
-          margin: 0;
-        }
-        #chatbot-trigger .btn:hover {
-          background: #ffb74d;
-        }
-        .ola-chatbot-rootActive body:after {
-          position: fixed;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          background: rgba(0,0,0,0.5);
-          content: " ";
-          z-index: 20;
-        }
-      </style>
+      #chatbot-trigger {
+        background: #eee;
+        padding: 1em;
+        border: 1px #ddd solid;
+        border-radius: 5px;
+        margin-bottom: 8px;
+        display: flex;
+        position: absolute;
+        top: -2000px;
+        left: 2000px;
+      }
+      .showbot #chatbot-trigger {
+        position: relative;
+        top: auto;
+        left: auto;
+      }
+      #chatbot-trigger .btn{
+        display: inline-block;
+        padding: 8px 1em;
+        margin: 0;
+      }
+      #chatbot-trigger .btn:hover {
+        background: #ffb74d;
+      }
+      #chatbot-trigger img {
+        width: 60px;
+        margin-right: 20px;
+      }
+      #chatbot-trigger h4 {
+        margin-bottom: 10px;
+      }
+      .ola-chatbot-rootActive body:after {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,0.5);
+        content: " ";
+        z-index: 20;
+      }
+
+      .search-results {
+        display: none;
+      }
+    </style>
 </head>
 
 <body>
@@ -147,12 +167,16 @@
                                                     <ul class="list-result-items">
                                                         <li>
                                                             <div id='chatbot-trigger'>
-                                                                
-                                                                                                                            <h4>Launch and explore FDW eligibility matters easily using our chatbot</h4>
-                                                                                                                            <a id='launchBot' class='btn btn--primary'>
-                                                                                                                              Launch chatbot
-                                                                                                                            </a>
-                                                                                                                          </div>
+                                                                <div>
+                                                                  <img src='chaticon.png' />
+                                                                </div>
+                                                                <div>
+                                                                <h4>Launch and explore FDW eligibility matters easily using our chatbot</h4>
+                                                                <a id='launchBot' class='btn btn--primary'>
+                                                                  Launch chatbot
+                                                                </a>
+                                                                </div>
+                                                              </div>
                                                         </li>
                                                         <li class="snippet-link"> <a class="atosgt-title" href="/passes-and-permits/work-permit-for-foreign-domestic-worker/eligibility-and-requirements/fdw-eligibility" data-id="38d6c5e856de404f8a0b2e2a5d3dadfb" data-req="">Foreign domestic worker eligibility</a>
                                                             <div class="subtitles">
@@ -541,6 +565,15 @@
   
           jQuery('.search-results').hide()
         });
+
+        jQuery('#search-query-inner').keyup(function(e) {
+        $('.search-results').toggleClass('showbot', e.target.value.indexOf('fdw elig') !== -1)
+        if (e.target.value) {
+          $('.search-results').show()
+        } else {
+          $('.search-results').hide()
+        }
+      })
   
       </script>
 </body>
