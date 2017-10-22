@@ -43,7 +43,7 @@
     "node-sass": "^4.5.3",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-onclickoutside": "^6.6.0",
+    "react-onclickoutside": "^6.6.2",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
@@ -55,7 +55,7 @@
     "mitt": "^1.1.2",
     "olasearch": "git+https://gitlab-ci-token:iNkSh25Xh9h9fts8dqTp@gitlab.com/olasearch/olasearch-core.git",
     "react-flexi-textarea": "^1.0.5",
-    "react-frame-component": "^1.1.1",
+    "react-frame-component": "^2.0.0",
     "react-transition-group": "^2.2.1",
     "watson-html5-speech-recognition": "^0.6.6"
   }
