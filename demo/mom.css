@@ -4649,14 +4649,14 @@ figure {
  */
 .mom-logo {
   display: inline-block;
-  background: url(../images/branding/mom-logo-color.svg);
+  background: url(http://www.mom.gov.sg/html/mom/images/branding/mom-logo-color.svg);
   background-repeat: no-repeat;
   background-size: auto 60px;
   text-indent: -2000em;
   width: 130px;
   height: 60px; }
   .no-svg .mom-logo {
-    background-image: url(../images/branding/mom-logo-color-ie.png); }
+    background-image: url(http://www.mom.gov.sg/html/mom/images/branding/mom-logo-color-ie.png); }
   @media only screen and (min-width: 600px) {
     .mom-logo {
       float: left; } }
@@ -4669,7 +4669,7 @@ _:-ms-input-placeholder, :root .mom-logo {
  */
 .gov-logo {
   float: right;
-  background: url(../images/branding/sing-gov.svg) top left no-repeat;
+  background: url(http://www.mom.gov.sg/html/mom/images/branding/sing-gov.svg) top left no-repeat;
   width: 194px;
   height: 31px;
   background-size: cover;
