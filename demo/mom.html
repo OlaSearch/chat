@@ -567,7 +567,8 @@
         });
 
         jQuery('#search-query-inner').keyup(function(e) {
-        $('.search-results').toggleClass('showbot', e.target.value.indexOf('fdw elig') !== -1)
+          var val = e.target.value ? e.target.value.toLowerCase() : ''
+        $('.search-results').toggleClass('showbot', val.indexOf('fdw elig') !== -1)
         if (e.target.value) {
           $('.search-results').show()
         } else {
