@@ -209,10 +209,10 @@ class Input extends React.Component {
       <form className='olachat-footer' onSubmit={this.onFormSubmit}>
         {suggestions.length && text
           ? <QuerySuggestions
-              onChange={this.onSuggestionChange}
-              suggestions={suggestions}
-              activeIndex={suggestedIndex}
-              queryTerm={text}
+            onChange={this.onSuggestionChange}
+            suggestions={suggestions}
+            activeIndex={suggestedIndex}
+            queryTerm={text}
             />
           : null
         }

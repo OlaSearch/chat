@@ -1,3 +1,4 @@
+/* global Element */
 module.exports = {
   createHTMLMarkup (html) {
     if (Array.isArray(html)) html = html.join('')
@@ -38,8 +39,8 @@ module.exports = {
     var ancestor = element
     if (!iframeEl.contains(el)) return null
     do {
-        if (ancestor.matches(elementClosest)) return ancestor
-        ancestor = ancestor.parentElement
+      if (ancestor.matches(elementClosest)) return ancestor
+      ancestor = ancestor.parentElement
     } while (ancestor !== null)
     return null
   },

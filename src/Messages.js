@@ -2,8 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Message from './Message'
 import TypingIndicator from './TypingIndicator'
-import classNames from 'classnames'
-import { Decorators } from 'olasearch'
 import TransitionGroup from 'react-transition-group/TransitionGroup'
 import CSSTransition from 'react-transition-group/CSSTransition'
 
@@ -87,7 +85,7 @@ class Messages extends React.Component {
       result: { title: e.target.text }
     })
   }
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.isComponentMounted = false
     if (this.messagesEl) this.messagesEl.removeEventListener('click', this.clickListener)
   }
@@ -96,7 +94,6 @@ class Messages extends React.Component {
   }
   pollScroll = () => {
     if (!this.isComponentMounted) return
-    let domNode = ReactDOM.findDOMNode(this)
     this.previousScrollTop = ReactDOM.findDOMNode(this).scrollTop
     this.onScroll()
     this.rafRequestId = window.requestAnimationFrame(this.pollScroll)
@@ -177,18 +174,18 @@ class Messages extends React.Component {
             classNames='ola-fade'
             timeout={{ enter: 500, exit: 300 }}
           >
-          <Message
-            avatarBot={this.props.avatarBot}
-            avatarUser={this.props.avatarUser}
-            message={message}
-            addMessage={this.props.addMessage}
-            isActive={idx === messages.length - 1}
-            messageIdx={idx}
-            isSearchActive={isSearchActive}
-            botName={this.props.botName}
-            userName={this.props.userName}
-            isTyping={isTyping}
-            log={this.props.log}
+            <Message
+              avatarBot={this.props.avatarBot}
+              avatarUser={this.props.avatarUser}
+              message={message}
+              addMessage={this.props.addMessage}
+              isActive={idx === messages.length - 1}
+              messageIdx={idx}
+              isSearchActive={isSearchActive}
+              botName={this.props.botName}
+              userName={this.props.userName}
+              isTyping={isTyping}
+              log={this.props.log}
           />
           </CSSTransition>
         )
@@ -209,7 +206,7 @@ class Messages extends React.Component {
             {messagesComponent}
           </TransitionGroup>
           {flipped ? null : loadingSpinner}
-          {isTyping ? flipped ? <TypingIndicator avatarBot={this.props.avatarBot} />: null : null}
+          {isTyping ? flipped ? <TypingIndicator avatarBot={this.props.avatarBot} /> : null : null}
         </div>
       </div>
     )

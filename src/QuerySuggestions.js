@@ -7,7 +7,7 @@ class QuerySuggestions extends React.Component {
   registerRef = (el) => {
     this.el = el
   };
-  componentDidMount() {
+  componentDidMount () {
     /* Add click listener */
     this.el.addEventListener('click', (e) => {
       e.preventDefault()

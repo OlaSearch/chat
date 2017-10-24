@@ -1,7 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
 import CardList from './CardList'
-import CardButton from './CardButton'
 import AnswerWordMap from 'olasearch/lib/components/Answer/AnswerWordMap'
 import AnswerMap from 'olasearch/lib/components/Answer/AnswerMap'
 import { Fields } from 'olasearch'
@@ -10,7 +9,7 @@ import { Fields } from 'olasearch'
 const Card = ({ card, templates }) => {
   if (!card) return null
   if (!card.title) return null
-  let { title, url, buttons = [], template } = card
+  let { buttons = [], template } = card
   let klass = cx('ola-card', `ola-card-template-${template}`)
 
   function pickTemplate (template) {
@@ -57,13 +56,13 @@ const Card = ({ card, templates }) => {
             />
             <Fields.TextField field='subtitle' result={card} />
             {buttons.map((button, idx) => (
-                <Fields.Button
-                  {...button}
-                  result={card}
-                  eventLabel={card['title']}
-                  key={idx}
-                  openInNewWindow
-                  eventCategory='card'
+              <Fields.Button
+                {...button}
+                result={card}
+                eventLabel={card['title']}
+                key={idx}
+                openInNewWindow
+                eventCategory='card'
                 />
               )
             )}

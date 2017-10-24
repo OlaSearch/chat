@@ -3,15 +3,15 @@ import Bot from './Bot'
 import Frame from 'react-frame-component'
 import { connect } from 'react-redux'
 import { Decorators } from 'olasearch'
-import { triggerMouseEvent, closest } from './utils'
-import { OLACHAT_IFRAME_ID, OLACHAT_MESSAGE_ELEMENT } from './Settings'
+import { triggerMouseEvent } from './utils'
+import { OLACHAT_IFRAME_ID } from './Settings'
 
 class BotFrame extends React.Component {
   constructor (props) {
     super(props)
     this.addedIframeClickEvent = false
     this.addedMessageClickEvent = false
-  }  
+  }
   static defaultProps = {
     width: 320,
     widthActive: 880,

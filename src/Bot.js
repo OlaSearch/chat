@@ -60,7 +60,7 @@ class Bot extends Component {
 
     /* Stop all audio */
     this.props.setBotStatus(currentActiveStatus)
-    
+
     /* Handle active status */
     this.props.onBubbleClick && this.props.onBubbleClick(currentActiveStatus)
     /* Log when chatbot opens or closes */
@@ -131,9 +131,9 @@ class Bot extends Component {
           ? null
           : showBubble
             ? <Bubble
-                onClick={this.toggleActive}
-                isActive={isBotActive}
-                {...this.props.bubbleProps}
+              onClick={this.toggleActive}
+              isActive={isBotActive}
+              {...this.props.bubbleProps}
               />
             : null
         }

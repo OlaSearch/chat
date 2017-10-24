@@ -7,14 +7,14 @@ import CSSTransition from 'react-transition-group/CSSTransition'
 const DISAMBIGUATION_INTENT_NAME = 'OLA.DisambiguateIntent'
 class SlotOptions extends Component {
   handleClick = ({ label, value, intent: selectedIntent }) => {
-    let { intent, message } = this.props
+    let { intent } = this.props
     let args = intent === DISAMBIGUATION_INTENT_NAME ? { intent: selectedIntent } : {}
     if (intent === DISAMBIGUATION_INTENT_NAME) {
       /* Log */
       this.props.log({
         eventLabel: selectedIntent,
         eventCategory: 'intent_training',
-        eventType: 'O',
+        eventType: 'O'
       })
     }
     this.props.updateQueryTerm(label)
@@ -32,7 +32,7 @@ class SlotOptions extends Component {
           appear
           className='olachat-qreply-list'
         >
-        {replies}
+          {replies}
         </TransitionGroup>
       </div>
     )

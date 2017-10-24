@@ -28,7 +28,7 @@ class HelpMenu extends React.Component {
         eventType: 'C',
         eventCategory: 'menu',
         eventLabel: event.target.text,
-        result: { title: label }
+        result: { title: event.target.text }
       })
       return
     }
@@ -66,12 +66,12 @@ class HelpMenu extends React.Component {
             {botLinks.map(({ title, url }, idx) => {
               return <a
                 className='olachat-menu-link'
-                href={url ? url : null}
+                href={url || null}
                 key={idx}
                 target='_blank'
                 onClick={this.handleClick}>{title}</a>
             })}
-            <a onClick={this.handlePrint}><em className='ola-icon ola-icon-print'></em>Print</a>
+            <a onClick={this.handlePrint}><em className='ola-icon ola-icon-print' />Print</a>
           </div>
         </div>
       </div>
