@@ -31,7 +31,7 @@ let root_div = document.getElementById('root')
 let fdw_div = document.getElementById('fdw-root')
 let search_div = document.getElementById('search-root')
 
-let css_url = !process.env.OLA_ENV || process.env.OLA_ENV === 'staging' ? '/olachat.min.css' : 'https://cdn.olasearch.com/production/59116d96300397120cfecdc0/olachat.min.css'
+let css_url = !process.env.OLA_ENV || process.env.OLA_ENV === 'staging' ? '/olachat.min.css' : `https://cdn.olasearch.com/production/${config.projectId}/olachat.min.css`
 
 if (fdw_div) {
   ReactDOM.render(
