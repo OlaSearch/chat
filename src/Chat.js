@@ -3,7 +3,7 @@ import Header from './Header'
 import Input from './Input'
 import Messages from './Messages'
 import { connect } from 'react-redux'
-import { addMessage, disabledFeedback } from './actions'
+import { addMessage, disabledFeedback, clearMessages, setBotStatus } from './actions'
 import { Actions, Decorators } from 'olasearch'
 import QuickReplies from './QuickReplies'
 
@@ -19,6 +19,10 @@ class Chat extends React.Component {
       this.props.addMessage({ intent: this.props.initialIntent, start: true })
     }
     this.props.changePerPage(3)
+  }
+  componentWillUnmount () {
+    this.props.clearMessages()
+    this.props.setBotStatus(false)
   }
   addMessage = (args) => {
     /* Scroll to Top */
@@ -90,6 +94,8 @@ function mapStateToProps (state) {
 
 export default connect(mapStateToProps, {
   addMessage,
+  clearMessages,
+  setBotStatus,
   updateQueryTerm: Actions.Search.updateQueryTerm,
   addContextField: Actions.Context.addContextField,
   disabledFeedback,

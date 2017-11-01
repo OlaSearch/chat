@@ -11,6 +11,12 @@
   }
 }
 
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+  .olachat-smartsuggestions {
+    animation: none;
+  }
+}
+
 .olachat-smartsuggestions-button {
   border-radius: 30px;
   border: 1px $blue solid;

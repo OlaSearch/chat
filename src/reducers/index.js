@@ -14,19 +14,8 @@ const initialState = {
 
 const createMessageObj = (answer, results) => {
   return {
-    id: answer.id,
-    reply: answer.reply,
-    reply_voice: answer.reply_voice,
-    timestamp: answer.timestamp,
-    intent: answer.intent,
-    message: answer.message,
+    ...answer,
     awaitingUserInput: answer.awaiting_user_input,
-    in_response_to: answer.in_response_to,
-    slot_options: answer.slot_options,
-    quick_replies: answer.quick_replies,
-    fulfilled: answer.fulfilled,
-    card: answer.card,
-    search: answer.search,
     results
   }
 }

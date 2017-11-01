@@ -38,7 +38,7 @@ if (fdw_div) {
     <OlaProvider config={config} store={store}>
       <div className='full-wrapper'>
         <BotFrame
-          initialIntent={config.initialIntent}
+          initialIntent={config.initialIntent || 'mom.fdw.welcome'}
           headerProps={{
             title: config.chatbotTitle
           }}

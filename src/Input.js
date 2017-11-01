@@ -88,7 +88,7 @@ class Input extends React.Component {
     this.closeSuggestion()
 
     /* Stop submitting if text is empty */
-    if (!this.state.text) {
+    if (!this.state.text || !this.state.text.trim()) {
       return this.Input.el.focus()
     }
 

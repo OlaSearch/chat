@@ -56,7 +56,6 @@ export function addMessage (payload) {
           query,
           context,
           api: 'search',
-          forceIntentEngine: true,
           payload
         }).then((response) => {
 
@@ -166,7 +165,7 @@ export function setFeedbackRating (rating) {
 export function logFeedback (feedbackMessage) { /* eventMessage => feed */
   return (dispatch, getState) => {
     let { feedbackMessageId, feedbackRating } = getState().Conversation
-    return
+
     dispatch(Actions.Logger.log({
       eventType: 'C',
       eventCategory: 'Feedback',
@@ -176,6 +175,7 @@ export function logFeedback (feedbackMessage) { /* eventMessage => feed */
       eventLabel: feedbackRating,
       debounce: false
     }))
+
   }
 }
 

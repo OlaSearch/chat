@@ -67,7 +67,8 @@ class Bot extends Component {
     this.props.log({
       eventLabel: currentActiveStatus ? 'open' : 'close',
       eventCategory: 'bot',
-      eventType: 'O'
+      eventType: 'O',
+      setNewUser: false
     })
   };
   static defaultProps = {
@@ -93,7 +94,8 @@ class Bot extends Component {
       this.props.log({
         eventLabel: 'load',
         eventCategory: 'bot',
-        eventType: 'O'
+        eventType: 'O',
+        setNewUser: false
       })
     }
   };

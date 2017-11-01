@@ -54,7 +54,7 @@
   "dependencies": {
     "mitt": "^1.1.2",
     "olasearch": "git+https://gitlab-ci-token:iNkSh25Xh9h9fts8dqTp@gitlab.com/olasearch/olasearch-core.git",
-    "react-flexi-textarea": "^1.0.5",
+    "react-flexi-textarea": "^1.0.6",
     "react-frame-component": "^2.0.0",
     "react-transition-group": "^2.2.1",
     "watson-html5-speech-recognition": "^0.6.6"

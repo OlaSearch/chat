@@ -42,7 +42,7 @@ class BotFrame extends React.Component {
   componentDidUpdate (prevProps) {
     this.checkForListener()
     if (prevProps.isBotActive !== this.props.isBotActive) {
-      document.documentElement.classList.toggle('ola-chatbot-rootActive', this.props.isBotActive)
+      // document.documentElement.classList.toggle('ola-chatbot-rootActive', this.props.isBotActive)
     }
   }
   checkForListener = () => {
