@@ -46,7 +46,10 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
           }
         </div>
         <div className='olachat-message-content'>
-          <div className='olachat-message-reply' dangerouslySetInnerHTML={setMarkup(text)} />
+          <div
+            className='olachat-message-reply'
+            dangerouslySetInnerHTML={setMarkup(text)}
+          />
           <Card
             card={card}
           />
