@@ -7,10 +7,13 @@ import { connect } from 'react-redux'
 import HelpMenu from './HelpMenu'
 import listensToClickOutside from 'react-onclickoutside'
 
-const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+const supportsVoice =
+  navigator.getUserMedia ||
+  navigator.webkitGetUserMedia ||
+  navigator.mozGetUserMedia
 
 class Input extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       text: '',
@@ -20,10 +23,10 @@ class Input extends React.Component {
       suggestedTerm: null
     }
   }
-  handleClickOutside = (event) => {
+  handleClickOutside = event => {
     this.closeSuggestion()
-  };
-  onChange = (event) => {
+  }
+  onChange = event => {
     let text = event && event.target ? event.target.value : event
     this.setState({
       text
@@ -34,15 +37,19 @@ class Input extends React.Component {
        * Auto suggest queries
        */
       let lastMsg = this.props.messages[this.props.messages.length - 1]
-      let hasQuickReply = lastMsg && lastMsg.slot_options && lastMsg.slot_options.length
+      let hasQuickReply =
+        lastMsg && lastMsg.slot_options && lastMsg.slot_options.length
 
       if (!hasQuickReply || this.props.isTyping) {
-        this.props.dispatch(Actions.AutoSuggest.executeFuzzyAutoSuggest(text))
-          .then((values) => {
+        this.props
+          .dispatch(Actions.AutoSuggest.executeFuzzyAutoSuggest(text))
+          .then(values => {
             if (!values) return this.closeSuggestion()
 
             this.setState({
-              suggestions: values.slice(0, 5).map((item) => ({ term: item.term })),
+              suggestions: values
+                .slice(0, 5)
+                .map(item => ({ term: item.term })),
               suggestedTerm: null,
               suggestedIndex: null
             })
@@ -55,27 +62,30 @@ class Input extends React.Component {
     }
 
     this.props.onChange && this.props.onChange(text)
-  };
-  onVoiceChange = (text) => {
+  }
+  onVoiceChange = text => {
     this.setState({
       text
     })
-  };
+  }
   clearText = () => {
     this.setState({
       text: ''
     })
-  };
+  }
   onVoiceFinal = (text, cb) => {
     /* Set text to empty */
     if (typeof text === 'undefined') text = ''
 
     /* Update text */
-    this.setState({
-      text
-    }, () => this.onSubmit(null, cb, 300, Settings.SEARCH_INPUTS.VOICE))
-  };
-  onFormSubmit = (event) => {
+    this.setState(
+      {
+        text
+      },
+      () => this.onSubmit(null, cb, 300, Settings.SEARCH_INPUTS.VOICE)
+    )
+  }
+  onFormSubmit = event => {
     /* Stop form submission */
     event && event.preventDefault()
     /* Check if suggestedTerm is active */
@@ -93,8 +103,13 @@ class Input extends React.Component {
     }
 
     setTimeout(this.onSubmit, 0)
-  };
-  onSubmit = (event, callback, textClearingDelay = 0, searchInput = Settings.SEARCH_INPUTS.KEYBOARD) => {
+  }
+  onSubmit = (
+    event,
+    callback,
+    textClearingDelay = 0,
+    searchInput = Settings.SEARCH_INPUTS.KEYBOARD
+  ) => {
     /* Update query term */
     this.props.updateQueryTerm(this.state.text, searchInput)
 
@@ -122,20 +137,19 @@ class Input extends React.Component {
     }, textClearingDelay)
 
     /* Submit the message */
-    return this.props.onSubmit()
-      .then((response) => {
-        /* Callbacks */
-        callback && typeof callback === 'function' && callback(response)
-      })
-  };
+    return this.props.onSubmit().then(response => {
+      /* Callbacks */
+      callback && typeof callback === 'function' && callback(response)
+    })
+  }
   closeSuggestion = () => {
     this.setState({
       suggestions: [],
       suggestedIndex: null,
       suggestedTerm: null
     })
-  };
-  onKeyDown = (event) => {
+  }
+  onKeyDown = event => {
     let index = null
     switch (event.nativeEvent.which) {
       case 13: // Enter key
@@ -159,7 +173,6 @@ class Input extends React.Component {
         break
 
       case 38: // Up
-
         if (this.state.suggestedIndex === null) {
           index = this.state.suggestions.length - 1
         } else {
@@ -192,47 +205,48 @@ class Input extends React.Component {
         })
         break
     }
-  };
-  registerRef = (el) => {
+  }
+  registerRef = el => {
     this.Input = el
-  };
-  onSuggestionChange = (text) => {
-    this.setState({ text, suggestedIndex: null, suggestedTerm: null, suggestions: [] }, () => {
-      this.onFormSubmit()
-    })
-  };
-  render () {
+  }
+  onSuggestionChange = text => {
+    this.setState(
+      { text, suggestedIndex: null, suggestedTerm: null, suggestions: [] },
+      () => {
+        this.onFormSubmit()
+      }
+    )
+  }
+  render() {
     let { isTyping } = this.props
     let { suggestions, suggestedIndex, suggestedTerm, text } = this.state
     let inputValue = suggestedTerm ? suggestedTerm.term : text
     return (
-      <form className='olachat-footer' onSubmit={this.onFormSubmit}>
-        {suggestions.length && text
-          ? <QuerySuggestions
+      <form className="olachat-footer" onSubmit={this.onFormSubmit}>
+        {suggestions.length && text ? (
+          <QuerySuggestions
             onChange={this.onSuggestionChange}
             suggestions={suggestions}
             activeIndex={suggestedIndex}
             queryTerm={text}
-            />
-          : null
-        }
+          />
+        ) : null}
         <HelpMenu
           onSubmit={this.props.onSubmit}
           updateQueryTerm={this.props.updateQueryTerm}
         />
-        <div className='olachat-input'>
-          {supportsVoice
-           ? <div className='olachat-input-voice'>
-             <Voice
-               onResult={this.onVoiceChange}
-               onFinalResult={this.onVoiceFinal}
-               voiceAdapter={this.props.voiceAdapter}
+        <div className="olachat-input">
+          {supportsVoice ? (
+            <div className="olachat-input-voice">
+              <Voice
+                onResult={this.onVoiceChange}
+                onFinalResult={this.onVoiceFinal}
+                voiceAdapter={this.props.voiceAdapter}
               />
-           </div>
-            : null
-          }
+            </div>
+          ) : null}
           <Textarea
-            placeholder='Type here...'
+            placeholder="Type here..."
             onChange={this.onChange}
             onKeyDown={this.onKeyDown}
             value={inputValue}
@@ -242,7 +256,7 @@ class Input extends React.Component {
             autoFocus={!this.props.isPhone}
           />
         </div>
-        <button disabled={isTyping} className='olachat-submit'>
+        <button disabled={isTyping} className="olachat-submit">
           <span>Send</span>
         </button>
       </form>

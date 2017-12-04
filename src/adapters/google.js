@@ -1,4 +1,4 @@
-import { TextToSpeech }  from 'watson-speech'
+import { TextToSpeech } from 'watson-speech'
 import reqwest from 'reqwest'
 
 import getUserMedia from 'get-user-media-promise'
@@ -12,7 +12,7 @@ var client = new BinaryClient(socketUrl)
 var OlaStream
 var connected = false
 
-const checkIfConnected = (callback) => {
+const checkIfConnected = callback => {
   if (!client || connected) return callback ? callback() : false
   if (!connected) {
     client = new BinaryClient(socketUrl)
@@ -31,16 +31,16 @@ const adapter = ({ emitter, onConnected }) => {
   var micStream
 
   return {
-    start () {
+    start() {
       var finalResult = null
       var hasEndReached = false
       var pm = getUserMedia({ video: false, audio: true })
       /* Todo: Connect/Reconnect */
-      checkIfConnected (() => {
+      checkIfConnected(() => {
         /* Connected callback */
         onConnected && onConnected()
         OlaStream = client.createStream()
-        OlaStream.on('data', (data) => {
+        OlaStream.on('data', data => {
           var d = JSON.parse(data)
           emitter.emit('onResult', d.results)
 
@@ -62,10 +62,10 @@ const adapter = ({ emitter, onConnected }) => {
             }
           }
         })
-        getMicStream = pm.then((mic) => {
+        getMicStream = pm.then(mic => {
           var l16Stream = new L16({ writableObjectMode: true })
           micStream = new MicrophoneStream(mic, {
-            objectMode: true,
+            objectMode: true
             // bufferSize: options.bufferSize
           })
           micStream.pipe(l16Stream).pipe(OlaStream)
@@ -73,16 +73,15 @@ const adapter = ({ emitter, onConnected }) => {
         })
       })
     },
-    stop () {
+    stop() {
       micStream && micStream.stop()
       OlaStream && OlaStream.end()
       emitter.emit('onStop')
     },
-    prefetchToken () {
-      this.getTtsToken()
-        .then((token) =>  this._ttsToken = token)
+    prefetchToken() {
+      this.getTtsToken().then(token => (this._ttsToken = token))
     },
-    getTtsToken () {
+    getTtsToken() {
       /* Cache tts token */
       if (this._ttsToken) {
         return new Promise((resolve, reject) => {
@@ -93,7 +92,7 @@ const adapter = ({ emitter, onConnected }) => {
         url: ttsTokenUrl
       })
     },
-    stopSpeaking () {
+    stopSpeaking() {
       if (window.OlaAudio) {
         window.OlaAudio.pause()
       }
@@ -102,9 +101,13 @@ const adapter = ({ emitter, onConnected }) => {
         window.speechSynthesis.pause()
       }
     },
-    speak (text, isPhone = false, callback) {
+    speak(text, isPhone = false, callback) {
       if (isPhone) {
-        if (!window.speechSynthesis || window.speechSynthesis.getVoices().length < 1) return callback ? callback() : false
+        if (
+          !window.speechSynthesis ||
+          window.speechSynthesis.getVoices().length < 1
+        )
+          return callback ? callback() : false
         if (window.speechSynthesis) window.speechSynthesis.cancel()
         var utterance = new SpeechSynthesisUtterance()
         utterance.lang = 'en-GB'
@@ -131,8 +134,7 @@ const adapter = ({ emitter, onConnected }) => {
         return
       }
 
-      this.getTtsToken()
-      .then((token) => {
+      this.getTtsToken().then(token => {
         this._ttsToken = token
         window.OlaAudio = TextToSpeech.synthesize({
           text,
@@ -140,7 +142,7 @@ const adapter = ({ emitter, onConnected }) => {
           autoPlay: false
         })
         window.OlaAudio.play()
-        window.OlaAudio.addEventListener('ended', () =>{
+        window.OlaAudio.addEventListener('ended', () => {
           callback && callback()
         })
       })

@@ -3,7 +3,12 @@ import Header from './Header'
 import Input from './Input'
 import Messages from './Messages'
 import { connect } from 'react-redux'
-import { addMessage, disabledFeedback, clearMessages, setBotStatus } from './actions'
+import {
+  addMessage,
+  disabledFeedback,
+  clearMessages,
+  setBotStatus
+} from './actions'
 import { Actions, Decorators } from 'olasearch'
 import QuickReplies from './QuickReplies'
 
@@ -13,40 +18,37 @@ class Chat extends React.Component {
     title: 'Ola Bot',
     sendWelcomeMsg: true,
     onLoad: () => new Promise((resolve, reject) => resolve())
-  };
-  componentDidMount () {
+  }
+  componentDidMount() {
     if (this.props.sendWelcomeMsg) {
       this.props.addMessage({ intent: this.props.initialIntent, start: true })
     }
     this.props.changePerPage(3)
   }
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.props.clearMessages()
     this.props.setBotStatus(false)
   }
-  addMessage = (args) => {
+  addMessage = args => {
     /* Scroll to Top */
     this.MessageContainer.scrollToView()
 
     /* Add message */
-    return this.props.addMessage(args).then((reply) => {
+    return this.props.addMessage(args).then(reply => {
       /* Scroll to Top after bot replies */
       this.MessageContainer.scrollToView()
 
       return reply
     })
-  };
-  registerRef = (el) => {
+  }
+  registerRef = el => {
     this.MessageContainer = el
-  };
-  render () {
+  }
+  render() {
     let { feedbackActive } = this.props
     return (
-      <div className='olachat'>
-        <Header
-          onHide={this.props.onHide}
-          title={this.props.title}
-        />
+      <div className="olachat">
+        <Header onHide={this.props.onHide} title={this.props.title} />
         <Messages
           messages={this.props.messages}
           flipped={this.props.flipped}
@@ -63,9 +65,7 @@ class Chat extends React.Component {
           log={this.props.log}
           updateQueryTerm={this.props.updateQueryTerm}
         />
-        <QuickReplies
-          onSubmit={this.addMessage}
-        />
+        <QuickReplies onSubmit={this.addMessage} />
         <Input
           onSubmit={this.addMessage}
           voiceAdapter={this.props.voiceAdapter}
@@ -82,7 +82,7 @@ class Chat extends React.Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     messages: state.Conversation.messages,
     feedbackActive: state.Conversation.feedbackActive,

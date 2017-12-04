@@ -6,10 +6,13 @@ import { addMessage } from './actions'
 import { Actions, Settings } from 'olasearch'
 import { createHTMLMarkup } from './utils'
 
-const supportsVoice = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+const supportsVoice =
+  navigator.getUserMedia ||
+  navigator.webkitGetUserMedia ||
+  navigator.mozGetUserMedia
 
 class Vui extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       text: '',
@@ -18,7 +21,7 @@ class Vui extends React.Component {
   }
   static defaultProps = {
     title: 'Ola Bot'
-  };
+  }
   addScrollListener = () => {
     let lastScrollTop = 0
     window.addEventListener('scroll', () => {
@@ -40,18 +43,18 @@ class Vui extends React.Component {
       lastScrollTop = st
     })
   }
-  onVoiceChange = (text) => {
+  onVoiceChange = text => {
     this.setState({
       text
     })
-  };
+  }
   onVoiceFinal = (text, cb, params) => {
     /* Set text to empty */
     if (typeof text === 'undefined') text = ''
     /* Update query term */
     this.props.updateQueryTerm(text, Settings.SEARCH_INPUTS.VOICE)
     return this.onSubmit(cb, 300, params)
-  };
+  }
   onSubmit = (callback, textClearingDelay = 0, params = {}) => {
     /**
      * Flow
@@ -72,41 +75,41 @@ class Vui extends React.Component {
     }, textClearingDelay)
 
     /* Submit the message */
-    return this.props.addMessage(params)
-      .then((response) => {
-        /* Scroll to top */
-        this.scrollToView()
-        /* Delete text state */
-        this.setState({
-          text: ''
-        })
-        callback && typeof callback === 'function' && callback(response)
+    return this.props.addMessage(params).then(response => {
+      /* Scroll to top */
+      this.scrollToView()
+      /* Delete text state */
+      this.setState({
+        text: ''
       })
-  };
+      callback && typeof callback === 'function' && callback(response)
+    })
+  }
   scrollToView = () => {
     window.scrollTo(0, 0)
-  };
+  }
   handleVoiceButtonClick = () => {
     this.setState({
       scrollDirection: null
     })
-  };
-  render () {
+  }
+  render() {
     let { messages } = this.props
     let { scrollDirection, text } = this.state
     let voiceContainerClass = scrollDirection
       ? `olachat-voice-scroll-${scrollDirection}`
       : ''
-    let initialPayload = { vui: true, immediate: true, intent: this.props.initialIntent }
-    let msgs = messages.filter((msg) => !msg.userId)
+    let initialPayload = {
+      vui: true,
+      immediate: true,
+      intent: this.props.initialIntent
+    }
+    let msgs = messages.filter(msg => !msg.userId)
     return (
-      <div className='olachat-vui'>
-        <Header
-          onHide={this.props.onHide}
-          title={this.props.title}
-        />
-        {supportsVoice
-          ? <Voice
+      <div className="olachat-vui">
+        <Header onHide={this.props.onHide} title={this.props.title} />
+        {supportsVoice ? (
+          <Voice
             onResult={this.onVoiceChange}
             onFinalResult={this.onVoiceFinal}
             voiceAdapter={this.props.voiceAdapter}
@@ -115,25 +118,30 @@ class Vui extends React.Component {
             showListening
             initialPayload={initialPayload}
           />
-          : null
-        }
+        ) : null}
         {msgs
           .filter((msg, i) => i === msgs.length - 1)
           .map(({ message, reply, userId }, idx) => {
             let isBot = !userId
             let text = isBot ? reply : message
             return (
-              <div key={idx} className='olachat-vui-reply' dangerouslySetInnerHTML={createHTMLMarkup(text)} />
+              <div
+                key={idx}
+                className="olachat-vui-reply"
+                dangerouslySetInnerHTML={createHTMLMarkup(text)}
+              />
             )
-          })
-        }
-        <span className='olachat-vui-message' dangerouslySetInnerHTML={createHTMLMarkup(text)} />
+          })}
+        <span
+          className="olachat-vui-message"
+          dangerouslySetInnerHTML={createHTMLMarkup(text)}
+        />
       </div>
     )
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     messages: state.Conversation.messages,
     isTyping: state.Conversation.isTyping

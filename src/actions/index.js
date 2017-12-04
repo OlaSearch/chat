@@ -5,7 +5,7 @@ import { ActionTypes, utilities, Actions } from 'olasearch'
 const CHAT_DELAY = 300
 const CHAT_REPLY_DELAY = 600
 
-export function addMessage (payload) {
+export function addMessage(payload) {
   return (dispatch, getState) => {
     var state = getState()
     var query = state.QueryState
@@ -15,7 +15,9 @@ export function addMessage (payload) {
     var context = state.Context
     var intent = payload && payload.intent ? { intent: payload.intent } : {}
     var msgId = utilities.uuid()
-    var in_response_to = messages.length ? messages[messages.length - 1]['id'] : null
+    var in_response_to = messages.length
+      ? messages[messages.length - 1]['id']
+      : null
     var { searchInput } = query
 
     /* Add this to ui */
@@ -42,7 +44,10 @@ export function addMessage (payload) {
     }
 
     /* Simulate delay - Show typing indicator */
-    setTimeout(() => dispatch(showTypingIndicator()), payload && payload.start ? 0 : CHAT_DELAY)
+    setTimeout(
+      () => dispatch(showTypingIndicator()),
+      payload && payload.start ? 0 : CHAT_DELAY
+    )
 
     return new Promise((resolve, reject) => {
       /* Simulate delay */
@@ -57,8 +62,7 @@ export function addMessage (payload) {
           context,
           api: 'search',
           payload
-        }).then((response) => {
-
+        }).then(response => {
           /* Hide typing indicator */
           dispatch(hideTypingIndicator())
 
@@ -67,7 +71,8 @@ export function addMessage (payload) {
             /* Remove intent */
             if (payload && 'intent' in payload) {
               delete payload['intent'] /* Remove intent */
-              if ('start' in payload) delete payload['start'] /* Remove start flag */
+              if ('start' in payload)
+                delete payload['start'] /* Remove start flag */
             }
             /* Clear previous query */
             dispatch(Actions.Search.clearQueryTerm())
@@ -75,59 +80,68 @@ export function addMessage (payload) {
             dispatch(addMessage(payload))
           }
 
-          return resolve(response)
+          /**
+           * Log views. When user views a
+           * 1. Cards
+           * 2. Quick reply
+           * 3. Search
+           **/
+          // To do
 
+          return resolve(response)
         })
       }, CHAT_REPLY_DELAY)
     })
-
   }
 }
 
-export function loadMore (message) {
+export function loadMore(message) {
+  let { q, facet_query, searchAdapterOptions } = message.search
   return (dispatch, getState) => {
     var currentPage = getState().QueryState.page
     dispatch(Actions.Search.changePage(++currentPage))
-    dispatch(Actions.Search.executeSearch({
-      routeChange: false,
-      appendResult: true,
-      extraParams: {
-        /* Additional params */
-        q: message.search.q,
-        facet_query: message.search.facet_query,
-        msgId: message.id,
-        searchAdapterOptions: message.search.searchAdapterOptions
-      }
-    }))
+    dispatch(
+      Actions.Search.executeSearch({
+        routeChange: false,
+        appendResult: true,
+        extraParams: {
+          /* Additional params */
+          q,
+          facet_query,
+          msgId: message.id,
+          searchAdapterOptions
+        }
+      })
+    )
   }
 }
 
-export function showTypingIndicator () {
+export function showTypingIndicator() {
   return {
     type: types.SHOW_TYPING_INDICATOR
   }
 }
 
-export function hideTypingIndicator () {
+export function hideTypingIndicator() {
   return {
     type: types.HIDE_TYPING_INDICATOR
   }
 }
 
-export function clearMessages () {
+export function clearMessages() {
   return {
     type: types.CLEAR_MESSAGES
   }
 }
 
-export function changeLanguage (language) {
+export function changeLanguage(language) {
   return {
     type: types.CHANGE_LANGUAGE,
     language
   }
 }
 
-export function pollWhenIdle () {
+export function pollWhenIdle() {
   return (dispatch, getState) => {
     let { shouldPoll } = getState().Conversation
     if (!shouldRetry) return
@@ -135,51 +149,52 @@ export function pollWhenIdle () {
   }
 }
 
-
-export function activateFeedback () {
+export function activateFeedback() {
   return {
     type: types.FEEDBACK_SET_ACTIVE
   }
 }
 
-export function disabledFeedback () {
+export function disabledFeedback() {
   return {
     type: types.FEEDBACK_SET_DISABLE
   }
 }
 
-export function setFeedbackMessage (messageId) {
+export function setFeedbackMessage(messageId) {
   return {
     type: types.SET_FEEDBACK_MESSAGE_ID,
     messageId
   }
 }
 
-export function setFeedbackRating (rating) {
+export function setFeedbackRating(rating) {
   return {
     type: types.SET_FEEDBACK_RATING,
     rating
   }
 }
 
-export function logFeedback (feedbackMessage) { /* eventMessage => feed */
+export function logFeedback(feedbackMessage) {
+  /* eventMessage => feed */
   return (dispatch, getState) => {
     let { feedbackMessageId, feedbackRating } = getState().Conversation
 
-    dispatch(Actions.Logger.log({
-      eventType: 'C',
-      eventCategory: 'Feedback',
-      eventAction: 'click',
-      eventMessage: feedbackMessage,
-      messageId: feedbackMessageId,
-      eventLabel: feedbackRating,
-      debounce: false
-    }))
-
+    dispatch(
+      Actions.Logger.log({
+        eventType: 'C',
+        eventCategory: 'Feedback',
+        eventAction: 'click',
+        eventMessage: feedbackMessage,
+        messageId: feedbackMessageId,
+        eventLabel: feedbackRating,
+        debounce: false
+      })
+    )
   }
 }
 
-export function setBotStatus (status) {
+export function setBotStatus(status) {
   return {
     type: types.SET_BOT_STATUS,
     status

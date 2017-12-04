@@ -1,4 +1,4 @@
-import { TextToSpeech }  from 'watson-speech'
+import { TextToSpeech } from 'watson-speech'
 import reqwest from 'reqwest'
 import Houndify from 'houndify-web-sdk'
 
@@ -17,22 +17,22 @@ const adapter = ({ emitter }) => {
         emitter.emit('onFinalResult', res.FormattedTranscription)
       }
     },
-    onError : (err) => {
+    onError: err => {
       emitter.emit('onStop')
     },
     onTranscriptionUpdate: function(trObj) {
       emitter.emit('onResult', trObj.PartialTranscript)
     },
-    onRecordingStarted () {
+    onRecordingStarted() {
       emitter.emit('onStart')
     },
-    onRecordingStopped () {
+    onRecordingStopped() {
       emitter.emit('onStop')
     }
   })
 
   return {
-    start () {
+    start() {
       /* Stop speaking */
       this.stopSpeaking()
 
@@ -47,17 +47,16 @@ const adapter = ({ emitter }) => {
       /* Get tts token */
       this.getTtsToken()
     },
-    stop () {
+    stop() {
       client.voiceSearch.stop()
       if (window.OlaAudio) {
         window.OlaAudio.pause()
       }
     },
-    prefetchToken () {
-      this.getTtsToken()
-        .then((token) =>  this._ttsToken = token)
+    prefetchToken() {
+      this.getTtsToken().then(token => (this._ttsToken = token))
     },
-    getTtsToken () {
+    getTtsToken() {
       /* Cache tts token */
       if (this._ttsToken) {
         return new Promise((resolve, reject) => {
@@ -68,7 +67,7 @@ const adapter = ({ emitter }) => {
         url: ttsTokenUrl
       })
     },
-    stopSpeaking () {
+    stopSpeaking() {
       if (window.OlaAudio) {
         window.OlaAudio.pause()
       }
@@ -77,7 +76,7 @@ const adapter = ({ emitter }) => {
         window.speechSynthesis.pause()
       }
     },
-    speak (text, isPhone = false, callback) {
+    speak(text, isPhone = false, callback) {
       if (isPhone) {
         if (!window.speechSynthesis) return
         if (window.speechSynthesis) window.speechSynthesis.cancel()
@@ -94,7 +93,7 @@ const adapter = ({ emitter }) => {
 
         /* Call end */
         const _wait = () => {
-          if ( ! window.speechSynthesis.speaking ) {
+          if (!window.speechSynthesis.speaking) {
             callback && callback()
             if (timeout) clearInterval(timeout)
             return
@@ -106,8 +105,7 @@ const adapter = ({ emitter }) => {
         return
       }
 
-      this.getTtsToken()
-      .then((token) => {
+      this.getTtsToken().then(token => {
         this._ttsToken = token
         window.OlaAudio = TextToSpeech.synthesize({
           text,
@@ -115,7 +113,7 @@ const adapter = ({ emitter }) => {
           autoPlay: false
         })
         window.OlaAudio.play()
-        window.OlaAudio.addEventListener('ended', () =>{
+        window.OlaAudio.addEventListener('ended', () => {
           callback && callback()
         })
       })

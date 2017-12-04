@@ -12,7 +12,7 @@ module.exports = {
   ],
   output: {
     path: path.join(__dirname, './../demo'),
-    filename: 'olachat.min.js',
+    filename: 'olachat.init.min.js',
     publicPath: '/'
   },
   plugins: [
@@ -78,6 +78,7 @@ module.exports = {
     "react": "React",
     "react-dom": "ReactDOM",
     "olasearch": "OlaSearch",
+    "olachat": "OlaChat",
     "redux": "Redux",
     "react-redux": "ReactRedux"
   }

@@ -5,7 +5,7 @@ import { SearchFooter, SearchResults } from 'olasearch'
 import { loadMore } from './actions'
 
 class SearchResultsMessage extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       isActive: false
@@ -13,17 +13,25 @@ class SearchResultsMessage extends React.Component {
   }
   static defaultProps = {
     results: []
-  };
+  }
   toggleActive = () => {
     this.setState({
       isActive: !this.state.isActive
     })
-  };
+  }
   onLoadMore = () => {
     this.props.loadMore(this.props.message)
-  };
-  render () {
-    let { AppState, QueryState, Device, dispatch, isActive, message, results } = this.props
+  }
+  render() {
+    let {
+      AppState,
+      QueryState,
+      Device,
+      dispatch,
+      isActive,
+      message,
+      results
+    } = this.props
     let { bookmarks, totalResults, isLoading } = AppState
     let { search } = message
     let { isPhone } = Device
@@ -36,11 +44,7 @@ class SearchResultsMessage extends React.Component {
 
     /* If no results */
     if (!results.length && search) {
-      return (
-        <div
-          className='olachat-message-reply'
-        >{noResultsText}</div>
-      )
+      return <div className="olachat-message-reply">{noResultsText}</div>
     }
 
     let isStacked = !isActive && !this.state.isActive
@@ -55,9 +59,15 @@ class SearchResultsMessage extends React.Component {
     return (
       <div className={klass}>
         <p>{title}</p>
-        <div className='olachat-results-wrapper'>
-          <div className='olachat-results-overlay' />
-          <button type='button' onClick={this.toggleActive} className='olachat-results-seeall'>See all</button>
+        <div className="olachat-results-wrapper">
+          <div className="olachat-results-overlay" />
+          <button
+            type="button"
+            onClick={this.toggleActive}
+            className="olachat-results-seeall"
+          >
+            See all
+          </button>
 
           <SearchResults
             results={results}
@@ -67,8 +77,8 @@ class SearchResultsMessage extends React.Component {
             baseUrl={baseUrl}
           />
 
-          {isActive
-            ? <SearchFooter
+          {isActive ? (
+            <SearchFooter
               totalResults={totalResults}
               currentPage={page}
               perPage={perPage}
@@ -77,16 +87,15 @@ class SearchResultsMessage extends React.Component {
               isLoading={isLoading}
               onLoadMore={this.onLoadMore}
               infiniteScroll
-              />
-            : null
-          }
+            />
+          ) : null}
         </div>
       </div>
     )
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     AppState: state.AppState,
     QueryState: state.QueryState,

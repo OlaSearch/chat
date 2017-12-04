@@ -2,34 +2,47 @@ import React from 'react'
 import cx from 'classnames'
 import Avatar from './Avatar'
 import Card from './Card'
-import { createHTMLMarkup } from './utils'
+import { createMessageMarkup } from './utils'
 import { DateParser } from 'olasearch'
 import SlotOptions from './SlotOptions'
 import SearchResultsMessage from './SearchResultsMessage'
 import MessageFeedback from './MessageFeedback'
-import { EMOJI_LIST } from './Settings'
 
-const regex = /^\\[a-z|0-9]+\b/g
-
-const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName, minTextLength, isActive, isSearchActive, isTyping, messageIdx, log }) => {
-  let { userId, timestamp, awaitingUserInput, fulfilled, card, slot_options: options, results, intent } = message
+const Message = ({
+  message,
+  avatarBot,
+  avatarUser,
+  addMessage,
+  botName,
+  userName,
+  minTextLength,
+  isActive,
+  isSearchActive,
+  isTyping,
+  messageIdx,
+  log
+}) => {
+  let {
+    userId,
+    timestamp,
+    awaitingUserInput,
+    fulfilled,
+    card,
+    slot_options: options,
+    results,
+    intent
+  } = message
   let isBot = !userId
   let text = isBot ? message.reply : message.message
   let messageClass = cx('olachat-message', {
     'olachat-message-bot': isBot,
     'olachat-message-fulfilled': fulfilled,
-    'olachat-message-collapse': typeof awaitingUserInput !== 'undefined' && !awaitingUserInput,
+    'olachat-message-collapse':
+      typeof awaitingUserInput !== 'undefined' && !awaitingUserInput,
     'olachat-message-single': text && text.length < minTextLength,
     'olachat-message-wide': !!card,
     'olachat-message-with-search': results && results.length > 0
   })
-  function setMarkup (text) {
-    if (!text) return null
-    let t = text.replace(regex, (match) => {
-      return '<span class="' + `${EMOJI_LIST[match]}` + '"></span>'
-    })
-    return createHTMLMarkup(t)
-  }
   return (
     <div className={messageClass}>
       <Avatar
@@ -38,21 +51,14 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
         avatarBot={avatarBot}
         avatarUser={avatarUser}
       />
-      <div className='olachat-message-body'>
-        <div className='olchat-message-name'>
-          {isBot
-            ? botName
-            : userName
-          }
-        </div>
-        <div className='olachat-message-content'>
+      <div className="olachat-message-body">
+        <div className="olchat-message-name">{isBot ? botName : userName}</div>
+        <div className="olachat-message-content">
           <div
-            className='olachat-message-reply'
-            dangerouslySetInnerHTML={setMarkup(text)}
+            className="olachat-message-reply"
+            dangerouslySetInnerHTML={createMessageMarkup(text)}
           />
-          <Card
-            card={card}
-          />
+          <Card card={card} />
           <SearchResultsMessage
             results={results}
             botName={botName}
@@ -60,7 +66,7 @@ const Message = ({ message, avatarBot, avatarUser, addMessage, botName, userName
             message={message}
           />
         </div>
-        <div className='olachat-message-date'>
+        <div className="olachat-message-date">
           {DateParser.format(timestamp * 1000, 'DD MMM')}
         </div>
         <SlotOptions

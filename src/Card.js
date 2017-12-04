@@ -6,13 +6,13 @@ import AnswerMap from 'olasearch/lib/components/Answer/AnswerMap'
 import { Fields } from 'olasearch'
 // import AnswerChart from 'olasearch/lib/components/Answer/AnswerChart'
 
-const Card = ({ card, templates }) => {
+function Card({ card, templates }) {
   if (!card) return null
   if (!card.title) return null
   let { buttons = [], template } = card
   let klass = cx('ola-card', `ola-card-template-${template}`)
 
-  function pickTemplate (template) {
+  function pickTemplate(template) {
     /* Check for user defined templates */
     if (templates && templates.hasOwnProperty(template)) {
       let Component = templates[template]
@@ -23,20 +23,10 @@ const Card = ({ card, templates }) => {
         return <CardList {...card} />
 
       case 'wordmap':
-        return (
-          <AnswerWordMap
-            data={card.elements}
-            maxLen={20}
-            shuffle
-          />
-        )
+        return <AnswerWordMap data={card.elements} maxLen={20} shuffle />
 
       case 'map':
-        return (
-          <AnswerMap
-            data={card.elements}
-          />
-        )
+        return <AnswerMap data={card.elements} />
       // case 'line_chart':
       //   return (
       //     <AnswerChart
@@ -46,15 +36,15 @@ const Card = ({ card, templates }) => {
 
       default:
         return (
-          <div className='ola-card-inner'>
+          <div className="ola-card-inner">
             <Fields.Title
               result={card}
-              field='title'
+              field="title"
               openInNewWindow
               eventLabel={card['title']}
-              eventCategory='card'
+              eventCategory="card"
             />
-            <Fields.TextField field='subtitle' result={card} />
+            <Fields.TextField field="subtitle" result={card} />
             {buttons.map((button, idx) => (
               <Fields.Button
                 {...button}
@@ -62,20 +52,15 @@ const Card = ({ card, templates }) => {
                 eventLabel={card['title']}
                 key={idx}
                 openInNewWindow
-                eventCategory='card'
-                />
-              )
-            )}
+                eventCategory="card"
+              />
+            ))}
           </div>
         )
     }
   }
 
-  return (
-    <div className={klass}>
-      {pickTemplate(template)}
-    </div>
-  )
+  return <div className={klass}>{pickTemplate(template)}</div>
 }
 
 module.exports = Card

@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 
-const Bubble = ({ onClick, isActive, label }) => {
+function Bubble({ onClick, isActive, label }) {
   let klass = classNames('olachat-bubble', {
     'olachat-bubble-active': isActive
   })

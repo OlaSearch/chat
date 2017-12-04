@@ -16,7 +16,9 @@ import Vui from './Vui'
 const DEBUG = false
 const supportsVoice = DEBUG
   ? false
-  : navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+  : navigator.getUserMedia ||
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia
 
 /**
  * Same emitter is shared by context
@@ -25,15 +27,14 @@ const supportsVoice = DEBUG
 const emitter = mitt()
 
 class Bot extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     let { speechRecognitionProvider } = props /* speechOutputProvider */
     if (speechRecognitionProvider) {
       /* Create a voiceadapter */
-      this.voiceAdapter = require('./adapters/google').default({ emitter })
-
+      // this.voiceAdapter = require('./adapters/google').default({ emitter })
       /* Lazy load tokens */
-      this.voiceAdapter.prefetchToken()
+      // this.voiceAdapter.prefetchToken()
     } else {
       this.voiceadapter = null
     }
@@ -41,8 +42,8 @@ class Bot extends Component {
   static childContextTypes = {
     emitter: PropTypes.object,
     env: PropTypes.string
-  };
-  getChildContext () {
+  }
+  getChildContext() {
     return {
       emitter,
       env: this.props.env
@@ -70,7 +71,7 @@ class Bot extends Component {
       eventType: 'O',
       setNewUser: false
     })
-  };
+  }
   static defaultProps = {
     vui: false,
     showBubble: true,
@@ -87,8 +88,8 @@ class Bot extends Component {
       avatarBot: null,
       avatarUser: null
     }
-  };
-  componentDidMount () {
+  }
+  componentDidMount() {
     /* Send load log for new user */
     if (this.props.isNewUser) {
       this.props.log({
@@ -98,8 +99,8 @@ class Bot extends Component {
         setNewUser: false
       })
     }
-  };
-  render () {
+  }
+  render() {
     // const initialIntent = 'start'
     const passProps = {
       onHide: this.toggleActive,
@@ -111,13 +112,17 @@ class Bot extends Component {
       onRequestClose: this.toggleActive,
       emitter
     }
-    const HAS_VOICES = this.props.isPhone ? window.speechSynthesis.getVoices().length > 1 : true
+    const HAS_VOICES = this.props.isPhone
+      ? window.speechSynthesis.getVoices().length > 1
+      : true
     const { isBotActive, showBubble } = this.props
-    const component = isBotActive
-      ? this.props.vui && supportsVoice && HAS_VOICES
-        ? <Vui {...passProps} />
-        : <Chat {...passProps} />
-      : null
+    const component = isBotActive ? (
+      this.props.vui && supportsVoice && HAS_VOICES ? (
+        <Vui {...passProps} />
+      ) : (
+        <Chat {...passProps} />
+      )
+    ) : null
     const botClass = classNames('olachat-bot', {
       'olachat-bot-active': isBotActive,
       'olachat-bot-iframe': this.props.iFrame,
@@ -128,24 +133,21 @@ class Bot extends Component {
     })
     return (
       <div className={botClass}>
-        <div className='olachat-bot-overlay' />
-        {isBotActive
-          ? null
-          : showBubble
-            ? <Bubble
-              onClick={this.toggleActive}
-              isActive={isBotActive}
-              {...this.props.bubbleProps}
-              />
-            : null
-        }
+        <div className="olachat-bot-overlay" />
+        {isBotActive ? null : showBubble ? (
+          <Bubble
+            onClick={this.toggleActive}
+            isActive={isBotActive}
+            {...this.props.bubbleProps}
+          />
+        ) : null}
         {component}
       </div>
     )
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     isPhone: state.Device.isPhone,
     isTablet: state.Device.isTablet,

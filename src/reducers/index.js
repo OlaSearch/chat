@@ -22,7 +22,6 @@ const createMessageObj = (answer, results) => {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-
     case types.REQUEST_ADD_MESSAGE:
       return {
         ...state,
@@ -65,7 +64,7 @@ export default (state = initialState, action) => {
       /**
        * Update older messages
        */
-      let original_messages = state.messages.map((item) => {
+      let original_messages = state.messages.map(item => {
         if (item.id === in_response_to) {
           item['message'] = message
         }
@@ -73,7 +72,7 @@ export default (state = initialState, action) => {
       })
       return {
         ...state,
-        messages: [...original_messages, ...messages],
+        messages: [...original_messages, ...messages]
       }
 
     case types.CLEAR_MESSAGES:
@@ -123,7 +122,7 @@ export default (state = initialState, action) => {
         ...state,
         feedbackRating: action.rating
       }
-    
+
     case types.SET_BOT_STATUS:
       return {
         ...state,

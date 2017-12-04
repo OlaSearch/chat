@@ -6,7 +6,7 @@ import CSSTransition from 'react-transition-group/CSSTransition'
 // import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 class QuickReplies extends React.Component {
-  handleClick = (label) => {
+  handleClick = label => {
     this.props.updateQueryTerm(label)
     this.props.onSubmit()
     this.props.log({
@@ -16,20 +16,25 @@ class QuickReplies extends React.Component {
       eventType: 'C',
       result: { title: label }
     })
-  };
+  }
   static defaultProps = {
     quickReplies: []
-  };
-  render () {
+  }
+  render() {
     let { quickReplies } = this.props
     if (!quickReplies || !quickReplies.length) return null
-    let replies = quickReplies.map(({ label }, idx) => <CSSTransition key={idx} timeout={{ enter: 500, exit: 300 }} classNames='qreply'><QuickReplyButton handleClick={this.handleClick} label={label} /></CSSTransition>)
+    let replies = quickReplies.map(({ label }, idx) => (
+      <CSSTransition
+        key={idx}
+        timeout={{ enter: 500, exit: 300 }}
+        classNames="qreply"
+      >
+        <QuickReplyButton handleClick={this.handleClick} label={label} />
+      </CSSTransition>
+    ))
     return (
-      <div className='olachat-smartsuggestions'>
-        <TransitionGroup
-          className='olachat-smartsuggestions-list'
-          appear
-        >
+      <div className="olachat-smartsuggestions">
+        <TransitionGroup className="olachat-smartsuggestions-list" appear>
           {replies}
         </TransitionGroup>
       </div>
@@ -37,15 +42,15 @@ class QuickReplies extends React.Component {
   }
 }
 
-const QuickReplyButton = ({ label, handleClick, isActive }) => {
-  function onClick () {
+function QuickReplyButton({ label, handleClick, isActive }) {
+  function onClick() {
     handleClick(label)
   }
 
   return (
     <button
-      className='olachat-smartsuggestions-button'
-      type='button'
+      className="olachat-smartsuggestions-button"
+      type="button"
       onClick={onClick}
     >
       {label}
@@ -53,7 +58,7 @@ const QuickReplyButton = ({ label, handleClick, isActive }) => {
   )
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   let len = state.Conversation.messages.length
   let latestMsg = state.Conversation.messages[len - 1]
   return {
@@ -61,4 +66,6 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, { updateQueryTerm: Actions.Search.updateQueryTerm })(Decorators.withLogger(QuickReplies))
+export default connect(mapStateToProps, {
+  updateQueryTerm: Actions.Search.updateQueryTerm
+})(Decorators.withLogger(QuickReplies))

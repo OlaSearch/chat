@@ -6,18 +6,18 @@ import Vui from './Vui'
 import Bot from './Bot'
 import BotFrame from './BotFrame'
 import Card from './Card'
-// import Search from './Search'
 import ChatReducer from './reducers'
 import Avatar from './Avatar'
 import * as ChatActions from './actions'
 import version from './Version'
+import { EMOJI_LIST } from './Settings'
+import { createMessageMarkup } from './utils'
 
 export {
   Input,
   Header,
   Messages,
   Avatar,
-  // Search,
   Chat,
   Vui,
   Bot,
@@ -25,5 +25,7 @@ export {
   Card,
   ChatReducer,
   ChatActions,
-  version
+  version,
+  EMOJI_LIST,
+  createMessageMarkup
 }

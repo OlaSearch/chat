@@ -20,18 +20,18 @@ config.logger.params.bot = true
 
 /* Set per page */
 store.dispatch(Actions.Search.changePerPage(3))
-/* Set to window */
-global.OlaStore = store
-global.OlaActions = ChatActions
+
+/* Set default state as active */
+store.dispatch(ChatActions.setBotStatus(true))
 
 /* Load default css */
 require('olachat/style/chat.scss')
 
 let root_div = document.getElementById('root')
-let fdw_div = document.getElementById('fdw-root')
+let fdw_div = document.getElementById('bot-root')
 let search_div = document.getElementById('search-root')
 
-let css_url = !process.env.OLA_ENV || process.env.OLA_ENV === 'staging' ? '/olachat.min.css' : `https://cdn.olasearch.com/production/${config.projectId}/olachat.min.css`
+let css_url = !process.env.OLA_ENV || process.env.OLA_ENV === 'staging' ? '/olachat.min.css' : `https://cdn.olasearch.com/assets/css/olachat.min.css`
 
 if (fdw_div) {
   ReactDOM.render(

@@ -5,7 +5,7 @@ import mitt from 'mitt'
 import classNames from 'classnames'
 import google from './../adapters/google'
 import SearchInput from './SearchInput'
-import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import { utilities } from 'olasearch'
 import TypingIndicator from './../TypingIndicator'
 import Avatar from './../Avatar'
@@ -20,7 +20,10 @@ const createMessage = (text, isBot) => {
 }
 
 const generateReply = () => {
-  var items = ['Sure, we found 10 new credit cards. Which one would you like?', 'Here you go']
+  var items = [
+    'Sure, we found 10 new credit cards. Which one would you like?',
+    'Here you go'
+  ]
   return items[0]
   return items[Math.floor(Math.random() * items.length)]
 }
@@ -28,23 +31,31 @@ const generateReply = () => {
 const results = [
   {
     title: 'Card activation &overseas card usage',
-    desc: 'Enhanced card security measures implemented to better safeguard your Standard Chartered ATM, debit and credit cards.',
-    thumbnail: 'https://www.sc.com/sg/search/images/1580x350_mas_masthead-375x175.jpg'
+    desc:
+      'Enhanced card security measures implemented to better safeguard your Standard Chartered ATM, debit and credit cards.',
+    thumbnail:
+      'https://www.sc.com/sg/search/images/1580x350_mas_masthead-375x175.jpg'
   },
   {
     title: 'Platinum Visa/MasterCard®Credit Card',
-    desc: 'Earn one Rewards Point with every $1 charged and enjoy dining, enrichment, and health and wellness deals.',
-    thumbnail: 'https://www.sc.com/sg/search/images/creditcards-platinum-visa-mastercard-375x175.jpg'
+    desc:
+      'Earn one Rewards Point with every $1 charged and enjoy dining, enrichment, and health and wellness deals.',
+    thumbnail:
+      'https://www.sc.com/sg/search/images/creditcards-platinum-visa-mastercard-375x175.jpg'
   },
   {
     title: 'Card activation &overseas card usage',
-    desc: 'Enhanced card security measures implemented to better safeguard your Standard Chartered ATM, debit and credit cards.',
-    thumbnail: 'https://www.sc.com/sg/search/images/1580x350_mas_masthead-375x175.jpg'
+    desc:
+      'Enhanced card security measures implemented to better safeguard your Standard Chartered ATM, debit and credit cards.',
+    thumbnail:
+      'https://www.sc.com/sg/search/images/1580x350_mas_masthead-375x175.jpg'
   },
   {
     title: 'Card activation &overseas card usage',
-    desc: 'Enhanced card security measures implemented to better safeguard your Standard Chartered ATM, debit and credit cards.',
-    thumbnail: 'https://www.sc.com/sg/search/images/1580x350_mas_masthead-375x175.jpg'
+    desc:
+      'Enhanced card security measures implemented to better safeguard your Standard Chartered ATM, debit and credit cards.',
+    thumbnail:
+      'https://www.sc.com/sg/search/images/1580x350_mas_masthead-375x175.jpg'
   }
 ]
 
@@ -56,15 +67,15 @@ const emitter = mitt()
 
 class Search extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       messages: [],
-      isTyping: false,
+      isTyping: false
     }
 
     /* Create a voiceAdapter */
     this.voiceAdapter = google({
-      emitter,
+      emitter
     })
 
     /* Lazy load tokens */
@@ -72,11 +83,11 @@ class Search extends Component {
   }
   static defaultProps = {
     flipped: true
-  };
+  }
   static childContextTypes = {
     emitter: PropTypes.object
-  };
-  getChildContext () {
+  }
+  getChildContext() {
     return {
       emitter
     }
@@ -90,12 +101,12 @@ class Search extends Component {
     this.setState({
       isTyping: true
     })
-  };
+  }
   hideTyping = () => {
     this.setState({
       isTyping: false
     })
-  };
+  }
   handleSubmit = (text, callback) => {
     /* Exit early */
     if (!text) return
@@ -110,14 +121,15 @@ class Search extends Component {
       let reply = generateReply()
       this.addMessage(reply, true)
 
-      callback && callback({
-        answer: {
-          reply
-        }
-      })
+      callback &&
+        callback({
+          answer: {
+            reply
+          }
+        })
     }, 2000)
-  };
-  render () {
+  }
+  render() {
     let { isTyping, messages } = this.state
     let { flipped } = this.props
     let showResults = messages.length > 1
@@ -126,73 +138,80 @@ class Search extends Component {
       messages = messages.slice().reverse()
     }
     const msg = messages
-                // .filter((item, idx) => idx < 2)
-                .filter((item, idx) => messages.length - idx <= 2)
-                .map(({ message, isBot, id }) => {
-                  let klass = classNames('olachat-search-message', 'olachat-message', {
-                    'olachat-search-message-bot': isBot
-                  })
-                  return (
-                    <div key={id} className={klass}>
-                      <Avatar
-                        isBot={isBot}
-                        avatarBot={avatarBot}
-                      />
-                      {message}
-                    </div>
-                  )
-                })
+      // .filter((item, idx) => idx < 2)
+      .filter((item, idx) => messages.length - idx <= 2)
+      .map(({ message, isBot, id }) => {
+        let klass = classNames('olachat-search-message', 'olachat-message', {
+          'olachat-search-message-bot': isBot
+        })
+        return (
+          <div key={id} className={klass}>
+            <Avatar isBot={isBot} avatarBot={avatarBot} />
+            {message}
+          </div>
+        )
+      })
     return (
-      <div className='olachat-search'>
-        <div className='olachat-search-header'>
+      <div className="olachat-search">
+        <div className="olachat-search-header">
           <SearchInput
             onSubmit={this.handleSubmit}
             voiceAdapter={this.voiceAdapter}
           />
-          {msg.length
-            ? <div className='olachat-search-container'>
-              <div className='olachat-search-messages'>
-                {isTyping ? flipped ? null : <TypingIndicator avatarBot={avatarBot} /> : null}
+          {msg.length ? (
+            <div className="olachat-search-container">
+              <div className="olachat-search-messages">
+                {isTyping ? (
+                  flipped ? null : (
+                    <TypingIndicator avatarBot={avatarBot} />
+                  )
+                ) : null}
                 <ReactCSSTransitionGroup
-                  transitionName='messages'
+                  transitionName="messages"
                   transitionAppear
                   transitionAppearTimeout={300}
                   transitionEnterTimeout={500}
                   transitionLeave={false}
-                  component='div'
-                  className='olachat-messages-list'
+                  component="div"
+                  className="olachat-messages-list"
                 >
                   {msg}
                 </ReactCSSTransitionGroup>
-                {isTyping ? flipped ? <TypingIndicator avatarBot={avatarBot} /> : null : null}
+                {isTyping ? (
+                  flipped ? (
+                    <TypingIndicator avatarBot={avatarBot} />
+                  ) : null
+                ) : null}
               </div>
             </div>
-            : null
-          }
+          ) : null}
         </div>
 
-        <div className='olachat-search-results'>
-          {showResults && results.map((result, idx) => {
-            let { title, desc, thumbnail } = result
-            return (
-              <div className='ola-snippet' key={idx}>
-                <div><img src={thumbnail} /></div>
-                <div>
-                  <h3 className='ola-field-title'>
-                    <a>{title}</a>
-                  </h3>
-                  <p>{desc}</p>
+        <div className="olachat-search-results">
+          {showResults &&
+            results.map((result, idx) => {
+              let { title, desc, thumbnail } = result
+              return (
+                <div className="ola-snippet" key={idx}>
+                  <div>
+                    <img src={thumbnail} />
+                  </div>
+                  <div>
+                    <h3 className="ola-field-title">
+                      <a>{title}</a>
+                    </h3>
+                    <p>{desc}</p>
+                  </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
         </div>
       </div>
     )
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return state
 }
 

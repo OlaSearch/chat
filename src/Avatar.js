@@ -1,13 +1,13 @@
 import React from 'react'
 import cx from 'classnames'
 
-const Avatar = ({ isBot, userId, avatarBot, avatarUser }) => {
-  let img = <img className='olachat-avatar' src={avatarBot} />
+function Avatar({ isBot, userId, avatarBot, avatarUser }) {
+  let img = <img className="olachat-avatar" src={avatarBot} />
   let klass = cx('olachat-message-avatar', {
     'olachat-avatar-bot': isBot
   })
   if (!isBot) {
-    img = <img className='olachat-avatar' src={avatarUser} />
+    img = <img className="olachat-avatar" src={avatarUser} />
   }
   return <div className={klass}>{img}</div>
 }

@@ -1,43 +1,45 @@
-import { TextToSpeech }  from 'watson-speech'
+import { TextToSpeech } from 'watson-speech'
 import reqwest from 'reqwest'
 
 const ttsTokenUrl = 'https://olasearch.com/api/speech-to-text/token/tts'
 
 const adapter = ({ emitter }) => {
-  var lang = "en-us"
+  var lang = 'en-us'
   var key = 'c26cfca5009e48bc8e4f317d7f6219cb'
-  var mode = Microsoft.CognitiveServices.SpeechRecognition.SpeechRecognitionMode.shortPhrase
+  var mode =
+    Microsoft.CognitiveServices.SpeechRecognition.SpeechRecognitionMode
+      .shortPhrase
   var client = Microsoft.CognitiveServices.SpeechRecognition.SpeechRecognitionServiceFactory.createMicrophoneClient(
-                        mode,
-                        lang,
-                        key);
+    mode,
+    lang,
+    key
+  )
 
-  client.onPartialResponseReceived = (response) => {
+  client.onPartialResponseReceived = response => {
     // console.log(response)
   }
-  client.onFinalResponseReceived = (res) => {
+  client.onFinalResponseReceived = res => {
     if (res) {
       emitter.emit('onFinalResult', res[0].transcript)
     }
   }
 
   return {
-    start () {
+    start() {
       client.startMicAndRecognition()
-      setTimeout(function () {
+      setTimeout(function() {
         client.endMicAndRecognition()
       }, 5000)
       emitter.emit('onStart')
     },
-    stop () {
+    stop() {
       if (client) client.endMicAndRecognition()
       emitter.emit('onStop')
     },
-    prefetchToken () {
-      this.getTtsToken()
-        .then((token) =>  this._ttsToken = token)
+    prefetchToken() {
+      this.getTtsToken().then(token => (this._ttsToken = token))
     },
-    getTtsToken () {
+    getTtsToken() {
       /* Cache tts token */
       if (this._ttsToken) {
         return new Promise((resolve, reject) => {
@@ -48,7 +50,7 @@ const adapter = ({ emitter }) => {
         url: ttsTokenUrl
       })
     },
-    speak (text, isPhone = false, callback) {
+    speak(text, isPhone = false, callback) {
       if (isPhone) {
         if (!window.speechSynthesis) return
         var utterance = new SpeechSynthesisUtterance()
@@ -64,7 +66,7 @@ const adapter = ({ emitter }) => {
 
         /* Call end */
         const _wait = () => {
-          if ( ! window.speechSynthesis.speaking ) {
+          if (!window.speechSynthesis.speaking) {
             callback && callback()
             if (timeout) clearInterval(timeout)
             return
@@ -76,8 +78,7 @@ const adapter = ({ emitter }) => {
         return
       }
 
-      this.getTtsToken()
-      .then((token) => {
+      this.getTtsToken().then(token => {
         this._ttsToken = token
         window.OlaAudio = TextToSpeech.synthesize({
           text,

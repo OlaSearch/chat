@@ -1,8 +1,10 @@
 import React from 'react'
 
-const CardButton = ({ title, type, url }) => {
+function CardButton({ title, type, url }) {
   return (
-    <a className='ola-card-button' target='_blank' href={url}>{title}</a>
+    <a className="ola-card-button" target="_blank" href={url}>
+      {title}
+    </a>
   )
 }
 

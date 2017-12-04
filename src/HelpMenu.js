@@ -6,23 +6,23 @@ import { Decorators } from 'olasearch'
 import { OLACHAT_IFRAME_ID } from './Settings'
 
 class HelpMenu extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       isOpen: false
     }
   }
-  handleClickOutside = (event) => {
+  handleClickOutside = event => {
     this.setState({
       isOpen: false
     })
-  };
-  toggle = (event) => {
+  }
+  toggle = event => {
     event.preventDefault()
     event.stopPropagation()
     this.setState({ isOpen: !this.state.isOpen })
-  };
-  handleClick = (event) => {
+  }
+  handleClick = event => {
     if (event.target.href && event.target.href !== '') {
       this.props.log({
         eventType: 'C',
@@ -36,7 +36,7 @@ class HelpMenu extends React.Component {
     this.handleClickOutside()
     this.props.updateQueryTerm(event.target.text)
     this.props.onSubmit()
-  };
+  }
   handlePrint = () => {
     let iFrame = document.getElementById(OLACHAT_IFRAME_ID)
     let innerDoc = iFrame.contentWindow
@@ -44,34 +44,43 @@ class HelpMenu extends React.Component {
       innerDoc.focus()
       innerDoc.print()
     }
-  };
+  }
   static defaultProps = {
     botLinks: []
-  };
-  render () {
+  }
+  render() {
     let klass = classNames('olachat-helpmenu', {
       'olachat-helpmenu-open': this.state.isOpen
     })
     let { botLinks } = this.props
     return (
       <div className={klass}>
-        <button className='olachat-helpmenu-button' onClick={this.toggle} type='button'>
+        <button
+          className="olachat-helpmenu-button"
+          onClick={this.toggle}
+          type="button"
+        >
           <span>Help</span>
         </button>
-        <div className='olachat-dp'>
-          <div className='olachat-dp-title'>
-            Menu
-          </div>
-          <div className='olachat-dp-body'>
+        <div className="olachat-dp">
+          <div className="olachat-dp-title">Menu</div>
+          <div className="olachat-dp-body">
             {botLinks.map(({ title, url }, idx) => {
-              return <a
-                className='olachat-menu-link'
-                href={url || null}
-                key={idx}
-                target='_blank'
-                onClick={this.handleClick}>{title}</a>
+              return (
+                <a
+                  className="olachat-menu-link"
+                  href={url || null}
+                  key={idx}
+                  target="_blank"
+                  onClick={this.handleClick}
+                >
+                  {title}
+                </a>
+              )
             })}
-            <a onClick={this.handlePrint}><em className='ola-icon ola-icon-print' />Print</a>
+            <a onClick={this.handlePrint}>
+              <em className="ola-icon ola-icon-print" />Print
+            </a>
           </div>
         </div>
       </div>
