@@ -1,6 +1,6 @@
 import types from './../ActionTypes'
 import { checkIfAwaitingResponse } from './../utils'
-import { ActionTypes, utilities, Actions } from 'olasearch'
+import { ActionTypes, utilities, Actions } from '@olasearch/core'
 
 const CHAT_DELAY = 300
 const CHAT_REPLY_DELAY = 600

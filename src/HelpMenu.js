@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import listensToClickOutside from 'react-onclickoutside'
 import PropTypes from 'prop-types'
-import { Decorators } from 'olasearch'
+import { Decorators } from '@olasearch/core'
 import { OLACHAT_IFRAME_ID } from './Settings'
 
 class HelpMenu extends React.Component {

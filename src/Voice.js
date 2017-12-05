@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import { checkIfAwaitingResponse } from './utils'
 import { connect } from 'react-redux'
-import { Actions } from 'olasearch'
+import { Actions } from '@olasearch/core'
 
 /* All voice events */
 const VOICE_EVENTS = ['onResult', 'onFinalResult', 'onStart', 'onEnd', 'onStop']

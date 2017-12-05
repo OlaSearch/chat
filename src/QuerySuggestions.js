@@ -1,5 +1,5 @@
 import React from 'react'
-import { Settings, utilities } from 'olasearch'
+import { Settings, utilities } from '@olasearch/core'
 
 const { RE_ESCAPE } = Settings
 const { createHTMLMarkup } = utilities

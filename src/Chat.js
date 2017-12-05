@@ -9,7 +9,7 @@ import {
   clearMessages,
   setBotStatus
 } from './actions'
-import { Actions, Decorators } from 'olasearch'
+import { Actions, Decorators } from '@olasearch/core'
 import QuickReplies from './QuickReplies'
 
 class Chat extends React.Component {

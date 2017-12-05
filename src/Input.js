@@ -1,6 +1,6 @@
 import React from 'react'
 import Voice from './Voice'
-import { Settings, Actions } from 'olasearch'
+import { Settings, Actions } from '@olasearch/core'
 import Textarea from 'react-flexi-textarea'
 import QuerySuggestions from './QuerySuggestions'
 import { connect } from 'react-redux'

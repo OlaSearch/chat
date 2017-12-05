@@ -1,5 +1,5 @@
 import types from './../ActionTypes'
-import { ActionTypes } from 'olasearch'
+import { ActionTypes } from '@olasearch/core'
 
 const initialState = {
   messages: [],

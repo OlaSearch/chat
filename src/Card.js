@@ -1,9 +1,9 @@
 import React from 'react'
 import cx from 'classnames'
 import CardList from './CardList'
-import AnswerWordMap from 'olasearch/lib/components/Answer/AnswerWordMap'
-import AnswerMap from 'olasearch/lib/components/Answer/AnswerMap'
-import { Fields } from 'olasearch'
+import AnswerWordMap from '@olasearch/core/lib/components/Answer/AnswerWordMap'
+import AnswerMap from '@olasearch/core/lib/components/Answer/AnswerMap'
+import { Fields } from '@olasearch/core'
 // import AnswerChart from 'olasearch/lib/components/Answer/AnswerChart'
 
 function Card({ card, templates }) {

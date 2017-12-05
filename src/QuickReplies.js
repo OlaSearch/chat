@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Actions, Decorators } from 'olasearch'
+import { Actions, Decorators } from '@olasearch/core'
 import TransitionGroup from 'react-transition-group/TransitionGroup'
 import CSSTransition from 'react-transition-group/CSSTransition'
 // import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'

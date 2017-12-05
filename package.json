@@ -1,5 +1,5 @@
 {
-  "name": "olachat",
+  "name": "@olasearch/chat",
   "version": "1.0.2",
   "description": "",
   "main": "lib/index.js",
@@ -51,6 +51,7 @@
     "mocha": "^4.0.1",
     "node-sass": "^4.5.3",
     "prettier-standard": "^7.0.3",
+    "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-onclickoutside": "^6.6.2",
@@ -66,11 +67,13 @@
     "webpack-hot-middleware": "^2.21.0"
   },
   "dependencies": {
+    "@olasearch/core": "git+https://gitlab-ci-token:iNkSh25Xh9h9fts8dqTp@gitlab.com/olasearch/olasearch-core.git",
     "mitt": "^1.1.2",
-    "olasearch": "git+https://gitlab-ci-token:iNkSh25Xh9h9fts8dqTp@gitlab.com/olasearch/olasearch-core.git",
     "react-flexi-textarea": "^1.0.6",
     "react-frame-component": "^2.0.0",
+    "react-redux": "^5.0.6",
     "react-transition-group": "^2.2.1",
+    "redux": "^3.7.2",
     "watson-html5-speech-recognition": "^0.6.6"
   }
 }

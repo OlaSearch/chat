@@ -2,7 +2,7 @@ import React from 'react'
 import Bot from './Bot'
 import Frame from 'react-frame-component'
 import { connect } from 'react-redux'
-import { Decorators, Settings as OlaSettings } from 'olasearch'
+import { Decorators, Settings as OlaSettings } from '@olasearch/core'
 import { triggerMouseEvent } from './utils'
 import { OLACHAT_IFRAME_ID } from './Settings'
 

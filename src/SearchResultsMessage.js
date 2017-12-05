@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import { SearchFooter, SearchResults } from 'olasearch'
+import { SearchFooter, SearchResults } from '@olasearch/core'
 import { loadMore } from './actions'
 
 class SearchResultsMessage extends React.Component {

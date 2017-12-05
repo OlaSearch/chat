@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Actions } from 'olasearch'
+import { Actions } from '@olasearch/core'
 import {
   activateFeedback,
   disabledFeedback,

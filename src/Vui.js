@@ -3,7 +3,7 @@ import Header from './Header'
 import Voice from './Voice'
 import { connect } from 'react-redux'
 import { addMessage } from './actions'
-import { Actions, Settings } from 'olasearch'
+import { Actions, Settings } from '@olasearch/core'
 import { createHTMLMarkup } from './utils'
 
 const supportsVoice =
