@@ -6,6 +6,13 @@
   position: relative;
 }
 
+/* Messages with search results */
+.olachat-message-with-search {
+  .olachat-message-content {
+    max-width: 720px;
+  }
+}
+
   /**
    * Wrapper
    */
@@ -20,8 +27,8 @@
     content: '';
     position: absolute;
     top: 0;
-    right: 0;
-    bottom: 0;
+    right: 1rem;
+    bottom: 1rem;
     left: 0;
     background: rgba(255,255,255,1);
     background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,0.79) 47%, rgba(237,237,237,0.55) 100%);
@@ -44,7 +51,6 @@
 /**
  * Search results
  */
-$space: 8px;
 .olachat .ola-results {
   display: flex;
   flex-direction: column;
@@ -55,121 +61,5 @@ $space: 8px;
     flex-wrap: wrap;
   }
   justify-content: flex-start;
-  margin: 0 -1 * $space;
+  // margin: 0 -1 * $space;
 }
-
-  .olachat .ola-snippet {
-    @include media(tablet) {
-      width: 31%;
-    }
-    border: 1px #d8d8d7 solid;
-    background: white;
-    padding: 1em;
-    border-radius: 5px;
-    margin: 0 $space 2 * $space $space;
-    // margin: 0 16px 16px 0;
-  }
-
-  /**
-   * Card title
-   */
-  .olachat .ola-field-title {
-    font-size: 14px;
-    margin: 0 0 5px 0;
-    > a {
-      color: $blue;
-      text-decoration: none;
-    }
-  }
-
-  /**
-   * Summary
-   */
-  .olachat .ola-field-summary {
-    p {
-      margin: 0 0 10px 0;
-    }
-  }
-
-  .ola-link-bookmark-action {
-    display: none;
-  }
-
-  /**
-   * Load more
-   */
-  .olachat .ola-link-load-more {
-    text-align: center;
-    display: block;
-    width: 100%;
-    background: none;
-    border: none;
-    color: $blue;
-    outline: none;
-
-    .olachat-results-stack & {
-      opacity: 0.2;
-    }
-
-    &:hover {
-      color: $base-color;
-    }
-
-    &:after {
-      @extend .iconfont;
-      background-position: 0 -73px;
-      background-size: 100% auto;
-      width: 18px;
-      height: 18px;
-    }
-
-    &.ola-link-load-more-active {
-      opacity: 0.5;
-    }
-  }
-
-
-  /**
-   * See all button
-   */
-
-  .olachat-results-seeall {
-    position: absolute;
-    top: 50%;
-    background: #F3F9FF;
-    color: $blue;
-    width: 180px;
-    height: 50px;
-    border: 1px $blue solid;
-    border-radius: 5px;
-    padding: 0;
-    margin: 0;
-    font-size: 18px;
-    left: 50%;
-    margin-left: -90px;
-    margin-top: -20px;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease-in;
-    font-weight: 500;
-
-    &:hover {
-      color: $base-color;
-      border-color: $base-color;
-    }
-
-    &:before {
-      @extend .iconfont;
-      background-position: 0 -73px;
-      background-size: 100% auto;
-      width: 18px;
-      height: 18px;
-      // vertical-align: -4px;
-      margin-right: 5px;
-    }
-
-    .olachat-results-stack & {
-      visibility: visible;
-      opacity: 1;
-    }
-  }

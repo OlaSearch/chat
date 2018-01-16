@@ -72,21 +72,21 @@
  * Quick replies
  */
 
-.qreply-enter, .qreply-appear {
+.slots-enter, .slots-appear {
   opacity: 0.01;
 }
 
-.qreply-enter.qreply-enter-active, .qreply-appear.qreply-appear-active {
+.slots-enter.slots-enter-active, .slots-appear.slots-appear-active {
   opacity: 1;
   transition: opacity 200ms ease-in;
   transition-delay: 0.1s;
 }
 
-.qreply-exit {
+.slots-exit {
   opacity: 1;
 }
 
-.qreply-exit.qreply-exit-active {
+.slots-exit.slots-exit-active {
   opacity: 0.01;
   transition: opacity 200ms ease-in;
 }

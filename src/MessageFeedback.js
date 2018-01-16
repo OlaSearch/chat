@@ -6,31 +6,16 @@ import {
   disabledFeedback,
   setFeedbackMessage,
   setFeedbackRating,
-  logFeedback
+  logFeedback,
+  updateBotQueryTerm
 } from './actions'
 import {
-  FEEDBACK_INTENT,
-  HELP_INTENT,
-  PROFANITY_INTENT,
-  UNFILFILLED_INTENT
+  IGNORE_FEEDBACK_INTENTS,
+  EMOJI_POSITIVE,
+  EMOJI_NEGATIVE
 } from './Settings'
 
-// const EMOJI_POSITIVE = ':+1:'
-
-// const EMOJI_NEGATIVE = ':-1:'
-const IGNORE_FEEDBACK_INTENTS = [
-  FEEDBACK_INTENT,
-  HELP_INTENT,
-  PROFANITY_INTENT,
-  UNFILFILLED_INTENT
-]
-const EMOJI_POSITIVE = '\\01f44d'
-const EMOJI_NEGATIVE = '\\01f44e'
-
-class FeedBack extends React.Component {
-  componentWillUnmount() {
-    this.props.disabledFeedback()
-  }
+class MessageFeedback extends React.Component {
   handlePositive = () => {
     this.props.updateQueryTerm(EMOJI_POSITIVE)
     this.props.setFeedbackMessage(this.props.message.id)
@@ -49,17 +34,16 @@ class FeedBack extends React.Component {
       isBot,
       isTyping,
       messageIdx,
-      message: { awaitingUserInput, intent }
+      message: { awaitingUserInput, intent, mc }
     } = this.props
-    if (
-      !isActive ||
-      !isBot ||
-      isTyping ||
-      !awaitingUserInput ||
-      messageIdx < 1 ||
-      IGNORE_FEEDBACK_INTENTS.indexOf(intent) !== -1
-    )
-      return null
+
+    /* Current message */
+    if (messageIdx < 1) return null
+    /* If user is typing */
+    if (!isActive || !isBot || isTyping || !awaitingUserInput) return null
+    /* Check if ignored intents or MC */
+    if (IGNORE_FEEDBACK_INTENTS.indexOf(intent) !== -1 && !mc) return null
+
     return (
       <div className="olachat-feedback">
         <a onClick={this.handlePositive} className="olachat-feedback-positive">
@@ -79,5 +63,5 @@ module.exports = connect(null, {
   setFeedbackMessage,
   setFeedbackRating,
   logFeedback,
-  updateQueryTerm: Actions.Search.updateQueryTerm
-})(FeedBack)
+  updateQueryTerm: updateBotQueryTerm,
+})(MessageFeedback)

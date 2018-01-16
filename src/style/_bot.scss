@@ -26,6 +26,9 @@
 
 .olachat-bot {
   @include prefix(animation, .2s ease-out 0s 1 fadeIn, (ms,webkit,moz));
+  /* PLEASE NOTE */
+  /* Chatbot will be hidden by default. Once Iframe has been loaded and CSS Link is also loaded, we show the bot */
+  opacity: 1 !important;
 }
 
 .olachat-bot .olachat, .olachat-bot .olachat-vui {
@@ -64,18 +67,15 @@ $bubble-icon-size: 34px;
   cursor: pointer;
   margin-left: 20px;
 
-  &:after {
-    @extend .iconfont;
-    // content: 'chat';
-    background-position: 0 0;
-    background-size: 100% auto;
-    width: 34px;
-    height: 30px;
+  &:active, &:focus {
+    background: darken($blue, 10%);
+  }
+
+  .ola-icon {
     position: absolute;
     right: 20px;
     top: 50%;
     margin-top: -15px;
-    // font-size: 34px;
   }
 }
 

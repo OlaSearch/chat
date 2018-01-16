@@ -1,0 +1,144 @@
+.olachat {
+  .ola-snippet {
+    @include media(tablet) {
+      width: 33.33%;
+      padding: 0 1rem 1rem 0;
+      margin: 0;
+    }
+  }
+
+  .ola-snippet-inner {
+    border: 1px #d8d8d7 solid;
+    background: white;
+    padding: 1em;
+    border-radius: 5px;
+    min-height: 100%;
+    box-shadow: none;
+  }
+
+  /* MC */
+  .ola-snippet-mc {
+    width: auto;
+    margin: 0;
+    padding-right: 0;
+  }
+
+  .ola-field-title {
+    font-size: 14px;
+    padding: 0;
+    margin: 0 0 5px 0;
+  }
+
+  .ola-link-bookmark-action {
+    display: none;
+  }
+
+  .ola-link-load-more {
+    text-align: center;
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    color: $blue;
+    outline: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+  
+    &:hover {
+      color: $base-color;
+    }
+  
+    &.ola-link-load-more-active {
+      opacity: 0.5;
+    }
+  }
+
+  /* Remove horizontal columns */
+  .ola-fg-horizontal {
+    display: block;
+    > .ola-fg {
+      padding: 0;
+    }
+  }
+  .ola-field-img {
+    width: auto;
+    height: 100px;
+    overflow: hidden;
+  }
+}
+
+
+/* Inside the stack */
+.olachat-results-stack {
+  .ola-link-load-more {
+    display: none;
+  }
+  .olachat-results-seeall {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+
+/**
+ * See all button
+ */
+
+.olachat-results-seeall {
+  position: absolute;
+  top: 50%;
+  background: #F3F9FF;
+  color: $blue;
+  width: 180px;
+  height: 50px;
+  border: 1px $blue solid;
+  border-radius: 5px;
+  padding: 0;
+  margin: 0;
+  font-size: 18px;
+  left: 50%;
+  margin-left: -90px;
+  margin-top: -20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease-in;
+  font-weight: 500;
+
+  &:hover {
+    color: $base-color;
+    border-color: $base-color;
+  }
+
+  &:before {
+    // @extend .iconfont;
+    // background-position: 0 -73px;
+    // background-size: 100% auto;
+    // width: 18px;
+    // height: 18px;
+    // margin-right: 5px;
+  }
+}
+
+/* Remove certain fields in chatbot */
+.olachat {
+  /* Articles */
+  .ola-fg-horizontal.Date-TextField {
+    display: none;
+  }
+  /* Events */
+  .ola-fg-horizontal.Date-Date-TextField {
+    font-size: 11px;
+    .ola-field-text {
+      display: none;
+    }
+  }
+  .ola-fg-horizontal.TextField-Direction {
+    display: block;
+  }
+}
+
+/* Snippet text */
+.ola-snippet-text {
+  margin-bottom: 0.5rem;
+}

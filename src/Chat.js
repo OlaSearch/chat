@@ -7,7 +7,8 @@ import {
   addMessage,
   disabledFeedback,
   clearMessages,
-  setBotStatus
+  setBotStatus,
+  updateBotQueryTerm
 } from './actions'
 import { Actions, Decorators } from '@olasearch/core'
 import QuickReplies from './QuickReplies'
@@ -16,18 +17,19 @@ class Chat extends React.Component {
   static defaultProps = {
     flipped: true,
     title: 'Ola Bot',
-    sendWelcomeMsg: true,
     onLoad: () => new Promise((resolve, reject) => resolve())
   }
   componentDidMount() {
-    if (this.props.sendWelcomeMsg) {
+    /**
+     * Check if the user has any messages
+     */
+    if (!this.props.messages.length) {
       this.props.addMessage({ intent: this.props.initialIntent, start: true })
     }
-    this.props.changePerPage(3)
   }
   componentWillUnmount() {
-    this.props.clearMessages()
-    this.props.setBotStatus(false)
+    // this.props.clearMessages()
+    // this.props.setBotStatus(false)
   }
   addMessage = args => {
     /* Scroll to Top */
@@ -63,6 +65,7 @@ class Chat extends React.Component {
           feedbackActive={feedbackActive}
           dismissModal={this.props.disabledFeedback}
           log={this.props.log}
+          setBotStatus={this.props.setBotStatus}
           updateQueryTerm={this.props.updateQueryTerm}
         />
         <QuickReplies onSubmit={this.addMessage} />
@@ -76,6 +79,7 @@ class Chat extends React.Component {
           isPhone={this.props.isPhone}
           onRequestClose={this.props.onRequestClose}
           messages={this.props.messages}
+          voiceInput={this.props.voiceInput}
         />
       </div>
     )
@@ -96,8 +100,7 @@ export default connect(mapStateToProps, {
   addMessage,
   clearMessages,
   setBotStatus,
-  updateQueryTerm: Actions.Search.updateQueryTerm,
+  updateQueryTerm: updateBotQueryTerm,
   addContextField: Actions.Context.addContextField,
   disabledFeedback,
-  changePerPage: Actions.Search.changePerPage
 })(Decorators.withLogger(Chat))

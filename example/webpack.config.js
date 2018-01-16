@@ -18,15 +18,17 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      'olasearch': path.join(__dirname, './../../npm-olasearch'),
-      'olasearch-solr-adapter': path.join(__dirname, './../../npm-olasearch-solr-adapter'),
-      'olasearch-logger-middleware': path.join(__dirname, './../../olasearch-logger-middleware'),
-      'olachat': path.resolve(__dirname, './../src'),
+      'OlaSearch': path.join(__dirname, './../../npm-olasearch'),
+      '@olasearch/core': path.join(__dirname, './../../npm-olasearch'),
+      '@olasearch/solr-adapter': path.join(__dirname, './../../npm-olasearch-solr-adapter'),
+      '@olasearch/logger': path.join(__dirname, './../../olasearch-logger-middleware'),
+      '@olasearch/chat': path.resolve(__dirname, './../src'),
+      '@olasearch/icons': path.resolve(__dirname, './../../ola-icons'),
       'react': path.join(__dirname, './../node_modules/react'),
       'react-dom': path.join(__dirname, './../node_modules/react-dom'),
       'react-addons-css-transition-group': 'standalone-react-css-transition-group',
       'react-redux': path.join(__dirname, './node_modules/react-redux'),
-      'olasearchconfig': path.join(__dirname, './config')
+      'olasearchconfig': path.join(__dirname, './config.wp')
     },
     modules: [
       'node_modules', path.resolve(__dirname, './node_modules'), path.resolve(__dirname, './../node_modules')

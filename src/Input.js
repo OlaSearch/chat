@@ -1,11 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Voice from './Voice'
 import { Settings, Actions } from '@olasearch/core'
-import Textarea from 'react-flexi-textarea'
+import Textarea from '@olasearch/textarea-elastic'
 import QuerySuggestions from './QuerySuggestions'
 import { connect } from 'react-redux'
 import HelpMenu from './HelpMenu'
-import listensToClickOutside from 'react-onclickoutside'
+import listensToClickOutside from '@olasearch/react-onclickoutside'
+import Send from '@olasearch/icons/lib/send'
 
 const supportsVoice =
   navigator.getUserMedia ||
@@ -22,6 +24,9 @@ class Input extends React.Component {
       suggestedIndex: null,
       suggestedTerm: null
     }
+  }
+  static contextTypes = {
+    document: PropTypes.object
   }
   handleClickOutside = event => {
     this.closeSuggestion()
@@ -218,7 +223,7 @@ class Input extends React.Component {
     )
   }
   render() {
-    let { isTyping } = this.props
+    let { isTyping, voiceInput } = this.props
     let { suggestions, suggestedIndex, suggestedTerm, text } = this.state
     let inputValue = suggestedTerm ? suggestedTerm.term : text
     return (
@@ -236,32 +241,40 @@ class Input extends React.Component {
           updateQueryTerm={this.props.updateQueryTerm}
         />
         <div className="olachat-input">
-          {supportsVoice ? (
-            <div className="olachat-input-voice">
-              <Voice
-                onResult={this.onVoiceChange}
-                onFinalResult={this.onVoiceFinal}
-                voiceAdapter={this.props.voiceAdapter}
-              />
-            </div>
-          ) : null}
           <Textarea
-            placeholder="Type here..."
+            placeholder="Type a message..."
             onChange={this.onChange}
             onKeyDown={this.onKeyDown}
             value={inputValue}
             rows={1}
-            cols={1}
+            cols={20}
             ref={this.registerRef}
             autoFocus={!this.props.isPhone}
+            initialHeight={40}
           />
         </div>
-        <button disabled={isTyping} className="olachat-submit">
-          <span>Send</span>
+        {voiceInput && supportsVoice ? (
+          <div className="olachat-input-voice">
+            <Voice
+              onResult={this.onVoiceChange}
+              onFinalResult={this.onVoiceFinal}
+              voiceAdapter={this.props.voiceAdapter}
+            />
+          </div>
+        ) : null}
+        <button
+          disabled={isTyping || !this.state.text}
+          className="olachat-submit"
+        >
+          <Send />
         </button>
       </form>
     )
   }
 }
 
-export default connect(null)(listensToClickOutside(Input))
+export default connect(null)(listensToClickOutside(Input, {
+  getDocument (instance) {
+    return instance.context.document || document
+  }
+}))

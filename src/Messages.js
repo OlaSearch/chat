@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import Message from './Message'
 import TypingIndicator from './TypingIndicator'
@@ -70,29 +71,51 @@ class Messages extends React.Component {
     /* Add click listener */
     this.messagesEl.addEventListener('click', this.clickListener)
   }
+  static contextTypes = {
+    document: PropTypes.object
+  }
   clickListener = e => {
     if (!e.target || e.target.nodeName !== 'A') return
     let href = e.target.getAttribute('href')
-    e.preventDefault()
 
+    /**
+     * Is this link inside a message? Log it separately
+     */
+    const isMessageLink = e.target.closest('.olachat-message-reply')
+
+    /**
+     * If there is a href tag, consider the link as a message
+     */
     if (!href) {
       this.props.updateQueryTerm(e.target.text)
+      e.preventDefault()
       return this.props.addMessage()
     }
-    /* Open link in new window */
-    window.open(href)
+
+    /**
+     * Final pass. Link has href and it goes to a new page
+     * Hide the bot
+     */
+    setTimeout(() => this.props.setBotStatus(false), 200)
+
     /* Log */
-    this.props.log({
-      eventLabel: e.target.text,
-      eventCategory: 'message_link',
-      eventType: 'C',
-      result: { title: e.target.text }
-    })
+    if (isMessageLink) {
+      this.props.log({
+        eventLabel: e.target.text,
+        eventCategory: 'message_link',
+        eventType: 'C',
+        result: { title: e.target.text },
+        payload: { bot: true }
+      })
+    }
   }
   componentWillUnmount() {
     this.isComponentMounted = false
     if (this.messagesEl)
       this.messagesEl.removeEventListener('click', this.clickListener)
+    
+    /* Reset all feedback */
+    // this.props.disabledFeedback()
   }
   componentDidUpdate(nextProps) {
     this.updateScrollTop()

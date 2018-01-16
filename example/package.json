@@ -11,9 +11,9 @@
     "build:staging": "OLA_ENV=staging NODE_ENV=production webpack --config webpack.config.demo.js --progress",
     "main": "NODE_ENV=production webpack --config webpack.config.main.js",
     "iframe": "NODE_ENV=production webpack --config webpack.config.iframe.js",
-    "demo": "npm run main && npm run build:demo && cat ./../polyfill.min.js ./../demo/olasearch.core.min.js ./../demo/olasearch.config.min.js ./../demo/olachat.min.js > ./../demo/olachat.all.min.js",
-    "search": "npm run main && npm run build:search && cat ./../polyfill.min.js ./../demo/olasearch.core.min.js ./../demo/olasearch.config.min.js ./../demo/olachat.search.min.js > ./../demo/olachat.search.all.min.js",
-    "staging": "npm run main && npm run build:demo && cat ./../polyfill.min.js ./../demo/olasearch.core.min.js ./../demo/olasearch.config.staging.min.js ./../demo/olachat.min.js > ./../demo/olachat.all.staging.min.js"
+    "demo": "npm run main && npm run build:demo && cat ./../demo/olasearch.core.min.js ./../demo/olasearch.config.min.js ./../demo/olachat.min.js > ./../demo/olachat.all.min.js",
+    "search": "npm run main && npm run build:search && cat ./../demo/olasearch.core.min.js ./../demo/olasearch.config.min.js ./../demo/olachat.search.min.js > ./../demo/olachat.search.all.min.js",
+    "staging": "npm run main && npm run build:demo && cat ./../demo/olasearch.core.min.js ./../demo/olasearch.config.staging.min.js ./../demo/olachat.min.js > ./../demo/olachat.all.staging.min.js"
   },
   "keywords": [],
   "author": "",

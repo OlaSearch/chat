@@ -28,14 +28,16 @@ module.exports = {
     searchPageUrl: '/',
     history: 'pushState',
     proxy: true,
-    projectId: "59116d96300397120cfecdc0",
+    projectId: "59e5757d08a7c353cb26c3f6",
     env: 'staging',
     namespace: "mom",
     chatbotBubbleLabel: 'Ask me about FDW eligiblity (Beta 1.0)',
+    userAvatar: "https://cdn.olasearch.com/assets/images/user.png",
+    botAvatar: "https://cdn.olasearch.com/assets/images/bot.png",
     api: {
-        intent: "https://api.staging.olasearch.com/intent",
-        search: "https://api.staging.olasearch.com/search",
-        suggest: "https://api.staging.olasearch.com/suggest"
+        intent: "https://api.olasearch.com/v1/intent",
+        search: "https://api.olasearch.com/v1/search",
+        suggest: "https://api.olasearch.com/v1/suggest"
     },
     logger: {
         enabled: true,
@@ -204,6 +206,6 @@ module.exports = {
             value: 'audience_score_i desc'
         }
     ],
-    perPage: ['10', '20', '50', '100'],
+    perPage: 10,
     filters: []
 }

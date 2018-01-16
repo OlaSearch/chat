@@ -1,34 +1,44 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Actions } from '@olasearch/core'
+import { updateBotQueryTerm } from './actions'
+import { Actions, GeoLocation } from '@olasearch/core'
 import TransitionGroup from 'react-transition-group/TransitionGroup'
 import CSSTransition from 'react-transition-group/CSSTransition'
+import { DISAMBIGUATION_INTENT_NAME } from './Settings'
 
-const DISAMBIGUATION_INTENT_NAME = 'OLA.DisambiguateIntent'
 class SlotOptions extends Component {
   handleClick = ({ label, value, intent: selectedIntent }) => {
     let { intent } = this.props
     let args =
       intent === DISAMBIGUATION_INTENT_NAME ? { intent: selectedIntent } : {}
     if (intent === DISAMBIGUATION_INTENT_NAME) {
-      /* Log */
+      /* Send for Intent training */
       this.props.log({
         eventLabel: selectedIntent,
         eventCategory: 'intent_training',
-        eventType: 'O'
+        eventType: 'O',
+        payload: { bot: true }
       })
     }
     this.props.updateQueryTerm(label)
     this.props.onSubmit(args)
   }
+  onGeoSuccess = data => {
+    // if (!data) return
+    // let latlng = `${data.coords.latitude}`
+    // this.props.onSubmit()
+  }
   render() {
     let { options, isActive } = this.props
+    // return (
+    //   <div><GeoLocation onSuccess={this.onGeoSuccess} /></div>
+    // )
     if (!options || !options.length) return null
     let replies = options.map(({ label, value, intent }, idx) => (
       <CSSTransition
         key={idx}
         timeout={{ enter: 300, exit: 300 }}
-        classNames="qreply"
+        classNames="slots"
       >
         <QuickReplyButton
           intent={intent}
@@ -40,10 +50,9 @@ class SlotOptions extends Component {
       </CSSTransition>
     ))
 
-    // if (!isActive) replies = null
     return (
-      <div className="olachat-qreply">
-        <TransitionGroup appear className="olachat-qreply-list">
+      <div className="olachat-slots">
+        <TransitionGroup appear className="olachat-slots-list">
           {replies}
         </TransitionGroup>
       </div>
@@ -57,7 +66,7 @@ function QuickReplyButton({ label, value, intent, handleClick, isActive }) {
   }
   return (
     <button
-      className="olachat-qreply-button"
+      className="olachat-slots-button"
       type="button"
       onClick={onClick}
       disabled={!isActive}
@@ -68,5 +77,5 @@ function QuickReplyButton({ label, value, intent, handleClick, isActive }) {
 }
 
 export default connect(null, {
-  updateQueryTerm: Actions.Search.updateQueryTerm
+  updateQueryTerm: updateBotQueryTerm
 })(SlotOptions)

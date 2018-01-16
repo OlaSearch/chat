@@ -1,4 +1,5 @@
 import React from 'react'
+import Cross from '@olasearch/icons/lib/x'
 
 function Header({ onHide, title }) {
   if (!title && !onHide) return null
@@ -7,7 +8,7 @@ function Header({ onHide, title }) {
       <p className="olachat-header-title">{title}</p>
       {onHide ? (
         <button className="olachat-header-hide" onClick={onHide}>
-          <span>Hide</span>
+          <Cross />
         </button>
       ) : null}
     </div>

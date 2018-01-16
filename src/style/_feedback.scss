@@ -5,13 +5,14 @@
 .olachat-feedback {
   font-size: 16px;
   text-align: right;
-  padding-top: 8px;
+  line-height: 1;
+  max-width: 720px;
 
   @include media (desktop) {
-    position: absolute;
-    right: 8px;
-    bottom: 0;
-    padding-top: 0;
+    // position: absolute;
+    // right: 8px;
+    // bottom: 0;
+    // padding-top: 0;
   }
 
   a {

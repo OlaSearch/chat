@@ -1,6 +1,6 @@
-import { TextToSpeech } from 'watson-speech'
-import reqwest from 'reqwest'
-const ttsTokenUrl = 'https://olasearch.com/api/speech-to-text/token/tts'
+// import { TextToSpeech } from 'watson-speech'
+// import alite from '@olasearch/alite'
+// const ttsTokenUrl = 'https://olasearch.com/api/speech-to-text/token/tts'
 
 const adapter = ({ emitter }) => {
   let SpeechRecognition =
@@ -59,7 +59,7 @@ const adapter = ({ emitter }) => {
       }
     },
     prefetchToken() {
-      this.getTtsToken().then(token => (this._ttsToken = token))
+      // this.getTtsToken().then(token => (this._ttsToken = token))
     },
     getTtsToken() {
       /* Cache tts token */
@@ -68,9 +68,18 @@ const adapter = ({ emitter }) => {
           resolve(this._ttsToken)
         })
       }
-      return reqwest({
-        url: ttsTokenUrl
-      })
+      // return alite({
+      //   url: ttsTokenUrl
+      // })
+    },
+    stopSpeaking() {
+      if (window.OlaAudio) {
+        window.OlaAudio.pause()
+      }
+      if (window.speechSynthesis) {
+        // window.speechSynthesis.cancel()
+        window.speechSynthesis.pause()
+      }
     },
     speak(text, isPhone = false, callback) {
       if (isPhone) {
@@ -102,15 +111,15 @@ const adapter = ({ emitter }) => {
 
       this.getTtsToken().then(token => {
         this._ttsToken = token
-        window.OlaAudio = TextToSpeech.synthesize({
-          text,
-          token,
-          autoPlay: false
-        })
-        window.OlaAudio.play()
-        window.OlaAudio.addEventListener('ended', () => {
-          callback && callback()
-        })
+        // window.OlaAudio = TextToSpeech.synthesize({
+        //   text,
+        //   token,
+        //   autoPlay: false
+        // })
+        // window.OlaAudio.play()
+        // window.OlaAudio.addEventListener('ended', () => {
+        callback && callback()
+        // })
       })
     }
   }

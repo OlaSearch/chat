@@ -1,13 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { clearMessages, setBotStatus } from './actions'
+import { clearMessages, setBotStatus, clearBotQueryTerm } from './actions'
 import { Actions, Decorators } from '@olasearch/core'
 import classNames from 'classnames'
-// import webkit from './adapters/webkit'
-// import houndify from './adapters/houndify'
-// import watson from './adapters/watson'
-// import bing from './adapters/bing'
 import mitt from 'mitt'
 import Bubble from './Bubble'
 import Chat from './Chat'
@@ -32,7 +28,7 @@ class Bot extends Component {
     let { speechRecognitionProvider } = props /* speechOutputProvider */
     if (speechRecognitionProvider) {
       /* Create a voiceadapter */
-      // this.voiceAdapter = require('./adapters/google').default({ emitter })
+      this.voiceAdapter = require('./adapters/webkit').default({ emitter })
       /* Lazy load tokens */
       // this.voiceAdapter.prefetchToken()
     } else {
@@ -54,8 +50,12 @@ class Bot extends Component {
     this.voiceAdapter && this.voiceAdapter.stopSpeaking()
 
     /* Reset */
-    this.props.clearMessages()
-    this.props.clearQueryTerm()
+    if (!this.props.showHistory) {
+      // this.props.clearMessages()
+
+      /* Clear initial query term */
+      // this.props.clearBotQueryTerm()
+    }
 
     const currentActiveStatus = !this.props.isBotActive
 
@@ -69,12 +69,16 @@ class Bot extends Component {
       eventLabel: currentActiveStatus ? 'open' : 'close',
       eventCategory: 'bot',
       eventType: 'O',
-      setNewUser: false
+      setNewUser: false,
+      payload: { bot: true }
     })
   }
   static defaultProps = {
+    showHistory: false,
+    speechRecognitionProvider: 'webkit',
     vui: false,
     showBubble: true,
+    voiceInput: true,
     bubbleProps: {},
     onBubbleClick: null,
     botProps: {
@@ -96,12 +100,12 @@ class Bot extends Component {
         eventLabel: 'load',
         eventCategory: 'bot',
         eventType: 'O',
-        setNewUser: false
+        setNewUser: false,
+        payload: { bot: true }
       })
     }
   }
   render() {
-    // const initialIntent = 'start'
     const passProps = {
       onHide: this.toggleActive,
       ...this.props.headerProps,
@@ -110,6 +114,7 @@ class Bot extends Component {
       initialIntent: this.props.initialIntent,
       voiceAdapter: this.voiceAdapter,
       onRequestClose: this.toggleActive,
+      voiceInput: this.props.voiceInput,
       emitter
     }
     const HAS_VOICES = this.props.isPhone
@@ -129,10 +134,9 @@ class Bot extends Component {
       'olachat-bot-mobile': this.props.isPhone,
       'olachat-bot-tablet': this.props.isTablet,
       'olachat-bot-desktop': this.props.isDesktop,
-      'olachat-bot-testing': this.props.env === 'testing'
     })
     return (
-      <div className={botClass}>
+      <div className={botClass} style={{ opacity: 0 }}>
         <div className="olachat-bot-overlay" />
         {isBotActive ? null : showBubble ? (
           <Bubble
@@ -160,5 +164,5 @@ function mapStateToProps(state) {
 module.exports = connect(mapStateToProps, {
   clearMessages,
   setBotStatus,
-  clearQueryTerm: Actions.Search.clearQueryTerm
+  clearBotQueryTerm
 })(Decorators.withLogger(Bot))

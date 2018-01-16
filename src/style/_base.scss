@@ -1,0 +1,14 @@
+/* Links */
+
+
+a {
+  color: $blue;
+  &, &:active, &:hover, &:focus {
+    text-decoration: none;
+  }
+}
+
+.olachat-body {
+  padding: 0;
+  margin: 0;
+}

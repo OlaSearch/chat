@@ -2,23 +2,55 @@ import types from './../ActionTypes'
 import { checkIfAwaitingResponse } from './../utils'
 import { ActionTypes, utilities, Actions } from '@olasearch/core'
 
+/* Query sanitization */
+const { sanitizeText, uuid } = utilities
 const CHAT_DELAY = 300
 const CHAT_REPLY_DELAY = 600
+
+export function updateBotQueryTerm (term) {
+  return {
+    type: types.UPDATE_BOT_QUERY_TERM,
+    term: sanitizeText(term)
+  }
+}
+
+export function clearBotQueryTerm () {
+  return {
+    type: types.CLEAR_BOT_QUERY_TERM
+  }
+}
+
+export function changePage (page) {
+  return {
+    type: types.CHANGE_BOT_PAGE,
+    page
+  }
+}
 
 export function addMessage(payload) {
   return (dispatch, getState) => {
     var state = getState()
-    var query = state.QueryState
-    var { projectId, env } = query
-    if (!env) env = 'staging'
-    var { messages, language } = state.Conversation
+    var { messages, language, perPage, q, page } = state.Conversation
     var context = state.Context
     var intent = payload && payload.intent ? { intent: payload.intent } : {}
-    var msgId = utilities.uuid()
+    var msgId = uuid()
     var in_response_to = messages.length
       ? messages[messages.length - 1]['id']
       : null
-    var { searchInput } = query
+
+    /* Add more params to query */
+    const query = {
+      ...state.QueryState,
+      q,
+      page,
+      per_page: perPage,
+      msgId,
+      language,
+      in_response_to,
+      ...intent
+    }
+
+    const { projectId, env = 'staging', searchInput } = query
 
     /* Add this to ui */
     if (query.q) {
@@ -32,16 +64,7 @@ export function addMessage(payload) {
           in_response_to
         }
       })
-    }
-
-    /* Add more params to query */
-    query = {
-      ...query,
-      msgId,
-      language,
-      in_response_to,
-      ...intent
-    }
+    }    
 
     /* Simulate delay - Show typing indicator */
     setTimeout(
@@ -61,7 +84,10 @@ export function addMessage(payload) {
           query,
           context,
           api: 'search',
-          payload
+          payload: {
+            ...payload,
+            bot: true
+          }
         }).then(response => {
           /* Hide typing indicator */
           dispatch(hideTypingIndicator())
@@ -75,7 +101,7 @@ export function addMessage(payload) {
                 delete payload['start'] /* Remove start flag */
             }
             /* Clear previous query */
-            dispatch(Actions.Search.clearQueryTerm())
+            dispatch(clearBotQueryTerm())
             /* Ask for more messages */
             dispatch(addMessage(payload))
           }
@@ -95,21 +121,46 @@ export function addMessage(payload) {
   }
 }
 
+/**
+ * Load more results
+ * Only used on chat interface
+ */
 export function loadMore(message) {
-  let { q, facet_query, searchAdapterOptions } = message.search
   return (dispatch, getState) => {
-    var currentPage = getState().QueryState.page
-    dispatch(Actions.Search.changePage(++currentPage))
+    /**
+     * message.search is from Intent engine. If Intent engine is down, fallback to message.message
+     * Hacky
+     */
+    let q
+    let facet_query = []
+    let searchAdapterOptions = {}
+    if (message.search) {
+      q = message.search.q,
+      facet_query = message.search.facet_query
+      searchAdapterOptions = message.search.searchAdapterOptions
+    } else {
+      q = message.message
+    }
+
+    /* Current page in the message */
+    var currentState = getState()
+    var { perPage, page } = currentState.Conversation
+    dispatch(changePage(++page))
+    /* Execute a search with appendResult: true */
+    /* Signature : executeSearch(payload) */
     dispatch(
       Actions.Search.executeSearch({
         routeChange: false,
         appendResult: true,
+        bot: true,
         extraParams: {
           /* Additional params */
           q,
+          per_page: perPage,
+          page,
           facet_query,
           msgId: message.id,
-          searchAdapterOptions
+          searchAdapterOptions,
         }
       })
     )
@@ -188,7 +239,10 @@ export function logFeedback(feedbackMessage) {
         eventMessage: feedbackMessage,
         messageId: feedbackMessageId,
         eventLabel: feedbackRating,
-        debounce: false
+        debounce: false,
+        payload: {
+          bot: true
+        }
       })
     )
   }

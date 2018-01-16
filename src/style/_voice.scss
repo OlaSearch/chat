@@ -2,14 +2,14 @@
  * Wrapper
  */
 .olachat-voice {
-  padding: 1em;
-  background: lighten(#2464af, 10%);
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  box-shadow: 0 0px 6px 0px rgba(0,0,0,0.6);
+  // padding: 1em;
+  // background: lighten(#2464af, 10%);
+  // width: 80px;
+  // height: 80px;
+  // border-radius: 50%;
+  // box-shadow: 0 0px 6px 0px rgba(0,0,0,0.6);
   cursor: pointer;
-  text-align: center;
+  // text-align: center;
 }
 
   .olachat-voice-isrecording {
@@ -42,20 +42,19 @@
   padding: 0;
   margin: 0;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  // width: 50px;
+  // height: 50px;
   text-align: center;
   padding: 0;
-  outline: none;
   position: relative;
   color: white;
   cursor: pointer;
 
   &:before {
-    @extend .iconfont;
-    content: 'mic';
-    font-size: 40px;
-    vertical-align: middle;
+    // @extend .iconfont;
+    // content: 'mic';
+    // font-size: 40px;
+    // vertical-align: middle;
   }
 
   .olachat-mic-text {
@@ -80,4 +79,41 @@
   margin-top: -0.5em;
   margin-right: 2em;
   color: $red;
+}
+
+/* Voice */
+
+.olachat-input-voice {
+  // position: absolute;
+  @include flexbox;
+  justify-content: center;
+  align-items: stretch;
+  text-align: center;
+
+  .olachat-voice  {
+    // background: transparent;
+    // width: auto;
+    // height: auto;
+    // box-shadow: none;
+    // padding: 8px;
+  }
+
+  .olachat-mic {
+    color: $blue;
+    width: auto;
+    height: 100%;
+    width: 40px;
+
+    &:before {
+      font-size: 24px;
+    }
+  }
+
+  /* When recording */
+  .olachat-voice-isrecording {
+    background-color: #eee;
+  }
+  .olachat-mic-isrecording {
+    color: red;
+  }
 }

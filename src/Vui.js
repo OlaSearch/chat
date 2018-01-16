@@ -2,7 +2,7 @@ import React from 'react'
 import Header from './Header'
 import Voice from './Voice'
 import { connect } from 'react-redux'
-import { addMessage } from './actions'
+import { addMessage, updateBotQueryTerm } from './actions'
 import { Actions, Settings } from '@olasearch/core'
 import { createHTMLMarkup } from './utils'
 
@@ -149,5 +149,5 @@ function mapStateToProps(state) {
 }
 export default connect(mapStateToProps, {
   addMessage,
-  updateQueryTerm: Actions.Search.updateQueryTerm
+  updateQueryTerm: updateBotQueryTerm
 })(Vui)

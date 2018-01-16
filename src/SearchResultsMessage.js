@@ -32,13 +32,18 @@ class SearchResultsMessage extends React.Component {
       message,
       results
     } = this.props
-    let { bookmarks, totalResults, isLoading } = AppState
-    let { search } = message
+    let { bookmarks, isLoading, isLoadingMc } = AppState
+    let { search, message: msgText, mc } = message
     let { isPhone } = Device
     let maxResults = isPhone ? 1 : 3
     /* If there is no search */
+    if (!search) search = {}
 
-    if (!search) return null
+    /* No search text, */
+    if (!msgText ||
+      (mc && mc.answer && mc.answer.confidence > 0.2) ||
+      (isLoadingMc && isActive)
+    ) return null
 
     let { title, no_result: noResultsText, base_url: baseUrl } = search
 
@@ -52,13 +57,12 @@ class SearchResultsMessage extends React.Component {
       results = results.filter((item, idx) => idx < maxResults)
     }
 
-    let { page, per_page: perPage } = QueryState
     let klass = classNames('olachat-results', {
       'olachat-results-stack': isStacked
     })
     return (
       <div className={klass}>
-        <p>{title}</p>
+        {title && <p>{title}</p>}
         <div className="olachat-results-wrapper">
           <div className="olachat-results-overlay" />
           <button
@@ -79,9 +83,9 @@ class SearchResultsMessage extends React.Component {
 
           {isActive ? (
             <SearchFooter
-              totalResults={totalResults}
-              currentPage={page}
-              perPage={perPage}
+              totalResults={this.props.totalResults}
+              currentPage={this.props.page}
+              perPage={this.props.perPage}
               dispatch={dispatch}
               isPhone={isPhone}
               isLoading={isLoading}
@@ -98,8 +102,11 @@ class SearchResultsMessage extends React.Component {
 function mapStateToProps(state) {
   return {
     AppState: state.AppState,
+    totalResults: state.Conversation.totalResults, 
     QueryState: state.QueryState,
-    Device: state.Device
+    Device: state.Device,
+    perPage: state.Conversation.perPage,
+    page: state.Conversation.page,
   }
 }
 

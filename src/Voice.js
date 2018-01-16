@@ -5,6 +5,8 @@ import cx from 'classnames'
 import { checkIfAwaitingResponse } from './utils'
 import { connect } from 'react-redux'
 import { Actions } from '@olasearch/core'
+import Mic from '@olasearch/icons/lib/mic'
+import MicOff from '@olasearch/icons/lib/mic-off'
 
 /* All voice events */
 const VOICE_EVENTS = ['onResult', 'onFinalResult', 'onStart', 'onEnd', 'onStop']
@@ -22,7 +24,8 @@ class Voice extends React.Component {
   }
   static defaultProps = {
     showListening: false,
-    containerClass: ''
+    containerClass: '',
+    iconSize: 20
   }
   componentWillUnmount() {
     const { emitter } = this.context
@@ -50,15 +53,13 @@ class Voice extends React.Component {
     /* Stop recording if no text in final result */
     if (typeof text !== 'undefined' && !text) return voiceAdapter.stop()
 
-    /* Set context field */
-    this.props.addContextField('hasUsedVoice', true)
+    /* Stop voice */
+    voiceAdapter.stop()
 
     this.props.onFinalResult(
       text,
       response => {
         let { answer } = response
-        /* Stop voice */
-        voiceAdapter.stop()
 
         /* If no answer */
         if (!answer || !answer.reply) return
@@ -110,7 +111,7 @@ class Voice extends React.Component {
     /* Play ping voice */
     this.playPing()
   }
-  onStop = () => {
+  onStop = (e) => {
     /* Die if has already stopped recording */
     if (!this.state.isRecording && !this.state.isSpeaking) return
 
@@ -128,7 +129,7 @@ class Voice extends React.Component {
     }
     var audio = new Audio()
     audio.crossOrigin = true
-    audio.src = '/tap.mp3'
+    audio.src = 'https://cdn.olasearch.com/assets/audio/tap.mp3'
     audio.play()
   }
   handleSpeechStart = () => {
@@ -150,7 +151,8 @@ class Voice extends React.Component {
       containerClass,
       hasUsedVoice,
       searchInput,
-      showListening
+      showListening,
+      iconSize
     } = this.props
     let klass = cx('olachat-mic', className, {
       'olachat-mic-isrecording': isRecording && !isTyping,
@@ -165,9 +167,7 @@ class Voice extends React.Component {
     return (
       <div className={containerKlass} onClick={this.handleSpeechStart}>
         <button type="button" className={klass}>
-          <span className="olachat-mic-text">
-            {isRecording ? 'Stop' : 'Speak'}
-          </span>
+          {isRecording ? <Mic size={iconSize} /> : <Mic size={iconSize} />}
           {isRecording && showListening ? (
             <span className="olachat-mic-listening">
               Listening<em>...</em>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Settings, utilities } from '@olasearch/core'
+// import ArrowDownRight from '@olasearch/icons/lib/arrow-down-right'
 
 const { RE_ESCAPE } = Settings
 const { createHTMLMarkup } = utilities
@@ -9,9 +10,9 @@ class QuerySuggestions extends React.Component {
   }
   componentDidMount() {
     /* Add click listener */
-    this.el.addEventListener('click', e => {
-      e.preventDefault()
-    })
+    // this.el.addEventListener('click', e => {
+    //   e.preventDefault()
+    // })
   }
   render() {
     let { suggestions, onChange, activeIndex, queryTerm } = this.props
@@ -48,12 +49,14 @@ function QuerySuggestionItem({ queryTerm, term, onChange, isActive }) {
   let value = term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
   let klass = 'olachat-query-suggestion' + (isActive ? ' is-active' : '')
   return (
-    <button
-      type="button"
-      className={klass}
-      onClick={handleChange}
-      dangerouslySetInnerHTML={createHTMLMarkup(value)}
-    />
+    <div className="olachat-query-suggestion-item">
+      <button
+        type="button"
+        className={klass}
+        onClick={handleChange}
+        dangerouslySetInnerHTML={createHTMLMarkup(value)}
+      />
+    </div>
   )
 }
 

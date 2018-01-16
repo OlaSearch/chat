@@ -4,10 +4,6 @@
   vertical-align: middle;
 }
 
-.olachat-helpmenu + .olachat-input > textarea {
-  padding-left: 0;
-}
-
 .olachat-helpmenu-button {
   background: none;
   padding: 0;
@@ -17,7 +13,7 @@
   text-align: center;
   // height: 100%;
   line-height: 1;
-  outline: none;
+  // outline: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -27,15 +23,6 @@
 
   span {
     font-size: 0;
-  }
-
-  &:before {
-    @extend .iconfont;
-    // content: 'menu';
-    background-position: 0 -24px;
-    background-size: 100% auto;
-    width: 24px;
-    height: 24px;
   }
 }
 

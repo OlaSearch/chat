@@ -26,14 +26,10 @@ class BotFrame extends React.Component {
       maxWidth: '100%'
     },
     activeStyle: {},
-    initialContent: '<!DOCTYPE html><html><head><base target="_parent"></head><body class="olachat-body"><div class="frame-root"></div></body></html>'
+    initialContent: '<!DOCTYPE html><html><head></head><body class="olachat-body"><div class="frame-root"></div></body></html>'
   }
   componentDidMount() {
-    /* Check if bot is active */
-    if (this.props.isBotActive) {
-      document.documentElement.classList.add(MODAL_ROOT_CLASSNAME)
-    }
-    /* Check if style tag is already added */
+    this.checkForListener()
     if (document.getElementById(STYLE_TAG_ID) || this.props.isDesktop) return
     /* Add inline css */
     var style = document.createElement('style')
@@ -48,8 +44,14 @@ class BotFrame extends React.Component {
         height: 100% !important;
     `
     document.getElementsByTagName('head')[0].appendChild(style)
+
+    /* Check if bot is active */
+    if (this.props.isBotActive) {
+      document.documentElement.classList.add(MODAL_ROOT_CLASSNAME)
+    }
   }
   componentDidUpdate(prevProps) {
+    this.checkForListener()
     if (prevProps.isBotActive !== this.props.isBotActive) {
       document.documentElement.classList.toggle(
         MODAL_ROOT_CLASSNAME,
@@ -57,10 +59,30 @@ class BotFrame extends React.Component {
       )
     }
   }
+  checkForListener = () => {
+    if (this.addedIframeClickEvent && this.addedMessageClickEvent) return
+
+    this.iFrame = document.getElementById(OLACHAT_IFRAME_ID)
+    this.innerDoc =
+      this.iFrame.contentDocument || this.iFrame.contentWindow.document
+
+    if (this.innerDoc && !this.addedIframeClickEvent) {
+      this.innerDoc.addEventListener('click', this.iFrameDispatcher)
+      this.addedIframeClickEvent = true
+    }
+  }
+  iFrameDispatcher = e => {
+    if (e.defaultPrevented) return
+    if (typeof document !== 'undefined')
+      triggerMouseEvent(document, 'mousedown')
+  }
   componentWillUnmount() {
-    /* Remove style: DONOT REMOVE STYLE as it may be used by Ola Search */
-    // var styleEl = document.getElementById('ola-styles')
-    // if (styleEl) styleEl.parentNode.removeChild(styleEl)
+    /* Remove event listener */
+    if (this.innerDoc)
+      this.innerDoc.removeEventListener('click', this.iFrameDispatcher)
+    /* Remove style */
+    var styleEl = document.getElementById('ola-styles')
+    if (styleEl) styleEl.parentNode.removeChild(styleEl)
   }
   render() {
     let { isBotActive } = this.props

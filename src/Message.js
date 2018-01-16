@@ -3,34 +3,36 @@ import cx from 'classnames'
 import Avatar from './Avatar'
 import Card from './Card'
 import { createMessageMarkup } from './utils'
-import { DateParser } from '@olasearch/core'
+import { DateParser, AnswerMC } from '@olasearch/core'
 import SlotOptions from './SlotOptions'
 import SearchResultsMessage from './SearchResultsMessage'
 import MessageFeedback from './MessageFeedback'
+import Loader from './Loader'
 
-const Message = ({
+function Message({
   message,
   avatarBot,
   avatarUser,
   addMessage,
   botName,
   userName,
-  minTextLength,
   isActive,
   isSearchActive,
   isTyping,
   messageIdx,
-  log
-}) => {
+  log,
+  isLoadingMc
+}) {
   let {
     userId,
     timestamp,
     awaitingUserInput,
     fulfilled,
     card,
-    slot_options: options,
+    slot_options: slotOptions,
     results,
-    intent
+    intent,
+    mc /* Machine comprehension */
   } = message
   let isBot = !userId
   let text = isBot ? message.reply : message.message
@@ -39,7 +41,6 @@ const Message = ({
     'olachat-message-fulfilled': fulfilled,
     'olachat-message-collapse':
       typeof awaitingUserInput !== 'undefined' && !awaitingUserInput,
-    'olachat-message-single': text && text.length < minTextLength,
     'olachat-message-wide': !!card,
     'olachat-message-with-search': results && results.length > 0
   })
@@ -54,10 +55,18 @@ const Message = ({
       <div className="olachat-message-body">
         <div className="olchat-message-name">{isBot ? botName : userName}</div>
         <div className="olachat-message-content">
-          <div
-            className="olachat-message-reply"
-            dangerouslySetInnerHTML={createMessageMarkup(text)}
+          <AnswerMC
+            mc={mc}
+            payload={{ ...message, isBot: true }}
+            loader={isActive ? <Loader /> : null}
           />
+
+          {mc ? null : (
+            <div
+              className="olachat-message-reply"
+              dangerouslySetInnerHTML={createMessageMarkup(text)}
+            />
+          )}
           <Card card={card} />
           <SearchResultsMessage
             results={results}
@@ -71,7 +80,7 @@ const Message = ({
         </div>
         <SlotOptions
           onSubmit={addMessage}
-          options={options}
+          options={slotOptions}
           isActive={isActive}
           intent={intent}
           message={message}
@@ -88,10 +97,6 @@ const Message = ({
       </div>
     </div>
   )
-}
-
-Message.defaultProps = {
-  minTextLength: 40
 }
 
 export default Message

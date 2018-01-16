@@ -1,16 +1,6 @@
 @import 'variables';
 @import 'reset';
-
-html {
-  line-height: 1.5;
-  font-family: 'Open Sans', sans-serif;
-  color: #4A4A4A;
-}
-
-p {
-  margin: 0 0 1em 0;
-}
-
+@import 'base';
 
 
 @import 'icons';
@@ -31,6 +21,7 @@ p {
 @import 'dropdown';
 @import 'smartsuggestions';
 @import 'results';
+@import 'snippets';
 @import 'wordmap';
 @import 'map';
 @import 'feedback';

@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { updateBotQueryTerm } from './actions'
 import { Actions, Decorators } from '@olasearch/core'
 import TransitionGroup from 'react-transition-group/TransitionGroup'
 import CSSTransition from 'react-transition-group/CSSTransition'
@@ -14,7 +15,8 @@ class QuickReplies extends React.Component {
       eventLabel: label,
       eventAction: 'click',
       eventType: 'C',
-      result: { title: label }
+      result: { title: label },
+      payload: { bot: true }
     })
   }
   static defaultProps = {
@@ -27,7 +29,7 @@ class QuickReplies extends React.Component {
       <CSSTransition
         key={idx}
         timeout={{ enter: 500, exit: 300 }}
-        classNames="qreply"
+        classNames="slots"
       >
         <QuickReplyButton handleClick={this.handleClick} label={label} />
       </CSSTransition>
@@ -67,5 +69,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-  updateQueryTerm: Actions.Search.updateQueryTerm
+  updateQueryTerm: updateBotQueryTerm
 })(Decorators.withLogger(QuickReplies))

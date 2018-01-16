@@ -39,10 +39,10 @@ module.exports = {
   resolve: {
     alias: {
       // 'olachat': path.resolve(__dirname, './../src'),
-      'olasearch': path.join(__dirname, './../../npm-olasearch'),
-      'olasearch-solr-adapter': path.join(__dirname, './../../npm-olasearch-solr-adapter'),
-      'olasearch-logger-middleware': path.join(__dirname, './../../olasearch-logger-middleware'),
-      'olachat': path.resolve(__dirname, './../src'),
+      '@olasearch/core': path.join(__dirname, './../../npm-olasearch'),
+      '@olasearch/solr-adapter': path.join(__dirname, './../../npm-olasearch-solr-adapter'),
+      '@olasearch/logger': path.join(__dirname, './../../olasearch-logger-middleware'),
+      '@olasearch/chat': path.resolve(__dirname, './../src'),
       'react': path.join(__dirname, './../node_modules/react'),
       'react-dom': path.join(__dirname, './../node_modules/react-dom'),
       'react-addons-css-transition-group': 'standalone-react-css-transition-group',
@@ -77,8 +77,8 @@ module.exports = {
     'olasearchconfig': 'OlaSearchConfig',
     "react": "React",
     "react-dom": "ReactDOM",
-    "olasearch": "OlaSearch",
-    "olachat": "OlaChat",
+    "@olasearch/core": "OlaSearch",
+    "@olasearch/chat": "OlaChat",
     "redux": "Redux",
     "react-redux": "ReactRedux"
   }

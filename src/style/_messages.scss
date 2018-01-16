@@ -42,7 +42,7 @@
   position: relative;
 
   &:hover {
-    background-color: #f8f8f8;
+    background-color: #f1f1f1;
   }
 }
 
@@ -60,6 +60,7 @@
   @include prefix(flex, 1, (ms,webkit,moz));
   @include prefix(flex-shrink, 0, (ms,webkit,moz));
   position: relative;
+  // padding-right: 80px;
 }
 
   .olachat-bot-testing {
@@ -93,7 +94,7 @@
 
 .olchat-message-name {
   font-weight: bold;
-  margin-bottom: 2px;
+  padding-bottom: 5px;
   line-height: 1;
 }
 
@@ -104,12 +105,6 @@
 .olachat-message-content {
   max-width: 600px;
 }
-
-  .olachat-message-with-search {
-    .olachat-message-content {
-      max-width: 100%;
-    }
-  }
 
 
 /**

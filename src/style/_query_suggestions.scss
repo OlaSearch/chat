@@ -14,11 +14,13 @@
  */
 .olachat-query-suggestion {
   border: none;
-  background: none;
+  background: transparent;
   display: block;
   width: 100%;
   text-align: left;
   padding: 8px 16px;
+  padding-left: 58px;
+  position: relative;
 
   &:hover {
     background-color: #eee;
@@ -33,3 +35,17 @@
     background: #eee;
   }
 }
+
+/* Item */
+// .olachat-query-suggestion-item {
+//   position: relative;
+  
+//   .ola-icon {
+//     position: absolute;
+//     width: 58px;
+//     text-align: center;
+//     opacity: 0.6;
+//     top: 50%;
+//     margin-top: -10px;
+//   }
+// }

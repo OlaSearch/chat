@@ -1,9 +1,11 @@
 import React from 'react'
 import classNames from 'classnames'
-import listensToClickOutside from 'react-onclickoutside'
+import listensToClickOutside from '@olasearch/react-onclickoutside'
 import PropTypes from 'prop-types'
 import { Decorators } from '@olasearch/core'
 import { OLACHAT_IFRAME_ID } from './Settings'
+import Menu from '@olasearch/icons/lib/menu'
+import Print from '@olasearch/icons/lib/printer'
 
 class HelpMenu extends React.Component {
   constructor(props) {
@@ -12,25 +14,28 @@ class HelpMenu extends React.Component {
       isOpen: false
     }
   }
+  static contextTypes = {
+    document: PropTypes.object
+  }
   handleClickOutside = event => {
     this.setState({
       isOpen: false
     })
   }
-  toggle = event => {
+  toggleMenu = event => {
     event.preventDefault()
     event.stopPropagation()
     this.setState({ isOpen: !this.state.isOpen })
   }
   handleClick = event => {
     if (event.target.href && event.target.href !== '') {
-      this.props.log({
+      return this.props.log({
         eventType: 'C',
         eventCategory: 'menu',
         eventLabel: event.target.text,
-        result: { title: event.target.text }
+        result: { title: event.target.text },
+        payload: { bot: true }
       })
-      return
     }
     event.preventDefault()
     this.handleClickOutside()
@@ -39,11 +44,10 @@ class HelpMenu extends React.Component {
   }
   handlePrint = () => {
     let iFrame = document.getElementById(OLACHAT_IFRAME_ID)
+    if (!iFrame) return window.print()
     let innerDoc = iFrame.contentWindow
-    if (iFrame && innerDoc) {
-      innerDoc.focus()
-      innerDoc.print()
-    }
+    innerDoc.focus()
+    innerDoc.print()
   }
   static defaultProps = {
     botLinks: []
@@ -57,10 +61,10 @@ class HelpMenu extends React.Component {
       <div className={klass}>
         <button
           className="olachat-helpmenu-button"
-          onClick={this.toggle}
+          onClick={this.toggleMenu}
           type="button"
         >
-          <span>Help</span>
+          <Menu />
         </button>
         <div className="olachat-dp">
           <div className="olachat-dp-title">Menu</div>
@@ -79,7 +83,7 @@ class HelpMenu extends React.Component {
               )
             })}
             <a onClick={this.handlePrint}>
-              <em className="ola-icon ola-icon-print" />Print
+              <Print /> Print
             </a>
           </div>
         </div>
@@ -88,7 +92,11 @@ class HelpMenu extends React.Component {
   }
 }
 
-const HelpMenuContainer = listensToClickOutside(HelpMenu)
+const HelpMenuContainer = listensToClickOutside(HelpMenu, {
+  getDocument (instance) {
+    return instance.context.document || document
+  }
+})
 const HelpMenuWrapper = (props, { config: { botLinks } }) => {
   return <HelpMenuContainer {...props} botLinks={botLinks} />
 }

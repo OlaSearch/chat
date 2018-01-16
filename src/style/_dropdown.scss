@@ -63,6 +63,8 @@ $padding: 10px 12px;
       display: block;
       border-top: 1px $border-color solid;
       text-decoration: none;
+      display: flex;
+      align-items: center;
       cursor: pointer;
 
       &:first-child {
@@ -76,9 +78,6 @@ $padding: 10px 12px;
 
     .ola-icon {
       color: #666;
-      vertical-align: middle;
       margin-right: 8px;
-      line-height: 1;
-      display: inline-block;
     }
   }
