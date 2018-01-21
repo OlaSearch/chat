@@ -1,15 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { updateBotQueryTerm } from './actions'
-import { Actions, Decorators } from '@olasearch/core'
-import TransitionGroup from 'react-transition-group/TransitionGroup'
-import CSSTransition from 'react-transition-group/CSSTransition'
-// import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
+import { Decorators } from '@olasearch/core'
+import { EMPTY_ARRAY } from './Settings'
 
 class QuickReplies extends React.Component {
-  handleClick = label => {
+  shouldComponentUpdate (nextProps) {
+    return nextProps.quickReplies !== this.props.quickReplies 
+  }
+  handleClick = (label, intent) => {
+    let args = {}
+    if (intent) {
+      args = { intent }
+    }
     this.props.updateQueryTerm(label)
-    this.props.onSubmit()
+    this.props.onSubmit(args)
     this.props.log({
       eventCategory: 'quick_reply',
       eventLabel: label,
@@ -22,37 +27,31 @@ class QuickReplies extends React.Component {
   static defaultProps = {
     quickReplies: []
   }
-  render() {
+  render () {
     let { quickReplies } = this.props
     if (!quickReplies || !quickReplies.length) return null
-    let replies = quickReplies.map(({ label }, idx) => (
-      <CSSTransition
-        key={idx}
-        timeout={{ enter: 500, exit: 300 }}
-        classNames="slots"
-      >
-        <QuickReplyButton handleClick={this.handleClick} label={label} />
-      </CSSTransition>
+    let replies = quickReplies.map(({ label, intent }, idx) => (
+      <QuickReplyButton key={idx} handleClick={this.handleClick} intent={intent} label={label} />
     ))
     return (
-      <div className="olachat-smartsuggestions">
-        <TransitionGroup className="olachat-smartsuggestions-list" appear>
+      <div className='olachat-smartsuggestions'>
+        <div className='olachat-smartsuggestions-list'>
           {replies}
-        </TransitionGroup>
+        </div>
       </div>
     )
   }
 }
 
-function QuickReplyButton({ label, handleClick, isActive }) {
-  function onClick() {
-    handleClick(label)
+function QuickReplyButton ({ label, intent, handleClick, isActive }) {
+  function onClick () {
+    handleClick(label, intent)
   }
 
   return (
     <button
-      className="olachat-smartsuggestions-button"
-      type="button"
+      className='olachat-smartsuggestions-button'
+      type='button'
       onClick={onClick}
     >
       {label}
@@ -60,14 +59,14 @@ function QuickReplyButton({ label, handleClick, isActive }) {
   )
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   let len = state.Conversation.messages.length
   let latestMsg = state.Conversation.messages[len - 1]
   return {
-    quickReplies: latestMsg ? latestMsg.quick_replies : null
+    quickReplies: latestMsg ? latestMsg.quick_replies : EMPTY_ARRAY
   }
 }
 
-export default connect(mapStateToProps, {
+export default Decorators.withLogger(connect(mapStateToProps, {
   updateQueryTerm: updateBotQueryTerm
-})(Decorators.withLogger(QuickReplies))
+})(QuickReplies))

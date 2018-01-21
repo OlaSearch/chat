@@ -20,7 +20,7 @@ const adapter = ({ emitter }) => {
   })
 
   return {
-    start() {
+    start () {
       var isEndReached = false
       var lastResult = ''
       navigator.mediaDevices
@@ -72,7 +72,7 @@ const adapter = ({ emitter }) => {
         })
         .catch(err => console.log(err))
     },
-    stop() {
+    stop () {
       if (OlaStream) {
         OlaStream.end()
         // OlaStream = null
@@ -94,10 +94,10 @@ const adapter = ({ emitter }) => {
       recording = false
       emitter.emit('onStop')
     },
-    prefetchToken() {
+    prefetchToken () {
       this.getTtsToken().then(token => (this._ttsToken = token))
     },
-    getTtsToken() {
+    getTtsToken () {
       /* Cache tts token */
       if (this._ttsToken) {
         return new Promise((resolve, reject) => {
@@ -108,7 +108,7 @@ const adapter = ({ emitter }) => {
         url: ttsTokenUrl
       })
     },
-    stopSpeaking() {
+    stopSpeaking () {
       if (window.OlaAudio) {
         window.OlaAudio.pause()
       }
@@ -117,7 +117,7 @@ const adapter = ({ emitter }) => {
         window.speechSynthesis.pause()
       }
     },
-    speak(text, isPhone = false, callback) {
+    speak (text, isPhone = false, callback) {
       if (isPhone) {
         if (!window.speechSynthesis) return
         if (window.speechSynthesis) window.speechSynthesis.cancel()

@@ -2,73 +2,64 @@ import React from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import { SearchFooter, SearchResults } from '@olasearch/core'
-import { loadMore } from './actions'
+import { loadMore, toggleSearchVisibility } from './actions'
+
+const MAX_RESULTS_MOBILE = 1
+const MAX_RESULTS_DESKTOP = 3
 
 class SearchResultsMessage extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isActive: false
-    }
-  }
   static defaultProps = {
     results: []
   }
   toggleActive = () => {
-    this.setState({
-      isActive: !this.state.isActive
-    })
+    this.props.toggleSearchVisibility(this.props.message.id)
   }
   onLoadMore = () => {
     this.props.loadMore(this.props.message)
   }
-  render() {
+  render () {  
     let {
-      AppState,
-      QueryState,
-      Device,
+      isPhone,
       dispatch,
       isActive,
       message,
-      results
+      results,
+      bookmarks,
+      isLoading,
+      isLoadingMc
     } = this.props
-    let { bookmarks, isLoading, isLoadingMc } = AppState
-    let { search, message: msgText, mc } = message
-    let { isPhone } = Device
-    let maxResults = isPhone ? 1 : 3
-    /* If there is no search */
+    let { search, mc, showSearch } = message
+    const maxResults = isPhone ? MAX_RESULTS_MOBILE : MAX_RESULTS_DESKTOP
+
+    /* Fallback (search: null) from intent engine */
     if (!search) search = {}
 
     /* No search text, */
-    if (!msgText ||
-      (mc && mc.answer && mc.answer.confidence > 0.2) ||
-      (isLoadingMc && isActive)
-    ) return null
+    // if (
+    //   (mc && mc.answer && mc.answer.confidence > 0.2) ||
+    //   (isLoadingMc && isActive)
+    // ) {
+    //   return null
+    // }
 
-    let { title, no_result: noResultsText, base_url: baseUrl } = search
+    /* When showing CURRRENT message, do not stack */
+    const isStacked = isActive ? false : !showSearch
 
-    /* If no results */
-    if (!results.length && search) {
-      return <div className="olachat-message-reply">{noResultsText}</div>
-    }
-
-    let isStacked = !isActive && !this.state.isActive
     if (isStacked) {
       results = results.filter((item, idx) => idx < maxResults)
     }
 
-    let klass = classNames('olachat-results', {
+    const klass = classNames('olachat-results', {
       'olachat-results-stack': isStacked
     })
     return (
       <div className={klass}>
-        {title && <p>{title}</p>}
-        <div className="olachat-results-wrapper">
-          <div className="olachat-results-overlay" />
+        <div className='olachat-results-wrapper'>
+          <div className='olachat-results-overlay' />
           <button
-            type="button"
+            type='button'
             onClick={this.toggleActive}
-            className="olachat-results-seeall"
+            className='olachat-results-seeall'
           >
             See all
           </button>
@@ -78,7 +69,7 @@ class SearchResultsMessage extends React.Component {
             bookmarks={bookmarks}
             dispatch={dispatch}
             openInNewWindow
-            baseUrl={baseUrl}
+            baseUrl={search.baseUrl}
           />
 
           {isActive ? (
@@ -88,7 +79,7 @@ class SearchResultsMessage extends React.Component {
               perPage={this.props.perPage}
               dispatch={dispatch}
               isPhone={isPhone}
-              isLoading={isLoading}
+              isLoading={this.props.isLoading}
               onLoadMore={this.onLoadMore}
               infiniteScroll
             />
@@ -99,15 +90,19 @@ class SearchResultsMessage extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
-    AppState: state.AppState,
-    totalResults: state.Conversation.totalResults, 
+    bookmarks: state.AppState.bookmarks,
+    isLoadingMc: state.AppState.isLoadingMc,
+    isLoading: state.Conversation.isLoading,
+    totalResults: state.Conversation.totalResults,
     QueryState: state.QueryState,
-    Device: state.Device,
+    isPhone: state.Device.isPhone,
     perPage: state.Conversation.perPage,
-    page: state.Conversation.page,
+    page: state.Conversation.page
   }
 }
 
-export default connect(mapStateToProps, { loadMore })(SearchResultsMessage)
+export default connect(mapStateToProps, { loadMore, toggleSearchVisibility })(
+  SearchResultsMessage
+)

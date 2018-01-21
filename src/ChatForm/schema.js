@@ -1,12 +1,12 @@
-function validateFullName(text) {
+function validateFullName (text) {
   return text
 }
 
-function validateNric(text) {
+function validateNric (text) {
   return text
 }
 
-function validateSubmit(text) {
+function validateSubmit (text) {
   return text.toLowerCase() === 'yes'
 }
 

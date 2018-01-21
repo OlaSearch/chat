@@ -14,7 +14,7 @@ import schema from './schema'
 const emitter = mitt()
 
 class ChatForm extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       text: '',
@@ -33,12 +33,12 @@ class ChatForm extends React.Component {
   static childContextTypes = {
     emitter: PropTypes.object
   }
-  getChildContext() {
+  getChildContext () {
     return {
       emitter
     }
   }
-  componentDidMount() {}
+  componentDidMount () {}
   toggleActive = () => {
     this.setState(
       {
@@ -107,15 +107,15 @@ class ChatForm extends React.Component {
     /* Clear text */
     this.clearText()
   }
-  render() {
+  render () {
     let { text, currentIndex, isActive } = this.state
     let msgs = schema.filter((item, idx) => idx === currentIndex)
     return (
-      <div className="olachat-form">
+      <div className='olachat-form'>
         <button onClick={this.toggleActive}>Fill this form using voice</button>
         {isActive ? (
-          <div className="olachat-vui">
-            <Header onHide={this.toggleActive} title="Reach us" />
+          <div className='olachat-vui'>
+            <Header onHide={this.toggleActive} title='Reach us' />
             <Voice
               voiceAdapter={this.voiceAdapter}
               onResult={this.onVoiceChange}
@@ -123,12 +123,12 @@ class ChatForm extends React.Component {
             />
             {msgs.map(({ dialogue }, idx) => {
               return (
-                <div key={idx} className="olachat-vui-reply">
+                <div key={idx} className='olachat-vui-reply'>
                   {dialogue}
                 </div>
               )
             })}
-            <span className="olachat-vui-message">{text}</span>
+            <span className='olachat-vui-message'>{text}</span>
           </div>
         ) : null}
       </div>

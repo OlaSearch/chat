@@ -1,12 +1,12 @@
 /* global Element */
 import { EMOJI_LIST } from './Settings'
 
-export function createHTMLMarkup(html) {
+export function createHTMLMarkup (html) {
   if (Array.isArray(html)) html = html.join('')
   return { __html: html }
 }
 
-export function createMessageMarkup(text) {
+export function createMessageMarkup (text) {
   if (!text) return null
   const emojiRegex = /^\\[a-z|0-9]+\b/g
   let t = text.replace(emojiRegex, match => {
@@ -15,13 +15,13 @@ export function createMessageMarkup(text) {
   return createHTMLMarkup(t)
 }
 
-export function createMessage(text, userId) {
+export function createMessage (text, userId) {
   return {
     message: text
   }
 }
 
-export function checkIfAwaitingResponse(response) {
+export function checkIfAwaitingResponse (response) {
   if (!response) return false
   return (
     response.answer &&
@@ -30,7 +30,7 @@ export function checkIfAwaitingResponse(response) {
   )
 }
 
-export function convertoFloat32ToInt16(buffer) {
+export function convertoFloat32ToInt16 (buffer) {
   var l = buffer.length
   var buf = new Int16Array(l)
 
@@ -40,13 +40,13 @@ export function convertoFloat32ToInt16(buffer) {
   return buf.buffer
 }
 
-export function stripHtml(text) {
+export function stripHtml (text) {
   if (!text) return ''
   if (Array.isArray(text)) text = text[0]
   return text.replace(/<(?:.|\n)*?>/gm, '').replace(/&nbsp;/gi, ' ')
 }
 
-export function triggerMouseEvent(node, eventType) {
+export function triggerMouseEvent (node, eventType) {
   var event = new window.Event(eventType, {
     bubbles: false,
     cancelable: true
@@ -54,7 +54,7 @@ export function triggerMouseEvent(node, eventType) {
   node.dispatchEvent(event)
 }
 
-export function isClosest(iframeEl, element, elementClosest) {
+export function isClosest (iframeEl, element, elementClosest) {
   if (!Element.prototype.matches) {
     Element.prototype.matches =
       Element.prototype.msMatchesSelector ||

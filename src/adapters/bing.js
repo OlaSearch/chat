@@ -25,21 +25,21 @@ const adapter = ({ emitter }) => {
   }
 
   return {
-    start() {
+    start () {
       client.startMicAndRecognition()
-      setTimeout(function() {
+      setTimeout(function () {
         client.endMicAndRecognition()
       }, 5000)
       emitter.emit('onStart')
     },
-    stop() {
+    stop () {
       if (client) client.endMicAndRecognition()
       emitter.emit('onStop')
     },
-    prefetchToken() {
+    prefetchToken () {
       this.getTtsToken().then(token => (this._ttsToken = token))
     },
-    getTtsToken() {
+    getTtsToken () {
       /* Cache tts token */
       if (this._ttsToken) {
         return new Promise((resolve, reject) => {
@@ -50,7 +50,7 @@ const adapter = ({ emitter }) => {
         url: ttsTokenUrl
       })
     },
-    speak(text, isPhone = false, callback) {
+    speak (text, isPhone = false, callback) {
       if (isPhone) {
         if (!window.speechSynthesis) return
         var utterance = new SpeechSynthesisUtterance()

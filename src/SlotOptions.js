@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { updateBotQueryTerm } from './actions'
-import { Actions, GeoLocation } from '@olasearch/core'
+import { updateBotQueryTerm, clearBotQueryTerm } from './actions'
+import { GeoLocation } from '@olasearch/core'
 import TransitionGroup from 'react-transition-group/TransitionGroup'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import { DISAMBIGUATION_INTENT_NAME } from './Settings'
+import Navigation from '@olasearch/icons/lib/navigation'
 
 class SlotOptions extends Component {
   handleClick = ({ label, value, intent: selectedIntent }) => {
@@ -24,21 +25,37 @@ class SlotOptions extends Component {
     this.props.onSubmit(args)
   }
   onGeoSuccess = data => {
-    // if (!data) return
-    // let latlng = `${data.coords.latitude}`
-    // this.props.onSubmit()
+    if (!data) return
+    this.props.clearBotQueryTerm()
+    this.props.onSubmit({ intent: this.props.message.intent })
   }
-  render() {
+  onIgnoreGeo = data => {
+    this.props.clearBotQueryTerm()
+    this.props.onSubmit({ intent: this.props.message.intent })
+  }
+  render () {
     let { options, isActive } = this.props
-    // return (
-    //   <div><GeoLocation onSuccess={this.onGeoSuccess} /></div>
-    // )
+    /**
+     * If message requires location and isActive
+     */
+    if (this.props.message.location && isActive && !this.props.location) {
+      return (
+        <div>
+          <GeoLocation
+            onSuccess={this.onGeoSuccess}
+            icon={<Navigation />}
+            className='ola-icon-btn'
+          />
+          <button onClick={this.onIgnoreGeo} className='ola-cancel-btn'>Ignore</button>
+        </div>
+      )
+    }
     if (!options || !options.length) return null
     let replies = options.map(({ label, value, intent }, idx) => (
       <CSSTransition
         key={idx}
         timeout={{ enter: 300, exit: 300 }}
-        classNames="slots"
+        classNames='slots'
       >
         <QuickReplyButton
           intent={intent}
@@ -51,8 +68,8 @@ class SlotOptions extends Component {
     ))
 
     return (
-      <div className="olachat-slots">
-        <TransitionGroup appear className="olachat-slots-list">
+      <div className='olachat-slots'>
+        <TransitionGroup appear className='olachat-slots-list'>
           {replies}
         </TransitionGroup>
       </div>
@@ -60,14 +77,14 @@ class SlotOptions extends Component {
   }
 }
 
-function QuickReplyButton({ label, value, intent, handleClick, isActive }) {
-  function onClick() {
+function QuickReplyButton ({ label, value, intent, handleClick, isActive }) {
+  function onClick () {
     handleClick({ label, value, intent })
   }
   return (
     <button
-      className="olachat-slots-button"
-      type="button"
+      className='olachat-slots-button'
+      type='button'
       onClick={onClick}
       disabled={!isActive}
     >
@@ -77,5 +94,6 @@ function QuickReplyButton({ label, value, intent, handleClick, isActive }) {
 }
 
 export default connect(null, {
-  updateQueryTerm: updateBotQueryTerm
+  updateQueryTerm: updateBotQueryTerm,
+  clearBotQueryTerm
 })(SlotOptions)

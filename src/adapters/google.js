@@ -31,7 +31,7 @@ const adapter = ({ emitter, onConnected }) => {
   var micStream
 
   return {
-    start() {
+    start () {
       var finalResult = null
       var hasEndReached = false
       var pm = getUserMedia({ video: false, audio: true })
@@ -73,15 +73,15 @@ const adapter = ({ emitter, onConnected }) => {
         })
       })
     },
-    stop() {
+    stop () {
       micStream && micStream.stop()
       OlaStream && OlaStream.end()
       emitter.emit('onStop')
     },
-    prefetchToken() {
+    prefetchToken () {
       this.getTtsToken().then(token => (this._ttsToken = token))
     },
-    getTtsToken() {
+    getTtsToken () {
       /* Cache tts token */
       if (this._ttsToken) {
         return new Promise((resolve, reject) => {
@@ -92,7 +92,7 @@ const adapter = ({ emitter, onConnected }) => {
         url: ttsTokenUrl
       })
     },
-    stopSpeaking() {
+    stopSpeaking () {
       if (window.OlaAudio) {
         window.OlaAudio.pause()
       }
@@ -101,13 +101,14 @@ const adapter = ({ emitter, onConnected }) => {
         window.speechSynthesis.pause()
       }
     },
-    speak(text, isPhone = false, callback) {
+    speak (text, isPhone = false, callback) {
       if (isPhone) {
         if (
           !window.speechSynthesis ||
           window.speechSynthesis.getVoices().length < 1
-        )
+        ) {
           return callback ? callback() : false
+        }
         if (window.speechSynthesis) window.speechSynthesis.cancel()
         var utterance = new SpeechSynthesisUtterance()
         utterance.lang = 'en-GB'

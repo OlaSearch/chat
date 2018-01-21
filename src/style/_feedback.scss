@@ -5,7 +5,8 @@
 .olachat-feedback {
   font-size: 16px;
   text-align: right;
-  line-height: 1;
+  // line-height: 1;
+  // height: 24px;
   max-width: 720px;
 
   @include media (desktop) {
@@ -94,4 +95,6 @@
 .olachat-feedback-positive, .olachat-feedback-negative {
   margin: 0 8px;
   display: inline-block;
+  background: none;
+  border: none;
 }

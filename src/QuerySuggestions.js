@@ -8,16 +8,16 @@ class QuerySuggestions extends React.Component {
   registerRef = el => {
     this.el = el
   }
-  componentDidMount() {
+  componentDidMount () {
     /* Add click listener */
     // this.el.addEventListener('click', e => {
     //   e.preventDefault()
     // })
   }
-  render() {
+  render () {
     let { suggestions, onChange, activeIndex, queryTerm } = this.props
     return (
-      <div className="olachat-query-suggestions" ref={this.registerRef}>
+      <div className='olachat-query-suggestions' ref={this.registerRef}>
         {suggestions.map((item, idx) => {
           return (
             <QuerySuggestionItem
@@ -34,8 +34,8 @@ class QuerySuggestions extends React.Component {
   }
 }
 
-function QuerySuggestionItem({ queryTerm, term, onChange, isActive }) {
-  function handleChange(e) {
+function QuerySuggestionItem ({ queryTerm, term, onChange, isActive }) {
+  function handleChange (e) {
     onChange && onChange(term)
   }
   let pattern =
@@ -49,9 +49,9 @@ function QuerySuggestionItem({ queryTerm, term, onChange, isActive }) {
   let value = term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
   let klass = 'olachat-query-suggestion' + (isActive ? ' is-active' : '')
   return (
-    <div className="olachat-query-suggestion-item">
+    <div className='olachat-query-suggestion-item'>
       <button
-        type="button"
+        type='button'
         className={klass}
         onClick={handleChange}
         dangerouslySetInnerHTML={createHTMLMarkup(value)}

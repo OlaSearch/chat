@@ -5,7 +5,9 @@ import Message from './Message'
 import TypingIndicator from './TypingIndicator'
 import TransitionGroup from 'react-transition-group/TransitionGroup'
 import CSSTransition from 'react-transition-group/CSSTransition'
-
+import Loader from '@olasearch/icons/lib/loader'
+import ReactList from 'react-list'
+import { scrollTo } from './utils'
 /**
  * Message interface
  * message = {
@@ -19,7 +21,7 @@ import CSSTransition from 'react-transition-group/CSSTransition'
 var supportsPassive = false
 try {
   var opts = Object.defineProperty({}, 'passive', {
-    get() {
+    get () {
       supportsPassive = true
     }
   })
@@ -29,50 +31,56 @@ try {
 }
 
 class Messages extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.scrollTop = 0
     this.previousScrollTop = 0
     this.scrollHeight = undefined
     this.state = {
-      isInfiniteLoading: false
+      isInfiniteLoading: false,
+      shouldRender: false
     }
     this.isComponentMounted = false
   }
+  static contextTypes = {
+    document: PropTypes.object
+  }
   static defaultProps = {
-    flipped: false,
+    flipped: true, /* Messages start from bottom to top */
     scrollLoadThreshold: 10,
     messageComponent: null
   }
-  componentDidMount() {
-    var scrollableDomEl = ReactDOM.findDOMNode(this)
-    // If there are not yet any children (they are still loading),
-    // this is a no-op as we are at both the top and bottom of empty viewport
-    var heightDifference = this.props.flipped
-      ? scrollableDomEl.scrollHeight - scrollableDomEl.clientHeight
-      : 0
+  componentDidMount () {
+    /**
+     * Prevent force layout on render
+     */
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        this.setState({ shouldRender : true})
 
-    scrollableDomEl.scrollTop = heightDifference
-    this.scrollTop = heightDifference
-
-    // Unless passive events are supported, we must not hook onScroll event
-    // directly - that will break hardware accelerated scrolling. We poll it
-    // with requestAnimationFrame instead.
-    if (supportsPassive) {
-      scrollableDomEl.addEventListener('scroll', this.onScroll, {
-        passive: true
+        var heightDifference = this.props.flipped
+          ? this.messagesEl.scrollHeight - this.messagesEl.clientHeight
+          : 0
+        this.messagesEl.scrollTop = heightDifference
+        this.scrollTop = heightDifference
       })
+    })
+
+    // // Unless passive events are supported, we must not hook onScroll event
+    // // directly - that will break hardware accelerated scrolling. We poll it
+    // // with requestAnimationFrame instead.
+    if (supportsPassive) {
+      // this.messagesEl.addEventListener('scroll', this.onScroll, {
+      //   passive: true
+      // })
     } else {
-      this.rafRequestId = window.requestAnimationFrame(this.pollScroll)
+      // this.rafRequestId = window.requestAnimationFrame(this.pollScroll)
     }
 
     this.isComponentMounted = true
 
     /* Add click listener */
     this.messagesEl.addEventListener('click', this.clickListener)
-  }
-  static contextTypes = {
-    document: PropTypes.object
   }
   clickListener = e => {
     if (!e.target || e.target.nodeName !== 'A') return
@@ -109,36 +117,50 @@ class Messages extends React.Component {
       })
     }
   }
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.isComponentMounted = false
-    if (this.messagesEl)
+    if (this.messagesEl) {
       this.messagesEl.removeEventListener('click', this.clickListener)
-    
-    /* Reset all feedback */
-    // this.props.disabledFeedback()
+    }
   }
-  componentDidUpdate(nextProps) {
-    this.updateScrollTop()
+  componentDidUpdate (prevProps, prevState) {
+    /**
+     * A new message has been received. We need to scroll
+     */
+    if (this.props.newMessageId !== prevProps.newMessageId) {
+      this.scrollIntoView(this.props.newMessageId)
+    }
+    /* Only update scroll position if new messages are added */
+    /**
+     * We cant scroll to bottom here, because messages can update anytime
+     * We have to scroll to a message
+     * 1. New messages are added
+     * 2. Message + Search results are loaded
+     */
+    // window.requestAnimationFrame(() => {
+    //   /* Only after the component is rendered */
+    //   if (prevState.shouldRender) this.updateScrollTop()
+    // })
   }
   pollScroll = () => {
     if (!this.isComponentMounted) return
-    this.previousScrollTop = ReactDOM.findDOMNode(this).scrollTop
+    this.previousScrollTop = this.messagesEl.scrollTop
     this.onScroll()
     this.rafRequestId = window.requestAnimationFrame(this.pollScroll)
   }
   onScroll = () => {
-    var domNode = ReactDOM.findDOMNode(this)
-    var scrollDirection =
-      domNode.scrollTop < this.previousScrollTop ? 'up' : 'down'
+    var scrollDirection = this.messagesEl.scrollTop < this.previousScrollTop
+      ? 'up'
+      : 'down'
 
     /* Update previous scroll */
-    this.previousScrollTop = domNode.scrollTop
+    this.previousScrollTop = this.messagesEl.scrollTop
 
     if (!this.props.flipped && scrollDirection === 'up') return
     if (this.props.flipped && scrollDirection === 'down') return
 
-    if (domNode.scrollTop !== this.scrollTop) {
-      if (this.shouldTriggerLoad(domNode)) {
+    if (this.messagesEl.scrollTop !== this.scrollTop) {
+      if (this.shouldTriggerLoad(this.messagesEl)) {
         this.setState({ isInfiniteLoading: true })
         var p = this.props.onLoad()
         p.then(() => this.setState({ isInfiniteLoading: false }))
@@ -166,38 +188,55 @@ class Messages extends React.Component {
       domNode.scrollHeight,
       domNode.clientHeight
     )
-    return passedThreshold && !this.state.isLoading
+    return passedThreshold && !this.state.isInfiniteLoading
   }
   updateScrollTop = () => {
-    var scrollableDomEl = ReactDOM.findDOMNode(this)
     var newScrollTop =
-      scrollableDomEl.scrollTop +
+      this.messagesEl.scrollTop +
       (this.props.flipped
-        ? scrollableDomEl.scrollHeight - (this.scrollHeight || 0)
+        ? this.messagesEl.scrollHeight - (this.scrollHeight || 0)
         : 0)
     var scrollHeightDifference = this.scrollHeight
-      ? this.scrollHeight - scrollableDomEl.scrollHeight
+      ? this.scrollHeight - this.messagesEl.scrollHeight
       : 0
-
     // if something was removed from list we need to include this difference in new scroll top
     if (this.props.flipped && scrollHeightDifference > 0) {
       newScrollTop += scrollHeightDifference
     }
-    if (newScrollTop !== scrollableDomEl.scrollTop) {
-      scrollableDomEl.scrollTop = newScrollTop
+    if (newScrollTop !== this.messagesEl.scrollTop) {
+      this.messagesEl.scrollTop = newScrollTop
     }
-    this.scrollTop = scrollableDomEl.scrollTop
-    this.scrollHeight = scrollableDomEl.scrollHeight
+    this.scrollTop = this.messagesEl.scrollTop
+    this.scrollHeight = this.messagesEl.scrollHeight
   }
-  scrollToView = () => {
-    var scrollableDomEl = ReactDOM.findDOMNode(this)
-    scrollableDomEl.scrollTop = this.props.flipped ? this.scrollHeight : 0
+  /**
+   * Scroll in to view. Pass the message ID
+   */
+  scrollIntoView = (id) => {
+    const doc = this.context.document || document
+    const domId = id
+    const domNode = doc.getElementById(domId)
+    if (!domNode) return
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        /* Fixes a bug in Mobile devices where keyboard loses focus on the first message */
+        if(domNode.offsetTop < this.messagesEl.clientHeight) return
+        domNode.scrollIntoView({ /*behavior: 'smooth',*/ block: 'start', inline: 'start'})
+      })
+    })
   }
   registerRef = el => {
     this.messagesEl = el
   }
-  render() {
-    let { messages, flipped, messageComponent, isTyping } = this.props
+  shouldComponentUpdate (nextProps, nextState) {
+    return (
+      nextProps.messages !== this.props.messages ||
+      nextProps.newMessageId !== this.props.newMessageId ||
+      nextState !== this.state
+    )
+  }
+  render () {
+    let { messages, flipped, messageComponent } = this.props
     let { isInfiniteLoading } = this.state
     if (!flipped) {
       messages = messages.slice().reverse()
@@ -206,56 +245,43 @@ class Messages extends React.Component {
     let messagesComponent = messageComponent
       ? messages.map(messageComponent)
       : messages.map((message, idx) => {
-          let nextMsgs = messages.slice(idx)
-          let isSearchActive =
-            nextMsgs.filter(msg => !msg.userId).length === nextMsgs.length
-          return (
-            <CSSTransition
-              key={message.id}
-              classNames="ola-fade"
-              timeout={{ enter: 500, exit: 300 }}
-            >
-              <Message
-                avatarBot={this.props.avatarBot}
-                avatarUser={this.props.avatarUser}
-                message={message}
-                addMessage={this.props.addMessage}
-                isActive={idx === messages.length - 1}
-                messageIdx={idx}
-                isSearchActive={isSearchActive}
-                botName={this.props.botName}
-                userName={this.props.userName}
-                isTyping={isTyping}
-                log={this.props.log}
-              />
-            </CSSTransition>
-          )
-        })
-
+        return (
+          <div
+            key={message.id}
+            id={message.id}
+          >            
+            {message.isTyping
+              ? <TypingIndicator
+                  avatarBot={this.props.avatarBot}
+                />
+              : <Message
+                  avatarBot={this.props.avatarBot}
+                  avatarUser={this.props.avatarUser}
+                  message={message}
+                  addMessage={this.props.addMessage}
+                  isActive={idx === messages.length - 1}
+                  botName={this.props.botName}
+                  userName={this.props.userName}
+                  log={this.props.log}
+                  location={this.props.location}
+                  isMounted={this.isComponentMounted}
+                />
+            }
+          </div>
+        )
+      })
     return (
-      <div className="olachat-messages" ref={this.registerRef}>
-        <div className="olachat-messages-wrapper">
-          {/* flipped ? loadingSpinner : null */}
-          {isTyping ? (
-            flipped ? null : (
-              <TypingIndicator avatarBot={this.props.avatarBot} />
-            )
-          ) : null}
-          <TransitionGroup
-            appear
-            enter
-            exit={false}
-            className="olachat-messages-list"
-          >
-            {messagesComponent}
-          </TransitionGroup>
-          {flipped ? null : loadingSpinner}
-          {isTyping ? (
-            flipped ? (
-              <TypingIndicator avatarBot={this.props.avatarBot} />
-            ) : null
-          ) : null}
-        </div>
+      <div className='olachat-messages' ref={this.registerRef}>
+        {this.state.shouldRender          
+          ? <div className='olachat-messages-wrapper'>
+              <div
+                className='olachat-messages-list'
+              >
+                {messagesComponent}
+              </div>
+            </div>
+          : <div className='olachat-message-loader'><Loader /></div>
+        }
       </div>
     )
   }

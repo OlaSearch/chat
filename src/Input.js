@@ -7,7 +7,9 @@ import QuerySuggestions from './QuerySuggestions'
 import { connect } from 'react-redux'
 import HelpMenu from './HelpMenu'
 import listensToClickOutside from '@olasearch/react-onclickoutside'
-import Send from '@olasearch/icons/lib/send'
+import Send from '@olasearch/icons/lib/arrow-right-circle'
+import { GeoLocation } from '@olasearch/core'
+import Navigation from '@olasearch/icons/lib/navigation'
 
 const supportsVoice =
   navigator.getUserMedia ||
@@ -15,7 +17,7 @@ const supportsVoice =
   navigator.mozGetUserMedia
 
 class Input extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       text: '',
@@ -29,14 +31,13 @@ class Input extends React.Component {
     document: PropTypes.object
   }
   handleClickOutside = event => {
+    /* Check if its already closed */
+    if (!this.state.suggestedTerm) return
     this.closeSuggestion()
   }
   onChange = event => {
     let text = event && event.target ? event.target.value : event
-    this.setState({
-      text
-    })
-
+    this.setState({ text })
     if (text) {
       /**
        * Auto suggest queries
@@ -222,12 +223,20 @@ class Input extends React.Component {
       }
     )
   }
-  render() {
+  shouldComponentUpdate (nextProps, nextState) {
+    return (
+      nextProps.messages !== this.props.messages ||
+      nextProps.isTyping !== this.props.isTyping ||
+      nextProps.location !== this.props.location ||
+      nextState !== this.state
+    )
+  }
+  render () {
     let { isTyping, voiceInput } = this.props
     let { suggestions, suggestedIndex, suggestedTerm, text } = this.state
     let inputValue = suggestedTerm ? suggestedTerm.term : text
     return (
-      <form className="olachat-footer" onSubmit={this.onFormSubmit}>
+      <form className='olachat-footer' onSubmit={this.onFormSubmit}>
         {suggestions.length && text ? (
           <QuerySuggestions
             onChange={this.onSuggestionChange}
@@ -240,9 +249,9 @@ class Input extends React.Component {
           onSubmit={this.props.onSubmit}
           updateQueryTerm={this.props.updateQueryTerm}
         />
-        <div className="olachat-input">
+        <div className='olachat-input'>
           <Textarea
-            placeholder="Type a message..."
+            placeholder='Type a message...'
             onChange={this.onChange}
             onKeyDown={this.onKeyDown}
             value={inputValue}
@@ -250,11 +259,18 @@ class Input extends React.Component {
             cols={20}
             ref={this.registerRef}
             autoFocus={!this.props.isPhone}
-            initialHeight={40}
+            initialHeight={50}
           />
         </div>
+        {this.props.location
+          ? <GeoLocation
+              icon={<Navigation size={20} />}
+              showLabel={false}
+            />
+          : null
+        }
         {voiceInput && supportsVoice ? (
-          <div className="olachat-input-voice">
+          <div className='olachat-input-voice'>
             <Voice
               onResult={this.onVoiceChange}
               onFinalResult={this.onVoiceFinal}
@@ -264,7 +280,7 @@ class Input extends React.Component {
         ) : null}
         <button
           disabled={isTyping || !this.state.text}
-          className="olachat-submit"
+          className='olachat-submit'
         >
           <Send />
         </button>
@@ -273,8 +289,10 @@ class Input extends React.Component {
   }
 }
 
-export default connect(null)(listensToClickOutside(Input, {
-  getDocument (instance) {
-    return instance.context.document || document
-  }
-}))
+export default connect(null)(
+  listensToClickOutside(Input, {
+    getDocument (instance) {
+      return instance.context.document || document
+    }
+  })
+)

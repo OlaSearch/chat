@@ -66,7 +66,7 @@ const results = [
 const emitter = mitt()
 
 class Search extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       messages: [],
@@ -87,7 +87,7 @@ class Search extends Component {
   static childContextTypes = {
     emitter: PropTypes.object
   }
-  getChildContext() {
+  getChildContext () {
     return {
       emitter
     }
@@ -129,7 +129,7 @@ class Search extends Component {
         })
     }, 2000)
   }
-  render() {
+  render () {
     let { isTyping, messages } = this.state
     let { flipped } = this.props
     let showResults = messages.length > 1
@@ -152,28 +152,28 @@ class Search extends Component {
         )
       })
     return (
-      <div className="olachat-search">
-        <div className="olachat-search-header">
+      <div className='olachat-search'>
+        <div className='olachat-search-header'>
           <SearchInput
             onSubmit={this.handleSubmit}
             voiceAdapter={this.voiceAdapter}
           />
           {msg.length ? (
-            <div className="olachat-search-container">
-              <div className="olachat-search-messages">
+            <div className='olachat-search-container'>
+              <div className='olachat-search-messages'>
                 {isTyping ? (
                   flipped ? null : (
                     <TypingIndicator avatarBot={avatarBot} />
                   )
                 ) : null}
                 <ReactCSSTransitionGroup
-                  transitionName="messages"
+                  transitionName='messages'
                   transitionAppear
                   transitionAppearTimeout={300}
                   transitionEnterTimeout={500}
                   transitionLeave={false}
-                  component="div"
-                  className="olachat-messages-list"
+                  component='div'
+                  className='olachat-messages-list'
                 >
                   {msg}
                 </ReactCSSTransitionGroup>
@@ -187,17 +187,17 @@ class Search extends Component {
           ) : null}
         </div>
 
-        <div className="olachat-search-results">
+        <div className='olachat-search-results'>
           {showResults &&
             results.map((result, idx) => {
               let { title, desc, thumbnail } = result
               return (
-                <div className="ola-snippet" key={idx}>
+                <div className='ola-snippet' key={idx}>
                   <div>
                     <img src={thumbnail} />
                   </div>
                   <div>
-                    <h3 className="ola-field-title">
+                    <h3 className='ola-field-title'>
                       <a>{title}</a>
                     </h3>
                     <p>{desc}</p>
@@ -211,7 +211,7 @@ class Search extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return state
 }
 

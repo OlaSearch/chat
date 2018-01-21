@@ -21,4 +21,8 @@
   .olachat-bot .olachat, .olachat-messages-wrapper {
     position: relative;
   }
+
+  .olachat-results-overlay, .olachat-results-seeall, .ola-field-img {
+    display: none;
+  }
 }

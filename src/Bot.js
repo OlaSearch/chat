@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { clearMessages, setBotStatus, clearBotQueryTerm } from './actions'
-import { Actions, Decorators } from '@olasearch/core'
+import { Decorators } from '@olasearch/core'
 import classNames from 'classnames'
 import mitt from 'mitt'
 import Bubble from './Bubble'
@@ -23,7 +23,7 @@ const supportsVoice = DEBUG
 const emitter = mitt()
 
 class Bot extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     let { speechRecognitionProvider } = props /* speechOutputProvider */
     if (speechRecognitionProvider) {
@@ -39,39 +39,39 @@ class Bot extends Component {
     emitter: PropTypes.object,
     env: PropTypes.string
   }
-  getChildContext() {
+  getChildContext () {
     return {
       emitter,
       env: this.props.env
     }
   }
   toggleActive = () => {
-    /* Pause all audio */
-    this.voiceAdapter && this.voiceAdapter.stopSpeaking()
-
-    /* Reset */
-    if (!this.props.showHistory) {
-      // this.props.clearMessages()
-
-      /* Clear initial query term */
-      // this.props.clearBotQueryTerm()
-    }
-
     const currentActiveStatus = !this.props.isBotActive
+
+    /* Check if bot is closed */
+    if (this.props.startOver) {
+      this.props.clearMessages()
+      this.props.clearBotQueryTerm()
+    }
 
     /* Stop all audio */
     this.props.setBotStatus(currentActiveStatus)
 
     /* Handle active status */
     this.props.onBubbleClick && this.props.onBubbleClick(currentActiveStatus)
+
     /* Log when chatbot opens or closes */
     this.props.log({
       eventLabel: currentActiveStatus ? 'open' : 'close',
       eventCategory: 'bot',
       eventType: 'O',
       setNewUser: false,
+      debounce: true,
       payload: { bot: true }
     })
+
+    /* Pause all audio */
+    this.voiceAdapter && this.voiceAdapter.stopSpeaking()
   }
   static defaultProps = {
     showHistory: false,
@@ -93,7 +93,7 @@ class Bot extends Component {
       avatarUser: null
     }
   }
-  componentDidMount() {
+  componentDidMount () {
     /* Send load log for new user */
     if (this.props.isNewUser) {
       this.props.log({
@@ -105,7 +105,7 @@ class Bot extends Component {
       })
     }
   }
-  render() {
+  render () {
     const passProps = {
       onHide: this.toggleActive,
       ...this.props.headerProps,
@@ -115,6 +115,7 @@ class Bot extends Component {
       voiceAdapter: this.voiceAdapter,
       onRequestClose: this.toggleActive,
       voiceInput: this.props.voiceInput,
+      setBotStatus: this.props.setBotStatus,
       emitter
     }
     const HAS_VOICES = this.props.isPhone
@@ -133,11 +134,11 @@ class Bot extends Component {
       'olachat-bot-iframe': this.props.iFrame,
       'olachat-bot-mobile': this.props.isPhone,
       'olachat-bot-tablet': this.props.isTablet,
-      'olachat-bot-desktop': this.props.isDesktop,
+      'olachat-bot-desktop': this.props.isDesktop
     })
     return (
       <div className={botClass} style={{ opacity: 0 }}>
-        <div className="olachat-bot-overlay" />
+        <div className='olachat-bot-overlay' />
         {isBotActive ? null : showBubble ? (
           <Bubble
             onClick={this.toggleActive}
@@ -151,7 +152,7 @@ class Bot extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
     isPhone: state.Device.isPhone,
     isTablet: state.Device.isTablet,

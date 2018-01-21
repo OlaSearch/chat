@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import { checkIfAwaitingResponse } from './utils'
 import { connect } from 'react-redux'
-import { Actions } from '@olasearch/core'
 import Mic from '@olasearch/icons/lib/mic'
 import MicOff from '@olasearch/icons/lib/mic-off'
 
@@ -12,7 +11,7 @@ import MicOff from '@olasearch/icons/lib/mic-off'
 const VOICE_EVENTS = ['onResult', 'onFinalResult', 'onStart', 'onEnd', 'onStop']
 /* Component */
 class Voice extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       isRecording: false,
@@ -27,13 +26,13 @@ class Voice extends React.Component {
     containerClass: '',
     iconSize: 20
   }
-  componentWillUnmount() {
+  componentWillUnmount () {
     const { emitter } = this.context
     for (let i = 0; i < VOICE_EVENTS.length; i++) {
       emitter.off(VOICE_EVENTS[i], this[VOICE_EVENTS[i]])
     }
   }
-  componentDidMount() {
+  componentDidMount () {
     const { emitter } = this.context
     if (!emitter) return
     for (let i = 0; i < VOICE_EVENTS.length; i++) {
@@ -111,7 +110,7 @@ class Voice extends React.Component {
     /* Play ping voice */
     this.playPing()
   }
-  onStop = (e) => {
+  onStop = e => {
     /* Die if has already stopped recording */
     if (!this.state.isRecording && !this.state.isSpeaking) return
 
@@ -143,7 +142,7 @@ class Voice extends React.Component {
     }
     this.props.handleVoiceButtonClick && this.props.handleVoiceButtonClick()
   }
-  render() {
+  render () {
     let { isRecording, isSpeaking } = this.state
     let {
       isTyping,
@@ -166,21 +165,21 @@ class Voice extends React.Component {
     let showLoadingIndicator = isTyping && searchInput === 'voice'
     return (
       <div className={containerKlass} onClick={this.handleSpeechStart}>
-        <button type="button" className={klass}>
+        <button type='button' className={klass}>
           {isRecording ? <Mic size={iconSize} /> : <Mic size={iconSize} />}
           {isRecording && showListening ? (
-            <span className="olachat-mic-listening">
+            <span className='olachat-mic-listening'>
               Listening<em>...</em>
             </span>
           ) : null}
-          {showLoadingIndicator && <span className="olachat-mic-loader" />}
+          {showLoadingIndicator && <span className='olachat-mic-loader' />}
         </button>
       </div>
     )
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
     isTyping: state.Conversation.isTyping,
     searchInput: state.QueryState.searchInput,
@@ -188,6 +187,4 @@ function mapStateToProps(state) {
     isPhone: state.Device.isPhone
   }
 }
-export default connect(mapStateToProps, {
-  addContextField: Actions.Context.addContextField
-})(Voice)
+export default connect(mapStateToProps, null)(Voice)

@@ -8,7 +8,7 @@ import Menu from '@olasearch/icons/lib/menu'
 import Print from '@olasearch/icons/lib/printer'
 
 class HelpMenu extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       isOpen: false
@@ -18,6 +18,7 @@ class HelpMenu extends React.Component {
     document: PropTypes.object
   }
   handleClickOutside = event => {
+    if (!this.state.isOpen) return
     this.setState({
       isOpen: false
     })
@@ -52,7 +53,12 @@ class HelpMenu extends React.Component {
   static defaultProps = {
     botLinks: []
   }
-  render() {
+  shouldComponentUpdate (nextProps, nextState) {
+    return (
+      nextState !== this.state
+    )
+  }
+  render () {
     let klass = classNames('olachat-helpmenu', {
       'olachat-helpmenu-open': this.state.isOpen
     })
@@ -60,22 +66,22 @@ class HelpMenu extends React.Component {
     return (
       <div className={klass}>
         <button
-          className="olachat-helpmenu-button"
+          className='olachat-helpmenu-button'
           onClick={this.toggleMenu}
-          type="button"
+          type='button'
         >
           <Menu />
         </button>
-        <div className="olachat-dp">
-          <div className="olachat-dp-title">Menu</div>
-          <div className="olachat-dp-body">
+        <div className='olachat-dp'>
+          <div className='olachat-dp-title'>Menu</div>
+          <div className='olachat-dp-body'>
             {botLinks.map(({ title, url }, idx) => {
               return (
                 <a
-                  className="olachat-menu-link"
+                  className='olachat-menu-link'
                   href={url || null}
                   key={idx}
-                  target="_blank"
+                  target='_blank'
                   onClick={this.handleClick}
                 >
                   {title}

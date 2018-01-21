@@ -6,13 +6,13 @@ import AnswerMap from '@olasearch/core/lib/components/Answer/AnswerMap'
 import { Fields } from '@olasearch/core'
 // import AnswerChart from 'olasearch/lib/components/Answer/AnswerChart'
 
-function Card({ card, templates }) {
+function Card ({ card, templates }) {
   if (!card) return null
   if (!card.title) return null
   let { buttons = [], template } = card
   let klass = cx('ola-card', `ola-card-template-${template}`)
 
-  function pickTemplate(template) {
+  function pickTemplate (template) {
     /* Check for user defined templates */
     if (templates && templates.hasOwnProperty(template)) {
       let Component = templates[template]
@@ -36,15 +36,15 @@ function Card({ card, templates }) {
 
       default:
         return (
-          <div className="ola-card-inner">
+          <div className='ola-card-inner'>
             <Fields.Title
               result={card}
-              field="title"
+              field='title'
               openInNewWindow
               eventLabel={card['title']}
-              eventCategory="card"
+              eventCategory='card'
             />
-            <Fields.TextField field="subtitle" result={card} />
+            <Fields.TextField field='subtitle' result={card} />
             {buttons.map((button, idx) => (
               <Fields.Button
                 {...button}
@@ -52,7 +52,7 @@ function Card({ card, templates }) {
                 eventLabel={card['title']}
                 key={idx}
                 openInNewWindow
-                eventCategory="card"
+                eventCategory='card'
               />
             ))}
           </div>

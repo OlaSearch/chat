@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Actions } from '@olasearch/core'
 import {
@@ -16,7 +17,10 @@ import {
 } from './Settings'
 
 class MessageFeedback extends React.Component {
-  handlePositive = () => {
+  static contextTypes = {
+    config: PropTypes.object
+  }
+  handlePositive = (e) => {
     this.props.updateQueryTerm(EMOJI_POSITIVE)
     this.props.setFeedbackMessage(this.props.message.id)
     this.props.setFeedbackRating(EMOJI_POSITIVE)
@@ -28,30 +32,27 @@ class MessageFeedback extends React.Component {
     this.props.setFeedbackRating(EMOJI_NEGATIVE)
     this.props.onSubmit({ intent: 'OLA.FeedbackIntent' })
   }
-  render() {
+  render () {
     let {
       isActive,
       isBot,
-      isTyping,
-      messageIdx,
       message: { awaitingUserInput, intent, mc }
     } = this.props
 
-    /* Current message */
-    if (messageIdx < 1) return null
     /* If user is typing */
-    if (!isActive || !isBot || isTyping || !awaitingUserInput) return null
+    if (!isActive || !isBot || !awaitingUserInput) return null
     /* Check if ignored intents or MC */
+    if (intent === this.context.config.initialIntent) return null
     if (IGNORE_FEEDBACK_INTENTS.indexOf(intent) !== -1 && !mc) return null
 
     return (
-      <div className="olachat-feedback">
-        <a onClick={this.handlePositive} className="olachat-feedback-positive">
-          <span className="emoji-thumbs-up" />
-        </a>
-        <a onClick={this.handleNegative} className="olachat-feedback-negative">
-          <span className="emoji-thumbs-down" />
-        </a>
+      <div className='olachat-feedback'>
+        <button type='button' onClick={this.handlePositive} className='olachat-feedback-positive'>
+          <span className='emoji-thumbs-up' />
+        </button>
+        <button type='button' onClick={this.handleNegative} className='olachat-feedback-negative'>
+          <span className='emoji-thumbs-down' />
+        </button>
       </div>
     )
   }
@@ -63,5 +64,5 @@ module.exports = connect(null, {
   setFeedbackMessage,
   setFeedbackRating,
   logFeedback,
-  updateQueryTerm: updateBotQueryTerm,
+  updateQueryTerm: updateBotQueryTerm
 })(MessageFeedback)

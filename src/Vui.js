@@ -3,7 +3,7 @@ import Header from './Header'
 import Voice from './Voice'
 import { connect } from 'react-redux'
 import { addMessage, updateBotQueryTerm } from './actions'
-import { Actions, Settings } from '@olasearch/core'
+import { Settings } from '@olasearch/core'
 import { createHTMLMarkup } from './utils'
 
 const supportsVoice =
@@ -12,7 +12,7 @@ const supportsVoice =
   navigator.mozGetUserMedia
 
 class Vui extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       text: '',
@@ -93,7 +93,7 @@ class Vui extends React.Component {
       scrollDirection: null
     })
   }
-  render() {
+  render () {
     let { messages } = this.props
     let { scrollDirection, text } = this.state
     let voiceContainerClass = scrollDirection
@@ -106,7 +106,7 @@ class Vui extends React.Component {
     }
     let msgs = messages.filter(msg => !msg.userId)
     return (
-      <div className="olachat-vui">
+      <div className='olachat-vui'>
         <Header onHide={this.props.onHide} title={this.props.title} />
         {supportsVoice ? (
           <Voice
@@ -127,13 +127,13 @@ class Vui extends React.Component {
             return (
               <div
                 key={idx}
-                className="olachat-vui-reply"
+                className='olachat-vui-reply'
                 dangerouslySetInnerHTML={createHTMLMarkup(text)}
               />
             )
           })}
         <span
-          className="olachat-vui-message"
+          className='olachat-vui-message'
           dangerouslySetInnerHTML={createHTMLMarkup(text)}
         />
       </div>
@@ -141,7 +141,7 @@ class Vui extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
     messages: state.Conversation.messages,
     isTyping: state.Conversation.isTyping

@@ -17,7 +17,7 @@ var TARGET_SAMPLE_RATE = 16000
  * @param {Object} options
  * @constructor
  */
-function WebAudioL16Stream(options) {
+function WebAudioL16Stream (options) {
   options = this.options = defaults(options, {
     sourceSampleRate: 48000,
     downsample: true
@@ -36,7 +36,7 @@ function WebAudioL16Stream(options) {
 }
 util.inherits(WebAudioL16Stream, Transform)
 
-WebAudioL16Stream.prototype.emitFormat = function emitFormat() {
+WebAudioL16Stream.prototype.emitFormat = function emitFormat () {
   this.emit('format', {
     channels: 1,
     bitDepth: 16,
@@ -61,7 +61,7 @@ WebAudioL16Stream.prototype.emitFormat = function emitFormat() {
  * @param  {AudioBuffer} bufferNewSamples Microphone/MediaElement audio chunk
  * @return {Float32Array} 'audio/l16' chunk
  */
-WebAudioL16Stream.prototype.downsample = function downsample(bufferNewSamples) {
+WebAudioL16Stream.prototype.downsample = function downsample (bufferNewSamples) {
   var buffer = null
   var newSamples = bufferNewSamples.length
   var unusedSamples = this.bufferUnusedSamples.length
@@ -150,7 +150,7 @@ WebAudioL16Stream.prototype.downsample = function downsample(bufferNewSamples) {
  * @param {Float32Array} input
  * @return {Buffer}
  */
-WebAudioL16Stream.prototype.floatTo16BitPCM = function(input) {
+WebAudioL16Stream.prototype.floatTo16BitPCM = function (input) {
   var output = new DataView(new ArrayBuffer(input.length * 2)) // length is in bytes (8-bit), so *2 to get 16-bit length
   for (var i = 0; i < input.length; i++) {
     var multiplier = input[i] < 0 ? 0x8000 : 0x7fff // 16-bit signed range is -32768 to 32767
@@ -165,7 +165,7 @@ WebAudioL16Stream.prototype.floatTo16BitPCM = function(input) {
  * @param {String} encoding
  * @param {Function} next
  */
-WebAudioL16Stream.prototype.handleFirstAudioBuffer = function handleFirstAudioBuffer(
+WebAudioL16Stream.prototype.handleFirstAudioBuffer = function handleFirstAudioBuffer (
   audioBuffer,
   encoding,
   next
@@ -183,7 +183,7 @@ WebAudioL16Stream.prototype.handleFirstAudioBuffer = function handleFirstAudioBu
  * @param {String} encoding
  * @param {Function} next
  */
-WebAudioL16Stream.prototype.transformAudioBuffer = function(
+WebAudioL16Stream.prototype.transformAudioBuffer = function (
   audioBuffer,
   encoding,
   next
@@ -203,7 +203,7 @@ WebAudioL16Stream.prototype.transformAudioBuffer = function(
  * @param {String} encoding
  * @param {Function} next
  */
-WebAudioL16Stream.prototype.transformBuffer = function(
+WebAudioL16Stream.prototype.transformBuffer = function (
   nodebuffer,
   encoding,
   next

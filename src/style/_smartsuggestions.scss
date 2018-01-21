@@ -1,7 +1,8 @@
 .olachat-smartsuggestions {
   font-size: 14px;
   background-color: transparent;
-  animation: 0.4s ease-in-out 0s 1 slideUp;
+  animation: 0.3s ease-in-out 0s 1 slideUp;
+  // box-shadow: 0 -2px 3px 1px rgba(0,0,0,.1);
 
   @include media (tablet) {
     display: flex;
@@ -18,7 +19,7 @@
 }
 
 .olachat-smartsuggestions-button {
-  border-radius: 30px;
+  border-radius: 6px;
   border: 1px $blue solid;
   color: $blue;
   background-color: transparent;

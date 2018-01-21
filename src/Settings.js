@@ -8,6 +8,7 @@ export const FEEDBACK_INTENT = 'OLA.FeedbackIntent'
 export const HELP_INTENT = 'OLA.HelpIntent'
 export const PROFANITY_INTENT = 'OLA.ProfanityIntent'
 export const UNFILFILLED_INTENT = 'OLA.UnfulfilledIntent'
+export const WELCOME_INTENT = 'OLA.WelcomeIntent'
 export const NONE_INTENT = 'OLA.NoneIntent'
 export const OLACHAT_IFRAME_ID = 'olachat-iframe'
 export const OLACHAT_MESSAGE_ELEMENT = '.olachat-message-reply'
@@ -17,5 +18,8 @@ export const IGNORE_FEEDBACK_INTENTS = [
   HELP_INTENT,
   PROFANITY_INTENT,
   UNFILFILLED_INTENT,
+  WELCOME_INTENT,
+  DISAMBIGUATION_INTENT_NAME,
   NONE_INTENT
 ]
+export const EMPTY_ARRAY = []

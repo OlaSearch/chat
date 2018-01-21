@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { disabledFeedback, logFeedback } from './actions'
 
 class InputFeedback extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       message: '',
@@ -37,21 +37,21 @@ class InputFeedback extends React.Component {
   registerRef = el => {
     this.Input = el
   }
-  render() {
+  render () {
     let { submitted } = this.state
     return (
       <form
-        className="olachat-footer olachat-footer-feedback"
+        className='olachat-footer olachat-footer-feedback'
         onSubmit={this.onFormSubmit}
       >
-        <div className="olachat-input">
+        <div className='olachat-input'>
           {submitted ? (
-            <span className="olachat-feedback-thankyou">
+            <span className='olachat-feedback-thankyou'>
               Thank you for your feedback
             </span>
           ) : (
             <Textarea
-              placeholder="Enter your feedback"
+              placeholder='Enter your feedback'
               onChange={this.onChange}
               value={this.state.message}
               rows={1}
@@ -62,13 +62,13 @@ class InputFeedback extends React.Component {
           )}
         </div>
         {submitted ? null : (
-          <button className="olachat-submit">
+          <button className='olachat-submit'>
             <span>Send</span>
           </button>
         )}
         <button
-          className="olachat-button-cancel"
-          type="button"
+          className='olachat-button-cancel'
+          type='button'
           onClick={this.cancelFeedback}
         >
           <span>{submitted ? 'Continue' : 'Cancel'}</span>

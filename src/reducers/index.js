@@ -1,23 +1,28 @@
 import types from './../ActionTypes'
-import { ActionTypes } from '@olasearch/core'
+import { EMPTY_ARRAY } from './../Settings'
+import { ActionTypes, utilities } from '@olasearch/core'
 
 const initialState = {
   q: '',
-  messages: [],
+  messages: EMPTY_ARRAY,
   isTyping: false,
   language: 'en',
   shouldPoll: false,
   feedbackActive: false,
   feedbackMessageId: null,
   feedbackRating: null,
+  isLoading: false,
   /* Flag to indicate if bot is currently active */
   isBotActive: false,
+
+  /* Track the latest message: Used to scroll to the new message */
+  newMessageId: null,
 
   /* For Search */
   perPage: 3 /* Per page is managed in Conversation state: As it can conflict with QueryState (Search) */,
   page: 1,
   totalResults: 0,
-  // facet_query: [],
+  facet_query: EMPTY_ARRAY,
 }
 
 const createMessageObj = ({ answer, results, mc }) => {
@@ -25,7 +30,17 @@ const createMessageObj = ({ answer, results, mc }) => {
     ...answer,
     mc,
     awaitingUserInput: answer.awaiting_user_input,
-    results
+    results,
+    showSearch: false
+  }
+}
+
+const createTypingMsg = (msgId) => {
+  return {
+    id: utilities.uuid(),
+    msgId,
+    isTyping: true,
+    quick_replies: EMPTY_ARRAY
   }
 }
 
@@ -34,22 +49,41 @@ export default (state = initialState, action) => {
     case types.REQUEST_ADD_MESSAGE:
       return {
         ...state,
+        newMessageId: action.message.id,
         messages: [...state.messages, action.message]
       }
+    
+    case types.REQUEST_BOT:
+      return {
+        ...state,
+        isLoading: true,
+      }
 
-    case ActionTypes.REQUEST_SEARCH_SUCCESS:
+    case types.REQUEST_BOT_SUCCESS:
       /* If its not from Bot: Do NOTHING */
-      if (!action.answer || !action.payload.bot || action.answer.error) return state
-      let { answer, results, payload, mc } = action
+      // if (!action.answer || action.answer.error) {
+      //   return state
+      // }
+      let { answer = {}, results, payload, mc } = action
 
-      /* Check if the answer is empty */
-      if (answer.empty) return state
-
-      if (payload.appendResult) {
+      /**
+       * Searching inside the bot
+       */
+      if (payload.appendResult && payload.bot) {
         return {
           ...state,
+          isLoading: false,
           messages: state.messages.map((item, idx) => {
             if (item.id === answer.in_response_to) {
+              return {
+                ...item,
+                results: [...item.results, ...results]
+              }
+            }
+            /**
+             * Pure search, no Intent engine
+             */
+            if (item.msgId && !answer.in_response_to && item.id === payload.msgId) {
               return {
                 ...item,
                 results: [...item.results, ...results]
@@ -60,29 +94,43 @@ export default (state = initialState, action) => {
         }
       }
 
-      let { reply, in_response_to, message } = answer
-      let messages = []
-      if (Array.isArray(reply)) {
-        for (let i = 0; i < reply.length; i++) {
-          let msg = { ...answer, mc, reply: reply[i], id: answer.id + '_' + i }
-          messages.push(createMessageObj({ answer: msg }))
-        }
-      } else {
-        messages.push(createMessageObj({ answer, results, mc }))
-      }
+      /* Check if the answer is empty */
+      if (answer && (answer.empty || answer.error)) return state
 
-      /**
-       * Update older messages
-       */
-      let original_messages = state.messages.map(item => {
-        if (item.id === in_response_to) {
-          item['message'] = message
-        }
-        return item
-      })
+      let { in_response_to, message } = answer
+      let msg = createMessageObj({ answer, results, mc })
       return {
         ...state,
-        messages: [...original_messages, ...messages],
+        isLoading: false,
+        newMessageId: msg.id,
+        messages: state.messages.map(item => {
+          /**
+           * Replace the message text after profanity check from Intent engine
+           */
+          if (item.id === in_response_to) {
+            return {
+              ...item,
+              message
+            }
+          }
+          /**
+           * Pure search, no Intent engine
+           */
+          if (item.msgId && item.isTyping && !in_response_to) {
+            return {
+              ...item,
+              ...msg,
+              isTyping: false,
+            }
+          }
+          /**
+           * Replace typing message with new message from Intent Engne
+           */
+          if (item.msgId && msg.in_response_to === item.msgId) {
+            return msg
+          }
+          return item
+        }),
         totalResults: action.totalResults
       }
 
@@ -91,7 +139,7 @@ export default (state = initialState, action) => {
         ...state,
         messages: []
       }
-    
+
     case types.CHANGE_BOT_PER_PAGE:
       return {
         ...state,
@@ -102,7 +150,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         messages: state.messages.map(item => {
-          if (item.id === action.payload.id) {
+          if (item.id === action.payload.messageId) {
             return {
               ...item,
               mc: action.mc
@@ -113,8 +161,11 @@ export default (state = initialState, action) => {
       }
 
     case types.SHOW_TYPING_INDICATOR:
+      let typingMsg = createTypingMsg(action.msgId)
       return {
         ...state,
+        newMessageId: typingMsg.id,
+        messages: [...state.messages, typingMsg],
         isTyping: true
       }
 
@@ -159,31 +210,50 @@ export default (state = initialState, action) => {
         ...state,
         isBotActive: action.status
       }
-    
+
     case types.UPDATE_BOT_QUERY_TERM:
       return {
         ...state,
         q: action.term,
         page: 1
       }
-    
+
     case types.CLEAR_BOT_QUERY_TERM:
       return {
         ...state,
         q: '',
         page: 1
       }
-    
+
     case types.CHANGE_BOT_PAGE:
       return {
         ...state,
         page: action.page
       }
-    
+
     case ActionTypes.OLA_REHYDRATE:
       return {
         ...state,
-        messages: action.botState ? action.botState.messages : []
+        messages: action.botState
+          ? action.botState.messages.map(item => ({
+            ...item,
+            showSearch: false
+          }))
+          : []
+      }
+
+    case types.TOGGLE_SEARCH_VISIBILITY:
+      return {
+        ...state,
+        messages: state.messages.map(msg => {
+          if (msg.id === action.messageId) {
+            return {
+              ...msg,
+              showSearch: !msg.showSearch
+            }
+          }
+          return msg
+        })
       }
 
     default:

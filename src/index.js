@@ -10,6 +10,7 @@ import ChatReducer from './reducers'
 import Avatar from './Avatar'
 import * as ChatActions from './actions'
 import persistMiddleware from './middleware/persistMiddleware'
+import notificationMiddleware from './middleware/notificationMiddleware'
 import version from './Version'
 import { EMOJI_LIST } from './Settings'
 import { createMessageMarkup } from './utils'
@@ -29,5 +30,6 @@ export {
   version,
   EMOJI_LIST,
   persistMiddleware,
+  notificationMiddleware,
   createMessageMarkup
 }

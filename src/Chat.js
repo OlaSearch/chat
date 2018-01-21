@@ -5,9 +5,6 @@ import Messages from './Messages'
 import { connect } from 'react-redux'
 import {
   addMessage,
-  disabledFeedback,
-  clearMessages,
-  setBotStatus,
   updateBotQueryTerm
 } from './actions'
 import { Actions, Decorators } from '@olasearch/core'
@@ -19,7 +16,7 @@ class Chat extends React.Component {
     title: 'Ola Bot',
     onLoad: () => new Promise((resolve, reject) => resolve())
   }
-  componentDidMount() {
+  componentDidMount () {
     /**
      * Check if the user has any messages
      */
@@ -27,18 +24,11 @@ class Chat extends React.Component {
       this.props.addMessage({ intent: this.props.initialIntent, start: true })
     }
   }
-  componentWillUnmount() {
-    // this.props.clearMessages()
-    // this.props.setBotStatus(false)
-  }
   addMessage = args => {
-    /* Scroll to Top */
-    this.MessageContainer.scrollToView()
-
     /* Add message */
     return this.props.addMessage(args).then(reply => {
       /* Scroll to Top after bot replies */
-      this.MessageContainer.scrollToView()
+      // this.MessageContainer.scrollToView()
 
       return reply
     })
@@ -46,15 +36,13 @@ class Chat extends React.Component {
   registerRef = el => {
     this.MessageContainer = el
   }
-  render() {
-    let { feedbackActive } = this.props
+  render () {
     return (
-      <div className="olachat">
+      <div className='olachat'>
         <Header onHide={this.props.onHide} title={this.props.title} />
         <Messages
           messages={this.props.messages}
           flipped={this.props.flipped}
-          isTyping={this.props.isTyping}
           ref={this.registerRef}
           onLoad={this.props.onLoad}
           avatarBot={this.props.avatarBot}
@@ -62,11 +50,11 @@ class Chat extends React.Component {
           addMessage={this.addMessage}
           botName={this.props.botName}
           userName={this.props.userName}
-          feedbackActive={feedbackActive}
-          dismissModal={this.props.disabledFeedback}
           log={this.props.log}
           setBotStatus={this.props.setBotStatus}
           updateQueryTerm={this.props.updateQueryTerm}
+          location={this.props.location}
+          newMessageId={this.props.newMessageId}
         />
         <QuickReplies onSubmit={this.addMessage} />
         <Input
@@ -80,27 +68,25 @@ class Chat extends React.Component {
           onRequestClose={this.props.onRequestClose}
           messages={this.props.messages}
           voiceInput={this.props.voiceInput}
+          location={this.props.location}
         />
       </div>
     )
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
     messages: state.Conversation.messages,
-    feedbackActive: state.Conversation.feedbackActive,
+    newMessageId: state.Conversation.newMessageId,
     isTyping: state.Conversation.isTyping,
     isPhone: state.Device.isPhone,
+    location: state.Context.location,
     searchInput: state.QueryState.searchInput
   }
 }
 
 export default connect(mapStateToProps, {
   addMessage,
-  clearMessages,
-  setBotStatus,
   updateQueryTerm: updateBotQueryTerm,
-  addContextField: Actions.Context.addContextField,
-  disabledFeedback,
 })(Decorators.withLogger(Chat))

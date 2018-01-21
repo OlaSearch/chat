@@ -21,7 +21,7 @@ const adapter = ({ emitter }) => {
   recog.addEventListener('onnomatch', handleEvent)
   recog.addEventListener('onspeechend', handleEvent)
 
-  function handleEvent(event) {
+  function handleEvent (event) {
     switch (event && event.type) {
       case 'result':
         window.requestAnimationFrame(() => {
@@ -45,23 +45,23 @@ const adapter = ({ emitter }) => {
   }
 
   return {
-    start() {
+    start () {
       if (window.OlaAudio) {
         window.OlaAudio.pause()
       }
       recog.start()
       emitter.emit('onStart')
     },
-    stop() {
+    stop () {
       if (recog) {
         recog.stop()
         emitter.emit('onStop')
       }
     },
-    prefetchToken() {
+    prefetchToken () {
       // this.getTtsToken().then(token => (this._ttsToken = token))
     },
-    getTtsToken() {
+    getTtsToken () {
       /* Cache tts token */
       if (this._ttsToken) {
         return new Promise((resolve, reject) => {
@@ -72,7 +72,7 @@ const adapter = ({ emitter }) => {
       //   url: ttsTokenUrl
       // })
     },
-    stopSpeaking() {
+    stopSpeaking () {
       if (window.OlaAudio) {
         window.OlaAudio.pause()
       }
@@ -81,7 +81,7 @@ const adapter = ({ emitter }) => {
         window.speechSynthesis.pause()
       }
     },
-    speak(text, isPhone = false, callback) {
+    speak (text, isPhone = false, callback) {
       if (isPhone) {
         if (!window.speechSynthesis) return
         var utterance = new SpeechSynthesisUtterance()

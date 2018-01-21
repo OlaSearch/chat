@@ -2,7 +2,7 @@ import React from 'react'
 import Voice from './../Voice'
 
 export default class SearchInput extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       text: ''
@@ -27,11 +27,11 @@ export default class SearchInput extends React.Component {
   onVoiceFinal = (text, cb, params) => {
     this.props.onSubmit(text, cb)
   }
-  render() {
+  render () {
     return (
       <form onSubmit={this.handleSubmit}>
-        <div className="olachat-input">
-          <div className="olachat-input-voice">
+        <div className='olachat-input'>
+          <div className='olachat-input-voice'>
             <Voice
               onResult={this.onVoiceChange}
               onFinalResult={this.onVoiceFinal}
@@ -39,12 +39,12 @@ export default class SearchInput extends React.Component {
             />
           </div>
           <input
-            type="text"
-            placeholder="Search"
+            type='text'
+            placeholder='Search'
             onChange={this.handleChange}
             value={this.state.text}
           />
-          <button type="submit" className="olachat-submit" />
+          <button type='submit' className='olachat-submit' />
         </div>
       </form>
     )

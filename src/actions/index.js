@@ -1,6 +1,6 @@
 import types from './../ActionTypes'
 import { checkIfAwaitingResponse } from './../utils'
-import { ActionTypes, utilities, Actions } from '@olasearch/core'
+import { utilities, Actions } from '@olasearch/core'
 
 /* Query sanitization */
 const { sanitizeText, uuid } = utilities
@@ -27,10 +27,10 @@ export function changePage (page) {
   }
 }
 
-export function addMessage(payload) {
+export function addMessage (payload, addCallback) {
   return (dispatch, getState) => {
     var state = getState()
-    var { messages, language, perPage, q, page } = state.Conversation
+    var { messages, language, perPage, q, page, facet_query } = state.Conversation
     var context = state.Context
     var intent = payload && payload.intent ? { intent: payload.intent } : {}
     var msgId = uuid()
@@ -40,10 +40,10 @@ export function addMessage(payload) {
 
     /* Add more params to query */
     const query = {
-      ...state.QueryState,
       q,
       page,
       per_page: perPage,
+      facet_query,
       msgId,
       language,
       in_response_to,
@@ -51,6 +51,8 @@ export function addMessage(payload) {
     }
 
     const { projectId, env = 'staging', searchInput } = query
+    const api = 'search'
+    const timestamp = new Date().getTime() / 1000
 
     /* Add this to ui */
     if (query.q) {
@@ -60,15 +62,17 @@ export function addMessage(payload) {
           id: msgId,
           userId: context.userId,
           message: query.q,
-          timestamp: state.Timestamp.timestamp,
+          timestamp,
           in_response_to
         }
       })
-    }    
+
+      addCallback && addCallback(msgId)
+    }
 
     /* Simulate delay - Show typing indicator */
     setTimeout(
-      () => dispatch(showTypingIndicator()),
+      () => dispatch(showTypingIndicator({ msgId })),
       payload && payload.start ? 0 : CHAT_DELAY
     )
 
@@ -77,13 +81,13 @@ export function addMessage(payload) {
       setTimeout(() => {
         return dispatch({
           types: [
-            ActionTypes.REQUEST_SEARCH,
-            ActionTypes.REQUEST_SEARCH_SUCCESS,
-            ActionTypes.REQUEST_SEARCH_FAILURE
+            types.REQUEST_BOT,
+            types.REQUEST_BOT_SUCCESS,
+            types.REQUEST_BOT_FAILURE
           ],
           query,
           context,
-          api: 'search',
+          api,
           payload: {
             ...payload,
             bot: true
@@ -97,8 +101,9 @@ export function addMessage(payload) {
             /* Remove intent */
             if (payload && 'intent' in payload) {
               delete payload['intent'] /* Remove intent */
-              if ('start' in payload)
-                delete payload['start'] /* Remove start flag */
+              if ('start' in payload) {
+                delete payload['start']
+              } /* Remove start flag */
             }
             /* Clear previous query */
             dispatch(clearBotQueryTerm())
@@ -125,7 +130,7 @@ export function addMessage(payload) {
  * Load more results
  * Only used on chat interface
  */
-export function loadMore(message) {
+export function loadMore (message) {
   return (dispatch, getState) => {
     /**
      * message.search is from Intent engine. If Intent engine is down, fallback to message.message
@@ -135,64 +140,77 @@ export function loadMore(message) {
     let facet_query = []
     let searchAdapterOptions = {}
     if (message.search) {
-      q = message.search.q,
-      facet_query = message.search.facet_query
+      q = message.search.q
+      facet_query = message.search.facet_query || []
       searchAdapterOptions = message.search.searchAdapterOptions
     } else {
       q = message.message
     }
 
     /* Current page in the message */
-    var currentState = getState()
-    var { perPage, page } = currentState.Conversation
+    var state = getState()
+    var context = state.Context
+    var { perPage, page } = state.Conversation
+
+    /* Update page */
     dispatch(changePage(++page))
+
+    let query = {
+      q,
+      per_page: perPage,
+      page,
+      facet_query,
+      msgId: message.id,
+      searchAdapterOptions
+    }
+    
     /* Execute a search with appendResult: true */
-    /* Signature : executeSearch(payload) */
-    dispatch(
-      Actions.Search.executeSearch({
+    return dispatch({
+      types: [
+        types.REQUEST_BOT,
+        types.REQUEST_BOT_SUCCESS,
+        types.REQUEST_BOT_FAILURE
+      ],
+      query,
+      context,
+      api: 'search',
+      payload: {
+        bot: true,
         routeChange: false,
         appendResult: true,
-        bot: true,
-        extraParams: {
-          /* Additional params */
-          q,
-          per_page: perPage,
-          page,
-          facet_query,
-          msgId: message.id,
-          searchAdapterOptions,
-        }
-      })
-    )
+        msgId: message.id
+      }
+    })
   }
 }
 
-export function showTypingIndicator() {
+export function showTypingIndicator ({ msgId }) {
   return {
-    type: types.SHOW_TYPING_INDICATOR
+    type: types.SHOW_TYPING_INDICATOR,
+    msgId
   }
 }
 
-export function hideTypingIndicator() {
+export function hideTypingIndicator () {
   return {
     type: types.HIDE_TYPING_INDICATOR
   }
 }
 
-export function clearMessages() {
+export function clearMessages () {
   return {
     type: types.CLEAR_MESSAGES
   }
 }
 
-export function changeLanguage(language) {
+export function changeLanguage (language) {
   return {
     type: types.CHANGE_LANGUAGE,
     language
   }
 }
 
-export function pollWhenIdle() {
+export function pollWhenIdle () {
   return (dispatch, getState) => {
     let { shouldPoll } = getState().Conversation
     if (!shouldRetry) return
@@ -200,33 +218,33 @@ export function pollWhenIdle() {
   }
 }
 
-export function activateFeedback() {
+export function activateFeedback () {
   return {
     type: types.FEEDBACK_SET_ACTIVE
   }
 }
 
-export function disabledFeedback() {
+export function disabledFeedback () {
   return {
     type: types.FEEDBACK_SET_DISABLE
   }
 }
 
-export function setFeedbackMessage(messageId) {
+export function setFeedbackMessage (messageId) {
   return {
     type: types.SET_FEEDBACK_MESSAGE_ID,
     messageId
   }
 }
 
-export function setFeedbackRating(rating) {
+export function setFeedbackRating (rating) {
   return {
     type: types.SET_FEEDBACK_RATING,
     rating
   }
 }
 
-export function logFeedback(feedbackMessage) {
+export function logFeedback (feedbackMessage) {
   /* eventMessage => feed */
   return (dispatch, getState) => {
     let { feedbackMessageId, feedbackRating } = getState().Conversation
@@ -248,9 +266,16 @@ export function logFeedback(feedbackMessage) {
   }
 }
 
-export function setBotStatus(status) {
+export function setBotStatus (status) {
   return {
     type: types.SET_BOT_STATUS,
     status
+  }
+}
+
+export function toggleSearchVisibility (messageId) {
+  return {
+    type: types.TOGGLE_SEARCH_VISIBILITY,
+    messageId
   }
 }
