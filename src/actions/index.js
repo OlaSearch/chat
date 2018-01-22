@@ -20,13 +20,6 @@ export function clearBotQueryTerm () {
   }
 }
 
-export function changePage (page) {
-  return {
-    type: types.CHANGE_BOT_PAGE,
-    page
-  }
-}
-
 export function addMessage (payload, addCallback) {
   return (dispatch, getState) => {
     var state = getState()
@@ -63,7 +56,9 @@ export function addMessage (payload, addCallback) {
           userId: context.userId,
           message: query.q,
           timestamp,
-          in_response_to
+          in_response_to,
+          quick_replies: [],
+          slots: []
         }
       })
 
@@ -150,10 +145,11 @@ export function loadMore (message) {
     /* Current page in the message */
     var state = getState()
     var context = state.Context
-    var { perPage, page } = state.Conversation
+    var { page } = message
+    var { perPage } = state.Conversation
 
     /* Update page */
-    dispatch(changePage(++page))
+    page = page + 1
 
     let query = {
       q,
@@ -178,7 +174,8 @@ export function loadMore (message) {
         bot: true,
         routeChange: false,
         appendResult: true,
-        msgId: message.id
+        msgId: message.id,
+        page
       }
     })
   }

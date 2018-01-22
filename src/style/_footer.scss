@@ -33,8 +33,9 @@ $gutter: 15px;
       background: transparent;
       width: 100%;
       border: none;
-      padding: $gutter $gutter $gutter 0;
-      font-size: 16px;
+      // padding: $gutter $gutter $gutter 0;
+      padding: 16px 1rem 1rem 0;
+      font-size: 1rem;
 
       @include media (desktop) {
         font-size: 14px;

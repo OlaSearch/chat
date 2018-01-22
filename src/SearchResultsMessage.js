@@ -26,21 +26,9 @@ class SearchResultsMessage extends React.Component {
       results,
       bookmarks,
       isLoading,
-      isLoadingMc
     } = this.props
     let { search, mc, showSearch } = message
     const maxResults = isPhone ? MAX_RESULTS_MOBILE : MAX_RESULTS_DESKTOP
-
-    /* Fallback (search: null) from intent engine */
-    if (!search) search = {}
-
-    /* No search text, */
-    // if (
-    //   (mc && mc.answer && mc.answer.confidence > 0.2) ||
-    //   (isLoadingMc && isActive)
-    // ) {
-    //   return null
-    // }
 
     /* When showing CURRRENT message, do not stack */
     const isStacked = isActive ? false : !showSearch
@@ -90,16 +78,12 @@ class SearchResultsMessage extends React.Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps (state, ownProps) {
   return {
     bookmarks: state.AppState.bookmarks,
-    isLoadingMc: state.AppState.isLoadingMc,
-    isLoading: state.Conversation.isLoading,
-    totalResults: state.Conversation.totalResults,
-    QueryState: state.QueryState,
     isPhone: state.Device.isPhone,
     perPage: state.Conversation.perPage,
-    page: state.Conversation.page
+    isLoading: ownProps.isActive ? state.Conversation.isLoading : false,
   }
 }
 

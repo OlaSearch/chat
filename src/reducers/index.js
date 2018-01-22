@@ -21,17 +21,18 @@ const initialState = {
   /* For Search */
   perPage: 3 /* Per page is managed in Conversation state: As it can conflict with QueryState (Search) */,
   page: 1,
-  totalResults: 0,
   facet_query: EMPTY_ARRAY,
 }
 
-const createMessageObj = ({ answer, results, mc }) => {
+const createMessageObj = ({ answer, results, mc, totalResults, page = 1 }) => {
   return {
     ...answer,
     mc,
     awaitingUserInput: answer.awaiting_user_input,
     results,
-    showSearch: false
+    showSearch: false,
+    totalResults,
+    page
   }
 }
 
@@ -64,7 +65,7 @@ export default (state = initialState, action) => {
       // if (!action.answer || action.answer.error) {
       //   return state
       // }
-      let { answer = {}, results, payload, mc } = action
+      let { answer = {}, results, payload, mc, totalResults, page } = action
 
       /**
        * Searching inside the bot
@@ -77,7 +78,8 @@ export default (state = initialState, action) => {
             if (item.id === answer.in_response_to) {
               return {
                 ...item,
-                results: [...item.results, ...results]
+                results: [...item.results, ...results],
+                page: payload.page
               }
             }
             /**
@@ -86,7 +88,8 @@ export default (state = initialState, action) => {
             if (item.msgId && !answer.in_response_to && item.id === payload.msgId) {
               return {
                 ...item,
-                results: [...item.results, ...results]
+                results: [...item.results, ...results],
+                page: payload.page
               }
             }
             return item
@@ -98,7 +101,7 @@ export default (state = initialState, action) => {
       if (answer && (answer.empty || answer.error)) return state
 
       let { in_response_to, message } = answer
-      let msg = createMessageObj({ answer, results, mc })
+      let msg = createMessageObj({ answer, results, mc, totalResults, page })
       return {
         ...state,
         isLoading: false,
@@ -130,8 +133,7 @@ export default (state = initialState, action) => {
             return msg
           }
           return item
-        }),
-        totalResults: action.totalResults
+        })
       }
 
     case types.CLEAR_MESSAGES:
@@ -223,12 +225,6 @@ export default (state = initialState, action) => {
         ...state,
         q: '',
         page: 1
-      }
-
-    case types.CHANGE_BOT_PAGE:
-      return {
-        ...state,
-        page: action.page
       }
 
     case ActionTypes.OLA_REHYDRATE:

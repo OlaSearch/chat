@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Bot from './Bot'
 import Frame from 'react-frame-component'
 import { connect } from 'react-redux'
@@ -15,11 +16,13 @@ class BotFrame extends React.Component {
     this.addedMessageClickEvent = false
   }
   static defaultProps = {
-    width: 320,
-    widthMobile: 100,
+    width: 300,
+    widthMobile: 80,
+    showBubbleLabel: true,
     widthActive: 880,
-    height: 85,
+    height: 80,
     heightActive: '100%',
+    /* Flag to add the chatbot as an inline element */
     inline: false,
     zIndex: 99999999,
     iframeStyle: {
@@ -29,6 +32,9 @@ class BotFrame extends React.Component {
     activeStyle: {},
     initialContent:
       '<!DOCTYPE html><html><head><base target="_parent"></head><body class="olachat-body"><div class="frame-root"></div></body></html>'
+  }
+  static propTypes = {
+    showBubbleLabel: PropTypes.bool
   }
   componentDidMount () {
     /* Check if bot is active */
@@ -59,11 +65,6 @@ class BotFrame extends React.Component {
       )
     }
   }
-  componentWillUnmount () {
-    /* Remove style: DONOT REMOVE STYLE as it may be used by Ola Search */
-    // var styleEl = document.getElementById('ola-styles')
-    // if (styleEl) styleEl.parentNode.removeChild(styleEl)
-  }
   render () {
     let { isBotActive } = this.props
     let {
@@ -76,8 +77,12 @@ class BotFrame extends React.Component {
       inline,
       zIndex,
       isDesktop,
-      activeStyle
+      activeStyle,
+      showBubbleLabel,
     } = this.props
+    /* On mobile and tablet, hide bubble label */
+    showBubbleLabel = this.props.isDesktop ? showBubbleLabel : false
+
     let frameStyles = {
       ...iframeStyle,
       ...(isBotActive
@@ -93,13 +98,15 @@ class BotFrame extends React.Component {
         }
         : {
           ...(inline
-            ? {}
+            ? {
+              height: 80,
+            }
             : {
-              bottom: isDesktop ? 5 : 0,
+              bottom: 10,
               top: 'auto',
-              right: 0,
+              right: 10,
               left: 'auto',
-              width: isDesktop ? width : widthMobile,
+              width: showBubbleLabel ? width : widthMobile,
               height,
               zIndex,
               position: 'fixed'
@@ -114,7 +121,11 @@ class BotFrame extends React.Component {
         initialContent={this.props.initialContent}
         title='Ola Chat'
       >
-        <Bot {...this.props} iFrame />
+        <Bot
+          {...this.props}
+          showBubbleLabel={showBubbleLabel}
+          iFrame
+        />
       </Frame>
     )
   }

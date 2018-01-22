@@ -43,6 +43,8 @@ class Message extends React.Component {
       intent,
       mc, /* Machine comprehension */
       search, /* Search results */
+      totalResults, /* Total search results */
+      page, /* Current page */
     } = message
     let isBot = !userId
     let text = isBot ? message.reply : message.message
@@ -117,6 +119,8 @@ class Message extends React.Component {
                       botName={botName}
                       message={message}
                       isActive={isActive}
+                      page={page}
+                      totalResults={totalResults}
                     />
                   : null
               }

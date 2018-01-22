@@ -6,45 +6,32 @@ $bubble-icon-size: 34px;
   text-align: left;
   position: relative;
   width: 60px;
-  margin-top: 10px;
+  /* For shadow */
   background: $blue;
   color: white;
-  // padding: 0em $bubble-size+ $bubble-icon-size 0em $bubble-size;
   border-radius: $bubble-size;
+  padding: 0 $bubble-size 0 $bubble-size;
   text-align: center;
   min-height: $bubble-size * 2;
   box-shadow: $sharp-box-shadow;
   cursor: pointer;
-  margin-left: 20px;
+  
+  margin: 10px;
 
   &:hover, &:active, &:focus {
     background: darken($blue, 10%);
   }
+}
 
-  .olachat-bot-tablet &, .olachat-bot-desktop & {
-    width: 280px;
-    text-align: left;
-    padding: 0 $bubble-size 0 $bubble-size;
-  }
-
-  .ola-icon {
-    vertical-align: middle;
-    display: inline-block;
-
-    .olachat-bot-tablet &, .olachat-bot-desktop & {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      margin-top: -15px;
-    }
-  }
+/* Inner */
+.olachat-bubble-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Bubble text */
 .olachat-bubble-text {
-  display: none;
-
-  .olachat-bot-tablet &, .olachat-bot-desktop & {
-    display: inline;
-  }
+  flex: 1;
+  text-align: left;
 }

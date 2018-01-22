@@ -56,7 +56,9 @@ class Chat extends React.Component {
           location={this.props.location}
           newMessageId={this.props.newMessageId}
         />
-        <QuickReplies onSubmit={this.addMessage} />
+        <QuickReplies
+          onSubmit={this.addMessage}
+        />
         <Input
           onSubmit={this.addMessage}
           voiceAdapter={this.props.voiceAdapter}

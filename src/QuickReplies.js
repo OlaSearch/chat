@@ -4,10 +4,7 @@ import { updateBotQueryTerm } from './actions'
 import { Decorators } from '@olasearch/core'
 import { EMPTY_ARRAY } from './Settings'
 
-class QuickReplies extends React.Component {
-  shouldComponentUpdate (nextProps) {
-    return nextProps.quickReplies !== this.props.quickReplies 
-  }
+class QuickReplies extends React.PureComponent {
   handleClick = (label, intent) => {
     let args = {}
     if (intent) {

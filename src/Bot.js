@@ -81,6 +81,7 @@ class Bot extends Component {
     voiceInput: true,
     bubbleProps: {},
     onBubbleClick: null,
+    showBubbleLabel: true,
     botProps: {
       botName: 'Bot',
       userName: 'You'
@@ -134,7 +135,8 @@ class Bot extends Component {
       'olachat-bot-iframe': this.props.iFrame,
       'olachat-bot-mobile': this.props.isPhone,
       'olachat-bot-tablet': this.props.isTablet,
-      'olachat-bot-desktop': this.props.isDesktop
+      'olachat-bot-desktop': this.props.isDesktop,
+      'olachat-bot-inline': this.props.inline
     })
     return (
       <div className={botClass} style={{ opacity: 0 }}>
@@ -143,6 +145,7 @@ class Bot extends Component {
           <Bubble
             onClick={this.toggleActive}
             isActive={isBotActive}
+            showBubbleLabel={this.props.showBubbleLabel}
             {...this.props.bubbleProps}
           />
         ) : null}
