@@ -1,0 +1,72 @@
+.olachat-slots {
+  background-color: transparent;
+  // overflow: hidden;
+  // position: absolute;
+  // bottom: 100%;
+  // left: 0;
+  // right: 0;
+  overflow-x: auto;
+  display: flex;
+  padding-bottom: 0.5rem;
+}
+
+
+.olachat-slots-button {
+  background-color: white;
+  border: 1px $light-grey-color solid;
+  color: $link-color;
+  
+  padding: 0.7rem 1rem;
+  font-size: 14px;
+  // 
+  white-space: nowrap;
+
+  display: block;
+  width: 100%;
+  // margin-bottom: 1px; /* Border gets cut off because of overflow-x:auto in parent container */
+
+  margin-bottom: -1px;
+
+  &:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  @include media (tablet) {
+    border-radius: 5px;
+    padding: 0.6rem 1rem;
+    margin: 8px 8px 1px 0;
+    color: $base-color;
+    font-weight: 600;
+  }
+
+  @include media (tablet) {
+    width: auto;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    color: $base-color;
+    cursor: text;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.olachat-slots-list {
+  display: flex;
+  padding: 0 0 0 0;
+  flex: 1;
+  flex-wrap: wrap;
+
+  @include media (tablet) {
+    flex-wrap: nowrap;
+  }
+}

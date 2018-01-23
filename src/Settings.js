@@ -10,9 +10,10 @@ export const PROFANITY_INTENT = 'OLA.ProfanityIntent'
 export const UNFILFILLED_INTENT = 'OLA.UnfulfilledIntent'
 export const WELCOME_INTENT = 'OLA.WelcomeIntent'
 export const NONE_INTENT = 'OLA.NoneIntent'
+export const DISAMBIGUATION_INTENT_NAME = 'OLA.DisambiguateIntent'
 export const OLACHAT_IFRAME_ID = 'olachat-iframe'
 export const OLACHAT_MESSAGE_ELEMENT = '.olachat-message-reply'
-export const DISAMBIGUATION_INTENT_NAME = 'OLA.DisambiguateIntent'
+
 export const IGNORE_FEEDBACK_INTENTS = [
   FEEDBACK_INTENT,
   HELP_INTENT,

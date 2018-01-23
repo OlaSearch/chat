@@ -200,7 +200,7 @@ class Search extends Component {
                     <h3 className='ola-field-title'>
                       <a>{title}</a>
                     </h3>
-                    <p>{desc}</p>
+                    <p className='ola-field-summary'>{desc}</p>
                   </div>
                 </div>
               )

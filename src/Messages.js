@@ -6,8 +6,7 @@ import TypingIndicator from './TypingIndicator'
 import TransitionGroup from 'react-transition-group/TransitionGroup'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import Loader from '@olasearch/icons/lib/loader'
-import ReactList from 'react-list'
-import { scrollTo } from './utils'
+
 /**
  * Message interface
  * message = {
@@ -277,6 +276,7 @@ class Messages extends React.Component {
               <div
                 className='olachat-messages-list'
               >
+                
                 {messagesComponent}
               </div>
             </div>

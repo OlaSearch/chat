@@ -150,8 +150,7 @@
     margin-bottom: 0.5em;
   }
 
-  a, a:hover, a:focus {
-    color: $blue;
-    text-decoration: none;
+  p {
+    @extend .o-text-p;
   }
 }

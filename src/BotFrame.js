@@ -30,8 +30,15 @@ class BotFrame extends React.Component {
       maxWidth: '100%'
     },
     activeStyle: {},
-    initialContent:
-      '<!DOCTYPE html><html><head><base target="_parent"></head><body class="olachat-body"><div class="frame-root"></div></body></html>'
+    initialContent: `<!DOCTYPE html>
+      <html class='olachat-html'>
+        <head>
+          <base target='_parent'>
+        </head>
+        <body class='olachat-body'>
+          <div class='frame-root'></div>
+        </body>
+      </html>`
   }
   static propTypes = {
     showBubbleLabel: PropTypes.bool

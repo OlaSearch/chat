@@ -145,5 +145,6 @@
 
 /* Snippet text */
 .ola-snippet-text {
+  @extend .o-text-p;
   margin-bottom: 0.5rem;
 }
