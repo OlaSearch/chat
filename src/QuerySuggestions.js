@@ -4,34 +4,23 @@ import { Settings, utilities } from '@olasearch/core'
 
 const { RE_ESCAPE } = Settings
 const { createHTMLMarkup } = utilities
-class QuerySuggestions extends React.Component {
-  registerRef = el => {
-    this.el = el
-  }
-  componentDidMount () {
-    /* Add click listener */
-    // this.el.addEventListener('click', e => {
-    //   e.preventDefault()
-    // })
-  }
-  render () {
-    let { suggestions, onChange, activeIndex, queryTerm } = this.props
-    return (
-      <div className='olachat-query-suggestions' ref={this.registerRef}>
-        {suggestions.map((item, idx) => {
-          return (
-            <QuerySuggestionItem
-              key={idx}
-              onChange={onChange}
-              term={item.term}
-              isActive={idx === activeIndex}
-              queryTerm={queryTerm}
-            />
-          )
-        })}
-      </div>
-    )
-  }
+function QuerySuggestions (props) {
+  let { suggestions, onChange, activeIndex, queryTerm } = props
+  return (
+    <div className='olachat-query-suggestions'>
+      {suggestions.map((item, idx) => {
+        return (
+          <QuerySuggestionItem
+            key={idx}
+            onChange={onChange}
+            term={item.term}
+            isActive={idx === activeIndex}
+            queryTerm={queryTerm}
+          />
+        )
+      })}
+    </div>
+  )
 }
 
 function QuerySuggestionItem ({ queryTerm, term, onChange, isActive }) {

@@ -69,11 +69,11 @@ class Messages extends React.Component {
     // // directly - that will break hardware accelerated scrolling. We poll it
     // // with requestAnimationFrame instead.
     if (supportsPassive) {
-      // this.messagesEl.addEventListener('scroll', this.onScroll, {
-      //   passive: true
-      // })
+      this.messagesEl.addEventListener('scroll', this.onScroll, {
+        passive: true
+      })
     } else {
-      // this.rafRequestId = window.requestAnimationFrame(this.pollScroll)
+      this.rafRequestId = window.requestAnimationFrame(this.pollScroll)
     }
 
     this.isComponentMounted = true
@@ -99,12 +99,6 @@ class Messages extends React.Component {
       return this.props.addMessage()
     }
 
-    /**
-     * Final pass. Link has href and it goes to a new page
-     * Hide the bot
-     */
-    setTimeout(() => this.props.setBotStatus(false), 200)
-
     /* Log */
     if (isMessageLink) {
       this.props.log({
@@ -115,6 +109,12 @@ class Messages extends React.Component {
         payload: { bot: true }
       })
     }
+
+    /**
+     * Final pass. Link has href and it goes to a new page
+     * Hide the bot
+     */
+    setTimeout(() => this.props.setBotStatus(false), 200)    
   }
   componentWillUnmount () {
     this.isComponentMounted = false
@@ -199,11 +199,12 @@ class Messages extends React.Component {
       ? this.scrollHeight - this.messagesEl.scrollHeight
       : 0
     // if something was removed from list we need to include this difference in new scroll top
-    if (this.props.flipped && scrollHeightDifference > 0) {
-      newScrollTop += scrollHeightDifference
-    }
+    // if (this.props.flipped && scrollHeightDifference > 0) {
+    //   newScrollTop += scrollHeightDifference
+    // }
     if (newScrollTop !== this.messagesEl.scrollTop) {
-      this.messagesEl.scrollTop = newScrollTop
+      /* Not requried */
+      // this.messagesEl.scrollTop = newScrollTop
     }
     this.scrollTop = this.messagesEl.scrollTop
     this.scrollHeight = this.messagesEl.scrollHeight

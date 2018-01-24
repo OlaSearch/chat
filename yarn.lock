@@ -88,9 +88,9 @@
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@olasearch/react-onclickoutside/-/react-onclickoutside-1.0.0.tgz#2cac266a7fed4ec2d954393ef1b3147941484e7b"
 
-"@olasearch/textarea-elastic@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@olasearch/textarea-elastic/-/textarea-elastic-1.0.1.tgz#c2084f6a3cb1e3988873cc90ee0305bf78e3ee26"
+"@olasearch/textarea-elastic@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@olasearch/textarea-elastic/-/textarea-elastic-1.0.2.tgz#da55f9a7fcb185e5188ecd0afb3e8c4693156e74"
 
 "@sheerun/eslint-config-standard@^10.2.1":
   version "10.2.1"
@@ -130,11 +130,7 @@ acorn@^4.0.3:
   version "4.0.13"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.13.tgz#105495ae5361d697bd195c825192e1ad7f253787"
 
-acorn@^5.0.0, acorn@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.2.1.tgz#317ac7821826c22c702d66189ab8359675f135d7"
-
-acorn@^5.3.0:
+acorn@^5.0.0, acorn@^5.2.1, acorn@^5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.3.0.tgz#7446d39459c54fb49a80e6ee6478149b940ec822"
 
@@ -4563,13 +4559,9 @@ prettier-standard@^8.0.0:
     prettier-eslint "^8.1.1"
     rxjs "^5.4.0"
 
-prettier@1.9.x:
+prettier@1.9.x, prettier@^1.7.0:
   version "1.9.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.9.2.tgz#96bc2132f7a32338e6078aeb29727178c6335827"
-
-prettier@^1.7.0:
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.7.4.tgz#5e8624ae9363c80f95ec644584ecdf55d74f93fa"
 
 pretty-format@^21.2.1:
   version "21.2.1"

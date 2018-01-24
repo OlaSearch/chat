@@ -57,7 +57,7 @@ class SearchResultsMessage extends React.Component {
             bookmarks={bookmarks}
             dispatch={dispatch}
             openInNewWindow
-            baseUrl={search.baseUrl}
+            baseUrl={search && search.baseUrl}
           />
 
           {isActive ? (
