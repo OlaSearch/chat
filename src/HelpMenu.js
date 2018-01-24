@@ -15,7 +15,8 @@ class HelpMenu extends React.Component {
     }
   }
   static contextTypes = {
-    document: PropTypes.object
+    document: PropTypes.object,
+    window: PropTypes.object
   }
   handleClickOutside = event => {
     if (!this.state.isOpen) return
@@ -44,11 +45,11 @@ class HelpMenu extends React.Component {
     this.props.onSubmit()
   }
   handlePrint = () => {
-    let iFrame = document.getElementById(OLACHAT_IFRAME_ID)
-    if (!iFrame) return window.print()
-    let innerDoc = iFrame.contentWindow
-    innerDoc.focus()
-    innerDoc.print()
+    if (this.context.window) {
+      this.context.window.print()
+    } else {
+      window.print()
+    }
   }
   static defaultProps = {
     botLinks: []

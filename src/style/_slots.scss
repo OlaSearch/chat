@@ -55,6 +55,12 @@
     cursor: text;
   }
 
+  &:hover {
+    background: $blue;
+    color: white;
+    border-color: $blue;
+  }
+
   &:focus {
     outline: none;
   }
@@ -65,8 +71,4 @@
   padding: 0 0 0 0;
   flex: 1;
   flex-wrap: wrap;
-
-  @include media (tablet) {
-    flex-wrap: nowrap;
-  }
 }
