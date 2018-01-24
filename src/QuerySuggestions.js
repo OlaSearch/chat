@@ -1,6 +1,5 @@
 import React from 'react'
 import { Settings, utilities } from '@olasearch/core'
-// import ArrowDownRight from '@olasearch/icons/lib/arrow-down-right'
 
 const { RE_ESCAPE } = Settings
 const { createHTMLMarkup } = utilities

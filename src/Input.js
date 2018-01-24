@@ -22,7 +22,6 @@ class Input extends React.Component {
     this.state = {
       text: '',
       suggestions: [],
-      submitting: false,
       suggestedIndex: null,
       suggestedTerm: null
     }

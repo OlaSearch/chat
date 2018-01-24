@@ -56,9 +56,7 @@ export function addMessage (payload, addCallback) {
           userId: context.userId,
           message: query.q,
           timestamp,
-          in_response_to,
-          quick_replies: [],
-          slots: []
+          in_response_to
         }
       })
 

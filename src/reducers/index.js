@@ -40,8 +40,7 @@ const createTypingMsg = (msgId) => {
   return {
     id: utilities.uuid(),
     msgId,
-    isTyping: true,
-    quick_replies: EMPTY_ARRAY
+    isTyping: true
   }
 }
 

@@ -15,6 +15,7 @@ import {
   EMOJI_POSITIVE,
   EMOJI_NEGATIVE
 } from './Settings'
+import { checkIfAwaitingResponse } from './utils';
 
 class MessageFeedback extends React.Component {
   static contextTypes = {

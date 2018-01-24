@@ -22,7 +22,7 @@ class QuickReplies extends React.PureComponent {
     })
   }
   static defaultProps = {
-    quickReplies: []
+    quickReplies: EMPTY_ARRAY
   }
   render () {
     let { quickReplies } = this.props
