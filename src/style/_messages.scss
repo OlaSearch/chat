@@ -146,6 +146,7 @@
  * Message reply
  */
 .olachat-message-reply {
+  
   p:last-child {
     margin-bottom: 0.5em;
   }
@@ -154,3 +155,4 @@
     @extend .o-text-p;
   }
 }
+

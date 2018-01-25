@@ -27,13 +27,12 @@ class QuickReplies extends React.PureComponent {
   render () {
     let { quickReplies } = this.props
     if (!quickReplies || !quickReplies.length) return null
-    let replies = quickReplies.map(({ label, intent }, idx) => (
-      <QuickReplyButton key={idx} handleClick={this.handleClick} intent={intent} label={label} />
-    ))
     return (
       <div className='olachat-smartsuggestions'>
         <div className='olachat-smartsuggestions-list'>
-          {replies}
+          {quickReplies.map(({ label, intent }, idx) => (
+            <QuickReplyButton key={idx} handleClick={this.handleClick} intent={intent} label={label} />
+          ))}
         </div>
       </div>
     )
