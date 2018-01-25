@@ -192,6 +192,12 @@
   p {
     @extend .o-text-p;
   }
+
+  a {
+    &, &:hover, &:active, &:focus {
+      color: white;
+    }
+  }
 }
 
 

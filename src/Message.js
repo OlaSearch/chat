@@ -45,9 +45,11 @@ class Message extends React.Component {
       search, /* Search results */
       totalResults, /* Total search results */
       page, /* Current page */
+      spellSuggestions, /* Spell suggestions */
+      suggestedTerm, /* Term that was searched for */
     } = message
     let isBot = !userId
-    let text = isBot ? message.reply : message.message
+    let text = isBot ? message.reply : (message.label || message.message)
     
     let messageClass = cx('olachat-message', {
       'olachat-message-bot': isBot,
@@ -77,7 +79,14 @@ class Message extends React.Component {
     if (results && results.length) {
       isSearchActive = true
       /* Bot reply */
-      text = `<p>${search ? search.title : 'Here are some results I found'}</p>`
+      text = `<p>
+        ${search
+          ? suggestedTerm
+            ? `Showing results for <mark class='ola-mark'>${suggestedTerm}</mark> instead`
+            : search.title
+          : 'Here are some results I found'
+        }
+      </p>`
     } else {
       /* No results */
       text = text || `<p>${search ? search.no_result : 'Sorry, we didn\'t find any results.'}</p>`
@@ -140,6 +149,19 @@ class Message extends React.Component {
               log={log}
               location={location}
             />
+            {spellSuggestions
+              ? <SlotOptions
+                  onSubmit={addMessage}
+                  reply='or did you mean'
+                  options={spellSuggestions.map(({ term }) => ({ label: term }))}
+                  isActive={isActive}
+                  intent={intent}
+                  message={message}
+                  log={log}
+                  location={location}
+                />
+              : null
+            }
             <MessageFeedback
               isBot={isBot}
               message={message}

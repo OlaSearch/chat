@@ -8,10 +8,11 @@ import { DISAMBIGUATION_INTENT_NAME } from './Settings'
 import Navigation from '@olasearch/icons/lib/navigation'
 
 class SlotOptions extends Component {
-  handleClick = ({ label, value, intent: selectedIntent }) => {
-    let { intent } = this.props
-    let args =
-      intent === DISAMBIGUATION_INTENT_NAME ? { intent: selectedIntent } : {}
+  handleClick = ({ label, value, intent }) => {
+    /**
+     * Check if current active intent is DISAMBIGUATION_INTENT_NAME
+     */
+    let args = { intent, value, label }
     if (intent === DISAMBIGUATION_INTENT_NAME) {
       /* Send for Intent training */
       this.props.log({
@@ -69,6 +70,7 @@ class SlotOptions extends Component {
 
     return (
       <div className='olachat-slots'>
+        {this.props.reply && <div><div className='olachat-message-reply'>{this.props.reply}</div></div>}
         <TransitionGroup appear className='olachat-slots-list'>
           {replies}
         </TransitionGroup>

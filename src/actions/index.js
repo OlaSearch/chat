@@ -24,19 +24,45 @@ export function addMessage (payload, addCallback) {
   return (dispatch, getState) => {
     var state = getState()
     var { messages, language, perPage, q, page, facet_query } = state.Conversation
+    /* Get filters from Search Query */
+    var { filters } = state.QueryState
     var context = state.Context
-    var intent = payload && payload.intent ? { intent: payload.intent } : {}
+    var intent = {}
+    var label = q
     var msgId = uuid()
     var in_response_to = messages.length
       ? messages[messages.length - 1]['id']
       : null
 
+    /**
+     * Check if payload has `label` => THis will be displayed in bot
+     */
+    if (payload && payload.label) {
+      label = payload.label
+    }
+
+    /**
+     * Check if payload has `value`
+     */
+    if (payload && payload.value) {
+      q = payload.value
+    }
+
+    /**
+     * Check if payload has `intent`
+     */
+    if (payload && payload.intent) {
+      intent = { intent: payload.intent }
+    }
+
     /* Add more params to query */
     const query = {
       q,
+      label,
       page,
       per_page: perPage,
       facet_query,
+      filters,
       msgId,
       language,
       in_response_to,
@@ -55,6 +81,7 @@ export function addMessage (payload, addCallback) {
           id: msgId,
           userId: context.userId,
           message: query.q,
+          label,
           timestamp,
           in_response_to
         }
@@ -145,6 +172,8 @@ export function loadMore (message) {
     var context = state.Context
     var { page } = message
     var { perPage } = state.Conversation
+    /* Get filters from Search Query */
+    var { filters } = state.QueryState
 
     /* Update page */
     page = page + 1
@@ -154,6 +183,7 @@ export function loadMore (message) {
       per_page: perPage,
       page,
       facet_query,
+      filters,
       msgId: message.id,
       searchAdapterOptions
     }

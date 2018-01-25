@@ -24,7 +24,7 @@ const initialState = {
   facet_query: EMPTY_ARRAY,
 }
 
-const createMessageObj = ({ answer, results, mc, totalResults, page = 1 }) => {
+const createMessageObj = ({ answer, results, mc, totalResults, page = 1, ...rest }) => {
   return {
     ...answer,
     mc,
@@ -32,7 +32,8 @@ const createMessageObj = ({ answer, results, mc, totalResults, page = 1 }) => {
     results,
     showSearch: false,
     totalResults,
-    page
+    page,
+    ...rest
   }
 }
 
@@ -60,11 +61,7 @@ export default (state = initialState, action) => {
       }
 
     case types.REQUEST_BOT_SUCCESS:
-      /* If its not from Bot: Do NOTHING */
-      // if (!action.answer || action.answer.error) {
-      //   return state
-      // }
-      let { answer = {}, results, payload, mc, totalResults, page } = action
+      let { answer = {}, results, payload, mc, totalResults, page, suggestedTerm, spellSuggestions } = action
 
       /**
        * Searching inside the bot
@@ -100,7 +97,7 @@ export default (state = initialState, action) => {
       if (answer && (answer.empty || answer.error)) return state
 
       let { in_response_to, message } = answer
-      let msg = createMessageObj({ answer, results, mc, totalResults, page })
+      let msg = createMessageObj({ answer, results, mc, totalResults, page, suggestedTerm, spellSuggestions })
       return {
         ...state,
         isLoading: false,
@@ -112,7 +109,7 @@ export default (state = initialState, action) => {
           if (item.id === in_response_to) {
             return {
               ...item,
-              message
+              ...suggestedTerm ? {} : { message }
             }
           }
           /**
