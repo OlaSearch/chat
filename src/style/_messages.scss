@@ -38,12 +38,12 @@
 .olachat-message {  
   font-size: 14px;
   @include clearfix;
-  padding: 0 1rem 0.5rem 1rem;
+  padding: 0 12px 0.5rem 12px;
   min-height: 56px;
   animation: fadeIn 0.2s linear;
 
   @include media (tablet) {
-    padding: 0 1rem;
+    padding: 0 20px 0 12px;
   }
 
   &:hover {
