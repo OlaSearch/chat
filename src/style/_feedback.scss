@@ -7,7 +7,7 @@
   text-align: right;
   // line-height: 1;
   // height: 24px;
-  max-width: 720px;
+  max-width: 680px;
 
   @include media (desktop) {
     // position: absolute;
@@ -30,28 +30,6 @@
   .olachat-submit {
     color: #f57c00;
   }
-}
-
-/**
- * Active feedback
- */
-
-.olachat-messages-overlay {
-    content: ' ';
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background: #000;
-    z-index: 10;
-    transition: all 0.2s ease-in;
-    opacity: 0;
-    visibility: hidden;
-    &.olachat-messages-overlay-active {
-      opacity: 0.2;
-      visibility: visible;
-    }
 }
 
 

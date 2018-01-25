@@ -31,7 +31,7 @@ class SearchResultsMessage extends React.Component {
     const maxResults = isPhone ? MAX_RESULTS_MOBILE : MAX_RESULTS_DESKTOP
 
     /* When showing CURRRENT message, do not stack */
-    const isStacked = isActive ? false : !showSearch
+    const isStacked = false // isActive ? false : !showSearch
 
     if (isStacked) {
       results = results.filter((item, idx) => idx < maxResults)

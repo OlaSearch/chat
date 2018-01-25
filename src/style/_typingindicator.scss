@@ -6,8 +6,11 @@
   padding: 8px;
   display: inline-block;
   margin: 0 auto;
-  margin-top: 1px;
+  margin-top: 0px;
   position: relative;
+  @include media (tablet) {
+    margin-top: 2px;
+  }
 }
 .typing-indicator:before, .typing-indicator:after {
   content: '';

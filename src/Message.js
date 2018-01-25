@@ -99,10 +99,13 @@ class Message extends React.Component {
               {isBot ? botName : userName}
             </div>
             <div className='olachat-message-content'>
-              <div
-                className='olachat-message-reply'
-                dangerouslySetInnerHTML={createMessageMarkup(text)}
-              />
+              {text
+                ? <div
+                    className='olachat-message-reply'
+                    dangerouslySetInnerHTML={createMessageMarkup(text)}
+                  />
+                : null
+              }
               <AnswerMC
                 mc={mc}
                 payload={{ messageId: message.id, bot: true }}

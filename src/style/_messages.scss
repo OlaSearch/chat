@@ -38,9 +38,13 @@
 .olachat-message {  
   font-size: 14px;
   @include clearfix;
-  padding: 0.5rem 1rem;
+  padding: 0 1rem 0.5rem 1rem;
   min-height: 56px;
   animation: fadeIn 0.2s linear;
+
+  @include media (tablet) {
+    padding: 0 1rem;
+  }
 
   &:hover {
     // background-color: #f1f1f1;
@@ -73,10 +77,11 @@
     // background: white;
     border-radius: 5px;
     @include flexbox;
+    flex-direction: row-reverse;
     position: relative;
 
     .olachat-message-bot & {
-      // background: darken($chatbg, 5%);
+      flex-direction: row;
     }
   }
 
@@ -94,6 +99,11 @@
   @include prefix(flex, 1, (ms,webkit,moz));
   @include prefix(flex-shrink, 0, (ms,webkit,moz));
   position: relative;
+  text-align: right;
+
+  .olachat-message-bot & {
+    text-align: left;
+  }
   // padding-right: 80px;
 }
 
@@ -117,6 +127,7 @@
   font-size: 11px;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
+  display: none;
 
   .olachat-message:hover & {
     opacity: 0.5;
@@ -131,6 +142,7 @@
   font-weight: bold;
   padding-bottom: 5px;
   line-height: 1;
+  display: none;
 }
 
 /**
@@ -138,7 +150,11 @@
  */
 
 .olachat-message-content {
-  max-width: 600px;
+  
+
+  .olachat-message-bot &{
+    max-width: 600px;
+  }
 }
 
 
@@ -146,9 +162,31 @@
  * Message reply
  */
 .olachat-message-reply {
+  background:#009DC2;
+  color: white;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
   
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  max-width: 300px;
+
+  @include media (tablet) {
+    max-width: 500px;
+  }
+
+
+  .olachat-message-bot & {
+    background: $blue;
+    //  background:  lighten($blue, 40%);
+    //  color: $base-color;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
   p:last-child {
-    margin-bottom: 0.5em;
+    // margin-bottom: 0.5em;
   }
 
   p {
@@ -156,3 +194,25 @@
   }
 }
 
+
+/**
+ * Active feedback
+ */
+
+ .olachat-messages-overlay {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: #000;
+  z-index: 10;
+  transition: all 0.2s ease-in;
+  opacity: 0;
+  visibility: hidden;
+  &.olachat-messages-overlay-active {
+    opacity: 0.2;
+    visibility: visible;
+  }
+}
