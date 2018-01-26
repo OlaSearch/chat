@@ -4,7 +4,7 @@ import cx from 'classnames'
 import Avatar from './Avatar'
 import Card from './Card'
 import { createMessageMarkup } from './utils'
-import { DateParser, AnswerMC } from '@olasearch/core'
+import { DateParser, AnswerMC, Decorators } from '@olasearch/core'
 import SlotOptions from './SlotOptions'
 import Geo from './Geo'
 import SearchResultsMessage from './SearchResultsMessage'
@@ -33,7 +33,8 @@ class Message extends React.Component {
       userName,
       isActive,
       log,
-      location
+      location,
+      translate
     } = this.props
     let {
       userId,
@@ -55,7 +56,7 @@ class Message extends React.Component {
     } = message
     let isBot = !userId
     let text = isBot ? message.reply : (message.label || message.message)
-    
+
     let messageClass = cx('olachat-message', {
       'olachat-message-bot': isBot,
       'olachat-message-fulfilled': fulfilled,
@@ -66,12 +67,12 @@ class Message extends React.Component {
       'olachat-message-error': error
     })
     /**
-     * Show location prompt if 
+     * Show location prompt if
      * intent requires `location`
      * and `context` location is empty
-     * 
+     *
      * isActive message, needs location
-     * 
+     *
      */
     let needsLocation = isActive
       ? message.location && !location
@@ -84,7 +85,7 @@ class Message extends React.Component {
     /**
      * If search is active && has results, the reply from the bot is { answer: { search : { title } } }
      * When MC is being loaded isLoadingMC, should we hide search results ?
-     * 
+     *
      * We are not checking for `search` key in `answer` because search should work without Intent Engine
      */
     // console.log(this.props.message)
@@ -94,18 +95,18 @@ class Message extends React.Component {
       text = `<p>
         ${search
           ? suggestedTerm
-            ? `We could find results for ${originalQuery}. Showing results for <mark class='ola-mark'>${suggestedTerm}</mark> instead`
+            ? translate('could_not_find', { originalQuery, suggestedTerm })
             : search.title
-          : 'Here are some results I found'
+          : translate('here_some_result')
         }
       </p>`
     } else {
       /* No results */
-      text = text || `<p>${search ? search.no_result : 'Sorry, we didn\'t find any results.'}</p>`
+      text = text || `<p>${search ? search.no_result : translate('sorry_no_result')}</p>`
     }
     // console.log(needsLocation, isSearchActive, text)
     if (needsLocation) text = ''
-    
+
     return (
       <div className={messageClass}>
         <div className='olachat-message-inner'>
@@ -171,7 +172,7 @@ class Message extends React.Component {
               ? <TopicSuggestions
                   onSubmit={addMessage}
                   options={spellSuggestions.map(({ term }) => ({ label: term }))}
-                  isActive={isActive}                  
+                  isActive={isActive}
                 />
               : null
             }
@@ -196,4 +197,4 @@ class Message extends React.Component {
   }
 }
 
-export default Message
+export default Decorators.injectTranslate(Message)

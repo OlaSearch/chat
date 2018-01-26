@@ -1,6 +1,7 @@
 import React from 'react'
 import Textarea from 'react-flexi-textarea'
 import { connect } from 'react-redux'
+import { Decorators } from '@olasearch/core'
 import { disabledFeedback, logFeedback } from './actions'
 
 class InputFeedback extends React.Component {
@@ -39,6 +40,7 @@ class InputFeedback extends React.Component {
   }
   render () {
     let { submitted } = this.state
+    const { translate } = this.props
     return (
       <form
         className='olachat-footer olachat-footer-feedback'
@@ -47,11 +49,11 @@ class InputFeedback extends React.Component {
         <div className='olachat-input'>
           {submitted ? (
             <span className='olachat-feedback-thankyou'>
-              Thank you for your feedback
+              {translate('thank_you')}
             </span>
           ) : (
             <Textarea
-              placeholder='Enter your feedback'
+              placeholder={translate('enter_feedback')}
               onChange={this.onChange}
               value={this.state.message}
               rows={1}
@@ -63,7 +65,7 @@ class InputFeedback extends React.Component {
         </div>
         {submitted ? null : (
           <button className='olachat-submit'>
-            <span>Send</span>
+            <span>{translate('send')}</span>
           </button>
         )}
         <button
@@ -71,11 +73,13 @@ class InputFeedback extends React.Component {
           type='button'
           onClick={this.cancelFeedback}
         >
-          <span>{submitted ? 'Continue' : 'Cancel'}</span>
+          <span>{submitted ? translate('continue') : translate('cancel')}</span>
         </button>
       </form>
     )
   }
 }
 
-module.exports = connect(null, { disabledFeedback, logFeedback })(InputFeedback)
+module.exports = connect(null, { disabledFeedback, logFeedback })(
+  Decorators.injectTranslate(InputFeedback)
+)

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Voice from './Voice'
-import { Settings, Actions } from '@olasearch/core'
+import { Settings, Actions, Decorators } from '@olasearch/core'
 import Textarea from '@olasearch/textarea-elastic'
 import QuerySuggestions from './QuerySuggestions'
 import { connect } from 'react-redux'
@@ -234,7 +234,7 @@ class Input extends React.Component {
     )
   }
   render () {
-    let { isTyping, voiceInput } = this.props
+    let { isTyping, voiceInput, translate } = this.props
     let { suggestions, suggestedIndex, suggestedTerm, text } = this.state
     let inputValue = suggestedTerm ? suggestedTerm.term : text
     return (
@@ -253,7 +253,7 @@ class Input extends React.Component {
         />
         <div className='olachat-input'>
           <Textarea
-            placeholder='Type a message...'
+            placeholder={translate('type_a_message')}
             onChange={this.onChange}
             onKeyDown={this.onKeyDown}
             value={inputValue}
@@ -292,9 +292,11 @@ class Input extends React.Component {
 }
 
 export default connect(null)(
-  listensToClickOutside(Input, {
-    getDocument (instance) {
-      return instance.context.document || document
-    }
-  })
+  Decorators.injectTranslate(
+    listensToClickOutside(Input, {
+      getDocument (instance) {
+        return instance.context.document || document
+      }
+    })
+  )
 )

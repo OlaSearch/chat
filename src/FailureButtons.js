@@ -1,10 +1,11 @@
 import React from 'react'
 import Repeat from '@olasearch/icons/lib/repeat'
+import { Decorators } from '@olasearch/core'
 
-const FailureButtons = ({ onSubmit, message, isActive }) => {
+const FailureButtons = ({ onSubmit, message, isActive, translate }) => {
   return (
     <div className='olachat-slots'>
-      <small>Something went wrong. Your message was not delivered.</small>
+      <small>{translate('something_went_wrong')}</small>
       <div className='olachat-slots-list'>
         <button
           className='olachat-slots-button'
@@ -13,11 +14,11 @@ const FailureButtons = ({ onSubmit, message, isActive }) => {
           disabled={!isActive}
         >
           <Repeat size={14} />
-          Retry
+          {translate('retry')}
         </button>
       </div>
     </div>
   )
 }
 
-module.exports = FailureButtons
+module.exports = Decorators.injectTranslate(FailureButtons)

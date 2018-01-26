@@ -74,7 +74,7 @@ class HelpMenu extends React.Component {
           <Menu />
         </button>
         <div className='olachat-dp'>
-          <div className='olachat-dp-title'>{translate('menu_label')}</div>
+          <div className='olachat-dp-title'>{translate('menu')}</div>
           <div className='olachat-dp-body'>
             {botLinks.map(({ title, url }, idx) => {
               return (
@@ -90,7 +90,7 @@ class HelpMenu extends React.Component {
               )
             })}
             <a onClick={this.handlePrint}>
-              <Print /> Print
+              <Print /> {translate('print')}
             </a>
           </div>
         </div>

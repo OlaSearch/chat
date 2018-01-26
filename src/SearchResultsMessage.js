@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import { SearchFooter, SearchResults } from '@olasearch/core'
+import { SearchFooter, SearchResults, Decorators } from '@olasearch/core'
 import { loadMore, toggleSearchVisibility } from './actions'
 
 const MAX_RESULTS_MOBILE = 1
@@ -17,7 +17,7 @@ class SearchResultsMessage extends React.Component {
   onLoadMore = () => {
     this.props.loadMore(this.props.message)
   }
-  render () {  
+  render () {
     let {
       isPhone,
       dispatch,
@@ -26,6 +26,7 @@ class SearchResultsMessage extends React.Component {
       results,
       bookmarks,
       isLoading,
+      translate
     } = this.props
     let { search, mc, showSearch } = message
     const maxResults = isPhone ? MAX_RESULTS_MOBILE : MAX_RESULTS_DESKTOP
@@ -49,7 +50,7 @@ class SearchResultsMessage extends React.Component {
             onClick={this.toggleActive}
             className='olachat-results-seeall'
           >
-            See all
+            {translate('see_all')}
           </button>
 
           <SearchResults
@@ -88,5 +89,5 @@ function mapStateToProps (state, ownProps) {
 }
 
 export default connect(mapStateToProps, { loadMore, toggleSearchVisibility })(
-  SearchResultsMessage
+  Decorators.injectTranslate(SearchResultsMessage)
 )

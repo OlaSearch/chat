@@ -1,7 +1,8 @@
 import React from 'react'
 import Voice from './../Voice'
+import { Decorators } from '@olasearch/core'
 
-export default class SearchInput extends React.Component {
+class SearchInput extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -28,6 +29,7 @@ export default class SearchInput extends React.Component {
     this.props.onSubmit(text, cb)
   }
   render () {
+    const { voiceAdapter, translate } = this.props
     return (
       <form onSubmit={this.handleSubmit}>
         <div className='olachat-input'>
@@ -35,12 +37,12 @@ export default class SearchInput extends React.Component {
             <Voice
               onResult={this.onVoiceChange}
               onFinalResult={this.onVoiceFinal}
-              voiceAdapter={this.props.voiceAdapter}
+              voiceAdapter={voiceAdapter}
             />
           </div>
           <input
             type='text'
-            placeholder='Search'
+            placeholder={translate('search')}
             onChange={this.handleChange}
             value={this.state.text}
           />
@@ -50,3 +52,5 @@ export default class SearchInput extends React.Component {
     )
   }
 }
+
+export default Decorators.injectTranslate(SearchInput)

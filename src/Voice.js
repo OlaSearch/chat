@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import { checkIfAwaitingResponse } from './utils'
 import { connect } from 'react-redux'
+import { Decorators } from '@olasearch/core'
 import Mic from '@olasearch/icons/lib/mic'
 import MicOff from '@olasearch/icons/lib/mic-off'
 
@@ -151,7 +152,8 @@ class Voice extends React.Component {
       hasUsedVoice,
       searchInput,
       showListening,
-      iconSize
+      iconSize,
+      translate
     } = this.props
     let klass = cx('olachat-mic', className, {
       'olachat-mic-isrecording': isRecording && !isTyping,
@@ -169,7 +171,7 @@ class Voice extends React.Component {
           {isRecording ? <Mic size={iconSize} /> : <Mic size={iconSize} />}
           {isRecording && showListening ? (
             <span className='olachat-mic-listening'>
-              Listening<em>...</em>
+              {translate('listening', {}, true)}
             </span>
           ) : null}
           {showLoadingIndicator && <span className='olachat-mic-loader' />}
@@ -187,4 +189,6 @@ function mapStateToProps (state) {
     isPhone: state.Device.isPhone
   }
 }
-export default connect(mapStateToProps, null)(Voice)
+export default connect(mapStateToProps, null)(
+  Decorators.injectTranslate(Voice)
+)
