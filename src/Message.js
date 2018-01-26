@@ -6,9 +6,12 @@ import Card from './Card'
 import { createMessageMarkup } from './utils'
 import { DateParser, AnswerMC } from '@olasearch/core'
 import SlotOptions from './SlotOptions'
+import Geo from './Geo'
 import SearchResultsMessage from './SearchResultsMessage'
 import MessageFeedback from './MessageFeedback'
+import TopicSuggestions from './TopicSuggestions'
 import Loader from './Loader'
+import FailureButtons from './FailureButtons'
 
 class Message extends React.Component {
   constructor (props) {
@@ -47,6 +50,8 @@ class Message extends React.Component {
       page, /* Current page */
       spellSuggestions, /* Spell suggestions */
       suggestedTerm, /* Term that was searched for */
+      originalQuery,
+      error
     } = message
     let isBot = !userId
     let text = isBot ? message.reply : (message.label || message.message)
@@ -57,14 +62,20 @@ class Message extends React.Component {
       'olachat-message-collapse':
         typeof awaitingUserInput !== 'undefined' && !awaitingUserInput,
       'olachat-message-wide': !!card,
-      'olachat-message-with-search': results && results.length > 0
+      'olachat-message-with-search': results && results.length > 0,
+      'olachat-message-error': error
     })
     /**
      * Show location prompt if 
      * intent requires `location`
      * and `context` location is empty
+     * 
+     * isActive message, needs location
+     * 
      */
-    let needsLocation = isActive && message.location && !location
+    let needsLocation = isActive
+      ? message.location && !location
+      : message.location
 
     /**
      * Do not render SearchResultsMessage unless required. Takes a perf hit
@@ -76,13 +87,14 @@ class Message extends React.Component {
      * 
      * We are not checking for `search` key in `answer` because search should work without Intent Engine
      */
+    // console.log(this.props.message)
     if (results && results.length) {
       isSearchActive = true
       /* Bot reply */
       text = `<p>
         ${search
           ? suggestedTerm
-            ? `Showing results for <mark class='ola-mark'>${suggestedTerm}</mark> instead`
+            ? `We could find results for ${originalQuery}. Showing results for <mark class='ola-mark'>${suggestedTerm}</mark> instead`
             : search.title
           : 'Here are some results I found'
         }
@@ -91,9 +103,9 @@ class Message extends React.Component {
       /* No results */
       text = text || `<p>${search ? search.no_result : 'Sorry, we didn\'t find any results.'}</p>`
     }
-
+    // console.log(needsLocation, isSearchActive, text)
     if (needsLocation) text = ''
-
+    
     return (
       <div className={messageClass}>
         <div className='olachat-message-inner'>
@@ -123,7 +135,7 @@ class Message extends React.Component {
               <Card
                 card={card}
               />
-              {needsLocation
+              {false
                 ? null
                 : isSearchActive
                   ? <SearchResultsMessage
@@ -140,6 +152,13 @@ class Message extends React.Component {
             <div className='olachat-message-date'>
               {DateParser.format(timestamp * 1000, 'DD MMM h:mm a')}
             </div>
+            <Geo
+              location={location}
+              needsLocation={needsLocation}
+              message={message}
+              onSubmit={addMessage}
+              isActive={isActive}
+            />
             <SlotOptions
               onSubmit={addMessage}
               options={slotOptions}
@@ -147,18 +166,20 @@ class Message extends React.Component {
               intent={intent}
               message={message}
               log={log}
-              location={location}
             />
-            {spellSuggestions
-              ? <SlotOptions
+            {spellSuggestions && spellSuggestions.length
+              ? <TopicSuggestions
                   onSubmit={addMessage}
-                  reply='or did you mean'
                   options={spellSuggestions.map(({ term }) => ({ label: term }))}
-                  isActive={isActive}
-                  intent={intent}
+                  isActive={isActive}                  
+                />
+              : null
+            }
+            {error
+              ? <FailureButtons
                   message={message}
-                  log={log}
-                  location={location}
+                  onSubmit={addMessage}
+                  isActive={isActive}
                 />
               : null
             }

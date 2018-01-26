@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { updateBotQueryTerm, clearBotQueryTerm } from './actions'
-import { GeoLocation } from '@olasearch/core'
+import { updateBotQueryTerm } from './actions'
 import TransitionGroup from 'react-transition-group/TransitionGroup'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import { DISAMBIGUATION_INTENT_NAME } from './Settings'
-import Navigation from '@olasearch/icons/lib/navigation'
 
 class SlotOptions extends Component {
   handleClick = ({ label, value, intent }) => {
@@ -25,32 +23,8 @@ class SlotOptions extends Component {
     this.props.updateQueryTerm(label)
     this.props.onSubmit(args)
   }
-  onGeoSuccess = data => {
-    if (!data) return
-    this.props.clearBotQueryTerm()
-    this.props.onSubmit({ intent: this.props.message.intent })
-  }
-  onIgnoreGeo = data => {
-    this.props.clearBotQueryTerm()
-    this.props.onSubmit({ intent: this.props.message.intent })
-  }
   render () {
     let { options, isActive } = this.props
-    /**
-     * If message requires location and isActive
-     */
-    if (this.props.message.location && isActive && !this.props.location) {
-      return (
-        <div>
-          <GeoLocation
-            onSuccess={this.onGeoSuccess}
-            icon={<Navigation />}
-            className='ola-icon-btn'
-          />
-          <button onClick={this.onIgnoreGeo} className='ola-cancel-btn'>Ignore</button>
-        </div>
-      )
-    }
     if (!options || !options.length) return null
     let replies = options.map(({ label, value, intent }, idx) => (
       <CSSTransition
@@ -70,7 +44,6 @@ class SlotOptions extends Component {
 
     return (
       <div className='olachat-slots'>
-        {this.props.reply && <div><div className='olachat-message-reply'>{this.props.reply}</div></div>}
         <TransitionGroup appear className='olachat-slots-list'>
           {replies}
         </TransitionGroup>
@@ -96,6 +69,5 @@ function QuickReplyButton ({ label, value, intent, handleClick, isActive }) {
 }
 
 export default connect(null, {
-  updateQueryTerm: updateBotQueryTerm,
-  clearBotQueryTerm
+  updateQueryTerm: updateBotQueryTerm
 })(SlotOptions)

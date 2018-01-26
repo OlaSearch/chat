@@ -26,7 +26,7 @@
 }
 
 .olachat-messages-list {
-  padding: 1rem 0;
+  padding: 12px 0;
   position: relative;
 }
 
@@ -38,9 +38,9 @@
 .olachat-message {  
   font-size: 14px;
   @include clearfix;
-  padding: 0 12px 0.5rem 12px;
+  padding: 0 16px 0.5rem 12px;
   min-height: 56px;
-  animation: fadeIn 0.2s linear;
+  animation: slideUpFade 0.2s linear;
 
   @include media (tablet) {
     padding: 0 20px 0 12px;
@@ -72,13 +72,14 @@
 }
 
 
-  .olachat-message-inner {        
-    // padding: 1rem;
-    // background: white;
-    border-radius: 5px;
+  .olachat-message-inner {
     @include flexbox;
     flex-direction: row-reverse;
     position: relative;
+
+    .olachat-message-with-search & {
+      padding-bottom: 0.5rem;
+    }
 
     .olachat-message-bot & {
       flex-direction: row;
@@ -164,9 +165,10 @@
 .olachat-message-reply {
   background:#009DC2;
   color: white;
+  // border-radius: 20px 0 20px 20px;
   border-radius: 20px;
   padding: 0.5rem 1rem;
-  
+  // position: relative;
   display: inline-block;
   margin-bottom: 0.5rem;
   max-width: 300px;
@@ -175,12 +177,14 @@
     max-width: 500px;
   }
 
-
   .olachat-message-bot & {
     background: $blue;
-    //  background:  lighten($blue, 40%);
-    //  color: $base-color;
   }
+
+  .olachat-message-error & {
+    background: $red;
+  }
+
 
   p {
     margin-bottom: 0;

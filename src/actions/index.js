@@ -6,6 +6,7 @@ import { utilities, Actions } from '@olasearch/core'
 const { sanitizeText, uuid } = utilities
 const CHAT_DELAY = 300
 const CHAT_REPLY_DELAY = 600
+const RESULTS_FOR_MC = 12
 
 export function updateBotQueryTerm (term) {
   return {
@@ -20,7 +21,7 @@ export function clearBotQueryTerm () {
   }
 }
 
-export function addMessage (payload, addCallback) {
+export function addMessage (payload) {
   return (dispatch, getState) => {
     var state = getState()
     var { messages, language, perPage, q, page, facet_query } = state.Conversation
@@ -60,7 +61,7 @@ export function addMessage (payload, addCallback) {
       q,
       label,
       page,
-      per_page: perPage,
+      per_page: RESULTS_FOR_MC, /* Always fetch 12 results from search engine. MC expects top 10 results */
       facet_query,
       filters,
       msgId,
@@ -73,21 +74,22 @@ export function addMessage (payload, addCallback) {
     const api = 'search'
     const timestamp = new Date().getTime() / 1000
 
+    /* User message */
+    const message = {
+      id: msgId,
+      userId: context.userId,
+      message: query.q,
+      label,
+      timestamp,
+      in_response_to
+    }
+
     /* Add this to ui */
     if (query.q) {
       dispatch({
         type: types.REQUEST_ADD_MESSAGE,
-        message: {
-          id: msgId,
-          userId: context.userId,
-          message: query.q,
-          label,
-          timestamp,
-          in_response_to
-        }
+        message
       })
-
-      addCallback && addCallback(msgId)
     }
 
     /* Simulate delay - Show typing indicator */
@@ -108,8 +110,16 @@ export function addMessage (payload, addCallback) {
           query,
           context,
           api,
+          processData: (response) => {
+            if (!response.results) return response
+            return {
+              ...response,
+              results: response.results.slice(0, perPage)
+            }
+          },
           payload: {
             ...payload,
+            message,
             bot: true
           }
         }).then(response => {

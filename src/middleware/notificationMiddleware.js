@@ -3,7 +3,7 @@ import types from './../ActionTypes'
 
 const debounceNotify = utilities.debounce(notify, 300)
 
-function notify ({ body, title }) {
+function notify ({ body, title, icon }) {
   if (
     window.Notification &&
     Notification.permission !== 'denied' &&
@@ -12,7 +12,7 @@ function notify ({ body, title }) {
     Notification.requestPermission(function (status) {
       var n = new Notification(title, {
         body,
-        icon: 'https://cdn.olasearch.com/assets/images/ola-icon-150x150.png'
+        icon,
       })
       n.onclick = function () {
         window.focus()
@@ -20,13 +20,13 @@ function notify ({ body, title }) {
     })
   }
 }
-module.exports = ({ name }) => {
+module.exports = ({ name, icon }) => {
   return ({ dispatch, getState }) => next => action => {
     if (action.type === types.REQUEST_BOT_SUCCESS) {
       if (!action.answer) return next(action)
       let { reply_voice: reply, search } = action.answer
       if (!reply && search && search.title) reply = search.title
-      if (reply) debounceNotify({ body: reply, title: name })
+      if (reply) debounceNotify({ body: reply, title: name, icon })
     }
     return next(action)
   }

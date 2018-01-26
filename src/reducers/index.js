@@ -19,7 +19,7 @@ const initialState = {
   newMessageId: null,
 
   /* For Search */
-  perPage: 3 /* Per page is managed in Conversation state: As it can conflict with QueryState (Search) */,
+  perPage: 3, /* Per page is managed in Conversation state: As it can conflict with QueryState (Search) */
   page: 1,
   facet_query: EMPTY_ARRAY,
 }
@@ -97,7 +97,16 @@ export default (state = initialState, action) => {
       if (answer && (answer.empty || answer.error)) return state
 
       let { in_response_to, message } = answer
-      let msg = createMessageObj({ answer, results, mc, totalResults, page, suggestedTerm, spellSuggestions })
+      let msg = createMessageObj({
+        answer,
+        results,
+        mc,
+        totalResults,
+        page,
+        suggestedTerm,
+        spellSuggestions,
+        originalQuery: payload.originalQuery
+      })
       return {
         ...state,
         isLoading: false,
@@ -130,6 +139,21 @@ export default (state = initialState, action) => {
           }
           return item
         })
+      }
+
+    case types.REQUEST_BOT_FAILURE:
+      return {
+        ...state,
+        messages: state.messages.map((item) => {
+          if (item.id === action.payload.message.id) {
+            return {
+              ...action.payload.message,
+              error: true,
+            }
+          }
+          return item
+        })
+        .filter((item) => item.msgId !== action.payload.message.id)
       }
 
     case types.CLEAR_MESSAGES:

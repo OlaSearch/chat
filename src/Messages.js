@@ -220,7 +220,7 @@ class Messages extends React.Component {
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
         /* Fixes a bug in Mobile devices where keyboard loses focus on the first message */
-        if(domNode.offsetTop < this.messagesEl.clientHeight) return
+        // if(domNode.offsetTop < this.messagesEl.clientHeight) return
         domNode.scrollIntoView({ /*behavior: 'smooth',*/ block: 'start', inline: 'start'})
       })
     })

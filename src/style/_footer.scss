@@ -1,13 +1,14 @@
 $gutter: 15px;
 .olachat-footer {
-  @include flexbox;
+  // @include flexbox;
+  display: flex;
   padding: 0;
   background: white;
   // border-top: 1px #ccc solid;
   position: relative;
   z-index: 2;
   min-height: 50px; /* Content height: 40px */
-  box-shadow: 1px -1px 2px rgba(199,199,199,0.5), 0 2px 4px 0 rgba(199,199,199,0.5);
+  box-shadow: 1px -3px 4px rgba(199,199,199,0.5), 0 2px 4px 0 rgba(199,199,199,0.5);
   @include media (desktop) {
     border-radius: 0 0 5px 5px;
   }

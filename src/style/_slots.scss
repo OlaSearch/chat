@@ -1,5 +1,6 @@
 .olachat-slots {
   background-color: transparent;
+  animation: 0.3s ease-in-out 0s 1 slideUp;
   // overflow: hidden;
   // position: absolute;
   // bottom: 100%;
@@ -13,13 +14,10 @@
 .olachat-slots-button {
   background-color: white;
   border: 1px $light-grey-color solid;
-  color: $link-color;
-  
-  padding: 0.7rem 1rem;
+  color: $link-color;  
+  padding: 0.8rem 1rem;
   font-size: 14px;
-  // 
   white-space: nowrap;
-
   display: block;
   width: 100%;
   // margin-bottom: 1px; /* Border gets cut off because of overflow-x:auto in parent container */
@@ -65,8 +63,15 @@
     border-color: $blue;
   }
 
-  &:focus {
-    outline: none;
+  /* With icon */
+  .ola-icon {
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  /* Inside user message */
+  .olachat-message & {
+    text-align: center;
   }
 }
 
@@ -75,4 +80,13 @@
   padding: 0 0 0 0;
   flex: 1;
   flex-wrap: wrap;
+
+
+  .olachat-message & {
+    justify-content: flex-end;    
+  }
+
+  .olachat-message-bot & {
+    justify-content: flex-start;
+  }
 }

@@ -5,17 +5,7 @@
 .olachat-feedback {
   font-size: 1.2rem;
   text-align: right;
-  // line-height: 1;
-  // height: 24px;
-  // max-width: 680px;
-
-  @include media (desktop) {
-    // position: absolute;
-    // right: 8px;
-    // bottom: 0;
-    // padding-top: 0;
-  }
-
+  line-height: 1;
 }
 
 /**
@@ -60,9 +50,9 @@
  * Positve
  */
 .olachat-feedback-positive, .olachat-feedback-negative {
-  margin: 0 8px;
+  margin: 0 0 0 4px;
   display: inline-block;
   background: none;
   border: none;
-  padding: 0 8px;
+  padding: 4px 8px;
 }
