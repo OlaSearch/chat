@@ -2,6 +2,7 @@
   width: 30px + 16px + 12px;
   position: relative;
   vertical-align: middle;
+  transform: translateZ(0); /* Fixes a safari bug where dropdown wasnt visible on Iframe. Trigger GPU acceleration */
 }
 
 .olachat-helpmenu-button {
