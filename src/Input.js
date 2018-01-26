@@ -31,7 +31,7 @@ class Input extends React.Component {
   }
   handleClickOutside = event => {
     /* Check if its already closed */
-    if (!this.state.suggestedTerm) return
+    if (!this.state.suggestedTerm && !this.state.suggestions.length) return
     this.closeSuggestion()
   }
   onChange = event => {
