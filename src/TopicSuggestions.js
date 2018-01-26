@@ -28,7 +28,9 @@ const TopicSuggestions = ({ options, onSubmit, updateQueryTerm, isActive }) => {
   })
   return (
     <div className='olachat-slots'>
-      <div><div className='olachat-message-reply olachat-message-reply-continue'>Did you mean</div></div>
+      <div className='olachat-message-reply olachat-message-reply-suggestion'>
+        Did you mean
+      </div>
       <TransitionGroup appear className='olachat-slots-list'>
         {replies}
       </TransitionGroup>
@@ -37,5 +39,5 @@ const TopicSuggestions = ({ options, onSubmit, updateQueryTerm, isActive }) => {
 }
 
 export default connect(null, {
-  updateQueryTerm: updateBotQueryTerm,
+  updateQueryTerm: updateBotQueryTerm
 })(TopicSuggestions)

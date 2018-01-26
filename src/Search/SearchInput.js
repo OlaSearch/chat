@@ -53,4 +53,4 @@ class SearchInput extends React.Component {
   }
 }
 
-export default Decorators.injectTranslate(SearchInput)
+export default Decorators.withTranslate(SearchInput)

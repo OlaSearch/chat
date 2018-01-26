@@ -21,4 +21,4 @@ const FailureButtons = ({ onSubmit, message, isActive, translate }) => {
   )
 }
 
-module.exports = Decorators.injectTranslate(FailureButtons)
+module.exports = Decorators.withTranslate(FailureButtons)

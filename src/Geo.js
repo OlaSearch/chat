@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { GeoLocation, Decorators } from '@olasearch/core'
+import { GeoLocation } from '@olasearch/core'
 import Navigation from '@olasearch/icons/lib/navigation'
 
 class Geo extends Component {
@@ -8,10 +8,10 @@ class Geo extends Component {
     this.props.onSubmit({ intent: this.props.message.intent })
   }
   onIgnoreGeo = data => {
-    this.props.onSubmit({ intent: this.props.message.intent })
+    // this.props.onSubmit({ intent: this.props.message.intent, label: 'Ignore' })
   }
   render () {
-    let { isActive, translate } = this.props
+    let { isActive } = this.props
     /**
      * If message requires location and isActive
      */
@@ -20,11 +20,10 @@ class Geo extends Component {
         <div>
           <GeoLocation
             onSuccess={this.onGeoSuccess}
-            icon={<Navigation />}
+            icon={<Navigation size={16} />}
             className='ola-icon-btn'
             disabled={!isActive}
           />
-          <button disabled={!isActive} onClick={this.onIgnoreGeo} className='ola-cancel-btn'>{translate('ignore')}</button>
         </div>
       )
     }
@@ -32,4 +31,4 @@ class Geo extends Component {
   }
 }
 
-export default Decorators.injectTranslate(Geo)
+export default Geo

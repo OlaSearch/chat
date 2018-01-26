@@ -45,7 +45,7 @@ class Messages extends React.Component {
     document: PropTypes.object
   }
   static defaultProps = {
-    flipped: true, /* Messages start from bottom to top */
+    flipped: true /* Messages start from bottom to top */,
     scrollLoadThreshold: 10,
     messageComponent: null
   }
@@ -55,7 +55,7 @@ class Messages extends React.Component {
      */
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
-        this.setState({ shouldRender : true})
+        this.setState({ shouldRender: true })
 
         var heightDifference = this.props.flipped
           ? this.messagesEl.scrollHeight - this.messagesEl.clientHeight
@@ -114,7 +114,7 @@ class Messages extends React.Component {
      * Final pass. Link has href and it goes to a new page
      * Hide the bot
      */
-    setTimeout(() => this.props.setBotStatus(false), 200)    
+    setTimeout(() => this.props.setBotStatus(false), 200)
   }
   componentWillUnmount () {
     this.isComponentMounted = false
@@ -148,9 +148,8 @@ class Messages extends React.Component {
     this.rafRequestId = window.requestAnimationFrame(this.pollScroll)
   }
   onScroll = () => {
-    var scrollDirection = this.messagesEl.scrollTop < this.previousScrollTop
-      ? 'up'
-      : 'down'
+    var scrollDirection =
+      this.messagesEl.scrollTop < this.previousScrollTop ? 'up' : 'down'
 
     /* Update previous scroll */
     this.previousScrollTop = this.messagesEl.scrollTop
@@ -212,7 +211,7 @@ class Messages extends React.Component {
   /**
    * Scroll in to view. Pass the message ID
    */
-  scrollIntoView = (id) => {
+  scrollIntoView = id => {
     const doc = this.context.document || document
     const domId = id
     const domNode = doc.getElementById(domId)
@@ -221,7 +220,10 @@ class Messages extends React.Component {
       window.requestAnimationFrame(() => {
         /* Fixes a bug in Mobile devices where keyboard loses focus on the first message */
         // if(domNode.offsetTop < this.messagesEl.clientHeight) return
-        domNode.scrollIntoView({ /*behavior: 'smooth',*/ block: 'start', inline: 'start'})
+        domNode.scrollIntoView({
+          /* behavior: 'smooth', */ block: 'start',
+          inline: 'start'
+        })
       })
     })
   }
@@ -246,43 +248,37 @@ class Messages extends React.Component {
       ? messages.map(messageComponent)
       : messages.map((message, idx) => {
         return (
-          <div
-            key={message.id}
-            id={message.id}
-          >            
-            {message.isTyping
-              ? <TypingIndicator
-                  avatarBot={this.props.avatarBot}
-                />
-              : <Message
-                  avatarBot={this.props.avatarBot}
-                  avatarUser={this.props.avatarUser}
-                  message={message}
-                  addMessage={this.props.addMessage}
-                  isActive={idx === messages.length - 1}
-                  botName={this.props.botName}
-                  userName={this.props.userName}
-                  log={this.props.log}
-                  location={this.props.location}
-                  isMounted={this.isComponentMounted}
-                />
-            }
+          <div key={message.id} id={message.id}>
+            {message.isTyping ? (
+              <TypingIndicator avatarBot={this.props.avatarBot} />
+            ) : (
+              <Message
+                avatarBot={this.props.avatarBot}
+                avatarUser={this.props.avatarUser}
+                message={message}
+                addMessage={this.props.addMessage}
+                isActive={idx === messages.length - 1}
+                botName={this.props.botName}
+                userName={this.props.userName}
+                log={this.props.log}
+                location={this.props.location}
+                isMounted={this.isComponentMounted}
+              />
+            )}
           </div>
         )
       })
     return (
       <div className='olachat-messages' ref={this.registerRef}>
-        {this.state.shouldRender          
-          ? <div className='olachat-messages-wrapper'>
-              <div
-                className='olachat-messages-list'
-              >
-                
-                {messagesComponent}
-              </div>
-            </div>
-          : <div className='olachat-message-loader'><Loader /></div>
-        }
+        {this.state.shouldRender ? (
+          <div className='olachat-messages-wrapper'>
+            <div className='olachat-messages-list'>{messagesComponent}</div>
+          </div>
+        ) : (
+          <div className='olachat-message-loader'>
+            <Loader />
+          </div>
+        )}
       </div>
     )
   }

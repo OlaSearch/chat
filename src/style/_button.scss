@@ -22,6 +22,11 @@
 /* Geo */
 .ola-link-geo {
   @extend .ola-chat-btn;
+
+  &:hover, &:focus, &:active {
+    background: $blue;
+    color: white;
+  }
 }
 
 /* Cancel */

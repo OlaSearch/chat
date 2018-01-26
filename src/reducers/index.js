@@ -19,12 +19,19 @@ const initialState = {
   newMessageId: null,
 
   /* For Search */
-  perPage: 3, /* Per page is managed in Conversation state: As it can conflict with QueryState (Search) */
+  perPage: 3 /* Per page is managed in Conversation state: As it can conflict with QueryState (Search) */,
   page: 1,
-  facet_query: EMPTY_ARRAY,
+  facet_query: EMPTY_ARRAY
 }
 
-const createMessageObj = ({ answer, results, mc, totalResults, page = 1, ...rest }) => {
+const createMessageObj = ({
+  answer,
+  results,
+  mc,
+  totalResults,
+  page = 1,
+  ...rest
+}) => {
   return {
     ...answer,
     mc,
@@ -37,7 +44,7 @@ const createMessageObj = ({ answer, results, mc, totalResults, page = 1, ...rest
   }
 }
 
-const createTypingMsg = (msgId) => {
+const createTypingMsg = msgId => {
   return {
     id: utilities.uuid(),
     msgId,
@@ -53,15 +60,24 @@ export default (state = initialState, action) => {
         newMessageId: action.message.id,
         messages: [...state.messages, action.message]
       }
-    
+
     case types.REQUEST_BOT:
       return {
         ...state,
-        isLoading: true,
+        isLoading: true
       }
 
     case types.REQUEST_BOT_SUCCESS:
-      let { answer = {}, results, payload, mc, totalResults, page, suggestedTerm, spellSuggestions } = action
+      let {
+        answer = {},
+        results,
+        payload,
+        mc,
+        totalResults,
+        page,
+        suggestedTerm,
+        spellSuggestions
+      } = action
 
       /**
        * Searching inside the bot
@@ -81,7 +97,11 @@ export default (state = initialState, action) => {
             /**
              * Pure search, no Intent engine
              */
-            if (item.msgId && !answer.in_response_to && item.id === payload.msgId) {
+            if (
+              item.msgId &&
+              !answer.in_response_to &&
+              item.id === payload.msgId
+            ) {
               return {
                 ...item,
                 results: [...item.results, ...results],
@@ -118,7 +138,7 @@ export default (state = initialState, action) => {
           if (item.id === in_response_to) {
             return {
               ...item,
-              ...suggestedTerm ? {} : { message }
+              ...(suggestedTerm ? {} : { message })
             }
           }
           /**
@@ -128,7 +148,7 @@ export default (state = initialState, action) => {
             return {
               ...item,
               ...msg,
-              isTyping: false,
+              isTyping: false
             }
           }
           /**
@@ -144,16 +164,17 @@ export default (state = initialState, action) => {
     case types.REQUEST_BOT_FAILURE:
       return {
         ...state,
-        messages: state.messages.map((item) => {
-          if (item.id === action.payload.message.id) {
-            return {
-              ...action.payload.message,
-              error: true,
+        messages: state.messages
+          .map(item => {
+            if (item.id === action.payload.message.id) {
+              return {
+                ...action.payload.message,
+                error: true
+              }
             }
-          }
-          return item
-        })
-        .filter((item) => item.msgId !== action.payload.message.id)
+            return item
+          })
+          .filter(item => item.msgId !== action.payload.message.id)
       }
 
     case types.CLEAR_MESSAGES:

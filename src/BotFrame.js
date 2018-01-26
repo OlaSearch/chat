@@ -85,7 +85,7 @@ class BotFrame extends React.Component {
       zIndex,
       isDesktop,
       activeStyle,
-      showBubbleLabel,
+      showBubbleLabel
     } = this.props
     /* On mobile and tablet, hide bubble label */
     showBubbleLabel = this.props.isDesktop ? showBubbleLabel : false
@@ -106,7 +106,7 @@ class BotFrame extends React.Component {
         : {
           ...(inline
             ? {
-              height: 80,
+              height: 80
             }
             : {
               bottom: 10,
@@ -128,11 +128,7 @@ class BotFrame extends React.Component {
         initialContent={this.props.initialContent}
         title='Ola Chat'
       >
-        <Bot
-          {...this.props}
-          showBubbleLabel={showBubbleLabel}
-          iFrame
-        />
+        <Bot {...this.props} showBubbleLabel={showBubbleLabel} iFrame />
       </Frame>
     )
   }

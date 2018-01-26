@@ -15,13 +15,13 @@ import {
   EMOJI_POSITIVE,
   EMOJI_NEGATIVE
 } from './Settings'
-import { checkIfAwaitingResponse } from './utils';
+import { checkIfAwaitingResponse } from './utils'
 
 class MessageFeedback extends React.Component {
   static contextTypes = {
     config: PropTypes.object
   }
-  handlePositive = (e) => {
+  handlePositive = e => {
     this.props.updateQueryTerm(EMOJI_POSITIVE)
     this.props.setFeedbackMessage(this.props.message.id)
     this.props.setFeedbackRating(EMOJI_POSITIVE)
@@ -48,10 +48,18 @@ class MessageFeedback extends React.Component {
 
     return (
       <div className='olachat-feedback'>
-        <button type='button' onClick={this.handlePositive} className='olachat-feedback-positive'>
+        <button
+          type='button'
+          onClick={this.handlePositive}
+          className='olachat-feedback-positive'
+        >
           <span className='emoji-thumbs-up' />
         </button>
-        <button type='button' onClick={this.handleNegative} className='olachat-feedback-negative'>
+        <button
+          type='button'
+          onClick={this.handleNegative}
+          className='olachat-feedback-negative'
+        >
           <span className='emoji-thumbs-down' />
         </button>
       </div>

@@ -45,17 +45,17 @@ class Message extends React.Component {
       slot_options: slotOptions,
       results,
       intent,
-      mc, /* Machine comprehension */
-      search, /* Search results */
-      totalResults, /* Total search results */
-      page, /* Current page */
-      spellSuggestions, /* Spell suggestions */
-      suggestedTerm, /* Term that was searched for */
+      mc /* Machine comprehension */,
+      search /* Search results */,
+      totalResults /* Total search results */,
+      page /* Current page */,
+      spellSuggestions /* Spell suggestions */,
+      suggestedTerm /* Term that was searched for */,
       originalQuery,
       error
     } = message
     let isBot = !userId
-    let text = isBot ? message.reply : (message.label || message.message)
+    let text = isBot ? message.reply : message.label || message.message
 
     let messageClass = cx('olachat-message', {
       'olachat-message-bot': isBot,
@@ -81,7 +81,7 @@ class Message extends React.Component {
     /**
      * Do not render SearchResultsMessage unless required. Takes a perf hit
      */
-    let isSearchActive  = false
+    let isSearchActive = false
     /**
      * If search is active && has results, the reply from the bot is { answer: { search : { title } } }
      * When MC is being loaded isLoadingMC, should we hide search results ?
@@ -93,16 +93,19 @@ class Message extends React.Component {
       isSearchActive = true
       /* Bot reply */
       text = `<p>
-        ${search
-          ? suggestedTerm
-            ? translate('could_not_find', { originalQuery, suggestedTerm })
-            : search.title
-          : translate('here_some_result')
-        }
+        ${
+  search
+    ? suggestedTerm
+      ? translate('could_not_find', { originalQuery, suggestedTerm })
+      : search.title
+    : translate('here_some_result')
+}
       </p>`
     } else {
       /* No results */
-      text = text || `<p>${search ? search.no_result : translate('sorry_no_result')}</p>`
+      text =
+        text ||
+        `<p>${search ? search.no_result : translate('sorry_no_result')}</p>`
     }
     // console.log(needsLocation, isSearchActive, text)
     if (needsLocation) text = ''
@@ -121,34 +124,28 @@ class Message extends React.Component {
               {isBot ? botName : userName}
             </div>
             <div className='olachat-message-content'>
-              {text
-                ? <div
-                    className='olachat-message-reply'
-                    dangerouslySetInnerHTML={createMessageMarkup(text)}
-                  />
-                : null
-              }
+              {text ? (
+                <div
+                  className='olachat-message-reply'
+                  dangerouslySetInnerHTML={createMessageMarkup(text)}
+                />
+              ) : null}
               <AnswerMC
                 mc={mc}
                 payload={{ messageId: message.id, bot: true }}
                 loader={isActive ? <Loader /> : null}
               />
-              <Card
-                card={card}
-              />
-              {false
-                ? null
-                : isSearchActive
-                  ? <SearchResultsMessage
-                      results={results}
-                      botName={botName}
-                      message={message}
-                      isActive={isActive}
-                      page={page}
-                      totalResults={totalResults}
-                    />
-                  : null
-              }
+              <Card card={card} />
+              {false ? null : isSearchActive ? (
+                <SearchResultsMessage
+                  results={results}
+                  botName={botName}
+                  message={message}
+                  isActive={isActive}
+                  page={page}
+                  totalResults={totalResults}
+                />
+              ) : null}
             </div>
             <div className='olachat-message-date'>
               {DateParser.format(timestamp * 1000, 'DD MMM h:mm a')}
@@ -168,22 +165,20 @@ class Message extends React.Component {
               message={message}
               log={log}
             />
-            {spellSuggestions && spellSuggestions.length
-              ? <TopicSuggestions
-                  onSubmit={addMessage}
-                  options={spellSuggestions.map(({ term }) => ({ label: term }))}
-                  isActive={isActive}
-                />
-              : null
-            }
-            {error
-              ? <FailureButtons
-                  message={message}
-                  onSubmit={addMessage}
-                  isActive={isActive}
-                />
-              : null
-            }
+            {spellSuggestions && spellSuggestions.length ? (
+              <TopicSuggestions
+                onSubmit={addMessage}
+                options={spellSuggestions.map(({ term }) => ({ label: term }))}
+                isActive={isActive}
+              />
+            ) : null}
+            {error ? (
+              <FailureButtons
+                message={message}
+                onSubmit={addMessage}
+                isActive={isActive}
+              />
+            ) : null}
             <MessageFeedback
               isBot={isBot}
               message={message}
@@ -197,4 +192,4 @@ class Message extends React.Component {
   }
 }
 
-export default Decorators.injectTranslate(Message)
+export default Decorators.withTranslate(Message)

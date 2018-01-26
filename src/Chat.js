@@ -3,10 +3,7 @@ import Header from './Header'
 import Input from './Input'
 import Messages from './Messages'
 import { connect } from 'react-redux'
-import {
-  addMessage,
-  updateBotQueryTerm
-} from './actions'
+import { addMessage, updateBotQueryTerm } from './actions'
 import { Actions, Decorators } from '@olasearch/core'
 import QuickReplies from './QuickReplies'
 
@@ -56,9 +53,7 @@ class Chat extends React.Component {
           location={this.props.location}
           newMessageId={this.props.newMessageId}
         />
-        <QuickReplies
-          onSubmit={this.addMessage}
-        />
+        <QuickReplies onSubmit={this.addMessage} />
         <Input
           onSubmit={this.addMessage}
           voiceAdapter={this.props.voiceAdapter}
@@ -90,5 +85,5 @@ function mapStateToProps (state) {
 
 export default connect(mapStateToProps, {
   addMessage,
-  updateQueryTerm: updateBotQueryTerm,
+  updateQueryTerm: updateBotQueryTerm
 })(Decorators.withLogger(Chat))

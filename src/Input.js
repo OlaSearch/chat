@@ -264,13 +264,9 @@ class Input extends React.Component {
             initialHeight={50}
           />
         </div>
-        {this.props.location
-          ? <GeoLocation
-              icon={<Navigation size={20} />}
-              showLabel={false}
-            />
-          : null
-        }
+        {this.props.location ? (
+          <GeoLocation icon={<Navigation size={20} />} showLabel={false} />
+        ) : null}
         {voiceInput && supportsVoice ? (
           <div className='olachat-input-voice'>
             <Voice
@@ -292,7 +288,7 @@ class Input extends React.Component {
 }
 
 export default connect(null)(
-  Decorators.injectTranslate(
+  Decorators.withTranslate(
     listensToClickOutside(Input, {
       getDocument (instance) {
         return instance.context.document || document

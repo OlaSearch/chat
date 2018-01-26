@@ -26,7 +26,7 @@
 }
 
 .olachat-messages-list {
-  padding: 12px 0;
+  padding: 1.5rem 0 12px 0;
   position: relative;
 }
 
@@ -202,6 +202,11 @@
       color: white;
     }
   }
+}
+
+/* Reply suggestion */
+.olachat-message-reply-suggestion {
+  // margin-bottom: 0;
 }
 
 

@@ -31,7 +31,12 @@ class QuickReplies extends React.PureComponent {
       <div className='olachat-smartsuggestions'>
         <div className='olachat-smartsuggestions-list'>
           {quickReplies.map(({ label, intent }, idx) => (
-            <QuickReplyButton key={idx} handleClick={this.handleClick} intent={intent} label={label} />
+            <QuickReplyButton
+              key={idx}
+              handleClick={this.handleClick}
+              intent={intent}
+              label={label}
+            />
           ))}
         </div>
       </div>
@@ -63,6 +68,8 @@ function mapStateToProps (state) {
   }
 }
 
-export default Decorators.withLogger(connect(mapStateToProps, {
-  updateQueryTerm: updateBotQueryTerm
-})(QuickReplies))
+export default Decorators.withLogger(
+  connect(mapStateToProps, {
+    updateQueryTerm: updateBotQueryTerm
+  })(QuickReplies)
+)

@@ -12,7 +12,7 @@ function notify ({ body, title, icon }) {
     Notification.requestPermission(function (status) {
       var n = new Notification(title, {
         body,
-        icon,
+        icon
       })
       n.onclick = function () {
         window.focus()

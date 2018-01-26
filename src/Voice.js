@@ -189,6 +189,4 @@ function mapStateToProps (state) {
     isPhone: state.Device.isPhone
   }
 }
-export default connect(mapStateToProps, null)(
-  Decorators.injectTranslate(Voice)
-)
+export default connect(mapStateToProps, null)(Decorators.withTranslate(Voice))

@@ -8,19 +8,18 @@ function Bubble ({ onClick, isActive, label, iconSize, showBubbleLabel }) {
   })
   const style = showBubbleLabel
     ? {
-        width: 280,
-      }
+      width: 280
+    }
     : {
-        width: 60,
-        padding: 0
-      }
+      width: 60,
+      padding: 0
+    }
   return (
     <button style={style} className={klass} onClick={onClick}>
       <span className='olachat-bubble-inner'>
-        {showBubbleLabel
-          ? <span className='olachat-bubble-text'>{label}</span>
-          : null
-        }
+        {showBubbleLabel ? (
+          <span className='olachat-bubble-text'>{label}</span>
+        ) : null}
         <Message size={iconSize} className='ola-icon' />
       </span>
     </button>

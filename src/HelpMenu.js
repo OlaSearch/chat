@@ -55,9 +55,7 @@ class HelpMenu extends React.Component {
     botLinks: []
   }
   shouldComponentUpdate (nextProps, nextState) {
-    return (
-      nextState !== this.state
-    )
+    return nextState !== this.state
   }
   render () {
     let klass = classNames('olachat-helpmenu', {
@@ -111,4 +109,6 @@ HelpMenuWrapper.contextTypes = {
   config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
 }
 
-module.exports = Decorators.injectTranslate(Decorators.withLogger(HelpMenuWrapper))
+module.exports = Decorators.withTranslate(
+  Decorators.withLogger(HelpMenuWrapper)
+)

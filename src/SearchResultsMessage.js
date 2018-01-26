@@ -84,10 +84,10 @@ function mapStateToProps (state, ownProps) {
     bookmarks: state.AppState.bookmarks,
     isPhone: state.Device.isPhone,
     perPage: state.Conversation.perPage,
-    isLoading: ownProps.isActive ? state.Conversation.isLoading : false,
+    isLoading: ownProps.isActive ? state.Conversation.isLoading : false
   }
 }
 
 export default connect(mapStateToProps, { loadMore, toggleSearchVisibility })(
-  Decorators.injectTranslate(SearchResultsMessage)
+  Decorators.withTranslate(SearchResultsMessage)
 )

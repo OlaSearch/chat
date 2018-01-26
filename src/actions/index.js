@@ -24,7 +24,14 @@ export function clearBotQueryTerm () {
 export function addMessage (payload) {
   return (dispatch, getState) => {
     var state = getState()
-    var { messages, language, perPage, q, page, facet_query } = state.Conversation
+    var {
+      messages,
+      language,
+      perPage,
+      q,
+      page,
+      facet_query
+    } = state.Conversation
     /* Get filters from Search Query */
     var { filters } = state.QueryState
     var context = state.Context
@@ -61,7 +68,7 @@ export function addMessage (payload) {
       q,
       label,
       page,
-      per_page: RESULTS_FOR_MC, /* Always fetch 12 results from search engine. MC expects top 10 results */
+      per_page: RESULTS_FOR_MC /* Always fetch 12 results from search engine. MC expects top 10 results */,
       facet_query,
       filters,
       msgId,
@@ -110,7 +117,7 @@ export function addMessage (payload) {
           query,
           context,
           api,
-          processData: (response) => {
+          processData: response => {
             if (!response.results) return response
             return {
               ...response,
@@ -197,7 +204,7 @@ export function loadMore (message) {
       msgId: message.id,
       searchAdapterOptions
     }
-    
+
     /* Execute a search with appendResult: true */
     return dispatch({
       types: [
