@@ -1,5 +1,6 @@
 import React from 'react'
 import Voice from './../Voice'
+import { Decorators } from '@olasearch/core'
 
 class SearchInput extends React.Component {
   constructor (props) {
