@@ -7,8 +7,8 @@
   -moz-animation: 0.2s ease-out 0s 1 fadeIn;
 
   @include media (tablet) {
-    border: 1px #ccc solid;
-    box-shadow: $small-box-shadow;
+    // border: 1px #ccc solid;
+    box-shadow: $sharp-box-shadow;
   }
   @include media (desktop) {
     border-radius: 5px;

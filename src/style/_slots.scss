@@ -15,12 +15,13 @@
   background-color: white;
   border: 1px $light-grey-color solid;
   color: $link-color;  
-  padding: 0.8rem 1rem;
+  padding: 0.6rem 1rem;
   font-size: 14px;
+  line-height: 1.5;
   white-space: nowrap;
   display: block;
   width: 100%;
-  // margin-bottom: 1px; /* Border gets cut off because of overflow-x:auto in parent container */
+  min-width: 80px;
 
   margin-bottom: -1px;
 
@@ -36,8 +37,8 @@
 
   @include media (tablet) {
     border-radius: 20px;
-    padding: 0.6rem 1rem;
-    margin: 8px 8px 1px 0;
+    padding: 0.45rem 1rem;
+    margin: 0.5rem 0.5rem 1px 0;
     color: $base-color;
     font-weight: 600;
   }

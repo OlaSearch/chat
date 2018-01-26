@@ -5,6 +5,10 @@ button,hr,input{overflow:visible}audio,canvas,progress,video{display:inline-bloc
   line-height: 1.5;
   font-family: 'Open Sans', sans-serif;
   color: #4A4A4A;
+
+  button {
+    line-height: 1.5;
+  }
 }
 /* / Iframe */
 

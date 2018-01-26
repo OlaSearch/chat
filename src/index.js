@@ -14,6 +14,7 @@ import notificationMiddleware from './middleware/notificationMiddleware'
 import version from './Version'
 import { EMOJI_LIST } from './Settings'
 import { createMessageMarkup } from './utils'
+import translations from './translations'
 
 export {
   Input,
@@ -31,5 +32,6 @@ export {
   EMOJI_LIST,
   persistMiddleware,
   notificationMiddleware,
-  createMessageMarkup
+  createMessageMarkup,
+  translations
 }

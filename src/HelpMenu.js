@@ -63,7 +63,7 @@ class HelpMenu extends React.Component {
     let klass = classNames('olachat-helpmenu', {
       'olachat-helpmenu-open': this.state.isOpen
     })
-    let { botLinks } = this.props
+    let { botLinks, translate } = this.props
     return (
       <div className={klass}>
         <button
@@ -74,7 +74,7 @@ class HelpMenu extends React.Component {
           <Menu />
         </button>
         <div className='olachat-dp'>
-          <div className='olachat-dp-title'>Menu</div>
+          <div className='olachat-dp-title'>{translate('menu_label')}</div>
           <div className='olachat-dp-body'>
             {botLinks.map(({ title, url }, idx) => {
               return (
@@ -111,4 +111,4 @@ HelpMenuWrapper.contextTypes = {
   config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
 }
 
-module.exports = Decorators.withLogger(HelpMenuWrapper)
+module.exports = Decorators.injectTranslate(Decorators.withLogger(HelpMenuWrapper))

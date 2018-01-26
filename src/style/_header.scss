@@ -48,6 +48,7 @@
   bottom: 0;
   width: 70px;
   color: white;
+  padding: 0;
 
   &:active, &:focus {
     background: darken($blue, 10%);
