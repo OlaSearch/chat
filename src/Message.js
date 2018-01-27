@@ -75,7 +75,7 @@ class Message extends React.Component {
      *
      */
     let needsLocation = isActive
-      ? message.location && !location
+      ? message.location
       : message.location
 
     /**
@@ -94,12 +94,12 @@ class Message extends React.Component {
       /* Bot reply */
       text = `<p>
         ${
-  search
-    ? suggestedTerm
-      ? translate('could_not_find', { originalQuery, suggestedTerm })
-      : search.title
-    : translate('here_some_result')
-}
+            search
+              ? suggestedTerm
+                ? translate('could_not_find', { originalQuery, suggestedTerm })
+                : search.title
+              : translate('here_some_result')
+          }
       </p>`
     } else {
       /* No results */
@@ -107,8 +107,6 @@ class Message extends React.Component {
         text ||
         `<p>${search ? search.no_result : translate('sorry_no_result')}</p>`
     }
-    // console.log(needsLocation, isSearchActive, text)
-    if (needsLocation) text = ''
 
     return (
       <div className={messageClass}>

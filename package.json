@@ -4,7 +4,8 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "BABEL_ENV=production mocha --compilers js:babel-register --recursive --require ./test/setup.js",
+    "test": "jest",
+    "test:watch": "npm run test -- --watch",
     "watch": "babel --watch src --out-dir lib",
     "standard": "standard --verbose --fix src/*",
     "release": "NODE_ENV=production webpack --display-optimization-bailout --config webpack.release.js",
@@ -30,17 +31,33 @@
       "/node_modules"
     ]
   },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|svg|css|scss)$": "<rootDir>/__tests__/fileMock.js",
+      "@olasearch/core": "<rootDir>/../npm-olasearch"
+    },
+    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setup.js",
+    "collectCoverage": false,
+    "collectCoverageFrom": [
+      "**/src/**"
+    ],
+    "testMatch": ["**/*.spec.js"]
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
+    "babel-jest": "^22.1.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.9",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "expect": "^22.1.0",
+    "jest": "^22.1.4",
     "jsdom": "^11.6.0",
     "lint-staged": "^6.0.1",
     "mocha": "^5.0.0",
@@ -52,6 +69,7 @@
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "regenerator-runtime": "^0.11.1",
     "sass-loader": "^6.0.6",
     "standard": "^10.0.3",
     "style-loader": "^0.19.1",

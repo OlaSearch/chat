@@ -23,9 +23,12 @@
 .ola-link-geo {
   @extend .ola-chat-btn;
 
-  &:hover, &:focus, &:active {
-    background: $blue;
-    color: white;
+  /* Inside the message */
+  .olachat-message & {
+    &:hover, &:focus, &:active {
+      background: $blue;
+      color: white;
+    }
   }
 }
 

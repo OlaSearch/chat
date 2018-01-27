@@ -123,12 +123,19 @@
  */
 .olachat-message-date {
   position: absolute;
-  right: 0;
-  top: 0;
+  text-align: right;
   font-size: 11px;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
+  top: -20px;
+  right: 0.5rem;
   display: none;
+
+  .olachat-message-bot & {    
+    left: 0.5rem;
+    right: auto;
+    text-align: left;
+  }
 
   .olachat-message:hover & {
     opacity: 0.5;
