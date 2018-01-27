@@ -1,8 +1,7 @@
 image: node:6.4
 before_script:
-  - npm install -g yarn
-  - yarn install
+  - npm install install
 
 test:
   script:
-  - yarn test
+  - npm run test
