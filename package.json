@@ -33,8 +33,7 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|svg|css|scss)$": "<rootDir>/__tests__/fileMock.js",
-      "@olasearch/core": "<rootDir>/../npm-olasearch"
+      "\\.(jpg|jpeg|png|svg|css|scss)$": "<rootDir>/__tests__/fileMock.js"
     },
     "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setup.js",
     "collectCoverage": false,
