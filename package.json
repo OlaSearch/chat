@@ -9,7 +9,8 @@
     "watch": "babel --watch src --out-dir lib",
     "standard": "standard --verbose --fix src/*",
     "release": "NODE_ENV=production webpack --display-optimization-bailout --config webpack.release.js",
-    "prettier-standard": "prettier-standard 'src/**/*.js'"
+    "prettier-standard": "prettier-standard 'src/**/*.js'",
+    "prettier": "yarn prettier-standard && git add src/ lib / && git status"
   },
   "author": "",
   "license": "Copyright Ola Search Pte Ltd",
@@ -17,8 +18,9 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
-  "lint-staged": [
-    "prettier-standard"
+  "pre-commit": [
+    "test",
+    "prettier"
   ],
   "prettier": {
     "semi": false
@@ -59,8 +61,8 @@
     "expect": "^22.1.0",
     "jest": "^22.1.4",
     "jsdom": "^11.6.1",
-    "lint-staged": "^6.1.0",
     "node-sass": "^4.7.2",
+    "pre-commit": "^1.2.2",
     "prettier-standard": "^8.0.0",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
