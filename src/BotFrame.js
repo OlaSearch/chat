@@ -5,7 +5,8 @@ import Frame from 'react-frame-component'
 import { connect } from 'react-redux'
 import { Decorators, Settings as OlaSettings } from '@olasearch/core'
 import { triggerMouseEvent } from './utils'
-import { OLACHAT_IFRAME_ID } from './Settings'
+import { OLACHAT_IFRAME_ID, BOT_ZINDEX, BOT_WIDTH_ACTIVE, BUBBLE_HEIGHT_MOBILE, BUBBLE_WIDTH_DESKTOP, BUBBLE_WIDTH_MOBILE, BUBBLE_SPACING, BUBBLE_FULL_WIDTH_DESKTOP, BUBBLE_FULL_WIDTH_MOBILE, BUBBLE_FULL_HEIGHT } from './Settings'
+
 
 const { STYLE_TAG_ID, MODAL_ROOT_CLASSNAME } = OlaSettings
 
@@ -16,22 +17,23 @@ class BotFrame extends React.Component {
     this.addedMessageClickEvent = false
   }
   static defaultProps = {
-    width: 300,
-    widthMobile: 80,
+    width: BUBBLE_FULL_WIDTH_DESKTOP,
+    widthMobile: BUBBLE_FULL_WIDTH_MOBILE,
     showBubbleLabel: true,
-    widthActive: 880,
-    height: 80,
+    widthActive: BOT_WIDTH_ACTIVE,
+    height: BUBBLE_FULL_HEIGHT,
     heightActive: '100%',
     /* Flag to add the chatbot as an inline element */
     inline: false,
-    zIndex: 99999999,
+    zIndex: BOT_ZINDEX,
     iframeStyle: {
       border: 'none',
       maxWidth: '100%'
     },
     cssUrl: 'https://cdn.olasearch.com/assets/css/olasearch.core.min.css',
     activeStyle: {},
-    initialContent: `<!DOCTYPE html>
+    initialContent: `
+      <!doctype html>
       <html class='olachat-html'>
         <head>
           <base target='_parent'>
@@ -39,7 +41,8 @@ class BotFrame extends React.Component {
         <body class='olachat-body'>
           <div class='frame-root'></div>
         </body>
-      </html>`
+      </html>
+    `
   }
   static propTypes = {
     showBubbleLabel: PropTypes.bool
@@ -107,12 +110,12 @@ class BotFrame extends React.Component {
         : {
           ...(inline
             ? {
-              height: 80
+              height: BUBBLE_FULL_HEIGHT
             }
             : {
-              bottom: 10,
+              bottom: BUBBLE_SPACING,
               top: 'auto',
-              right: 10,
+              right: BUBBLE_SPACING,
               left: 'auto',
               width: showBubbleLabel ? width : widthMobile,
               height,
@@ -137,7 +140,11 @@ class BotFrame extends React.Component {
         initialContent={this.props.initialContent}
         title='Ola Chat'
       >
-        <Bot {...this.props} showBubbleLabel={showBubbleLabel} iFrame />
+        <Bot
+          {...this.props}
+          showBubbleLabel={showBubbleLabel}
+          iFrame
+        />
       </Frame>
     )
   }
@@ -150,4 +157,4 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps)(Decorators.withLogger(BotFrame))
+export default connect(mapStateToProps)(Decorators.withLogger(BotFrame))

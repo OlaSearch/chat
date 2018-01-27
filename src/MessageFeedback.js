@@ -66,7 +66,7 @@ class MessageFeedback extends React.Component {
   }
 }
 
-module.exports = connect(null, {
+export default connect(null, {
   activateFeedback,
   disabledFeedback,
   setFeedbackMessage,

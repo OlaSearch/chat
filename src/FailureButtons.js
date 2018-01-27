@@ -2,7 +2,7 @@ import React from 'react'
 import Repeat from '@olasearch/icons/lib/repeat'
 import { Decorators } from '@olasearch/core'
 
-const FailureButtons = ({ onSubmit, message, isActive, translate }) => {
+function FailureButtons ({ onSubmit, message, isActive, translate }) {
   return (
     <div className='olachat-slots'>
       <small>{translate('something_went_wrong')}</small>
@@ -21,4 +21,4 @@ const FailureButtons = ({ onSubmit, message, isActive, translate }) => {
   )
 }
 
-module.exports = Decorators.withTranslate(FailureButtons)
+export default Decorators.withTranslate(FailureButtons)

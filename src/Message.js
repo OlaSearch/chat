@@ -112,6 +112,7 @@ class Message extends React.Component {
 
     return (
       <div className={messageClass}>
+        {/* Message flex */}
         <div className='olachat-message-inner'>
           <Avatar
             isBot={isBot}
@@ -196,6 +197,7 @@ class Message extends React.Component {
             ) : null}
           </div>
         </div>
+        {/* / Message flex */}
       </div>
     )
   }

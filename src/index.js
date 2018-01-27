@@ -1,37 +1,17 @@
-import Messages from './Messages'
-import Input from './Input'
-import Header from './Header'
-import Chat from './Chat'
-import Vui from './Vui'
-import Bot from './Bot'
-import BotFrame from './BotFrame'
-import Card from './Card'
-import ChatReducer from './reducers'
-import Avatar from './Avatar'
-import * as ChatActions from './actions'
-import persistMiddleware from './middleware/persistMiddleware'
-import notificationMiddleware from './middleware/notificationMiddleware'
-import version from './Version'
-import { EMOJI_LIST } from './Settings'
-import { createMessageMarkup } from './utils'
-import translations from './translations'
-
-export {
-  Input,
-  Header,
-  Messages,
-  Avatar,
-  Chat,
-  Vui,
-  Bot,
-  BotFrame,
-  Card,
-  ChatReducer,
-  ChatActions,
-  version,
-  EMOJI_LIST,
-  persistMiddleware,
-  notificationMiddleware,
-  createMessageMarkup,
-  translations
-}
+export Messages from './Messages'
+export Input from './Input'
+export Header from './Header'
+export Chat from './Chat'
+export Vui from './Vui'
+export Bot from './Bot'
+export BotFrame from './BotFrame'
+export Card from './Card'
+export ChatReducer from './reducers'
+export Avatar from './Avatar'
+export * as ChatActions from './actions'
+export persistMiddleware from './middleware/persistMiddleware'
+export notificationMiddleware from './middleware/notificationMiddleware'
+export version from './Version'
+export { EMOJI_LIST } from './Settings'
+export { createMessageMarkup } from './utils'
+export translations from './translations'

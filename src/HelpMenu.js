@@ -109,6 +109,6 @@ HelpMenuWrapper.contextTypes = {
   config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
 }
 
-module.exports = Decorators.withTranslate(
+export default Decorators.withTranslate(
   Decorators.withLogger(HelpMenuWrapper)
 )

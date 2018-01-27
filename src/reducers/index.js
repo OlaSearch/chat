@@ -24,14 +24,14 @@ const initialState = {
   facet_query: EMPTY_ARRAY
 }
 
-const createMessageObj = ({
+function createMessageObj ({
   answer,
   results,
   mc,
   totalResults,
   page = 1,
   ...rest
-}) => {
+}) {
   return {
     ...answer,
     mc,
@@ -44,7 +44,7 @@ const createMessageObj = ({
   }
 }
 
-const createTypingMsg = msgId => {
+function createTypingMsg (msgId) {
   return {
     id: utilities.uuid(),
     msgId,

@@ -1,7 +1,7 @@
 import React from 'react'
 import Cross from '@olasearch/icons/lib/x'
 
-function Header ({ onHide, title }) {
+export default function Header ({ onHide, title }) {
   if (!title && !onHide) return null
   return (
     <div className='olachat-header'>
@@ -14,5 +14,3 @@ function Header ({ onHide, title }) {
     </div>
   )
 }
-
-export default Header

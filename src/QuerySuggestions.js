@@ -48,4 +48,4 @@ function QuerySuggestionItem ({ queryTerm, term, onChange, isActive }) {
   )
 }
 
-module.exports = QuerySuggestions
+export default QuerySuggestions

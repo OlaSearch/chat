@@ -29,7 +29,7 @@ try {
   /* pass */
 }
 
-class Messages extends React.Component {
+export default class Messages extends React.Component {
   constructor (props) {
     super(props)
     this.scrollTop = 0
@@ -285,4 +285,3 @@ class Messages extends React.Component {
   }
 }
 
-export default Messages

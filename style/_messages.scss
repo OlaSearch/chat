@@ -38,7 +38,7 @@
 .olachat-message {  
   font-size: 14px;
   @include clearfix;
-  padding: 0 16px 0.5rem 12px;
+  padding: 0 1rem 0.5rem 12px; /* Cos the logo is [4 + 32 + 4] */
   min-height: 56px;
   animation: slideUpFade 0.2s linear;
 

@@ -23,12 +23,7 @@ class Chat extends React.Component {
   }
   addMessage = args => {
     /* Add message */
-    return this.props.addMessage(args).then(reply => {
-      /* Scroll to Top after bot replies */
-      // this.MessageContainer.scrollToView()
-
-      return reply
-    })
+    return this.props.addMessage(args)
   }
   registerRef = el => {
     this.MessageContainer = el

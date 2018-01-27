@@ -20,9 +20,10 @@ function persistState (action, getState, namespace) {
   }
 }
 
-module.exports = ({ namespace }) =>
-  createPersistMiddleware({
+export default function ({ namespace }) {
+  return createPersistMiddleware({
     namespace,
     types: types.REQUEST_BOT_SUCCESS,
     callback: debouncePersist
   })
+}

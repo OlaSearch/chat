@@ -1,17 +1,18 @@
 import React from 'react'
 import classNames from 'classnames'
 import Message from '@olasearch/icons/lib/message-square'
+import { BUBBLE_WIDTH_DESKTOP, BUBBLE_WIDTH_MOBILE } from './Settings'
 
-function Bubble ({ onClick, isActive, label, iconSize, showBubbleLabel }) {
+export default function Bubble ({ onClick, isActive, label, iconSize, showBubbleLabel }) {
   let klass = classNames('olachat-bubble', {
     'olachat-bubble-active': isActive
   })
   const style = showBubbleLabel
     ? {
-      width: 280
+      width: BUBBLE_WIDTH_DESKTOP
     }
     : {
-      width: 60,
+      width: BUBBLE_WIDTH_MOBILE,
       padding: 0
     }
   return (
@@ -30,5 +31,3 @@ Bubble.defaultProps = {
   label: 'Ask me anything',
   iconSize: 34
 }
-
-module.exports = Bubble

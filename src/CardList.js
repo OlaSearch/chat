@@ -60,4 +60,4 @@ function CardList ({ title, elements, buttons }) {
   )
 }
 
-module.exports = CardList
+export default CardList

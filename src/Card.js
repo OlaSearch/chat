@@ -6,7 +6,7 @@ import AnswerMap from '@olasearch/core/lib/components/Answer/AnswerMap'
 import { Fields } from '@olasearch/core'
 // import AnswerChart from 'olasearch/lib/components/Answer/AnswerChart'
 
-function Card ({ card, templates }) {
+export default function Card ({ card, templates }) {
   if (!card) return null
   if (!card.title) return null
   let { buttons = [], template } = card
@@ -62,5 +62,3 @@ function Card ({ card, templates }) {
 
   return <div className={klass}>{pickTemplate(template)}</div>
 }
-
-module.exports = Card

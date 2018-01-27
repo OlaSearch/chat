@@ -165,7 +165,7 @@ function mapStateToProps (state) {
   }
 }
 
-module.exports = connect(mapStateToProps, {
+export default connect(mapStateToProps, {
   clearMessages,
   setBotStatus,
   clearBotQueryTerm

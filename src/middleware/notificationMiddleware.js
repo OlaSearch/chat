@@ -20,7 +20,7 @@ function notify ({ body, title, icon }) {
     })
   }
 }
-module.exports = ({ name, icon }) => {
+export default function ({ name, icon }) {
   return ({ dispatch, getState }) => next => action => {
     if (action.type === types.REQUEST_BOT_SUCCESS) {
       if (!action.answer) return next(action)
