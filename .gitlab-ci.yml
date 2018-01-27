@@ -1,6 +1,6 @@
 image: node:6.4
 before_script:
-  - npm install install
+  - npm install
 
 test:
   script:
