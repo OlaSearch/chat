@@ -68,6 +68,4 @@ function QuickReplyButton ({ label, value, intent, handleClick, isActive }) {
   )
 }
 
-export default connect(null, {
-  updateQueryTerm: updateBotQueryTerm
-})(SlotOptions)
+export default SlotOptions

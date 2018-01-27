@@ -7,8 +7,7 @@ import {
   disabledFeedback,
   setFeedbackMessage,
   setFeedbackRating,
-  logFeedback,
-  updateBotQueryTerm
+  logFeedback
 } from './actions'
 import {
   IGNORE_FEEDBACK_INTENTS,
@@ -72,6 +71,5 @@ module.exports = connect(null, {
   disabledFeedback,
   setFeedbackMessage,
   setFeedbackRating,
-  logFeedback,
-  updateQueryTerm: updateBotQueryTerm
+  logFeedback
 })(MessageFeedback)

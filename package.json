@@ -1,7 +1,7 @@
 {
   "name": "@olasearch/chat",
-  "version": "1.0.2",
-  "description": "",
+  "version": "2.0.0",
+  "description": "Chat User Interface elements",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
@@ -58,8 +58,8 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "expect": "^22.1.0",
     "jest": "^22.1.4",
-    "jsdom": "^11.6.0",
-    "lint-staged": "^6.0.1",
+    "jsdom": "^11.6.1",
+    "lint-staged": "^6.1.0",
     "node-sass": "^4.7.2",
     "prettier-standard": "^8.0.0",
     "prop-types": "^15.6.0",
@@ -71,8 +71,8 @@
     "regenerator-runtime": "^0.11.1",
     "sass-loader": "^6.0.6",
     "standard": "^10.0.3",
-    "style-loader": "^0.19.1",
-    "webpack": "^3.9.0",
+    "style-loader": "^0.20.1",
+    "webpack": "^3.10.0",
     "webpack-bundle-size-analyzer": "^2.7.0",
     "webpack-dev-middleware": "^2.0.4",
     "webpack-hot-middleware": "^2.21.0"

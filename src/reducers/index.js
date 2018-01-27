@@ -138,7 +138,11 @@ export default (state = initialState, action) => {
           if (item.id === in_response_to) {
             return {
               ...item,
-              ...(suggestedTerm ? {} : { message })
+              message:
+                item.message === message
+                  ? item.message
+                  : message /* To prevent re-render */,
+              suggestedTerm
             }
           }
           /**

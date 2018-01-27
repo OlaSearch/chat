@@ -29,6 +29,7 @@ class BotFrame extends React.Component {
       border: 'none',
       maxWidth: '100%'
     },
+    cssUrl: 'https://cdn.olasearch.com/assets/css/olasearch.core.min.css',
     activeStyle: {},
     initialContent: `<!DOCTYPE html>
       <html class='olachat-html'>
@@ -123,7 +124,15 @@ class BotFrame extends React.Component {
     return (
       <Frame
         style={frameStyles}
-        head={this.props.head}
+        head={
+          <div>
+            <link rel='stylesheet' href={this.props.cssUrl} />
+            <meta
+              name='viewport'
+              content='width=device-width, initial-scale=1'
+            />
+          </div>
+        }
         id={OLACHAT_IFRAME_ID}
         initialContent={this.props.initialContent}
         title='Ola Chat'

@@ -34,7 +34,8 @@ class Message extends React.Component {
       isActive,
       log,
       location,
-      translate
+      translate,
+      updateQueryTerm
     } = this.props
     let {
       userId,
@@ -52,7 +53,8 @@ class Message extends React.Component {
       spellSuggestions /* Spell suggestions */,
       suggestedTerm /* Term that was searched for */,
       originalQuery,
-      error
+      error,
+      quick_replies: quickReplies
     } = message
     let isBot = !userId
     let text = isBot ? message.reply : message.label || message.message
@@ -64,7 +66,9 @@ class Message extends React.Component {
         typeof awaitingUserInput !== 'undefined' && !awaitingUserInput,
       'olachat-message-wide': !!card,
       'olachat-message-with-search': results && results.length > 0,
-      'olachat-message-error': error
+      'olachat-message-error': error,
+      'olachat-message-active': isActive,
+      'olachat-message-with-qr': quickReplies && quickReplies.length
     })
     /**
      * Show location prompt if
@@ -74,9 +78,7 @@ class Message extends React.Component {
      * isActive message, needs location
      *
      */
-    let needsLocation = isActive
-      ? message.location
-      : message.location
+    let needsLocation = isActive ? message.location : message.location
 
     /**
      * Do not render SearchResultsMessage unless required. Takes a perf hit
@@ -94,12 +96,12 @@ class Message extends React.Component {
       /* Bot reply */
       text = `<p>
         ${
-            search
-              ? suggestedTerm
-                ? translate('could_not_find', { originalQuery, suggestedTerm })
-                : search.title
-              : translate('here_some_result')
-          }
+  search
+    ? suggestedTerm
+      ? translate('could_not_find', { originalQuery, suggestedTerm })
+      : search.title
+    : translate('here_some_result')
+}
       </p>`
     } else {
       /* No results */
@@ -134,7 +136,7 @@ class Message extends React.Component {
                 loader={isActive ? <Loader /> : null}
               />
               <Card card={card} />
-              {false ? null : isSearchActive ? (
+              {isSearchActive ? (
                 <SearchResultsMessage
                   results={results}
                   botName={botName}
@@ -148,26 +150,32 @@ class Message extends React.Component {
             <div className='olachat-message-date'>
               {DateParser.format(timestamp * 1000, 'DD MMM h:mm a')}
             </div>
-            <Geo
-              location={location}
-              needsLocation={needsLocation}
-              message={message}
-              onSubmit={addMessage}
-              isActive={isActive}
-            />
-            <SlotOptions
-              onSubmit={addMessage}
-              options={slotOptions}
-              isActive={isActive}
-              intent={intent}
-              message={message}
-              log={log}
-            />
-            {spellSuggestions && spellSuggestions.length ? (
+            {isBot ? (
+              <Geo
+                location={location}
+                needsLocation={needsLocation}
+                message={message}
+                onSubmit={addMessage}
+                isActive={isActive}
+              />
+            ) : null}
+            {isBot ? (
+              <SlotOptions
+                onSubmit={addMessage}
+                updateQueryTerm={updateQueryTerm}
+                options={slotOptions}
+                isActive={isActive}
+                intent={intent}
+                message={message}
+                log={log}
+              />
+            ) : null}
+            {isBot && spellSuggestions && spellSuggestions.length ? (
               <TopicSuggestions
                 onSubmit={addMessage}
                 options={spellSuggestions.map(({ term }) => ({ label: term }))}
                 isActive={isActive}
+                updateQueryTerm={updateQueryTerm}
               />
             ) : null}
             {error ? (
@@ -177,12 +185,15 @@ class Message extends React.Component {
                 isActive={isActive}
               />
             ) : null}
-            <MessageFeedback
-              isBot={isBot}
-              message={message}
-              isActive={isActive}
-              onSubmit={addMessage}
-            />
+            {isBot ? (
+              <MessageFeedback
+                isBot={isBot}
+                message={message}
+                isActive={isActive}
+                onSubmit={addMessage}
+                updateQueryTerm={updateQueryTerm}
+              />
+            ) : null}
           </div>
         </div>
       </div>

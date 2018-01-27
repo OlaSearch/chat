@@ -38,6 +38,4 @@ const TopicSuggestions = ({ options, onSubmit, updateQueryTerm, isActive }) => {
   )
 }
 
-export default connect(null, {
-  updateQueryTerm: updateBotQueryTerm
-})(TopicSuggestions)
+export default TopicSuggestions

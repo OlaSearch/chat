@@ -1,4 +1,4 @@
-.olachat-smartsuggestions {
+.olachat-quickreplies {
   font-size: 14px;
   background-color: transparent;
   animation: 0.3s ease-in-out 0s 1 slideUp;
@@ -16,12 +16,12 @@
 }
 
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
-  .olachat-smartsuggestions {
+  .olachat-quickreplies {
     animation: none;
   }
 }
 
-.olachat-smartsuggestions-button {
+.olachat-quickreplies-button {
   border-radius: 20px;
   // border: 1px $blue solid;
   border: none;
@@ -49,7 +49,7 @@
   }
 }
 
-.olachat-smartsuggestions-list {
+.olachat-quickreplies-list {
   
   padding: 12px;
   display: flex;

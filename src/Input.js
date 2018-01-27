@@ -228,9 +228,9 @@ class Input extends React.Component {
       nextProps.isTyping !== this.props.isTyping ||
       nextProps.location !== this.props.location ||
       nextState.text !== this.state.text ||
-      nextState.suggestions !== this.state.suggestions ||
       nextState.suggestedTerm !== this.state.suggestedTerm ||
-      nextState.suggestedIndex !== this.state.suggestedIndex
+      nextState.suggestedIndex !== this.state.suggestedIndex ||
+      nextState.suggestions !== this.state.suggestions
     )
   }
   render () {

@@ -263,6 +263,7 @@ class Messages extends React.Component {
                 log={this.props.log}
                 location={this.props.location}
                 isMounted={this.isComponentMounted}
+                updateQueryTerm={this.props.updateQueryTerm}
               />
             )}
           </div>

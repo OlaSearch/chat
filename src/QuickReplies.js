@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { updateBotQueryTerm } from './actions'
 import { Decorators } from '@olasearch/core'
 import { EMPTY_ARRAY } from './Settings'
 
@@ -28,8 +27,8 @@ class QuickReplies extends React.PureComponent {
     let { quickReplies } = this.props
     if (!quickReplies || !quickReplies.length) return null
     return (
-      <div className='olachat-smartsuggestions'>
-        <div className='olachat-smartsuggestions-list'>
+      <div className='olachat-quickreplies'>
+        <div className='olachat-quickreplies-list'>
           {quickReplies.map(({ label, intent }, idx) => (
             <QuickReplyButton
               key={idx}
@@ -51,7 +50,7 @@ function QuickReplyButton ({ label, intent, handleClick, isActive }) {
 
   return (
     <button
-      className='olachat-smartsuggestions-button'
+      className='olachat-quickreplies-button'
       type='button'
       onClick={onClick}
     >
@@ -68,8 +67,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default Decorators.withLogger(
-  connect(mapStateToProps, {
-    updateQueryTerm: updateBotQueryTerm
-  })(QuickReplies)
-)
+export default Decorators.withLogger(connect(mapStateToProps)(QuickReplies))

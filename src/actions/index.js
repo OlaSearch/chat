@@ -36,7 +36,7 @@ export function addMessage (payload) {
     var { filters } = state.QueryState
     var context = state.Context
     var intent = {}
-    var label = q
+    var label = null
     var msgId = uuid()
     var in_response_to = messages.length
       ? messages[messages.length - 1]['id']
