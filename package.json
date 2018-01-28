@@ -83,7 +83,7 @@
     "@olasearch/alite": "^1.0.5",
     "@olasearch/core": "git+https://gitlab-ci-token:2ifVEexGsujyWB4NXMZ4@gitlab.com/olasearch/olasearch-core.git",
     "@olasearch/icons": "^1.0.0",
-    "@olasearch/react-onclickoutside": "^1.0.0",
+    "@olasearch/react-onclickoutside": "^6.7.1-rc",
     "@olasearch/textarea-elastic": "^1.0.2",
     "classnames": "^2.2.5",
     "mitt": "^1.1.3",

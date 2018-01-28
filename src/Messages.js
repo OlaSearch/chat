@@ -273,7 +273,9 @@ export default class Messages extends React.Component {
       <div className='olachat-messages' ref={this.registerRef}>
         {this.state.shouldRender ? (
           <div className='olachat-messages-wrapper'>
-            <div className='olachat-messages-list'>{messagesComponent}</div>
+            <div className='olachat-messages-list'>
+              {messagesComponent}
+            </div>
           </div>
         ) : (
           <div className='olachat-message-loader'>
