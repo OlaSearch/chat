@@ -5,8 +5,18 @@ import Frame from 'react-frame-component'
 import { connect } from 'react-redux'
 import { Decorators, Settings as OlaSettings } from '@olasearch/core'
 import { triggerMouseEvent } from './utils'
-import { OLACHAT_IFRAME_ID, BOT_ZINDEX, BOT_WIDTH_ACTIVE, BUBBLE_HEIGHT_MOBILE, BUBBLE_WIDTH_DESKTOP, BUBBLE_WIDTH_MOBILE, BUBBLE_SPACING, BUBBLE_FULL_WIDTH_DESKTOP, BUBBLE_FULL_WIDTH_MOBILE, BUBBLE_FULL_HEIGHT } from './Settings'
-
+import {
+  OLACHAT_IFRAME_ID,
+  BOT_ZINDEX,
+  BOT_WIDTH_ACTIVE,
+  BUBBLE_HEIGHT_MOBILE,
+  BUBBLE_WIDTH_DESKTOP,
+  BUBBLE_WIDTH_MOBILE,
+  BUBBLE_SPACING,
+  BUBBLE_FULL_WIDTH_DESKTOP,
+  BUBBLE_FULL_WIDTH_MOBILE,
+  BUBBLE_FULL_HEIGHT
+} from './Settings'
 
 const { STYLE_TAG_ID, MODAL_ROOT_CLASSNAME } = OlaSettings
 
@@ -140,11 +150,7 @@ class BotFrame extends React.Component {
         initialContent={this.props.initialContent}
         title='Ola Chat'
       >
-        <Bot
-          {...this.props}
-          showBubbleLabel={showBubbleLabel}
-          iFrame
-        />
+        <Bot {...this.props} showBubbleLabel={showBubbleLabel} iFrame />
       </Frame>
     )
   }

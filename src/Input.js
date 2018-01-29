@@ -11,10 +11,11 @@ import Send from '@olasearch/icons/lib/arrow-right-circle'
 import { GeoLocation } from '@olasearch/core'
 import Navigation from '@olasearch/icons/lib/navigation'
 
-const supportsVoice = (
-  navigator.getUserMedia ||
-  navigator.webkitGetUserMedia ||
-  navigator.mozGetUserMedia) && (window.SpeechRecognition || window.webkitSpeechRecognition)
+const supportsVoice =
+  (navigator.getUserMedia ||
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia) &&
+  (window.SpeechRecognition || window.webkitSpeechRecognition)
 
 class Input extends React.Component {
   constructor (props) {

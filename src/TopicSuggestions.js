@@ -4,7 +4,12 @@ import TransitionGroup from 'react-transition-group/TransitionGroup'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import { updateBotQueryTerm } from './actions'
 
-export default function TopicSuggestions ({ options, onSubmit, updateQueryTerm, isActive }) {
+export default function TopicSuggestions ({
+  options,
+  onSubmit,
+  updateQueryTerm,
+  isActive
+}) {
   const replies = options.map(({ label }, idx) => {
     return (
       <CSSTransition

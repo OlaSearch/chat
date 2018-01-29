@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { addMessage, updateBotQueryTerm } from './actions'
 import { Actions, Decorators } from '@olasearch/core'
 import QuickReplies from './QuickReplies'
+import OfflineIndicator from './OfflineIndicator'
 
 class Chat extends React.Component {
   static defaultProps = {
@@ -32,6 +33,7 @@ class Chat extends React.Component {
     return (
       <div className='olachat'>
         <Header onHide={this.props.onHide} title={this.props.title} />
+        <OfflineIndicator />
         <Messages
           messages={this.props.messages}
           flipped={this.props.flipped}

@@ -3,7 +3,13 @@ import classNames from 'classnames'
 import Message from '@olasearch/icons/lib/message-square'
 import { BUBBLE_WIDTH_DESKTOP, BUBBLE_WIDTH_MOBILE } from './Settings'
 
-export default function Bubble ({ onClick, isActive, label, iconSize, showBubbleLabel }) {
+export default function Bubble ({
+  onClick,
+  isActive,
+  label,
+  iconSize,
+  showBubbleLabel
+}) {
   let klass = classNames('olachat-bubble', {
     'olachat-bubble-active': isActive
   })

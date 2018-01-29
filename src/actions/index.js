@@ -68,7 +68,7 @@ export function addMessage (payload) {
       q,
       label,
       page,
-      per_page: RESULTS_FOR_MC, /* Always fetch 12 results from search engine. MC expects top 10 results */
+      per_page: RESULTS_FOR_MC /* Always fetch 12 results from search engine. MC expects top 10 results */,
       facet_query,
       filters,
       msgId,

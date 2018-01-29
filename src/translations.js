@@ -20,7 +20,9 @@ export default {
       listening: 'Listening<em>...</em>',
       enter_feedback: 'Enter your feedback',
       search: 'Search',
-      type_a_message: 'Type a message...'
+      type_a_message: 'Type a message...',
+      offline_message:
+        'It appears that your browser is offline. Are you connected to the internet?'
     }
   }
 }

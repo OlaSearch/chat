@@ -10,7 +10,7 @@
     "standard": "standard --verbose --fix src/*",
     "release": "NODE_ENV=production webpack --display-optimization-bailout --config webpack.release.js",
     "prettier-standard": "prettier-standard 'src/**/*.js'",
-    "prettier": "yarn prettier-standard && git add src/ lib / && git status"
+    "prettier": "yarn prettier-standard && git add src lib && git status"
   },
   "author": "",
   "license": "Copyright Ola Search Pte Ltd",
@@ -90,9 +90,7 @@
     "react-frame-component": "^2.0.2",
     "react-redux": "^5.0.6",
     "react-transition-group": "^2.2.1",
-    "react-virtualized": "^9.17.3",
     "redux": "^3.7.2",
-    "styled-components": "^3.0.2",
     "watson-html5-speech-recognition": "^0.6.6"
   }
 }
