@@ -24,7 +24,7 @@ class QuickReplies extends React.PureComponent {
     quickReplies: EMPTY_ARRAY
   }
   render () {
-    let { quickReplies } = this.props
+    let { quickReplies, theme } = this.props
     if (!quickReplies || !quickReplies.length) return null
     return (
       <div className='olachat-quickreplies'>
@@ -38,6 +38,19 @@ class QuickReplies extends React.PureComponent {
             />
           ))}
         </div>
+        <style jsx>
+          {`
+            .olachat-quickreplies :global(.olachat-quickreplies-button) {
+              box-shadow: inset 0 0 0 1px ${theme.primaryColor};
+              color: ${theme.primaryColor};
+              border-color: ${theme.primaryColor};
+            }
+            .olachat-quickreplies :global(.olachat-quickreplies-button:hover) {
+              color: white;
+              background: ${theme.primaryColor};
+            }
+          `}
+        </style>
       </div>
     )
   }

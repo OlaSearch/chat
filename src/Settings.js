@@ -18,7 +18,7 @@ export const BUBBLE_WIDTH_MOBILE = 60
 export const BUBBLE_HEIGHT_MOBILE = 60
 export const BUBBLE_SPACING = 10
 export const BOT_WIDTH_ACTIVE = 880
-export const BOT_ZINDEX = 99999999
+export const BOT_ZINDEX = 999
 export const BUBBLE_FULL_WIDTH_DESKTOP =
   BUBBLE_WIDTH_DESKTOP + 2 * BUBBLE_SPACING /* [10 + 60 + 10] */
 export const BUBBLE_FULL_WIDTH_MOBILE =

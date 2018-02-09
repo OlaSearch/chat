@@ -70,6 +70,10 @@ $padding: 10px 12px;
         border-top: none;
       }
 
+      &:last-child {
+        border-radius: 0 0 5px 5px;
+      }
+
       &:hover {
         color: $base-color;
       }

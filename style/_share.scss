@@ -1,0 +1,50 @@
+.ola-share-links {
+  position: relative;
+  
+  .olachat-bot & {
+    margin-left: 0;
+  }
+  
+  /* Dropdown */
+  .ola-drop {
+    min-width: 0;
+  }
+  /* Text */
+  .ola-drop-link-text {
+    font-size: 0;
+  }
+
+  /* Body */
+  .ola-drop-body {
+    display: flex;
+  }
+
+  /* Link */
+  .ola-drop-link {
+    border: none;
+    border-right: 1px $base-border-color solid;
+    &:hover {
+      background: #eee;
+    }
+    &:first-child {
+      border-radius: $base-border-radius 0 0 $base-border-radius;
+    }
+    &:last-child {
+      border-right: none;
+      border-radius: 0 $base-border-radius $base-border-radius 0;
+    }
+  }
+}
+
+/**
+ * Btn share
+ */
+.ola-btn-share {
+  .olachat-bot & {
+    width: 100%;
+  }
+  &, &:hover, &:active, &:focus {
+    box-shadow: $small-box-shadow;
+    text-align: center;
+  }
+}

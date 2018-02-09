@@ -125,10 +125,12 @@ export default (state = initialState, action) => {
         page,
         suggestedTerm,
         spellSuggestions,
-        originalQuery: payload.originalQuery
+        originalQuery: payload.originalQuery,
+        context: payload.context
       })
       return {
         ...state,
+        q: '',
         isLoading: false,
         newMessageId: msg.id,
         messages: state.messages.map(item => {
@@ -280,7 +282,13 @@ export default (state = initialState, action) => {
             ...item,
             showSearch: false
           }))
-          : []
+          : [],
+        newMessageId:
+          action.botState && action.botState.messages.length
+            ? action.botState.messages[action.botState.messages.length - 1][
+              'id'
+            ]
+            : null
       }
 
     case types.TOGGLE_SEARCH_VISIBILITY:

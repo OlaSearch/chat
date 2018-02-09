@@ -10,6 +10,7 @@ import listensToClickOutside from '@olasearch/react-onclickoutside'
 import Send from '@olasearch/icons/lib/arrow-right-circle'
 import { GeoLocation } from '@olasearch/core'
 import Navigation from '@olasearch/icons/lib/navigation'
+import { ThemeConsumer } from '@olasearch/core'
 
 const supportsVoice =
   (navigator.getUserMedia ||
@@ -231,11 +232,12 @@ class Input extends React.Component {
       nextState.text !== this.state.text ||
       nextState.suggestedTerm !== this.state.suggestedTerm ||
       nextState.suggestedIndex !== this.state.suggestedIndex ||
-      nextState.suggestions !== this.state.suggestions
+      nextState.suggestions !== this.state.suggestions ||
+      nextProps.theme !== this.props.theme
     )
   }
   render () {
-    let { isTyping, voiceInput, translate } = this.props
+    let { isTyping, voiceInput, translate, theme } = this.props
     let { suggestions, suggestedIndex, suggestedTerm, text } = this.state
     let inputValue = suggestedTerm ? suggestedTerm.term : text
     return (
@@ -251,10 +253,11 @@ class Input extends React.Component {
         <HelpMenu
           onSubmit={this.props.onSubmit}
           updateQueryTerm={this.props.updateQueryTerm}
+          theme={theme}
         />
         <div className='olachat-input'>
           <Textarea
-            placeholder={translate('type_a_message')}
+            placeholder={translate('chat_type_a_message')}
             onChange={this.onChange}
             onKeyDown={this.onKeyDown}
             value={inputValue}
@@ -274,6 +277,7 @@ class Input extends React.Component {
               onResult={this.onVoiceChange}
               onFinalResult={this.onVoiceFinal}
               voiceAdapter={this.props.voiceAdapter}
+              theme={theme}
             />
           </div>
         ) : null}
@@ -283,6 +287,27 @@ class Input extends React.Component {
         >
           <Send />
         </button>
+        <style jsx global>
+          {`
+            .olachat-submit .ola-icon {
+              fill: ${theme.primaryColor};
+            }
+            .olachat-submit .ola-icon circle {
+              stroke: ${theme.primaryColor};
+            }
+          `}
+        </style>
+        <style jsx>
+          {`
+            .olachat-submit {
+              color: ${theme.primaryColor};
+            }
+            .olachat-footer :global(.ola-link-geo, .ola-link-geo:hover) {
+              background: none;
+              color: red;
+            }
+          `}
+        </style>
       </form>
     )
   }

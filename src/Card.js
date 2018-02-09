@@ -11,19 +11,44 @@ export default function Card ({ card, templates }) {
   if (!card.title) return null
   let { buttons = [], template } = card
   let klass = cx('ola-card', `ola-card-template-${template}`)
-
   function pickTemplate (template) {
     /* Check for user defined templates */
     if (templates && templates.hasOwnProperty(template)) {
       let Component = templates[template]
       return <Component {...card} />
     }
+
     switch (template) {
       case 'list':
         return <CardList {...card} />
 
       case 'wordmap':
         return <AnswerWordMap data={card.elements} maxLen={20} shuffle />
+
+      case 'image':
+        return (
+          <div className='ola-card-inner'>
+            <Fields.Title
+              result={card}
+              field='title'
+              openInNewWindow
+              eventLabel={card['title']}
+              eventCategory='card'
+            />
+            <Fields.Thumbnail thumbnail={card.image_url} />
+            <Fields.TextField field='subtitle' result={card} />
+            {buttons.map((button, idx) => (
+              <Fields.Button
+                {...button}
+                result={card}
+                eventLabel={card['title']}
+                key={idx}
+                openInNewWindow
+                eventCategory='card'
+              />
+            ))}
+          </div>
+        )
 
       case 'map':
         return <AnswerMap data={card.elements} />

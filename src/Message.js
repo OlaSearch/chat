@@ -20,7 +20,8 @@ class Message extends React.Component {
   shouldComponentUpdate (nextProps, nextState) {
     return (
       this.props.message !== nextProps.message ||
-      this.props.isActive !== nextProps.isActive
+      this.props.isActive !== nextProps.isActive ||
+      this.props.theme !== nextProps.theme
     )
   }
   render () {
@@ -54,6 +55,7 @@ class Message extends React.Component {
       suggestedTerm /* Term that was searched for */,
       originalQuery,
       error,
+      context = {},
       quick_replies: quickReplies
     } = message
     let isBot = !userId
@@ -78,7 +80,7 @@ class Message extends React.Component {
      * isActive message, needs location
      *
      */
-    let needsLocation = isActive ? message.location : message.location
+    let needsLocation = message.location && !context.location
 
     /**
      * Do not render SearchResultsMessage unless required. Takes a perf hit
@@ -98,16 +100,47 @@ class Message extends React.Component {
         ${
   search
     ? suggestedTerm
-      ? translate('could_not_find', { originalQuery, suggestedTerm })
+      ? translate('chat_could_not_find', {
+        originalQuery,
+        suggestedTerm
+      })
       : search.title
-    : translate('here_some_result')
+    : translate('chat_here_some_result')
 }
       </p>`
     } else {
       /* No results */
       text =
         text ||
-        `<p>${search ? search.no_result : translate('sorry_no_result')}</p>`
+        `<p>${
+          search ? search.no_result : translate('chat_sorry_no_result')
+        }</p>`
+    }
+
+    if (needsLocation) {
+      return (
+        <div className={messageClass}>
+          <div className='olachat-message-inner'>
+            <Avatar
+              isBot={isBot}
+              userId={userId}
+              avatarBot={avatarBot}
+              avatarUser={avatarUser}
+            />
+            <div className='olachat-message-body'>
+              {isBot ? (
+                <Geo
+                  location={location}
+                  needsLocation={needsLocation}
+                  message={message}
+                  onSubmit={addMessage}
+                  isActive={isActive}
+                />
+              ) : null}
+            </div>
+          </div>
+        </div>
+      )
     }
 
     return (
@@ -134,7 +167,7 @@ class Message extends React.Component {
               <AnswerMC
                 mc={mc}
                 payload={{ messageId: message.id, bot: true }}
-                loader={isActive ? <Loader /> : null}
+                loader={isActive ? <Loader theme={this.props.theme} /> : null}
               />
               <Card card={card} />
               {isSearchActive ? (

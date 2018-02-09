@@ -5,7 +5,7 @@ import { Decorators } from '@olasearch/core'
 function FailureButtons ({ onSubmit, message, isActive, translate }) {
   return (
     <div className='olachat-slots'>
-      <small>{translate('something_went_wrong')}</small>
+      <small>{translate('chat_something_went_wrong')}</small>
       <div className='olachat-slots-list'>
         <button
           className='olachat-slots-button'
@@ -14,7 +14,7 @@ function FailureButtons ({ onSubmit, message, isActive, translate }) {
           disabled={!isActive}
         >
           <Repeat size={14} />
-          {translate('retry')}
+          {translate('chat_retry')}
         </button>
       </div>
     </div>

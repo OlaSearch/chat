@@ -12,7 +12,11 @@
     }
   }
 
-  .ola-snippet-inner {
+  .ola-card {
+    margin-bottom: 1rem;
+  }
+
+  .ola-snippet-inner, .ola-card-inner {
     border: 1px #d8d8d7 solid;
     background: white;
     padding: 1em;
@@ -31,7 +35,8 @@
   }
 
   .ola-field-title {
-    font-size: 14px;
+    font-size: 1rem;
+    font-weight: bold;
     padding: 0;
     margin: 0 0 5px 0;
   }
@@ -63,14 +68,14 @@
 
   /* Remove horizontal columns */
   .ola-fg-horizontal {
-    display: block;
+    flex-direction: column;
     > .ola-fg {
       padding: 0;
     }
   }
   .ola-field-img {
     width: auto;
-    height: 100px;
+    // height: 100px;
     overflow: hidden;
   }
 

@@ -1,7 +1,7 @@
 /* Simple button */
 .ola-chat-btn {
   background: white;
-  border-radius: $base-radius;
+  border-radius: $button-border-radius;
   box-shadow: $small-box-shadow;
   height: 40px;
   display: inline-block;
@@ -21,13 +21,14 @@
 
 /* Geo */
 .ola-link-geo {
-  @extend .ola-chat-btn;
 
   /* Inside the message */
   .olachat-message & {
+    @extend .ola-chat-btn;
     &:hover, &:focus, &:active {
       background: $blue;
       color: white;
+      text-decoration: none;
     }
   }
 }
@@ -39,4 +40,11 @@
   box-shadow: none;
   border: none;
   color: $base-color;
+}
+
+/* Primary button */
+.ola-cta-button {
+  .olachat-bot & {
+    width: 100%;
+  }
 }

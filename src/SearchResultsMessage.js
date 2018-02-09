@@ -50,7 +50,7 @@ class SearchResultsMessage extends React.Component {
             onClick={this.toggleActive}
             className='olachat-results-seeall'
           >
-            {translate('see_all')}
+            {translate('chat_see_all')}
           </button>
 
           <SearchResults

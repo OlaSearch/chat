@@ -58,10 +58,17 @@ class BotFrame extends React.Component {
     showBubbleLabel: PropTypes.bool
   }
   componentDidMount () {
+    /* On Mount */
+    this.props.onMount &&
+      this.props.onMount(
+        document.getElementById(OLACHAT_IFRAME_ID).contentDocument
+      )
+
     /* Check if bot is active */
     if (this.props.isBotActive) {
       document.documentElement.classList.add(MODAL_ROOT_CLASSNAME)
     }
+
     /* Check if style tag is already added */
     if (document.getElementById(STYLE_TAG_ID) || this.props.isDesktop) return
     /* Add inline css */

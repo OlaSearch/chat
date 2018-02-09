@@ -171,11 +171,18 @@ class Voice extends React.Component {
           {isRecording ? <Mic size={iconSize} /> : <Mic size={iconSize} />}
           {isRecording && showListening ? (
             <span className='olachat-mic-listening'>
-              {translate('listening', {}, true)}
+              {translate('chat_listening', {}, true)}
             </span>
           ) : null}
           {showLoadingIndicator && <span className='olachat-mic-loader' />}
         </button>
+        <style jsx>
+          {`
+            .olachat-mic {
+              color: ${this.props.theme.primaryColor};
+            }
+          `}
+        </style>
       </div>
     )
   }

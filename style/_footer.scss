@@ -19,6 +19,7 @@ $gutter: 15px;
     box-shadow: none;
     margin: 0;
     height: auto;
+    width: 40px;
   }
 
   /* All buttons */
@@ -74,11 +75,11 @@ $gutter: 15px;
     line-height: 1;
 
     .ola-icon {
-      fill: $blue;
+      // fill: $blue;
       color: white;
 
       circle {
-        stroke: $blue;
+        // stroke: $blue;
       }
     }
 

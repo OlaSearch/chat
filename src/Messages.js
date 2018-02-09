@@ -3,9 +3,8 @@ import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import Message from './Message'
 import TypingIndicator from './TypingIndicator'
-import TransitionGroup from 'react-transition-group/TransitionGroup'
-import CSSTransition from 'react-transition-group/CSSTransition'
 import Loader from '@olasearch/icons/lib/loader'
+import scrollIntoView from 'dom-scroll-into-view'
 
 /**
  * Message interface
@@ -127,19 +126,17 @@ export default class Messages extends React.Component {
      * A new message has been received. We need to scroll
      */
     if (this.props.newMessageId !== prevProps.newMessageId) {
-      this.scrollIntoView(this.props.newMessageId)
+      this.scrollIntoView({ id: this.props.newMessageId })
     }
-    /* Only update scroll position if new messages are added */
     /**
-     * We cant scroll to bottom here, because messages can update anytime
-     * We have to scroll to a message
-     * 1. New messages are added
-     * 2. Message + Search results are loaded
+     * Always scroll to bottom during initial load
      */
-    // window.requestAnimationFrame(() => {
-    //   /* Only after the component is rendered */
-    //   if (prevState.shouldRender) this.updateScrollTop()
-    // })
+    if (
+      prevState.shouldRender !== this.state.shouldRender &&
+      this.state.shouldRender
+    ) {
+      this.scrollIntoView({ id: this.props.newMessageId, position: 'end' })
+    }
   }
   pollScroll = () => {
     if (!this.isComponentMounted) return
@@ -211,18 +208,17 @@ export default class Messages extends React.Component {
   /**
    * Scroll in to view. Pass the message ID
    */
-  scrollIntoView = id => {
+  scrollIntoView = ({ id, position = 'start' }) => {
     const doc = this.context.document || document
     const domId = id
     const domNode = doc.getElementById(domId)
     if (!domNode) return
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
-        /* Fixes a bug in Mobile devices where keyboard loses focus on the first message */
-        // if(domNode.offsetTop < this.messagesEl.clientHeight) return
-        domNode.scrollIntoView({
-          /* behavior: 'smooth', */ block: 'start',
-          inline: 'start'
+        /* Fixes a bug in Mobile devices where keyboard loses focus */
+        scrollIntoView(domNode, this.messagesEl, {
+          onlyScrollIfNeeded: true,
+          alignWithTop: true
         })
       })
     })
@@ -234,7 +230,8 @@ export default class Messages extends React.Component {
     return (
       nextProps.messages !== this.props.messages ||
       nextProps.newMessageId !== this.props.newMessageId ||
-      nextState !== this.state
+      nextState !== this.state ||
+      nextProps.theme !== this.props.theme
     )
   }
   render () {
@@ -244,42 +241,80 @@ export default class Messages extends React.Component {
       messages = messages.slice().reverse()
     }
     let loadingSpinner = isInfiniteLoading ? <div>Loading</div> : null
-    let messagesComponent = messageComponent
-      ? messages.map(messageComponent)
-      : messages.map((message, idx) => {
-        return (
-          <div key={message.id} id={message.id}>
-            {message.isTyping ? (
-              <TypingIndicator avatarBot={this.props.avatarBot} />
-            ) : (
-              <Message
-                avatarBot={this.props.avatarBot}
-                avatarUser={this.props.avatarUser}
-                message={message}
-                addMessage={this.props.addMessage}
-                isActive={idx === messages.length - 1}
-                botName={this.props.botName}
-                userName={this.props.userName}
-                log={this.props.log}
-                location={this.props.location}
-                isMounted={this.isComponentMounted}
-                updateQueryTerm={this.props.updateQueryTerm}
-              />
-            )}
-          </div>
-        )
-      })
     return (
       <div className='olachat-messages' ref={this.registerRef}>
         {this.state.shouldRender ? (
           <div className='olachat-messages-wrapper'>
-            <div className='olachat-messages-list'>{messagesComponent}</div>
+            <div className='olachat-messages-list'>
+              {messages.map((message, idx) => {
+                return (
+                  <div
+                    key={message.id}
+                    id={message.id}
+                    className='olachat-messages-item'
+                  >
+                    {message.isTyping ? (
+                      <TypingIndicator
+                        avatarBot={this.props.avatarBot}
+                        theme={this.props.theme}
+                      />
+                    ) : (
+                      <Message
+                        avatarBot={this.props.avatarBot}
+                        avatarUser={this.props.avatarUser}
+                        message={message}
+                        addMessage={this.props.addMessage}
+                        isActive={idx === messages.length - 1}
+                        botName={this.props.botName}
+                        userName={this.props.userName}
+                        log={this.props.log}
+                        location={this.props.location}
+                        isMounted={this.isComponentMounted}
+                        updateQueryTerm={this.props.updateQueryTerm}
+                        theme={this.props.theme}
+                      />
+                    )}
+                  </div>
+                )
+              })}
+            </div>
           </div>
         ) : (
           <div className='olachat-message-loader'>
             <Loader />
           </div>
         )}
+        <style jsx>
+          {`
+            .olachat-message-loader {
+              color: ${this.props.theme.primaryColor};
+            }
+            .olachat-messages :global(.olachat-message-reply) {
+              background-color: ${this.props.theme.chatUserMessageBackground};
+              color: ${this.props.theme.chatUserMessageColor};
+            }
+            .olachat-messages
+              :global(.olachat-message-bot .olachat-message-reply) {
+              background-color: ${this.props.theme.chatBotMessageBackground};
+              color: ${this.props.theme.chatBotMessageColor};
+            }
+            .olachat-messages :global(.olachat-slots-button) {
+              color: ${this.props.theme.primaryButtonBackground};
+            }
+            .olachat-messages :global(.olachat-slots-button:hover) {
+              background-color: ${this.props.theme.primaryButtonBackground};
+              color: ${this.props.theme.primaryButtonColor};
+            }
+            .olachat-messages :global(.ola-link-geo) {
+              color: ${this.props.theme.primaryButtonBackground};
+              background: ${this.props.theme.primaryButtonColor};
+            }
+            .olachat-messages :global(.ola-link-geo:hover) {
+              background: ${this.props.theme.primaryButtonBackground};
+              color: ${this.props.theme.primaryButtonColor};
+            }
+          `}
+        </style>
       </div>
     )
   }

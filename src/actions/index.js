@@ -127,6 +127,7 @@ export function addMessage (payload) {
           payload: {
             ...payload,
             message,
+            context,
             bot: true
           }
         }).then(response => {

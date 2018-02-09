@@ -10,24 +10,10 @@ import Print from '@olasearch/icons/lib/printer'
 class HelpMenu extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
-      isOpen: false
-    }
   }
   static contextTypes = {
     document: PropTypes.object,
     window: PropTypes.object
-  }
-  handleClickOutside = event => {
-    if (!this.state.isOpen) return
-    this.setState({
-      isOpen: false
-    })
-  }
-  toggleMenu = event => {
-    event.preventDefault()
-    event.stopPropagation()
-    this.setState({ isOpen: !this.state.isOpen })
   }
   handleClick = event => {
     if (event.target.href && event.target.href !== '') {
@@ -55,24 +41,30 @@ class HelpMenu extends React.Component {
     botLinks: []
   }
   shouldComponentUpdate (nextProps, nextState) {
-    return nextState !== this.state
+    return (
+      nextProps.theme !== this.props.theme ||
+      nextProps.isCollapsed !== this.props.isCollapsed
+    )
+  }
+  handleClickOutside = () => {
+    this.props.hide()
   }
   render () {
     let klass = classNames('olachat-helpmenu', {
-      'olachat-helpmenu-open': this.state.isOpen
+      'olachat-helpmenu-open': this.props.isCollapsed
     })
     let { botLinks, translate } = this.props
     return (
       <div className={klass}>
         <button
           className='olachat-helpmenu-button'
-          onClick={this.toggleMenu}
+          onClick={this.props.toggleDisplay}
           type='button'
         >
           <Menu />
         </button>
         <div className='olachat-dp'>
-          <div className='olachat-dp-title'>{translate('menu')}</div>
+          <div className='olachat-dp-title'>{translate('chat_menu')}</div>
           <div className='olachat-dp-body'>
             {botLinks.map(({ title, url }, idx) => {
               return (
@@ -87,11 +79,27 @@ class HelpMenu extends React.Component {
                 </a>
               )
             })}
-            <a onClick={this.handlePrint}>
-              <Print /> {translate('print')}
+            <a onClick={this.handlePrint} className='olachat-menu-link'>
+              <Print /> {translate('chat_print')}
             </a>
           </div>
         </div>
+        <style jsx>
+          {`
+            .olachat-helpmenu-button {
+              color: ${this.props.theme.primaryColor};
+            }
+            .olachat-menu-link,
+            .olachat-menu-link:hover,
+            .olachat-menu-link:focus,
+            .olachat-menu-link:active {
+              color: ${this.props.theme.primaryColor};
+            }
+            .olachat-menu-link:hover {
+              background-color: #f5f5f5;
+            }
+          `}
+        </style>
       </div>
     )
   }
@@ -109,4 +117,6 @@ HelpMenuWrapper.contextTypes = {
   config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
 }
 
-export default Decorators.withTranslate(Decorators.withLogger(HelpMenuWrapper))
+export default Decorators.withToggle(
+  Decorators.withTranslate(Decorators.withLogger(HelpMenuWrapper))
+)

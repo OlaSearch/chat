@@ -14,8 +14,7 @@ $bubble-icon-size: 34px;
   text-align: center;
   min-height: $bubble-size * 2;
   box-shadow: $sharp-box-shadow;
-  cursor: pointer;
-  
+  cursor: pointer;  
   margin: 10px;
 
   &:hover, &:active, &:focus {
@@ -34,4 +33,5 @@ $bubble-icon-size: 34px;
 .olachat-bubble-text {
   flex: 1;
   text-align: left;
+  margin-right: 0.5rem;
 }

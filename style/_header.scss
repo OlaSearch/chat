@@ -31,8 +31,8 @@
   margin: 0;
   flex: 1;
   -webkit-flex: 1;
-  font-weight: 600;
-  font-size: 14px;
+  // font-weight: bold;
+  font-size: 15px;
 
   .olachat-vui & {
     font-weight: normal;
@@ -53,8 +53,4 @@
   width: 70px;
   color: white;
   padding: 0;
-
-  &:active, &:focus {
-    background: darken($blue, 10%);
-  }
 }
