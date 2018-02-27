@@ -340,7 +340,7 @@ export default class Messages extends React.Component {
             }
             /* Quick replies */
             .olachat-messages :global(.olachat-quickreplies-button) {
-              border: inset 0 0 0 1px ${theme.primaryButtonColor};
+              box-shadow: inset 0 0 0 1px ${theme.primaryButtonColor};
               color: ${theme.primaryButtonColor};
               border-color: ${theme.primaryButtonColor};
             }
