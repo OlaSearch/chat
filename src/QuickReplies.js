@@ -16,7 +16,7 @@ class QuickReplies extends React.PureComponent {
       eventLabel: label,
       eventAction: 'click',
       eventType: 'C',
-      result: { title: label },
+      result: { title: label } /* Used to quickly find title in admin panel */,
       payload: { bot: true }
     })
   }
@@ -24,7 +24,7 @@ class QuickReplies extends React.PureComponent {
     quickReplies: EMPTY_ARRAY
   }
   render () {
-    let { quickReplies, theme } = this.props
+    let { quickReplies } = this.props
     if (!quickReplies || !quickReplies.length) return null
     return (
       <div className='olachat-quickreplies'>
@@ -38,19 +38,6 @@ class QuickReplies extends React.PureComponent {
             />
           ))}
         </div>
-        <style jsx>
-          {`
-            .olachat-quickreplies :global(.olachat-quickreplies-button) {
-              box-shadow: inset 0 0 0 1px ${theme.primaryColor};
-              color: ${theme.primaryColor};
-              border-color: ${theme.primaryColor};
-            }
-            .olachat-quickreplies :global(.olachat-quickreplies-button:hover) {
-              color: white;
-              background: ${theme.primaryColor};
-            }
-          `}
-        </style>
       </div>
     )
   }
@@ -72,12 +59,4 @@ function QuickReplyButton ({ label, intent, handleClick, isActive }) {
   )
 }
 
-function mapStateToProps (state) {
-  let len = state.Conversation.messages.length
-  let latestMsg = state.Conversation.messages[len - 1]
-  return {
-    quickReplies: latestMsg ? latestMsg.quick_replies : EMPTY_ARRAY
-  }
-}
-
-export default Decorators.withLogger(connect(mapStateToProps)(QuickReplies))
+export default Decorators.withLogger(QuickReplies)

@@ -6,12 +6,12 @@ import CSSTransition from 'react-transition-group/CSSTransition'
 import { DISAMBIGUATION_INTENT_NAME } from './Settings'
 
 class SlotOptions extends Component {
-  handleClick = ({ label, value, intent }) => {
+  handleClick = ({ label, value, intent: selectedIntent }) => {
     /**
      * Check if current active intent is DISAMBIGUATION_INTENT_NAME
      */
-    let args = { intent, value, label }
-    if (intent === DISAMBIGUATION_INTENT_NAME) {
+    let args = { intent: selectedIntent, value, label }
+    if (this.props.intent === DISAMBIGUATION_INTENT_NAME) {
       /* Send for Intent training */
       this.props.log({
         eventLabel: selectedIntent,

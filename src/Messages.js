@@ -5,6 +5,7 @@ import Message from './Message'
 import TypingIndicator from './TypingIndicator'
 import Loader from '@olasearch/icons/lib/loader'
 import scrollIntoView from 'dom-scroll-into-view'
+import { imagesLoaded } from './utils'
 
 /**
  * Message interface
@@ -88,7 +89,10 @@ export default class Messages extends React.Component {
      * Is this link inside a message? Log it separately
      */
     const isMessageLink = e.target.closest('.olachat-message-reply')
-
+    const messageItem = e.target.closest('.olachat-messages-item')
+    const message = this.props.messages
+      .filter(({ id }) => id === messageItem.getAttribute('id'))
+      .reduce((_, a) => a, null)
     /**
      * If there is a href tag, consider the link as a message
      */
@@ -104,8 +108,10 @@ export default class Messages extends React.Component {
         eventLabel: e.target.text,
         eventCategory: 'message_link',
         eventType: 'C',
-        result: { title: e.target.text },
-        payload: { bot: true }
+        result: {
+          title: e.target.text
+        } /* Used to quickly find title in admin panel */,
+        payload: { bot: true, message }
       })
     }
 
@@ -218,7 +224,7 @@ export default class Messages extends React.Component {
         /* Fixes a bug in Mobile devices where keyboard loses focus */
         scrollIntoView(domNode, this.messagesEl, {
           onlyScrollIfNeeded: true,
-          alignWithTop: true
+          alignWithTop: position !== 'end'
         })
       })
     })
@@ -235,7 +241,7 @@ export default class Messages extends React.Component {
     )
   }
   render () {
-    let { messages, flipped, messageComponent } = this.props
+    let { messages, flipped, messageComponent, theme } = this.props
     let { isInfiniteLoading } = this.state
     if (!flipped) {
       messages = messages.slice().reverse()
@@ -254,10 +260,7 @@ export default class Messages extends React.Component {
                     className='olachat-messages-item'
                   >
                     {message.isTyping ? (
-                      <TypingIndicator
-                        avatarBot={this.props.avatarBot}
-                        theme={this.props.theme}
-                      />
+                      <TypingIndicator avatarBot={this.props.avatarBot} />
                     ) : (
                       <Message
                         avatarBot={this.props.avatarBot}
@@ -271,7 +274,7 @@ export default class Messages extends React.Component {
                         location={this.props.location}
                         isMounted={this.isComponentMounted}
                         updateQueryTerm={this.props.updateQueryTerm}
-                        theme={this.props.theme}
+                        theme={theme}
                       />
                     )}
                   </div>
@@ -287,31 +290,63 @@ export default class Messages extends React.Component {
         <style jsx>
           {`
             .olachat-message-loader {
-              color: ${this.props.theme.primaryColor};
+              color: ${theme.primaryColor};
             }
             .olachat-messages :global(.olachat-message-reply) {
-              background-color: ${this.props.theme.chatUserMessageBackground};
-              color: ${this.props.theme.chatUserMessageColor};
+              background-color: ${theme.chatUserMessageBackground};
+              color: ${theme.chatUserMessageColor};
             }
             .olachat-messages
               :global(.olachat-message-bot .olachat-message-reply) {
-              background-color: ${this.props.theme.chatBotMessageBackground};
-              color: ${this.props.theme.chatBotMessageColor};
+              background-color: ${theme.chatBotMessageBackground};
+              color: ${theme.chatBotMessageColor};
             }
-            .olachat-messages :global(.olachat-slots-button) {
-              color: ${this.props.theme.primaryButtonBackground};
+            .olachat-messages
+              :global(.olachat-message-error .olachat-message-reply) {
+              background: ${theme.dangerColor};
+              color: white;
+            }
+            /* Slot */
+            .olachat-messages :global(.olachat-slots-button),
+            .olachat-messages :global(.olachat-slots-button:disabled:hover) {
+              color: ${theme.chatBotSlotButtonColor};
+              background-color: ${theme.chatBotSlotButtonBackground};
+              border-color: ${theme.chatBotSlotButtonColor};
             }
             .olachat-messages :global(.olachat-slots-button:hover) {
-              background-color: ${this.props.theme.primaryButtonBackground};
-              color: ${this.props.theme.primaryButtonColor};
+              background-color: ${theme.chatBotSlotButtonColor};
+              color: ${theme.chatBotSlotButtonBackground};
             }
-            .olachat-messages :global(.ola-link-geo) {
-              color: ${this.props.theme.primaryButtonBackground};
-              background: ${this.props.theme.primaryButtonColor};
+
+            /* Request geo location button */
+            .olachat-messages :global(.ola-link-geo),
+            .olachat-messages :global(.ola-link-geo:hover),
+            .olachat-messages :global(.ola-link-geo:focus),
+            .olachat-messages :global(.ola-link-geo:disabled:hover) {
+              color: ${theme.primaryButtonColor};
+              background-color: ${theme.primaryButtonBackground};
             }
-            .olachat-messages :global(.ola-link-geo:hover) {
-              background: ${this.props.theme.primaryButtonBackground};
-              color: ${this.props.theme.primaryButtonColor};
+            .olachat-messages :global(.typing-indicator span) {
+              background-color: ${theme.primaryColor};
+            }
+            .olachat-messages :global(.ola-btn-pill) {
+              font-size: ${theme.smallFontSize};
+              padding: 4px 6px;
+            }
+
+            /* Links inside message */
+            .olachat-messages :global(.olachat-message-reply a) {
+              color: ${theme.chatLinkColor};
+            }
+            /* Quick replies */
+            .olachat-messages :global(.olachat-quickreplies-button) {
+              border: inset 0 0 0 1px ${theme.primaryButtonColor};
+              color: ${theme.primaryButtonColor};
+              border-color: ${theme.primaryButtonColor};
+            }
+            .olachat-messages :global(.olachat-quickreplies-button:hover) {
+              background: ${theme.primaryButtonColor};
+              color: white;
             }
           `}
         </style>

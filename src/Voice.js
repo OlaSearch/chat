@@ -181,6 +181,9 @@ class Voice extends React.Component {
             .olachat-mic {
               color: ${this.props.theme.primaryColor};
             }
+            .olachat-mic.olachat-mic-isrecording {
+              color: ${this.props.theme.dangerColor};
+            }
           `}
         </style>
       </div>

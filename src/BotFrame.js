@@ -29,7 +29,6 @@ class BotFrame extends React.Component {
   static defaultProps = {
     width: BUBBLE_FULL_WIDTH_DESKTOP,
     widthMobile: BUBBLE_FULL_WIDTH_MOBILE,
-    showBubbleLabel: true,
     widthActive: BOT_WIDTH_ACTIVE,
     height: BUBBLE_FULL_HEIGHT,
     heightActive: '100%',
@@ -53,9 +52,6 @@ class BotFrame extends React.Component {
         </body>
       </html>
     `
-  }
-  static propTypes = {
-    showBubbleLabel: PropTypes.bool
   }
   componentDidMount () {
     /* On Mount */
@@ -106,10 +102,13 @@ class BotFrame extends React.Component {
       zIndex,
       isDesktop,
       activeStyle,
-      showBubbleLabel
+      bubbleProps
     } = this.props
-    /* On mobile and tablet, hide bubble label */
-    showBubbleLabel = this.props.isDesktop ? showBubbleLabel : false
+
+    /* Check if chatbot label is present */
+    const showBubbleLabel = this.props.isDesktop
+      ? bubbleProps && !!bubbleProps.label
+      : false
 
     let frameStyles = {
       ...iframeStyle,

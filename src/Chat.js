@@ -5,7 +5,6 @@ import Messages from './Messages'
 import { connect } from 'react-redux'
 import { addMessage, updateBotQueryTerm } from './actions'
 import { Actions, Decorators } from '@olasearch/core'
-import QuickReplies from './QuickReplies'
 import OfflineIndicator from './OfflineIndicator'
 import { ThemeConsumer } from '@olasearch/core'
 
@@ -35,7 +34,11 @@ class Chat extends React.Component {
       <ThemeConsumer>
         {theme => (
           <div className='olachat'>
-            <Header onHide={this.props.onHide} title={this.props.title} />
+            <Header
+              onHide={this.props.onHide}
+              title={this.props.title}
+              theme={theme}
+            />
             <OfflineIndicator />
             <Messages
               messages={this.props.messages}
@@ -54,11 +57,7 @@ class Chat extends React.Component {
               newMessageId={this.props.newMessageId}
               theme={theme}
             />
-            <QuickReplies
-              onSubmit={this.addMessage}
-              updateQueryTerm={this.props.updateQueryTerm}
-              theme={theme}
-            />
+
             <Input
               onSubmit={this.addMessage}
               voiceAdapter={this.props.voiceAdapter}
@@ -91,7 +90,13 @@ class Chat extends React.Component {
             <style jsx>
               {`
                 .olachat :global(.ola-link-load-more) {
-                  color: ${theme.primaryButtonBackground};
+                  color: ${theme.primaryColor};
+                  background: transparent;
+                }
+                .olachat :global(.olachat-input-textarea),
+                .olachat :global(.olachat-query-suggestion),
+                .olachat :global(button) {
+                  font-family: ${theme.chatFontFamily};
                 }
               `}
             </style>
@@ -99,6 +104,18 @@ class Chat extends React.Component {
               {`
                 .olachat :global(.ola-share-links) {
                   display: block;
+                }
+                @media screen and (-ms-high-contrast: active),
+                  (-ms-high-contrast: none) {
+                  :global(img[src$='.svg']) {
+                    width: 100%;
+                  }
+                  :global(.olachat-body) {
+                    overflow: hidden;
+                  }
+                  :global(.olachat) {
+                    border: 1px #ccc solid;
+                  }
                 }
               `}
             </style>

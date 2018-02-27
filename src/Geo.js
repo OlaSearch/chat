@@ -1,17 +1,27 @@
 import React, { Component } from 'react'
 import { GeoLocation } from '@olasearch/core'
-import Navigation from '@olasearch/icons/lib/navigation'
+import { connect } from 'react-redux'
+import { ignoreLocation } from './actions'
 
 class Geo extends Component {
   onGeoSuccess = data => {
     if (!data) return
     this.props.onSubmit({
       intent: this.props.message.intent,
-      label: 'Around me'
+      label: 'Around me',
+      query: this.props.message.message
     })
   }
   onIgnoreGeo = data => {
-    this.props.onSubmit({ intent: this.props.message.intent, label: 'Ignore' })
+    this.props.ignoreLocation()
+    /**
+     * Send a empty query
+     */
+    this.props.onSubmit({
+      intent: this.props.message.intent,
+      label: 'Ignore',
+      query: this.props.message.message
+    })
   }
   render () {
     let { isActive } = this.props
@@ -23,14 +33,13 @@ class Geo extends Component {
         <div>
           <GeoLocation
             onSuccess={this.onGeoSuccess}
-            icon={<Navigation size={16} />}
-            className='ola-icon-btn'
             disabled={!isActive}
+            showLabel
           />
           <button
             disabled={!isActive}
             onClick={this.onIgnoreGeo}
-            className='ola-icon-btn'
+            className='ola-btn'
           >
             Ignore
           </button>
@@ -41,4 +50,4 @@ class Geo extends Component {
   }
 }
 
-export default Geo
+export default connect(null, { ignoreLocation })(Geo)

@@ -16,8 +16,12 @@
     margin-bottom: 1rem;
   }
 
+  .ola-card-template-map {
+    margin: 0;
+  }
+
   .ola-snippet-inner, .ola-card-inner {
-    border: 1px #d8d8d7 solid;
+    // border: 1px #d8d8d7 solid;
     background: white;
     padding: 1em;
     border-radius: 5px;
@@ -71,6 +75,9 @@
     flex-direction: column;
     > .ola-fg {
       padding: 0;
+    }
+    > .ola-field {
+      padding: 0 0 1rem 0;
     }
   }
   .ola-field-img {

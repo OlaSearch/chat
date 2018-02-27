@@ -37,14 +37,9 @@
  */
 .olachat-message {  
   font-size: 14px;
-  @include clearfix;
-  padding: 0 1rem 0.5rem 12px; /* Cos the logo is [4 + 32 + 4] */
+  @include clearfix;  
   min-height: 56px;
   animation: slideUpFade 0.2s linear;
-
-  @include media (tablet) {
-    padding: 0 20px 0 12px;
-  }
 
   &:hover {
     // background-color: #f1f1f1;
@@ -74,8 +69,13 @@
 
   .olachat-message-inner {
     @include flexbox;
+    padding: 0 1rem 0.5rem 12px; /* Cos the logo is [4 + 32 + 4] */
     flex-direction: row-reverse;
     position: relative;
+
+    @include media (tablet) {
+      padding: 0 20px 0 12px;
+    }
 
     .olachat-message-with-search & {
       padding-bottom: 0.5rem;
@@ -238,3 +238,52 @@
     visibility: visible;
   }
 }
+
+/**
+ * Message with qr
+ */
+
+.olachat-message-with-qr.olachat-message-active {
+  // padding-bottom: 60px - 12px; /* same height as quick reply */
+}
+
+
+
+/**
+ * Detached message
+ */
+// .olachat-bot-mobile {
+//   .olachat-message-detach {
+//     margin-left: -30px - 12px - 8px;
+//     margin-right: -12px;
+//     .olachat-results {
+//       width: 375px;
+//       padding-left: 0.5rem;
+//       padding-right: 0.5rem;
+//       overflow-x: auto;
+//     }
+//     .ola-link-load-more-text {
+//       display: none;    
+//     }
+//     .ola-link-load-more {
+//       .ola-icon {
+//         transform: rotate(-90deg);
+//       }
+//     }
+//     .olachat-results-wrapper {
+//       display: flex;
+//     }    
+//     .ola-results {
+//       flex-direction: row;      
+//     }
+//     .ola-snippet {
+//       width: 280px;
+//       margin: 0.5rem;
+//     }
+//     .ola-snippet-mc {
+//       width: auto;
+//       margin-left: 1rem;
+//       margin-right: 1rem;
+//     }
+//   }
+// }

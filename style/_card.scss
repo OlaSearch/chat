@@ -5,6 +5,12 @@
   padding-top: 8px;
   font-size: 14px;
 }
+  
+  /* Remove padding from map */
+  .ola-card-template-map {
+    padding: 0;
+  }
+
   .ola-card-inner {
     border: 1px #d8d8d7 solid;
     background: white;

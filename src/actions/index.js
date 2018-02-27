@@ -1,9 +1,10 @@
 import types from './../ActionTypes'
 import { checkIfAwaitingResponse } from './../utils'
-import { utilities, Actions } from '@olasearch/core'
+import { utilities, Actions, Settings } from '@olasearch/core'
 
 /* Query sanitization */
 const { sanitizeText, uuid } = utilities
+const { SLOT_DATE } = Settings
 const CHAT_DELAY = 300
 const CHAT_REPLY_DELAY = 600
 const RESULTS_FOR_MC = 12
@@ -91,6 +92,14 @@ export function addMessage (payload) {
       in_response_to
     }
 
+    /**
+     * Check if original query is filled
+     * Only use if you want to dynamically replace the query
+     */
+    if (payload && typeof payload.query !== 'undefined') {
+      query.q = payload.query
+    }
+
     /* Add this to ui */
     if (query.q) {
       dispatch({
@@ -142,6 +151,15 @@ export function addMessage (payload) {
               if ('start' in payload) {
                 delete payload['start']
               } /* Remove start flag */
+              /**
+               * Remove value and label from payload
+               */
+              if ('value' in payload) {
+                delete payload['value']
+              }
+              if ('label' in payload) {
+                delete payload['label']
+              }
             }
             /* Clear previous query */
             dispatch(clearBotQueryTerm())
@@ -179,7 +197,14 @@ export function loadMore (message) {
     let searchAdapterOptions = {}
     if (message.search) {
       q = message.search.q
-      facet_query = message.search.facet_query || []
+      const slots = message.search.slots || []
+      facet_query = slots.filter(({ facet_query }) => facet_query).map(item => {
+        return {
+          ...item,
+          type: item.type && item.type === SLOT_DATE ? 'daterange' : 'string',
+          selected: item.value
+        }
+      })
       searchAdapterOptions = message.search.searchAdapterOptions
     } else {
       q = message.message
@@ -221,6 +246,7 @@ export function loadMore (message) {
         routeChange: false,
         appendResult: true,
         msgId: message.id,
+        q,
         page
       }
     })
@@ -320,5 +346,11 @@ export function toggleSearchVisibility (messageId) {
   return {
     type: types.TOGGLE_SEARCH_VISIBILITY,
     messageId
+  }
+}
+
+export function ignoreLocation () {
+  return {
+    type: types.IGNORE_LOCATION
   }
 }

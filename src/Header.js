@@ -1,27 +1,26 @@
 import React from 'react'
 import Cross from '@olasearch/icons/lib/x'
-import { ThemeConsumer } from '@olasearch/core'
+import { darken } from './utils'
 
-export default function Header ({ onHide, title }) {
+export default function Header ({ onHide, title, theme }) {
   if (!title && !onHide) return null
   return (
-    <ThemeConsumer>
-      {theme => (
-        <div className='olachat-header'>
-          <p className='olachat-header-title'>{title}</p>
-          {onHide ? (
-            <button className='olachat-header-hide' onClick={onHide}>
-              <Cross />
-            </button>
-          ) : null}
-          <style jsx>{`
-            .olachat-header {
-              background-color: ${theme.chatHeaderBackground};
-              color: ${theme.chatHeaderColor};
-            }
-          `}</style>
-        </div>
-      )}
-    </ThemeConsumer>
+    <div className='olachat-header'>
+      <p className='olachat-header-title'>{title}</p>
+      {onHide ? (
+        <button className='olachat-header-hide' onClick={onHide}>
+          <Cross />
+        </button>
+      ) : null}
+      <style jsx>{`
+        .olachat-header {
+          background-color: ${theme.chatHeaderBackground};
+          color: ${theme.chatHeaderColor};
+        }
+        .olachat-header .olachat-header-hide:hover {
+          background-color: ${darken(theme.chatHeaderBackground, 10)};
+        }
+      `}</style>
+    </div>
   )
 }

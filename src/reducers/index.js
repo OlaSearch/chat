@@ -21,7 +21,10 @@ const initialState = {
   /* For Search */
   perPage: 3 /* Per page is managed in Conversation state: As it can conflict with QueryState (Search) */,
   page: 1,
-  facet_query: EMPTY_ARRAY
+  facet_query: EMPTY_ARRAY,
+
+  /* Location ignore states */
+  ignoreLocation: false
 }
 
 function createMessageObj ({
@@ -30,8 +33,10 @@ function createMessageObj ({
   mc,
   totalResults,
   page = 1,
+  ignoreLocation,
   ...rest
 }) {
+  if (answer.location && ignoreLocation) answer.location = false
   return {
     ...answer,
     mc,
@@ -126,13 +131,14 @@ export default (state = initialState, action) => {
         suggestedTerm,
         spellSuggestions,
         originalQuery: payload.originalQuery,
-        context: payload.context
+        context: payload.context,
+        ignoreLocation: state.ignoreLocation
       })
       return {
         ...state,
-        q: '',
         isLoading: false,
         newMessageId: msg.id,
+        ignoreLocation: false,
         messages: state.messages.map(item => {
           /**
            * Replace the message text after profanity check from Intent engine
@@ -141,9 +147,9 @@ export default (state = initialState, action) => {
             return {
               ...item,
               message:
-                item.message === message
+                message && item.message === message
                   ? item.message
-                  : message /* To prevent re-render */,
+                  : item.message || message /* To prevent re-render */,
               suggestedTerm
             }
           }
@@ -275,14 +281,18 @@ export default (state = initialState, action) => {
       }
 
     case ActionTypes.OLA_REHYDRATE:
+      /**
+       * If user is in a new session, do not pre-load the conversations:
+       */
       return {
         ...state,
-        messages: action.botState
-          ? action.botState.messages.map(item => ({
-            ...item,
-            showSearch: false
-          }))
-          : [],
+        messages:
+          !action.isNewSession && action.botState
+            ? action.botState.messages.map(item => ({
+              ...item,
+              showSearch: false
+            }))
+            : [],
         newMessageId:
           action.botState && action.botState.messages.length
             ? action.botState.messages[action.botState.messages.length - 1][
@@ -303,6 +313,12 @@ export default (state = initialState, action) => {
           }
           return msg
         })
+      }
+
+    case types.IGNORE_LOCATION:
+      return {
+        ...state,
+        ignoreLocation: true
       }
 
     default:

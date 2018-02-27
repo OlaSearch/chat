@@ -13,7 +13,7 @@ export default {
       chat_continue: 'Continue',
       chat_cancel: 'Cancel',
       chat_could_not_find:
-        "We could not find results for {originalQuery}. Showing results for <mark class='ola-mark'>{suggestedTerm}</mark> instead",
+        "Showing results for <mark class='ola-mark'>{suggestedTerm}</mark> instead. We could not find results for {originalQuery}.",
       chat_here_some_result: 'Here are some results I found',
       chat_sorry_no_result: "Sorry, we didn't find any results.",
       chat_see_all: 'See all',

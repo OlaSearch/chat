@@ -57,8 +57,10 @@ class SearchResultsMessage extends React.Component {
             results={results}
             bookmarks={bookmarks}
             dispatch={dispatch}
-            openInNewWindow
             baseUrl={search && search.baseUrl}
+            logPayload={{
+              bot: true
+            }}
           />
 
           {isActive ? (

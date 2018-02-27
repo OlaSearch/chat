@@ -16,10 +16,10 @@ $gutter: 15px;
 
   /* Geo button */
   .ola-link-geo {
-    box-shadow: none;
-    margin: 0;
-    height: auto;
-    width: 40px;
+    // box-shadow: none;
+    // margin: 0;
+    // height: auto;
+    // width: 40px;
   }
 
   /* All buttons */
@@ -47,7 +47,7 @@ $gutter: 15px;
       border: none;
       // padding: $gutter $gutter $gutter 0;
       padding: 16px 1rem 1rem 0;
-      font-size: 1rem;
+      font-size: 16px;
 
       @include media (desktop) {
         font-size: 14px;

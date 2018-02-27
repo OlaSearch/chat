@@ -6,7 +6,7 @@ import AnswerMap from '@olasearch/core/lib/components/Answer/AnswerMap'
 import { Fields } from '@olasearch/core'
 // import AnswerChart from 'olasearch/lib/components/Answer/AnswerChart'
 
-export default function Card ({ card, templates }) {
+export default function Card ({ card, location, templates, results }) {
   if (!card) return null
   if (!card.title) return null
   let { buttons = [], template } = card
@@ -51,13 +51,7 @@ export default function Card ({ card, templates }) {
         )
 
       case 'map':
-        return <AnswerMap data={card.elements} />
-      // case 'line_chart':
-      //   return (
-      //     <AnswerChart
-      //       data={card}
-      //     />
-      //   )
+        return <AnswerMap data={card} results={results} location={location} />
 
       default:
         return (

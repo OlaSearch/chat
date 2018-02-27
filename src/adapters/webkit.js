@@ -82,6 +82,7 @@ const adapter = ({ emitter }) => {
       }
     },
     speak (text, isPhone = false, callback) {
+      return
       if (isPhone) {
         if (!window.speechSynthesis) return
         var utterance = new SpeechSynthesisUtterance()
@@ -105,8 +106,6 @@ const adapter = ({ emitter }) => {
           const timeout = window.setTimeout(_wait, 200)
         }
         _wait()
-
-        return
       }
 
       this.getTtsToken().then(token => {

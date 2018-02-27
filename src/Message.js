@@ -12,6 +12,7 @@ import MessageFeedback from './MessageFeedback'
 import TopicSuggestions from './TopicSuggestions'
 import Loader from './Loader'
 import FailureButtons from './FailureButtons'
+import QuickReplies from './QuickReplies'
 
 class Message extends React.Component {
   constructor (props) {
@@ -23,6 +24,9 @@ class Message extends React.Component {
       this.props.isActive !== nextProps.isActive ||
       this.props.theme !== nextProps.theme
     )
+  }
+  componentDidUpdate () {
+    this.props.onUpdate && this.props.onUpdate()
   }
   render () {
     let {
@@ -164,22 +168,25 @@ class Message extends React.Component {
                   dangerouslySetInnerHTML={createMessageMarkup(text)}
                 />
               ) : null}
-              <AnswerMC
-                mc={mc}
-                payload={{ messageId: message.id, bot: true }}
-                loader={isActive ? <Loader theme={this.props.theme} /> : null}
-              />
-              <Card card={card} />
-              {isSearchActive ? (
-                <SearchResultsMessage
-                  results={results}
-                  botName={botName}
-                  message={message}
-                  isActive={isActive}
-                  page={page}
-                  totalResults={totalResults}
+              <div className='olachat-message-detach'>
+                <AnswerMC
+                  mc={mc}
+                  payload={{ messageId: message.id, bot: true }}
+                  loader={isActive ? <Loader theme={this.props.theme} /> : null}
+                  showWhileFiltering
                 />
-              ) : null}
+                <Card card={card} results={results} location={location} />
+                {isSearchActive ? (
+                  <SearchResultsMessage
+                    results={results}
+                    botName={botName}
+                    message={message}
+                    isActive={isActive}
+                    page={page}
+                    totalResults={totalResults}
+                  />
+                ) : null}
+              </div>
             </div>
             <div className='olachat-message-date'>
               {DateParser.format(timestamp * 1000, 'DD MMM h:mm a')}
@@ -204,14 +211,7 @@ class Message extends React.Component {
                 log={log}
               />
             ) : null}
-            {isBot && spellSuggestions && spellSuggestions.length ? (
-              <TopicSuggestions
-                onSubmit={addMessage}
-                options={spellSuggestions.map(({ term }) => ({ label: term }))}
-                isActive={isActive}
-                updateQueryTerm={updateQueryTerm}
-              />
-            ) : null}
+
             {error ? (
               <FailureButtons
                 message={message}
@@ -231,6 +231,14 @@ class Message extends React.Component {
           </div>
         </div>
         {/* / Message flex */}
+        {isActive ? (
+          <QuickReplies
+            onSubmit={addMessage}
+            updateQueryTerm={updateQueryTerm}
+            theme={this.props.theme}
+            quickReplies={quickReplies}
+          />
+        ) : null}
       </div>
     )
   }

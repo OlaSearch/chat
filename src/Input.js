@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 import Voice from './Voice'
 import { Settings, Actions, Decorators } from '@olasearch/core'
 import Textarea from '@olasearch/textarea-elastic'
@@ -9,7 +10,6 @@ import HelpMenu from './HelpMenu'
 import listensToClickOutside from '@olasearch/react-onclickoutside'
 import Send from '@olasearch/icons/lib/arrow-right-circle'
 import { GeoLocation } from '@olasearch/core'
-import Navigation from '@olasearch/icons/lib/navigation'
 import { ThemeConsumer } from '@olasearch/core'
 
 const supportsVoice =
@@ -25,7 +25,8 @@ class Input extends React.Component {
       text: '',
       suggestions: [],
       suggestedIndex: null,
-      suggestedTerm: null
+      suggestedTerm: null,
+      isFocused: false
     }
   }
   static contextTypes = {
@@ -230,18 +231,30 @@ class Input extends React.Component {
       nextProps.isTyping !== this.props.isTyping ||
       nextProps.location !== this.props.location ||
       nextState.text !== this.state.text ||
+      nextState.isFocused !== this.state.isFocused ||
       nextState.suggestedTerm !== this.state.suggestedTerm ||
       nextState.suggestedIndex !== this.state.suggestedIndex ||
       nextState.suggestions !== this.state.suggestions ||
       nextProps.theme !== this.props.theme
     )
   }
+  handleFocus = () => this.setState({ isFocused: true })
+  handleBlur = () => this.setState({ isFocused: false })
   render () {
     let { isTyping, voiceInput, translate, theme } = this.props
-    let { suggestions, suggestedIndex, suggestedTerm, text } = this.state
+    let {
+      suggestions,
+      suggestedIndex,
+      suggestedTerm,
+      text,
+      isFocused
+    } = this.state
     let inputValue = suggestedTerm ? suggestedTerm.term : text
+    const classes = cx('olachat-footer', {
+      'olachat-footer-focused': isFocused
+    })
     return (
-      <form className='olachat-footer' onSubmit={this.onFormSubmit}>
+      <form className={classes} onSubmit={this.onFormSubmit}>
         {suggestions.length && text ? (
           <QuerySuggestions
             onChange={this.onSuggestionChange}
@@ -257,9 +270,12 @@ class Input extends React.Component {
         />
         <div className='olachat-input'>
           <Textarea
+            className='olachat-input-textarea'
             placeholder={translate('chat_type_a_message')}
             onChange={this.onChange}
             onKeyDown={this.onKeyDown}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
             value={inputValue}
             rows={1}
             cols={20}
@@ -269,7 +285,7 @@ class Input extends React.Component {
           />
         </div>
         {this.props.location ? (
-          <GeoLocation icon={<Navigation size={20} />} showLabel={false} />
+          <GeoLocation refreshOnGeoChange={false} showLabel={false} />
         ) : null}
         {voiceInput && supportsVoice ? (
           <div className='olachat-input-voice'>

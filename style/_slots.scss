@@ -25,6 +25,7 @@
   min-width: 80px;
   margin-bottom: -1px;
 
+
   &:first-child {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -84,7 +85,7 @@
 
 
   .olachat-message & {
-    justify-content: flex-end;    
+    justify-content: flex-end;
   }
 
   .olachat-message-bot & {

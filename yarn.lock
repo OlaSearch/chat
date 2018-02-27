@@ -1835,6 +1835,10 @@ date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
 
+debounce@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/debounce/-/debounce-1.1.0.tgz#6a1a4ee2a9dc4b7c24bb012558dbcdb05b37f408"
+
 debug-log@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/debug-log/-/debug-log-1.0.1.tgz#2307632d4c04382b8df8a32f70b895046d52745f"
@@ -2469,6 +2473,10 @@ extsprintf@1.3.0, extsprintf@^1.2.0:
 fast-deep-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-1.0.0.tgz#96256a3bc975595eb36d82e9929d060d893439ff"
+
+fast-equals@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/fast-equals/-/fast-equals-1.0.6.tgz#72a4ee4b44859055a8680bea4d2354aaedbd3fba"
 
 fast-json-stable-stringify@^2.0.0:
   version "2.0.0"
@@ -4049,6 +4057,10 @@ messageformat@^1.0.2:
     nopt "~3.0.6"
     reserved-words "^0.1.2"
 
+micro-memoize@^1.0.0:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/micro-memoize/-/micro-memoize-1.3.2.tgz#9903e206cb3cd412124944b22b990a775b62c3fb"
+
 micromatch@^2.1.5, micromatch@^2.3.11:
   version "2.3.11"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-2.3.11.tgz#86677c97d1720b363431d04d0d15293bd38c1565"
@@ -5112,7 +5124,7 @@ quick-lru@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-1.1.0.tgz#4360b17c61136ad38078397ff11416e186dcfbb8"
 
-raf@^3.4.0:
+raf@^3.3.2, raf@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.0.tgz#a28876881b4bc2ca9117d4138163ddb80f781575"
   dependencies:
@@ -5237,6 +5249,16 @@ react-transition-group@^2.2.1:
     loose-envify "^1.3.1"
     prop-types "^15.5.8"
     warning "^3.0.0"
+
+react-windowed-list@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-windowed-list/-/react-windowed-list-2.0.0.tgz#79d81cc4b2e2828185596de1d30466a35e6ef79d"
+  dependencies:
+    debounce "^1.1.0"
+    micro-memoize "^1.0.0"
+    prop-types "^15.6.0"
+    raf "^3.3.2"
+    remeasure "^3.0.1"
 
 react@^16.0.0:
   version "16.2.0"
@@ -5438,6 +5460,16 @@ regjsparser@^0.1.4:
   dependencies:
     jsesc "~0.5.0"
 
+remeasure@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/remeasure/-/remeasure-3.0.1.tgz#f9a6b38fc2d57eae7d4c7cc2502fe65f94902a87"
+  dependencies:
+    debounce "^1.1.0"
+    fast-equals "^1.0.6"
+    micro-memoize "^1.0.0"
+    raf "^3.3.2"
+    resize-observer-polyfill "^1.5.0"
+
 remove-trailing-separator@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
@@ -5546,6 +5578,10 @@ require-uncached@^1.0.2, require-uncached@^1.0.3:
 reserved-words@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/reserved-words/-/reserved-words-0.1.2.tgz#00a0940f98cd501aeaaac316411d9adc52b31ab1"
+
+resize-observer-polyfill@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.0.tgz#660ff1d9712a2382baa2cad450a4716209f9ca69"
 
 resolve-cwd@^2.0.0:
   version "2.0.0"

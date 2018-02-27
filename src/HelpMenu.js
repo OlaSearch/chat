@@ -86,6 +86,9 @@ class HelpMenu extends React.Component {
         </div>
         <style jsx>
           {`
+            .olachat-dp {
+              font-size: ${this.props.theme.mediumFontSize};
+            }
             .olachat-helpmenu-button {
               color: ${this.props.theme.primaryColor};
             }

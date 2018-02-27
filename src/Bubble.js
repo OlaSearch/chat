@@ -48,6 +48,6 @@ export default function Bubble ({
 }
 
 Bubble.defaultProps = {
-  label: 'Ask me anything',
+  label: '',
   iconSize: 34
 }
