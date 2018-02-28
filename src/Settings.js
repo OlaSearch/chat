@@ -1,3 +1,5 @@
+import { utilities } from '@olasearch/core'
+
 export const EMOJI_LIST = {
   '\\01f44d': 'emoji-thumbs-up',
   '\\01f44e': 'emoji-thumbs-down'
@@ -34,3 +36,33 @@ export const IGNORE_FEEDBACK_INTENTS = [
   DISAMBIGUATION_INTENT_NAME
 ]
 export const EMPTY_ARRAY = []
+
+export function createMessageObj ({
+  answer,
+  results,
+  mc,
+  totalResults,
+  page = 1,
+  ignoreLocation,
+  ...rest
+}) {
+  if (answer.location && ignoreLocation) answer.location = false
+  return {
+    ...answer,
+    mc,
+    awaitingUserInput: answer.awaiting_user_input,
+    results,
+    showSearch: false,
+    totalResults,
+    page,
+    ...rest
+  }
+}
+
+export function createTypingMsg (msgId) {
+  return {
+    id: utilities.uuid(),
+    msgId,
+    isTyping: true
+  }
+}

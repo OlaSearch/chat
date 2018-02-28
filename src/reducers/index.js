@@ -1,6 +1,6 @@
 import types from './../ActionTypes'
-import { EMPTY_ARRAY } from './../Settings'
-import { ActionTypes, utilities } from '@olasearch/core'
+import { createMessageObj, createTypingMsg, EMPTY_ARRAY } from './../Settings'
+import { ActionTypes } from '@olasearch/core'
 
 const initialState = {
   q: '',
@@ -25,36 +25,6 @@ const initialState = {
 
   /* Location ignore states */
   ignoreLocation: false
-}
-
-function createMessageObj ({
-  answer,
-  results,
-  mc,
-  totalResults,
-  page = 1,
-  ignoreLocation,
-  ...rest
-}) {
-  if (answer.location && ignoreLocation) answer.location = false
-  return {
-    ...answer,
-    mc,
-    awaitingUserInput: answer.awaiting_user_input,
-    results,
-    showSearch: false,
-    totalResults,
-    page,
-    ...rest
-  }
-}
-
-function createTypingMsg (msgId) {
-  return {
-    id: utilities.uuid(),
-    msgId,
-    isTyping: true
-  }
 }
 
 export default (state = initialState, action) => {
