@@ -1,6 +1,6 @@
 {
   "name": "@olasearch/chat",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Chat User Interface elements",
   "main": "lib/index.js",
   "scripts": {
@@ -90,6 +90,7 @@
     "classnames": "^2.2.5",
     "cxs": "^6.1.0",
     "dom-scroll-into-view": "^1.2.1",
+    "invariant": "^2.2.3",
     "mitt": "^1.1.3",
     "react-frame-component": "^2.0.2",
     "react-list": "^0.8.8",

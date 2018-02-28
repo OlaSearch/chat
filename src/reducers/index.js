@@ -236,18 +236,6 @@ export default (state = initialState, action) => {
         language: action.language
       }
 
-    case types.FEEDBACK_SET_ACTIVE:
-      return {
-        ...state,
-        feedbackActive: true
-      }
-
-    case types.FEEDBACK_SET_DISABLE:
-      return {
-        ...state,
-        feedbackActive: false
-      }
-
     case types.SET_FEEDBACK_MESSAGE_ID:
       return {
         ...state,

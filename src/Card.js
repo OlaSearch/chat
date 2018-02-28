@@ -7,8 +7,7 @@ import { Fields } from '@olasearch/core'
 // import AnswerChart from 'olasearch/lib/components/Answer/AnswerChart'
 
 export default function Card ({ card, location, templates, results }) {
-  if (!card) return null
-  if (!card.title) return null
+  if (!card || !card.title) return null
   let { buttons = [], template } = card
   let klass = cx('ola-card', `ola-card-template-${template}`)
   function pickTemplate (template) {

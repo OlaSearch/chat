@@ -2,13 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Actions } from '@olasearch/core'
-import {
-  activateFeedback,
-  disabledFeedback,
-  setFeedbackMessage,
-  setFeedbackRating,
-  logFeedback
-} from './actions'
+import { setFeedbackMessage, setFeedbackRating } from './actions'
 import {
   IGNORE_FEEDBACK_INTENTS,
   EMOJI_POSITIVE,
@@ -21,15 +15,23 @@ class MessageFeedback extends React.Component {
     config: PropTypes.object
   }
   handlePositive = e => {
+    /* Update the query term */
     this.props.updateQueryTerm(EMOJI_POSITIVE)
+    /* Set the message ID for later logging */
     this.props.setFeedbackMessage(this.props.message.id)
+    /* Set positive or negative feedback */
     this.props.setFeedbackRating(EMOJI_POSITIVE)
+    /* Send the message */
     this.props.onSubmit({ intent: 'OLA.FeedbackIntent' })
   }
   handleNegative = () => {
+    /* Update the query term */
     this.props.updateQueryTerm(EMOJI_NEGATIVE)
+    /* Set the message ID for later logging */
     this.props.setFeedbackMessage(this.props.message.id)
+    /* Set positive or negative feedback */
     this.props.setFeedbackRating(EMOJI_NEGATIVE)
+    /* Send the message */
     this.props.onSubmit({ intent: 'OLA.FeedbackIntent' })
   }
   render () {
@@ -67,9 +69,6 @@ class MessageFeedback extends React.Component {
 }
 
 export default connect(null, {
-  activateFeedback,
-  disabledFeedback,
   setFeedbackMessage,
-  setFeedbackRating,
-  logFeedback
+  setFeedbackRating
 })(MessageFeedback)

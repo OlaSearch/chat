@@ -1,6 +1,7 @@
 import types from './../ActionTypes'
 import { checkIfAwaitingResponse } from './../utils'
 import { utilities, Actions, Settings } from '@olasearch/core'
+import invariant from 'invariant'
 
 /* Query sanitization */
 const { sanitizeText, uuid } = utilities
@@ -110,7 +111,7 @@ export function addMessage (payload) {
 
     /* Simulate delay - Show typing indicator */
     setTimeout(
-      () => dispatch(showTypingIndicator({ msgId })),
+      () => dispatch(showTypingIndicator(msgId)),
       payload && payload.start ? 0 : CHAT_DELAY
     )
 
@@ -253,7 +254,8 @@ export function loadMore (message) {
   }
 }
 
-export function showTypingIndicator ({ msgId }) {
+export function showTypingIndicator (msgId) {
+  invariant(msgId, 'msgId is required')
   return {
     type: types.SHOW_TYPING_INDICATOR,
     msgId
@@ -287,18 +289,6 @@ export function pollWhenIdle () {
   }
 }
 
-export function activateFeedback () {
-  return {
-    type: types.FEEDBACK_SET_ACTIVE
-  }
-}
-
-export function disabledFeedback () {
-  return {
-    type: types.FEEDBACK_SET_DISABLE
-  }
-}
-
 export function setFeedbackMessage (messageId) {
   return {
     type: types.SET_FEEDBACK_MESSAGE_ID,
@@ -313,36 +303,46 @@ export function setFeedbackRating (rating) {
   }
 }
 
-export function logFeedback (feedbackMessage) {
-  /* eventMessage => feed */
-  return (dispatch, getState) => {
-    let { feedbackMessageId, feedbackRating } = getState().Conversation
+// export function logFeedback (feedbackMessage) {
+//   /* eventMessage => feed */
+//   return (dispatch, getState) => {
+//     let { feedbackMessageId, feedbackRating } = getState().Conversation
 
-    dispatch(
-      Actions.Logger.log({
-        eventType: 'C',
-        eventCategory: 'Feedback',
-        eventAction: 'click',
-        eventMessage: feedbackMessage,
-        messageId: feedbackMessageId,
-        eventLabel: feedbackRating,
-        debounce: false,
-        payload: {
-          bot: true
-        }
-      })
-    )
-  }
-}
+//     dispatch(
+//       Actions.Logger.log({
+//         eventType: 'C',
+//         eventCategory: 'Feedback',
+//         eventAction: 'click',
+//         eventMessage: feedbackMessage,
+//         messageId: feedbackMessageId,
+//         eventLabel: feedbackRating,
+//         debounce: false,
+//         payload: {
+//           bot: true
+//         }
+//       })
+//     )
+//   }
+// }
 
+/**
+ * setBotStatus: Show or hide a bot
+ * @param {Boolean} status
+ */
 export function setBotStatus (status) {
+  invariant(typeof status !== 'undefined', 'Status is required (Boolean)')
   return {
     type: types.SET_BOT_STATUS,
     status
   }
 }
 
+/**
+ * [toggleSearchVisibility Show or hide search results inside a message]
+ * @param  {String} messageId
+ */
 export function toggleSearchVisibility (messageId) {
+  invariant(messageId, 'Message ID is required (Boolean)')
   return {
     type: types.TOGGLE_SEARCH_VISIBILITY,
     messageId

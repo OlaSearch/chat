@@ -25,7 +25,7 @@ class QuickReplies extends React.PureComponent {
   }
   render () {
     let { quickReplies } = this.props
-    if (!quickReplies || !quickReplies.length) return null
+    if (!quickReplies.length) return null
     return (
       <div className='olachat-quickreplies'>
         <div className='olachat-quickreplies-list'>
