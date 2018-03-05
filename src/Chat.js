@@ -96,10 +96,6 @@ class Chat extends React.Component {
             .olachat :global(button) {
               font-family: ${theme.chatFontFamily};
             }
-          `}
-        </style>
-        <style jsx>
-          {`
             .olachat :global(.ola-share-links) {
               display: block;
             }

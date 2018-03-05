@@ -127,7 +127,7 @@ export function addMessage (payload) {
           query,
           context,
           api,
-          processData: response => {
+          beforeSuccessCallback: response => {
             if (!response.results) return response
             return {
               ...response,
@@ -196,6 +196,11 @@ export function loadMore (message) {
     let q
     let facet_query = []
     let searchAdapterOptions = {}
+    /*
+      Always take the intent from original message
+      If the current intent is OLA.Disambiguation, then on loadmore, disambiguation is triggered
+     */
+    const { intent } = message
     if (message.search) {
       q = message.search.q
       const slots = message.search.slots || []
@@ -214,7 +219,7 @@ export function loadMore (message) {
     /* Current page in the message */
     var state = getState()
     var context = state.Context
-    var { page } = message
+    var { page = 1 } = message
     var { perPage } = state.Conversation
     /* Get filters from Search Query */
     var { filters } = state.QueryState
@@ -227,6 +232,7 @@ export function loadMore (message) {
       per_page: perPage,
       page,
       facet_query,
+      intent,
       filters,
       msgId: message.id,
       searchAdapterOptions
@@ -352,5 +358,17 @@ export function toggleSearchVisibility (messageId) {
 export function ignoreLocation () {
   return {
     type: types.IGNORE_LOCATION
+  }
+}
+
+export function showInvite () {
+  return {
+    type: types.SHOW_INVITE
+  }
+}
+
+export function hideInvite () {
+  return {
+    type: types.HIDE_INVITE
   }
 }

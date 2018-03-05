@@ -60,6 +60,7 @@ class Message extends React.Component {
       originalQuery,
       error,
       context = {},
+      payload,
       quick_replies: quickReplies
     } = message
     let isBot = !userId
@@ -90,35 +91,34 @@ class Message extends React.Component {
      * Do not render SearchResultsMessage unless required. Takes a perf hit
      */
     let isSearchActive = false
+
     /**
-     * If search is active && has results, the reply from the bot is { answer: { search : { title } } }
-     * When MC is being loaded isLoadingMC, should we hide search results ?
-     *
-     * We are not checking for `search` key in `answer` because search should work without Intent Engine
+     * search => only exists if intent engine is ON
      */
-    // console.log(this.props.message)
-    if (results && results.length) {
-      isSearchActive = true
-      /* Bot reply */
-      text = `<p>
-        ${
-  search
-    ? suggestedTerm
-      ? translate('chat_could_not_find', {
-        originalQuery,
-        suggestedTerm
-      })
-      : search.title
-    : translate('chat_here_some_result')
-}
-      </p>`
-    } else {
-      /* No results */
-      text =
-        text ||
-        `<p>${
-          search ? search.no_result : translate('chat_sorry_no_result')
-        }</p>`
+    if (isBot) {
+      if (results && results.length) {
+        /* Flag to display search results */
+        isSearchActive = true
+        text =
+          suggestedTerm !== originalQuery
+            ? translate('chat_could_not_find', { originalQuery, suggestedTerm })
+            : search && search.title
+              ? search.title
+              : translate('chat_here_some_result')
+      } else {
+        /* Bot has a reply here */
+        if (text) {
+          if (suggestedTerm !== originalQuery) {
+            text = `${translate('chat_could_not_find', {
+              originalQuery,
+              suggestedTerm
+            })} ${text}`
+          }
+        } else {
+          /* No results */
+          text = search ? search.no_result : translate('chat_sorry_no_result')
+        }
+      }
     }
 
     if (needsLocation) {

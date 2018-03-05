@@ -16,6 +16,16 @@ $bubble-icon-size: 34px;
   box-shadow: $sharp-box-shadow;
   cursor: pointer;  
   margin: 10px;
+  position: relative;
+
+  /**
+   * Inside iframe
+   */
+  .olachat-bot-iframe & {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
 
   &:hover, &:active, &:focus {
     background: darken($blue, 10%);
@@ -34,4 +44,20 @@ $bubble-icon-size: 34px;
   flex: 1;
   text-align: left;
   margin-right: 0.5rem;
+}
+
+/**
+ * Badge
+ */
+.olachat-bubble-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #f94d3e;
+  color: white;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  font-size: 12px;
+  border-radius: 50%;
 }

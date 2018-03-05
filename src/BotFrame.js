@@ -7,6 +7,7 @@ import { Decorators, Settings as OlaSettings } from '@olasearch/core'
 import { triggerMouseEvent } from './utils'
 import {
   OLACHAT_IFRAME_ID,
+  OLACHAT_INVITE_IFRAME_ID,
   BOT_ZINDEX,
   BOT_WIDTH_ACTIVE,
   BUBBLE_HEIGHT_MOBILE,
@@ -17,6 +18,7 @@ import {
   BUBBLE_FULL_WIDTH_MOBILE,
   BUBBLE_FULL_HEIGHT
 } from './Settings'
+import InviteNotification from './InviteNotification'
 
 const { STYLE_TAG_ID, MODAL_ROOT_CLASSNAME } = OlaSettings
 
@@ -47,7 +49,7 @@ class BotFrame extends React.Component {
         <head>
           <base target='_parent'>
         </head>
-        <body class='olachat-body'>
+        <body class='olachat-body' style='overflow: hidden;'>
           <div class='frame-root'></div>
         </body>
       </html>
@@ -102,7 +104,8 @@ class BotFrame extends React.Component {
       zIndex,
       isDesktop,
       activeStyle,
-      bubbleProps
+      bubbleProps,
+      inviteVisible
     } = this.props
 
     /* Check if chatbot label is present */
@@ -141,23 +144,51 @@ class BotFrame extends React.Component {
         })
     }
     return (
-      <Frame
-        style={frameStyles}
-        head={
-          <div>
-            <link rel='stylesheet' href={this.props.cssUrl} />
-            <meta
-              name='viewport'
-              content='width=device-width, initial-scale=1'
-            />
-          </div>
-        }
-        id={OLACHAT_IFRAME_ID}
-        initialContent={this.props.initialContent}
-        title='Ola Chat'
-      >
-        <Bot {...this.props} showBubbleLabel={showBubbleLabel} iFrame />
-      </Frame>
+      <React.Fragment>
+        <Frame
+          style={frameStyles}
+          head={
+            <div>
+              <link rel='stylesheet' href={this.props.cssUrl} />
+              <meta
+                name='viewport'
+                content='width=device-width, initial-scale=1'
+              />
+            </div>
+          }
+          id={OLACHAT_IFRAME_ID}
+          initialContent={this.props.initialContent}
+          title='Ola Chat'
+        >
+          <Bot {...this.props} showBubbleLabel={showBubbleLabel} iFrame />
+        </Frame>
+        {inviteVisible ? (
+          <Frame
+            style={{
+              ...iframeStyle,
+              position: 'fixed',
+              bottom: 86,
+              right: 20,
+              width: 300,
+              height: 120
+            }}
+            head={
+              <div>
+                <link rel='stylesheet' href={this.props.cssUrl} />
+                <meta
+                  name='viewport'
+                  content='width=device-width, initial-scale=1'
+                />
+              </div>
+            }
+            id={OLACHAT_INVITE_IFRAME_ID}
+            initialContent={this.props.initialContent}
+            title='Ola Chat'
+          >
+            <InviteNotification {...this.props} iFrame />
+          </Frame>
+        ) : null}
+      </React.Fragment>
     )
   }
 }
@@ -165,7 +196,8 @@ class BotFrame extends React.Component {
 function mapStateToProps (state) {
   return {
     isDesktop: state.Device.isDesktop,
-    isBotActive: state.Conversation.isBotActive
+    isBotActive: state.Conversation.isBotActive,
+    inviteVisible: state.Conversation.inviteVisible
   }
 }
 

@@ -22,5 +22,8 @@ export default {
   SET_BOT_STATUS: 'SET_BOT_STATUS',
 
   /* Called when user ignores Share location prompt */
-  IGNORE_LOCATION: 'IGNORE_LOCATION'
+  IGNORE_LOCATION: 'IGNORE_LOCATION',
+
+  SHOW_INVITE: 'SHOW_INVITE',
+  HIDE_INVITE: 'HIDE_INVITE'
 }

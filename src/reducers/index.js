@@ -24,7 +24,15 @@ const initialState = {
   facet_query: EMPTY_ARRAY,
 
   /* Location ignore states */
-  ignoreLocation: false
+  ignoreLocation: false,
+
+  /* Invite */
+  inviteVisible: true,
+  invite: {
+    title: 'Ola Team',
+    subtitle: '',
+    body: 'Hi there! What brings you to our website today?'
+  }
 }
 
 export default (state = initialState, action) => {
@@ -119,7 +127,7 @@ export default (state = initialState, action) => {
               message:
                 message && item.message === message
                   ? item.message
-                  : item.message || message /* To prevent re-render */,
+                  : message || item.message /* To prevent re-render */,
               suggestedTerm
             }
           }
@@ -221,7 +229,8 @@ export default (state = initialState, action) => {
     case types.SET_BOT_STATUS:
       return {
         ...state,
-        isBotActive: action.status
+        isBotActive: action.status,
+        inviteVisible: false
       }
 
     case types.UPDATE_BOT_QUERY_TERM:
@@ -244,6 +253,11 @@ export default (state = initialState, action) => {
        */
       return {
         ...state,
+        inviteVisible: action.botState
+          ? typeof action.botState.inviteVisible === 'undefined'
+            ? true
+            : action.botState.inviteVisible
+          : state.inviteVisible,
         messages:
           !action.isNewSession && action.botState
             ? action.botState.messages.map(item => ({
@@ -277,6 +291,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         ignoreLocation: true
+      }
+
+    case types.SHOW_INVITE:
+      return {
+        ...state,
+        inviteVisible: true
+      }
+
+    case types.HIDE_INVITE:
+      return {
+        ...state,
+        inviteVisible: false
       }
 
     default:

@@ -303,20 +303,16 @@ class Input extends React.Component {
         >
           <Send />
         </button>
-        <style jsx global>
-          {`
-            .olachat-submit .ola-icon {
-              fill: ${theme.primaryColor};
-            }
-            .olachat-submit .ola-icon circle {
-              stroke: ${theme.primaryColor};
-            }
-          `}
-        </style>
         <style jsx>
           {`
             .olachat-submit {
               color: ${theme.primaryColor};
+            }
+            .olachat-submit :global(.ola-icon) {
+              fill: ${theme.primaryColor};
+            }
+            .olachat-submit :global(.ola-icon circle) {
+              stroke: ${theme.primaryColor};
             }
             .olachat-footer :global(.ola-link-geo, .ola-link-geo:hover) {
               background: none;

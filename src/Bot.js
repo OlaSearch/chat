@@ -7,7 +7,7 @@ import classNames from 'classnames'
 import mitt from 'mitt'
 import Bubble from './Bubble'
 import Chat from './Chat'
-import Vui from './Vui'
+// import Vui from './Vui'
 
 const DEBUG = false
 const supportsVoice = DEBUG
@@ -81,7 +81,7 @@ class Bot extends Component {
     voiceInput: true,
     bubbleProps: {},
     onBubbleClick: null,
-    showBubbleLabel: true,
+    showBubbleLabel: false,
     botProps: {
       botName: 'Bot',
       userName: 'You'
@@ -124,12 +124,13 @@ class Bot extends Component {
       : true
     const { isBotActive, showBubble } = this.props
     const component = isBotActive ? (
-      this.props.vui && supportsVoice && HAS_VOICES ? (
-        <Vui {...passProps} />
-      ) : (
-        <Chat {...passProps} />
-      )
-    ) : null
+      <Chat {...passProps} />
+    ) // this.props.vui && supportsVoice && HAS_VOICES ? (
+    //   <Vui {...passProps} />
+    // ) : (
+    //   <Chat {...passProps} />
+    // )
+      : null
     const botClass = classNames('olachat-bot', {
       'olachat-bot-active': isBotActive,
       'olachat-bot-iframe': this.props.iFrame,

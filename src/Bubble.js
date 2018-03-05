@@ -10,6 +10,7 @@ function Bubble ({
   label,
   iconSize,
   showBubbleLabel,
+  badge,
   theme
 }) {
   let klass = classNames('olachat-bubble', {
@@ -30,6 +31,7 @@ function Bubble ({
           <span className='olachat-bubble-text'>{label}</span>
         ) : null}
         <Message size={iconSize} className='ola-icon' />
+        {badge ? <span className='olachat-bubble-badge'>{badge}</span> : null}
       </span>
       <style jsx>{`
         .olachat-bubble {
@@ -39,6 +41,9 @@ function Bubble ({
         .olachat-bubble:hover {
           background: ${theme.chatBubbleBackgroundHover};
         }
+        .olachat-bubble .olachat-bubble-badge {
+          background: ${theme.dangerColor};
+        }
       `}</style>
     </button>
   )
@@ -46,7 +51,8 @@ function Bubble ({
 
 Bubble.defaultProps = {
   label: '',
-  iconSize: 34
+  iconSize: 34,
+  badge: null
 }
 
 export default Decorators.withTheme(Bubble)
