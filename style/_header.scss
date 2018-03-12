@@ -5,7 +5,7 @@
   background: $blue;
   color: white;
   padding-left: 1rem;
-  height: 60px;
+  height: 50px;
   // margin: -1px -1px 0 -1px;
   position: relative;
   z-index: 1;
@@ -13,13 +13,11 @@
   align-items: center;
   -webkit-align-items: center;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,0.5);
-  // margin: -1px -1px 0 -1px; /* Olachat has a 1px border around it */
-  
-
-  @include media (desktop) {
-    height: 50px;
-    border-radius: 5px 5px 0 0;
-    // padding: $gutter 16px;
+  // margin: -1px -1px 0 -1px; /* Olachat has a 1px border around it */  
+  border-radius: 5px 5px 0 0;
+  .olachat-bot-tablet &, .olachat-bot-mobile & {
+    height: 60px;
+    border-radius: 0;
   }
 
   .olachat-header-hide {

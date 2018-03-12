@@ -282,6 +282,7 @@ class Input extends React.Component {
             ref={this.registerRef}
             autoFocus={!this.props.isPhone}
             initialHeight={50}
+            disabled={this.props.disabled}
           />
         </div>
         {this.props.location ? (
@@ -298,7 +299,7 @@ class Input extends React.Component {
           </div>
         ) : null}
         <button
-          disabled={isTyping || !this.state.text}
+          disabled={isTyping || !this.state.text || this.props.disabled}
           className='olachat-submit'
         >
           <Send />

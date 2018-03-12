@@ -4,6 +4,7 @@
 
 .olachat-results {
   position: relative;
+  padding-bottom: 0.5rem;
 }
 
 /* Messages with search results */
@@ -53,25 +54,13 @@
 /**
  * Search results
  */
-.olachat .ola-results {
-  display: flex;
+.olachat-results .ola-results {
+  display: flex;  
+  justify-content: flex-start;
   flex-direction: column;
 
-
   @include media (tablet) {
-    flex-direction: row;
     flex-wrap: wrap;
+    flex-direction: row;
   }
-  justify-content: flex-start;
 }
-
-
-/**
- * Layout
- */
-// .olachat-message-detach {
-//   padding-left: 30px + 8px;
-//   @include media (tablet)  {
-//     padding-left: 36px + 8px;
-//   }
-// }

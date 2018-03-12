@@ -17,8 +17,18 @@ class Chat extends React.Component {
     /**
      * Check if the user has any messages
      */
-    if (!this.props.messages.length) {
+    if (!this.props.messages.length && !this.props.disabled) {
       this.props.addMessage({ intent: this.props.initialIntent, start: true })
+    }
+    /**
+     * If its disabled
+     */
+    if (this.props.disabled) {
+      this.props.addMessage({
+        label: this.props.disabled,
+        value: this.props.disabled,
+        disableSubmit: true
+      })
     }
   }
   addMessage = args => {
@@ -69,6 +79,7 @@ class Chat extends React.Component {
           voiceInput={this.props.voiceInput}
           location={this.props.location}
           theme={theme}
+          disabled={this.props.disabled}
         />
         <style jsx global>
           {`

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Actions } from '@olasearch/core'
+import { Actions, Decorators } from '@olasearch/core'
 import { setFeedbackMessage, setFeedbackRating } from './actions'
 import {
   IGNORE_FEEDBACK_INTENTS,
@@ -11,9 +11,6 @@ import {
 import { checkIfAwaitingResponse } from './utils'
 
 class MessageFeedback extends React.Component {
-  static contextTypes = {
-    config: PropTypes.object
-  }
   handlePositive = e => {
     /* Update the query term */
     this.props.updateQueryTerm(EMOJI_POSITIVE)
@@ -44,7 +41,7 @@ class MessageFeedback extends React.Component {
     /* If user is typing */
     if (!isActive || !isBot || !awaitingUserInput) return null
     /* Check if ignored intents or MC */
-    if (intent === this.context.config.initialIntent) return null
+    if (intent === this.props.config.initialIntent) return null
     if (IGNORE_FEEDBACK_INTENTS.indexOf(intent) !== -1 && !mc) return null
 
     return (
@@ -71,4 +68,4 @@ class MessageFeedback extends React.Component {
 export default connect(null, {
   setFeedbackMessage,
   setFeedbackRating
-})(MessageFeedback)
+})(Decorators.withConfig(MessageFeedback))

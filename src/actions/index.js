@@ -43,6 +43,8 @@ export function addMessage (payload) {
     var in_response_to = messages.length
       ? messages[messages.length - 1]['id']
       : null
+    const showUserMessage = !(payload && payload.hidden)
+    const stopSubmit = payload && payload.disableSubmit
 
     /**
      * Check if payload has `label` => THis will be displayed in bot
@@ -103,16 +105,23 @@ export function addMessage (payload) {
 
     /* Add this to ui */
     if (query.q) {
-      dispatch({
-        type: types.REQUEST_ADD_MESSAGE,
-        message
-      })
+      /**
+       * Add message only if hidden is undefined or false
+       */
+      if (showUserMessage) {
+        dispatch({
+          type: types.REQUEST_ADD_MESSAGE,
+          message
+        })
+      }
     }
+
+    if (stopSubmit) return
 
     /* Simulate delay - Show typing indicator */
     setTimeout(
       () => dispatch(showTypingIndicator(msgId)),
-      payload && payload.start ? 0 : CHAT_DELAY
+      (payload && payload.start) || !showUserMessage ? 0 : CHAT_DELAY
     )
 
     return new Promise((resolve, reject) => {
@@ -138,6 +147,7 @@ export function addMessage (payload) {
             ...payload,
             message,
             context,
+            originalQuery: query.q,
             bot: true
           }
         }).then(response => {
@@ -161,6 +171,9 @@ export function addMessage (payload) {
               if ('label' in payload) {
                 delete payload['label']
               }
+              if ('hidden' in payload) {
+                delete payload['hidden']
+              }
             }
             /* Clear previous query */
             dispatch(clearBotQueryTerm())
@@ -178,7 +191,7 @@ export function addMessage (payload) {
 
           return resolve(response)
         })
-      }, CHAT_REPLY_DELAY)
+      }, showUserMessage ? CHAT_REPLY_DELAY : 0)
     })
   }
 }
@@ -213,7 +226,7 @@ export function loadMore (message) {
       })
       searchAdapterOptions = message.search.searchAdapterOptions
     } else {
-      q = message.message
+      q = message.message || message.originalQuery
     }
 
     /* Current page in the message */

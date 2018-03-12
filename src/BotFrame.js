@@ -31,9 +31,9 @@ class BotFrame extends React.Component {
   static defaultProps = {
     width: BUBBLE_FULL_WIDTH_DESKTOP,
     widthMobile: BUBBLE_FULL_WIDTH_MOBILE,
-    widthActive: BOT_WIDTH_ACTIVE,
+    widthActive: BOT_WIDTH_ACTIVE /* 410 */,
     height: BUBBLE_FULL_HEIGHT,
-    heightActive: '100%',
+    heightActive: '100%' /* 620 */,
     /* Flag to add the chatbot as an inline element */
     inline: false,
     zIndex: BOT_ZINDEX,
@@ -117,12 +117,13 @@ class BotFrame extends React.Component {
       ...iframeStyle,
       ...(isBotActive
         ? {
-          top: 0,
+          top: 'auto',
           bottom: 0,
           right: 0,
           position: 'fixed',
           width: isDesktop ? widthActive : '100%',
           height: heightActive,
+          maxHeight: '100%',
           zIndex,
           ...activeStyle
         }

@@ -44,14 +44,14 @@ class SearchResultsMessage extends React.Component {
     return (
       <div className={klass}>
         <div className='olachat-results-wrapper'>
-          <div className='olachat-results-overlay' />
+          {/* <div className='olachat-results-overlay' />
           <button
             type='button'
             onClick={this.toggleActive}
             className='olachat-results-seeall'
           >
             {translate('chat_see_all')}
-          </button>
+          </button> */}
 
           <SearchResults
             results={results}

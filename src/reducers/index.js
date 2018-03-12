@@ -120,6 +120,8 @@ export default (state = initialState, action) => {
         messages: state.messages.map(item => {
           /**
            * Replace the message text after profanity check from Intent engine
+           * 1. Profanity check
+           * 2. Spell check
            */
           if (item.id === in_response_to) {
             return {
@@ -127,8 +129,11 @@ export default (state = initialState, action) => {
               message:
                 message && item.message === message
                   ? item.message
-                  : message || item.message /* To prevent re-render */,
-              suggestedTerm
+                  : suggestedTerm
+                    ? message === suggestedTerm
+                      ? payload.originalQuery
+                      : message /* bigot federen => **** federen */
+                    : message || item.message /* To prevent re-render */
             }
           }
           /**

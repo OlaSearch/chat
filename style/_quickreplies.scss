@@ -23,7 +23,7 @@
  * @type {[type]}
  */
 .olachat-quickreplies::-webkit-scrollbar {
-  height: 0;
+  display: none;
 }
 
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  

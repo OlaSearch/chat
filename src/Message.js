@@ -100,23 +100,26 @@ class Message extends React.Component {
         /* Flag to display search results */
         isSearchActive = true
         text =
-          suggestedTerm !== originalQuery
+          suggestedTerm && suggestedTerm !== originalQuery
             ? translate('chat_could_not_find', { originalQuery, suggestedTerm })
             : search && search.title
               ? search.title
               : translate('chat_here_some_result')
       } else {
-        /* Bot has a reply here */
-        if (text) {
-          if (suggestedTerm !== originalQuery) {
-            text = `${translate('chat_could_not_find', {
-              originalQuery,
-              suggestedTerm
-            })} ${text}`
+        if (search) {
+          /* Bot has a reply here */
+          /* Search is also active */
+          if (text) {
+            if (suggestedTerm && suggestedTerm !== originalQuery) {
+              text = `${translate('chat_could_not_find', {
+                originalQuery,
+                suggestedTerm
+              })} ${text}`
+            }
+          } else {
+            /* No results */
+            text = search.no_result || translate('chat_sorry_no_result')
           }
-        } else {
-          /* No results */
-          text = search ? search.no_result : translate('chat_sorry_no_result')
         }
       }
     }
@@ -168,25 +171,6 @@ class Message extends React.Component {
                   dangerouslySetInnerHTML={createMessageMarkup(text)}
                 />
               ) : null}
-              <div className='olachat-message-detach'>
-                <AnswerMC
-                  mc={mc}
-                  payload={{ messageId: message.id, bot: true }}
-                  loader={isActive ? <Loader theme={this.props.theme} /> : null}
-                  showWhileFiltering
-                />
-                <Card card={card} results={results} location={location} />
-                {isSearchActive ? (
-                  <SearchResultsMessage
-                    results={results}
-                    botName={botName}
-                    message={message}
-                    isActive={isActive}
-                    page={page}
-                    totalResults={totalResults}
-                  />
-                ) : null}
-              </div>
             </div>
             <div className='olachat-message-date'>
               {DateParser.format(timestamp * 1000, 'DD MMM h:mm a')}
@@ -219,18 +203,37 @@ class Message extends React.Component {
                 isActive={isActive}
               />
             ) : null}
-            {isBot ? (
-              <MessageFeedback
-                isBot={isBot}
-                message={message}
-                isActive={isActive}
-                onSubmit={addMessage}
-                updateQueryTerm={updateQueryTerm}
-              />
-            ) : null}
           </div>
         </div>
         {/* / Message flex */}
+        <div className='olachat-message-detach'>
+          <AnswerMC
+            mc={mc}
+            payload={{ messageId: message.id, bot: true }}
+            loader={isActive ? <Loader theme={this.props.theme} /> : null}
+            showWhileFiltering
+          />
+          <Card card={card} results={results} location={location} />
+          {isSearchActive ? (
+            <SearchResultsMessage
+              results={results}
+              botName={botName}
+              message={message}
+              isActive={isActive}
+              page={page}
+              totalResults={totalResults}
+            />
+          ) : null}
+        </div>
+        {isBot ? (
+          <MessageFeedback
+            isBot={isBot}
+            message={message}
+            isActive={isActive}
+            onSubmit={addMessage}
+            updateQueryTerm={updateQueryTerm}
+          />
+        ) : null}
         {isActive ? (
           <QuickReplies
             onSubmit={addMessage}

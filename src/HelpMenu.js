@@ -37,9 +37,6 @@ class HelpMenu extends React.Component {
       window.print()
     }
   }
-  static defaultProps = {
-    botLinks: []
-  }
   shouldComponentUpdate (nextProps, nextState) {
     return (
       nextProps.theme !== this.props.theme ||
@@ -50,10 +47,11 @@ class HelpMenu extends React.Component {
     this.props.hide()
   }
   render () {
-    let klass = classNames('olachat-helpmenu', {
+    const klass = classNames('olachat-helpmenu', {
       'olachat-helpmenu-open': this.props.isCollapsed
     })
-    let { botLinks, translate } = this.props
+    const { translate, config } = this.props
+    const { botLinks = [] } = config
     return (
       <div className={klass}>
         <button
@@ -113,13 +111,12 @@ const HelpMenuContainer = listensToClickOutside(HelpMenu, {
     return instance.context.document || document
   }
 })
-const HelpMenuWrapper = (props, { config: { botLinks } }) => {
-  return <HelpMenuContainer {...props} botLinks={botLinks} />
-}
-HelpMenuWrapper.contextTypes = {
-  config: PropTypes.oneOfType([PropTypes.object, PropTypes.func])
+const HelpMenuWrapper = props => {
+  return <HelpMenuContainer {...props} />
 }
 
 export default Decorators.withToggle(
-  Decorators.withTranslate(Decorators.withLogger(HelpMenuWrapper))
+  Decorators.withConfig(
+    Decorators.withTranslate(Decorators.withLogger(HelpMenuWrapper))
+  )
 )

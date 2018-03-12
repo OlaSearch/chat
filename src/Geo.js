@@ -8,7 +8,7 @@ class Geo extends Component {
     if (!data) return
     this.props.onSubmit({
       intent: this.props.message.intent,
-      label: 'Around me',
+      hidden: true,
       query: this.props.message.message
     })
   }
@@ -19,7 +19,7 @@ class Geo extends Component {
      */
     this.props.onSubmit({
       intent: this.props.message.intent,
-      label: 'Ignore',
+      hidden: true,
       query: this.props.message.message
     })
   }
