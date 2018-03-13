@@ -1,79 +1,31 @@
-# Ola Search Chat Interface
-
-A React based chat user interface to embed a complete web chat on your website.
-
-Required dependency
-
-1. Core - @olasearch/core
-2. Search engine adapter - @olasearch/solr-adapter
-3. Project config file
+# Ola Chat
+A chatbot framework for Ola Search powered by React. It can be embedded as a widget (iframe) or inline in any pages
 
 ## Installation
 
 ````
-yarn add @olasearch/chat
+npm install @olasearch/chat --save
 ````
 
-## Usage
+### 3. Download Ola Search starter kit
 
-````
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Parser, QueryBuilder, Http } from '@olasearch/solr-adapter'
-import config from 'olasearchconfig'
-import { createLoggerMiddleware } from '@olasearch/logger'
-import { OlaProvider, createStore } from '@olasearch/core'
-import { ChatReducer, BotFrame, Bot, ChatActions, persistMiddleware, notificationMiddleware, translations as chatTranslations } from '@olasearch/chat'
+```
+git clone https://gitlab.com/olasearch/olasearch-project-starter.git
+cd olasearch-project-starter
+npm install
+cd src
+# Copy the config file to `src` directory
+npm run start
+```
 
-/* Include css files */
-require('@olasearch/core/src/style/core.scss')
-require('@olasearch/chat/style/chat.scss')
+Navigate to `http://localhost:3003` to see a chat bot
 
-/* DOM ID */
-const ola_chatbot = document.getElementById('ola-chatbot')
+### More documentation - Coming Soon
 
-/* Logging middleware */
-let loggerMiddleware = createLoggerMiddleware({ logger: config.logger })
+## Collaboration guidelines
 
-/* Chat persist middleware */
-let chatPersistMiddleware = persistMiddleware({ namespace: config.namespace })
+Uses [Prettier](prettier.io) and [Prettier standard](https://github.com/sheerun/prettier-standard) for code formatting and linting
 
-/* Push notification middleware */
-let chatNotification = notificationMiddleware({ name: config.projectName, icon: config.botAvatar })
+## License
 
-/* Store */
-let store = createStore(config,
-  { Parser, QueryBuilder, Http }, /* Search Adapter */
-  { Conversation: ChatReducer }, /* Chatbot Reducer */
-  [ 
-    chatPersistMiddleware, /* Chatbot Middlewares */
-    chatNotification,
-    loggerMiddleware /* Logging Middlewares */,
-  ]
-)
-
-if (ola_chatbot) {
-  ReactDOM.render(
-    <OlaProvider config={config} store={store} translations={chatTranslations}>
-      <BotFrame
-        initialIntent={config.initialIntent}
-        headerProps={{
-          title: config.chatbotTitle
-        }}
-        avatarProps={{
-          avatarBot: config.botAvatar,
-          avatarUser: config.userAvatar,
-        }}
-        bubbleProps={{
-          label: config.chatbotBubbleLabel
-        }}
-        botProps={{
-          botName: config.botName,
-          userName: 'You'
-        }}
-      />
-    </OlaProvider>
-    , ola_chatbot
-  )
-}
-````
+Copyright OlaSearch Pte Ltd 2015 - 2018
