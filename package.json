@@ -10,7 +10,7 @@
     "standard": "standard --verbose --fix src/*",
     "release": "NODE_ENV=production webpack --display-optimization-bailout --config webpack.release.js",
     "prettier-standard": "prettier-standard 'src/**/*.js'",
-    "prettier": "yarn prettier-standard && git add src lib && git status"
+    "prettier": "yarn prettier-standard && git add src && git status"
   },
   "author": "",
   "license": "Copyright Ola Search Pte Ltd",
