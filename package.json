@@ -1,6 +1,6 @@
 {
   "name": "@olasearch/chat",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "Chat User Interface elements",
   "main": "lib/index.js",
   "scripts": {
@@ -81,7 +81,7 @@
   },
   "dependencies": {
     "@olasearch/alite": "^1.0.5",
-    "@olasearch/core": "git+https://gitlab-ci-token:2ifVEexGsujyWB4NXMZ4@gitlab.com/olasearch/olasearch-core.git",
+    "@olasearch/core": "^2.5.2",
     "@olasearch/icons": "^1.0.1",
     "@olasearch/react-onclickoutside": "^6.7.1-rc",
     "@olasearch/styled-jsx": "^2.2.6",
