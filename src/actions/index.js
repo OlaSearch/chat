@@ -322,28 +322,6 @@ export function setFeedbackRating (rating) {
   }
 }
 
-// export function logFeedback (feedbackMessage) {
-//   /* eventMessage => feed */
-//   return (dispatch, getState) => {
-//     let { feedbackMessageId, feedbackRating } = getState().Conversation
-
-//     dispatch(
-//       Actions.Logger.log({
-//         eventType: 'C',
-//         eventCategory: 'Feedback',
-//         eventAction: 'click',
-//         eventMessage: feedbackMessage,
-//         messageId: feedbackMessageId,
-//         eventLabel: feedbackRating,
-//         debounce: false,
-//         payload: {
-//           bot: true
-//         }
-//       })
-//     )
-//   }
-// }
-
 /**
  * setBotStatus: Show or hide a bot
  * @param {Boolean} status
