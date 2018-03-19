@@ -2,6 +2,10 @@ import React from 'react'
 import Repeat from '@olasearch/icons/lib/repeat'
 import { Decorators } from '@olasearch/core'
 
+/**
+ * Shows button if message sending failed
+ * @example ./styleguide/FailureButtons.md
+ */
 function FailureButtons ({ onSubmit, message, isActive, translate }) {
   return (
     <div className='olachat-slots'>

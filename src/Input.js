@@ -294,7 +294,6 @@ class Input extends React.Component {
               onResult={this.onVoiceChange}
               onFinalResult={this.onVoiceFinal}
               voiceAdapter={this.props.voiceAdapter}
-              theme={theme}
             />
           </div>
         ) : null}

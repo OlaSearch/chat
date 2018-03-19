@@ -4,7 +4,7 @@ import cx from 'classnames'
 
 /**
  * Displays an avatar
- * @example ./src/Avatar.md
+ * @example ./styleguide/Avatar.md
  */
 function Avatar ({ isBot, userId, avatarBot, avatarUser }) {
   let img = <img className='olachat-avatar' src={avatarBot} />

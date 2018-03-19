@@ -2,6 +2,9 @@ import React from 'react'
 import Cross from '@olasearch/icons/lib/x'
 import { darken } from './utils'
 
+/**
+ * Chatbot Header
+ */
 export default function Header ({ onHide, title, theme }) {
   if (!title && !onHide) return null
   return (

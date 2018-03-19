@@ -10,7 +10,14 @@ import {
 } from './Settings'
 import { checkIfAwaitingResponse } from './utils'
 
+/**
+ * Shows a thumbs up/down feedback
+ * @example ./styleguide/MessageFeedback.md
+ */
 class MessageFeedback extends React.Component {
+  static propTypes = {
+    isActive: PropTypes.bool
+  }
   handlePositive = e => {
     /* Update the query term */
     this.props.updateQueryTerm(EMOJI_POSITIVE)
@@ -41,7 +48,7 @@ class MessageFeedback extends React.Component {
     /* If user is typing */
     if (!isActive || !isBot || !awaitingUserInput) return null
     /* Check if ignored intents or MC */
-    if (intent === this.props.config.initialIntent) return null
+    if (intent && intent === this.props.config.initialIntent) return null
     if (IGNORE_FEEDBACK_INTENTS.indexOf(intent) !== -1 && !mc) return null
 
     return (

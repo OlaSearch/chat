@@ -3,6 +3,10 @@ import { connect } from 'react-redux'
 import { Decorators } from '@olasearch/core'
 import { EMPTY_ARRAY } from './Settings'
 
+/**
+ * Quick replies
+ * @example ./styleguide/QuickReplies.md
+ */
 class QuickReplies extends React.PureComponent {
   handleClick = (label, intent) => {
     let args = {}

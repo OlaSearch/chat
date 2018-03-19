@@ -4,6 +4,10 @@ import TransitionGroup from 'react-transition-group/TransitionGroup'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import { updateBotQueryTerm } from './actions'
 
+/**
+ * Suggest Did you mean topics to user
+ * @example ./styleguide/TopicSuggestions.md
+ */
 export default function TopicSuggestions ({
   options,
   onSubmit,

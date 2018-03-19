@@ -1,12 +1,18 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Settings, utilities } from '@olasearch/core'
 
 const { RE_ESCAPE } = Settings
 const { createHTMLMarkup } = utilities
+
+/**
+ * Display as you type suggestions
+ * @example ./styleguide/QuerySuggestions.md
+ */
 function QuerySuggestions (props) {
-  let { suggestions, onChange, activeIndex, queryTerm } = props
+  let { suggestions, onChange, activeIndex, queryTerm, style } = props
   return (
-    <div className='olachat-query-suggestions'>
+    <div className='olachat-query-suggestions' style={style}>
       {suggestions.map((item, idx) => {
         return (
           <QuerySuggestionItem
@@ -46,6 +52,13 @@ function QuerySuggestionItem ({ queryTerm, term, onChange, isActive }) {
       />
     </div>
   )
+}
+
+QuerySuggestions.propTypes = {
+  suggestions: PropTypes.array,
+  onChange: PropTypes.func,
+  activeIndex: PropTypes.number,
+  queryTerm: PropTypes.string
 }
 
 export default QuerySuggestions

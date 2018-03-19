@@ -4,12 +4,13 @@ import store from './styleguide.store'
 import config from './styleguide.olaconfig'
 import { Provider } from 'react-redux'
 import { OlaProvider } from '@olasearch/core'
+import translations from './../src/translations'
 
 export default class Wrapper extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <OlaProvider config={config}>
+        <OlaProvider config={config} translations={translations}>
           {this.props.children}
         </OlaProvider>
       </Provider>

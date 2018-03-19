@@ -14,6 +14,10 @@ import Loader from './Loader'
 import FailureButtons from './FailureButtons'
 import QuickReplies from './QuickReplies'
 
+/**
+ * Chatbot message
+ * @example ./styleguide/Message.md
+ */
 class Message extends React.Component {
   constructor (props) {
     super(props)
@@ -28,6 +32,9 @@ class Message extends React.Component {
   componentDidUpdate () {
     this.props.onUpdate && this.props.onUpdate()
   }
+  static defaultProps = {
+    showTimestamp: false
+  }
   render () {
     let {
       message,
@@ -41,7 +48,8 @@ class Message extends React.Component {
       location,
       translate,
       theme,
-      updateQueryTerm
+      updateQueryTerm,
+      showTimestamp
     } = this.props
     let {
       userId,
@@ -124,7 +132,6 @@ class Message extends React.Component {
         }
       }
     }
-
     if (needsLocation) {
       return (
         <div className={messageClass}>
@@ -177,9 +184,11 @@ class Message extends React.Component {
                 />
               ) : null}
             </div>
-            <div className='olachat-message-date'>
-              {DateParser.format(timestamp * 1000, 'DD MMM h:mm a')}
-            </div>
+            {showTimestamp ? (
+              <div className='olachat-message-date'>
+                {DateParser.format(timestamp * 1000, 'DD MMM h:mm a')}
+              </div>
+            ) : null}
             {isBot ? (
               <Geo
                 location={location}
@@ -218,12 +227,7 @@ class Message extends React.Component {
             loader={isActive ? <Loader theme={theme} /> : null}
             showWhileFiltering
           />
-          <Card
-            card={card}
-            results={results}
-            location={location}
-            theme={theme}
-          />
+          <Card card={card} results={results} location={location} />
           {isSearchActive ? (
             <SearchResultsMessage
               results={results}

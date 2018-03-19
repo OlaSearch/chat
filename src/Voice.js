@@ -11,6 +11,11 @@ import MicOff from '@olasearch/icons/lib/mic-off'
 /* All voice events */
 const VOICE_EVENTS = ['onResult', 'onFinalResult', 'onStart', 'onEnd', 'onStop']
 /* Component */
+
+/**
+ * Voice input
+ * @example ./styleguide/Voice.md
+ */
 class Voice extends React.Component {
   constructor (props) {
     super(props)
@@ -26,6 +31,13 @@ class Voice extends React.Component {
     showListening: false,
     containerClass: '',
     iconSize: 20
+  }
+  static propTypes = {
+    showListening: PropTypes.bool,
+    containerClass: PropTypes.string,
+    onFinalResult: PropTypes.func,
+    initialPayload: PropTypes.any,
+    handleVoiceButtonClick: PropTypes.func
   }
   componentWillUnmount () {
     const { emitter } = this.context
@@ -199,4 +211,6 @@ function mapStateToProps (state) {
     isPhone: state.Device.isPhone
   }
 }
-export default connect(mapStateToProps, null)(Decorators.withTranslate(Voice))
+export default connect(mapStateToProps, null)(
+  Decorators.withTheme(Decorators.withTranslate(Voice))
+)

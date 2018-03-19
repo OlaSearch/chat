@@ -27,6 +27,7 @@ module.exports = {
   // resolver: require('react-docgen').resolver.findAllComponentDefinitions,
   context: {
     olaconfig: path.resolve(__dirname, './styleguide/styleguide.olaconfig'),    
+    store: path.resolve(__dirname, './styleguide/styleguide.store'),    
     // SearchState: function (state) {
     //   return {
     //     AppState: state.AppState,
@@ -49,17 +50,36 @@ module.exports = {
     },
     {
       name: 'Components',
-      components: './src/*.js'
-      // components: () => {
-      //   return [
-      //     './src/Avatar.js'
-      //   ]
-      // }
+      // components: './src/*.js'
+      components: () => {
+        return [
+          './src/Avatar.js',
+          './src/Bubble.js',
+          './src/Card.js',
+          './src/FailureButtons.js',
+          './src/Geo.js',
+          './src/HelpMenu.js',
+          './src/Input.js',
+          './src/InviteNotification.js',
+          './src/Loader.js',
+          './src/Message.js',
+          './src/MessageFeedback.js',
+          './src/OfflineIndicator.js',
+          './src/QuerySuggestions.js',
+          './src/SearchResultsMessage.js',
+          './src/QuickReplies.js',
+          './src/SlotOptions.js',
+          './src/TopicSuggestions.js',
+          './src/TypingIndicator.js',
+          './src/Voice.js',
+        ]
+      }
     }  
   ],
   require: [
     // path.resolve(__dirname, './setup.js'),
-    path.join(__dirname, './style/chat.scss'),
+    path.join(__dirname, './../npm-olasearch/style/core.scss'),
+    path.join(__dirname, './style/chat.scss'),    
     // path.resolve(__dirname, './src/index.js')
   ],
   getComponentPathLine: (componentPath) => {
@@ -75,8 +95,9 @@ module.exports = {
     resolve: {
       alias: {
         'olasearchconfig': path.join(__dirname, 'styleguide/styleguide.olaconfig'),
-        'OlaSearch': '@olasearch/core',
-        // '@olasearch/core': path.join(__dirname, './../npm-olasearch'),
+        '@olasearch/core': path.join(__dirname, './../npm-olasearch'),
+        '@olasearch/chat': path.join(__dirname, './src'),
+        'OlaSearch': '@olasearch/core',        
         // 'OlaSearch': path.join(__dirname, './../npm-olasearch'),
       }
     },

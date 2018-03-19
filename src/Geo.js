@@ -3,6 +3,10 @@ import { GeoLocation } from '@olasearch/core'
 import { connect } from 'react-redux'
 import { ignoreLocation } from './actions'
 
+/**
+ * Ask for users geo location
+ * @example ./styleguide/Geo.md
+ */
 class Geo extends Component {
   onGeoSuccess = data => {
     if (!data) return

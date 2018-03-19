@@ -1,13 +1,19 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import cx from 'classnames'
 import {
   AnswerList,
   AnswerWordMap,
   AnswerMap,
-  AnswerCard
+  AnswerCard,
+  Decorators
 } from '@olasearch/core'
 
-export default function Card ({ card, templates, results, location, theme }) {
+/**
+ * Cards
+ * @example ./styleguide/Card.md
+ */
+function Card ({ card, templates, results, location, theme }) {
   if (!card || !card.title) return null
   let { buttons = [], template } = card
   let classes = cx('ola-card', `ola-card-template-${template}`)
@@ -29,7 +35,7 @@ export default function Card ({ card, templates, results, location, theme }) {
         return <AnswerCard card={card} />
 
       case 'map':
-        return <AnswerMap data={card} results={results} />
+        return <AnswerMap card={card} results={results} location={location} />
 
       default:
         return <AnswerCard card={card} />
@@ -53,3 +59,34 @@ export default function Card ({ card, templates, results, location, theme }) {
     </div>
   )
 }
+
+Card.propTypes = {
+  /**
+   * Users current location
+   */
+  location: PropTypes.string,
+  /**
+   * Card to be displayed
+   */
+  card: PropTypes.shape({
+    /**
+     * Template of the card
+     */
+    template: PropTypes.string,
+    title: PropTypes.string,
+    buttons: PropTypes.array,
+    subtitle: PropTypes.string,
+    image: PropTypes.string
+  }),
+  /**
+   * Search results
+   */
+  results: PropTypes.array,
+
+  /**
+   * Override card templates
+   */
+  templates: PropTypes.object
+}
+
+export default Decorators.withTheme(Card)
