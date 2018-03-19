@@ -1,9 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Message from '@olasearch/icons/lib/message-square'
 import { BUBBLE_WIDTH_DESKTOP, BUBBLE_WIDTH_MOBILE } from './Settings'
 import { Decorators } from '@olasearch/core'
 
+/**
+ * Chat bubble
+ * @example ./src/Bubble.md
+ */
 function Bubble ({
   onClick,
   isActive,
@@ -53,6 +58,21 @@ Bubble.defaultProps = {
   label: '',
   iconSize: 34,
   badge: null
+}
+
+Bubble.propTypes = {
+  /**
+   * Label to be displayed inside the buble
+   */
+  label: PropTypes.string,
+  /**
+   * Size of the icon
+   */
+  iconSize: PropTypes.number,
+  /**
+   * Notification badge
+   */
+  badge: PropTypes.number
 }
 
 export default Decorators.withTheme(Bubble)

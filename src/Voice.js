@@ -168,7 +168,7 @@ class Voice extends React.Component {
     return (
       <div className={containerKlass} onClick={this.handleSpeechStart}>
         <button type='button' className={klass}>
-          {isRecording ? <Mic size={iconSize} /> : <Mic size={iconSize} />}
+          <Mic size={iconSize} />
           {isRecording && showListening ? (
             <span className='olachat-mic-listening'>
               {translate('chat_listening', {}, true)}

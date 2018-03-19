@@ -18,7 +18,7 @@ export default function Header ({ onHide, title, theme }) {
           color: ${theme.chatHeaderColor};
         }
         .olachat-header .olachat-header-hide:hover {
-          background-color: ${darken(theme.chatHeaderBackground, 10)};
+          background-color: ${theme.chatHeaderBackground};
         }
       `}</style>
     </div>

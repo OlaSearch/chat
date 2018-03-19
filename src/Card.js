@@ -1,15 +1,16 @@
 import React from 'react'
 import cx from 'classnames'
-import CardList from './CardList'
-import AnswerWordMap from '@olasearch/core/lib/components/Answer/AnswerWordMap'
-import AnswerMap from '@olasearch/core/lib/components/Answer/AnswerMap'
-import { Fields } from '@olasearch/core'
-// import AnswerChart from 'olasearch/lib/components/Answer/AnswerChart'
+import {
+  AnswerList,
+  AnswerWordMap,
+  AnswerMap,
+  AnswerCard
+} from '@olasearch/core'
 
-export default function Card ({ card, location, templates, results }) {
+export default function Card ({ card, templates, results, location, theme }) {
   if (!card || !card.title) return null
   let { buttons = [], template } = card
-  let klass = cx('ola-card', `ola-card-template-${template}`)
+  let classes = cx('ola-card', `ola-card-template-${template}`)
   function pickTemplate (template) {
     /* Check for user defined templates */
     if (templates && templates.hasOwnProperty(template)) {
@@ -19,64 +20,36 @@ export default function Card ({ card, location, templates, results }) {
 
     switch (template) {
       case 'list':
-        return <CardList {...card} />
+        return <AnswerList card={card} />
 
       case 'wordmap':
-        return <AnswerWordMap data={card.elements} maxLen={20} shuffle />
+        return <AnswerWordMap card={card} maxLen={20} shuffle />
 
       case 'image':
-        return (
-          <div className='ola-card-inner'>
-            <Fields.Title
-              result={card}
-              field='title'
-              openInNewWindow
-              eventLabel={card['title']}
-              eventCategory='card'
-            />
-            <Fields.Thumbnail thumbnail={card.image_url} />
-            <Fields.TextField field='subtitle' result={card} />
-            {buttons.map((button, idx) => (
-              <Fields.Button
-                {...button}
-                result={card}
-                eventLabel={card['title']}
-                key={idx}
-                openInNewWindow
-                eventCategory='card'
-              />
-            ))}
-          </div>
-        )
+        return <AnswerCard card={card} />
 
       case 'map':
-        return <AnswerMap data={card} results={results} location={location} />
+        return <AnswerMap data={card} results={results} />
 
       default:
-        return (
-          <div className='ola-card-inner'>
-            <Fields.Title
-              result={card}
-              field='title'
-              openInNewWindow
-              eventLabel={card['title']}
-              eventCategory='card'
-            />
-            <Fields.TextField field='subtitle' result={card} />
-            {buttons.map((button, idx) => (
-              <Fields.Button
-                {...button}
-                result={card}
-                eventLabel={card['title']}
-                key={idx}
-                openInNewWindow
-                eventCategory='card'
-              />
-            ))}
-          </div>
-        )
+        return <AnswerCard card={card} />
     }
   }
 
-  return <div className={klass}>{pickTemplate(template)}</div>
+  return (
+    <div className={classes}>
+      {pickTemplate(template)}
+      <style jsx>
+        {`
+          .ola-card :global(.ola-answer-title a) {
+            color: ${theme.searchLinkColor};
+          }
+          .ola-card :global(.ola-answer-title a:hover),
+          .ola-card :global(.ola-answer-title a:focus) {
+            color: ${theme.searchLinkHoverColor};
+          }
+        `}
+      </style>
+    </div>
+  )
 }

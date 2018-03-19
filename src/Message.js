@@ -40,6 +40,7 @@ class Message extends React.Component {
       log,
       location,
       translate,
+      theme,
       updateQueryTerm
     } = this.props
     let {
@@ -128,12 +129,14 @@ class Message extends React.Component {
       return (
         <div className={messageClass}>
           <div className='olachat-message-inner'>
-            <Avatar
-              isBot={isBot}
-              userId={userId}
-              avatarBot={avatarBot}
-              avatarUser={avatarUser}
-            />
+            {isBot ? (
+              <Avatar
+                isBot={isBot}
+                userId={userId}
+                avatarBot={avatarBot}
+                avatarUser={avatarUser}
+              />
+            ) : null}
             <div className='olachat-message-body'>
               {isBot ? (
                 <Geo
@@ -154,12 +157,14 @@ class Message extends React.Component {
       <div className={messageClass}>
         {/* Message flex */}
         <div className='olachat-message-inner'>
-          <Avatar
-            isBot={isBot}
-            userId={userId}
-            avatarBot={avatarBot}
-            avatarUser={avatarUser}
-          />
+          {isBot ? (
+            <Avatar
+              isBot={isBot}
+              userId={userId}
+              avatarBot={avatarBot}
+              avatarUser={avatarUser}
+            />
+          ) : null}
           <div className='olachat-message-body'>
             <div className='olchat-message-name'>
               {isBot ? botName : userName}
@@ -210,10 +215,15 @@ class Message extends React.Component {
           <AnswerMC
             mc={mc}
             payload={{ messageId: message.id, bot: true }}
-            loader={isActive ? <Loader theme={this.props.theme} /> : null}
+            loader={isActive ? <Loader theme={theme} /> : null}
             showWhileFiltering
           />
-          <Card card={card} results={results} location={location} />
+          <Card
+            card={card}
+            results={results}
+            location={location}
+            theme={theme}
+          />
           {isSearchActive ? (
             <SearchResultsMessage
               results={results}
@@ -238,7 +248,7 @@ class Message extends React.Component {
           <QuickReplies
             onSubmit={addMessage}
             updateQueryTerm={updateQueryTerm}
-            theme={this.props.theme}
+            theme={theme}
             quickReplies={quickReplies}
           />
         ) : null}
