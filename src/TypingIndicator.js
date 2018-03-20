@@ -5,7 +5,7 @@ import Loader from './Loader'
 
 /**
  * Typing indicator
- * @example ./styleguide/TypingIndicator.md
+ * @example ./../styleguide/TypingIndicator.md
  */
 function TypingIndicator ({ avatarBot }) {
   return (

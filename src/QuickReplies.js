@@ -5,7 +5,7 @@ import { EMPTY_ARRAY } from './Settings'
 
 /**
  * Quick replies
- * @example ./styleguide/QuickReplies.md
+ * @example ./../styleguide/QuickReplies.md
  */
 class QuickReplies extends React.PureComponent {
   handleClick = (label, intent) => {

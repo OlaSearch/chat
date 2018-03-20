@@ -11,7 +11,7 @@ import {
 
 /**
  * Cards
- * @example ./styleguide/Card.md
+ * @example ./../styleguide/Card.md
  */
 function Card ({ card, templates, results, location, theme }) {
   if (!card || !card.title) return null

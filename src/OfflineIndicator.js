@@ -5,7 +5,7 @@ import { Decorators } from '@olasearch/core'
 
 /**
  * Offline indicator
- * @example ./styleguide/OfflineIndicator.md
+ * @example ./../styleguide/OfflineIndicator.md
  */
 const OfflineIndicator = ({ connection, translate }) => {
   if (connection === 'offline') {

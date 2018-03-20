@@ -16,7 +16,7 @@ import QuickReplies from './QuickReplies'
 
 /**
  * Chatbot message
- * @example ./styleguide/Message.md
+ * @example ./../styleguide/Message.md
  */
 class Message extends React.Component {
   constructor (props) {

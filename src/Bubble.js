@@ -7,7 +7,7 @@ import { Decorators } from '@olasearch/core'
 
 /**
  * Chat bubble
- * @example ./styleguide/Bubble.md
+ * @example ./../styleguide/Bubble.md
  */
 function Bubble ({
   onClick,

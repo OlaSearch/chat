@@ -4,7 +4,7 @@ import CSSTransition from 'react-transition-group/CSSTransition'
 
 /**
  * Loading indicator
- * @example ./styleguide/Loader.md
+ * @example ./../styleguide/Loader.md
  */
 export default function Loader () {
   return (

@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Repeat from '@olasearch/icons/lib/repeat'
 import { Decorators } from '@olasearch/core'
 
 /**
  * Shows button if message sending failed
- * @example ./styleguide/FailureButtons.md
+ * @example ./../styleguide/FailureButtons.md
  */
 function FailureButtons ({ onSubmit, message, isActive, translate }) {
   return (
@@ -25,6 +26,13 @@ function FailureButtons ({ onSubmit, message, isActive, translate }) {
       </div>
     </div>
   )
+}
+
+FailureButtons.propTypes = {
+  onSubmit: PropTypes.func,
+  message: PropTypes.object,
+  isActive: PropTypes.bool,
+  translate: PropTypes.func
 }
 
 export default Decorators.withTranslate(FailureButtons)

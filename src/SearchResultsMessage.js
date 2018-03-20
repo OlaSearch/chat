@@ -10,7 +10,7 @@ const MAX_RESULTS_DESKTOP = 3
 
 /**
  * Show search results in a chatbot
- * @example ./styleguide/SearchResultsMessage.md
+ * @example ./../styleguide/SearchResultsMessage.md
  */
 class SearchResultsMessage extends React.Component {
   static defaultProps = {

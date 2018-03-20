@@ -7,7 +7,7 @@ const { createHTMLMarkup } = utilities
 
 /**
  * Display as you type suggestions
- * @example ./styleguide/QuerySuggestions.md
+ * @example ./../styleguide/QuerySuggestions.md
  */
 function QuerySuggestions (props) {
   let { suggestions, onChange, activeIndex, queryTerm, style } = props

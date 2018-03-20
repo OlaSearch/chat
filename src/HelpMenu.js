@@ -7,6 +7,10 @@ import { OLACHAT_IFRAME_ID } from './Settings'
 import Menu from '@olasearch/icons/lib/menu'
 import Print from '@olasearch/icons/lib/printer'
 
+/**
+ * Help menu
+ * @example ./../styleguide/HelpMenu.md
+ */
 class HelpMenu extends React.Component {
   constructor (props) {
     super(props)
@@ -14,6 +18,10 @@ class HelpMenu extends React.Component {
   static contextTypes = {
     document: PropTypes.object,
     window: PropTypes.object
+  }
+  static propTypes = {
+    config: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    theme: PropTypes.object
   }
   handleClick = event => {
     if (event.target.href && event.target.href !== '') {
@@ -56,7 +64,7 @@ class HelpMenu extends React.Component {
       <div className={klass}>
         <button
           className='olachat-helpmenu-button'
-          onClick={this.props.toggleDisplay}
+          onClick={this.props.toggle}
           type='button'
         >
           <Menu />
@@ -108,15 +116,12 @@ class HelpMenu extends React.Component {
 
 const HelpMenuContainer = listensToClickOutside(HelpMenu, {
   getDocument (instance) {
-    return instance.context.document || document
+    return instance.context ? instance.context.document : document
   }
 })
-const HelpMenuWrapper = props => {
-  return <HelpMenuContainer {...props} />
-}
 
 export default Decorators.withToggle(
   Decorators.withConfig(
-    Decorators.withTranslate(Decorators.withLogger(HelpMenuWrapper))
+    Decorators.withTranslate(Decorators.withLogger(HelpMenuContainer))
   )
 )

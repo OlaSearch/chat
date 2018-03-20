@@ -1,13 +1,24 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { GeoLocation } from '@olasearch/core'
 import { connect } from 'react-redux'
 import { ignoreLocation } from './actions'
 
 /**
  * Ask for users geo location
- * @example ./styleguide/Geo.md
+ * @example ./../styleguide/Geo.md
  */
 class Geo extends Component {
+  static propTypes = {
+    /**
+     * Is the message currently active (latest message)
+     */
+    isActive: PropTypes.bool,
+    /**
+     * Does the message needs location
+     */
+    needsLocation: PropTypes.bool
+  }
   onGeoSuccess = data => {
     if (!data) return
     this.props.onSubmit({

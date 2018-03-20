@@ -6,7 +6,7 @@ import { updateBotQueryTerm } from './actions'
 
 /**
  * Suggest Did you mean topics to user
- * @example ./styleguide/TopicSuggestions.md
+ * @example ./../styleguide/TopicSuggestions.md
  */
 export default function TopicSuggestions ({
   options,

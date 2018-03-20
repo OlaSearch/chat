@@ -7,7 +7,7 @@ import { DISAMBIGUATION_INTENT_NAME } from './Settings'
 
 /**
  * Slot options
- * @example ./styleguide/SlotOptions.md
+ * @example ./../styleguide/SlotOptions.md
  */
 class SlotOptions extends Component {
   handleClick = ({ label, value, intent: selectedIntent }) => {

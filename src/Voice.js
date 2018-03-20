@@ -14,7 +14,7 @@ const VOICE_EVENTS = ['onResult', 'onFinalResult', 'onStart', 'onEnd', 'onStop']
 
 /**
  * Voice input
- * @example ./styleguide/Voice.md
+ * @example ./../styleguide/Voice.md
  */
 class Voice extends React.Component {
   constructor (props) {

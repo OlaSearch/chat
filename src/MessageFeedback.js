@@ -12,7 +12,7 @@ import { checkIfAwaitingResponse } from './utils'
 
 /**
  * Shows a thumbs up/down feedback
- * @example ./styleguide/MessageFeedback.md
+ * @example ./../styleguide/MessageFeedback.md
  */
 class MessageFeedback extends React.Component {
   static propTypes = {

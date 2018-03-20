@@ -16,6 +16,7 @@ module.exports = {
   title: `Ola Chat UI - ${version}`,
   showUsage: true,
   styleguideDir: 'docs',
+  serverPort: 6061,
   styleguideComponents: {
     // StyleGuideRenderer: path.join(__dirname, './styleguide/styleguide.wrapper')
     Wrapper: path.join(__dirname, './styleguide/styleguide.wrapper')
