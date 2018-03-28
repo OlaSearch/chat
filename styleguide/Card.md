@@ -144,6 +144,44 @@ const location = "-27.4756124,153.0280484";
 
 ```
 
+#### Carousel
+
+```js
+const card = {
+  "template": "carousel",
+  "title": "Media Contact",
+  "images": [
+    {
+      url: 'https://placeimg.com/800/300/any',
+      title: ''
+    },
+    {
+      url: 'https://placeimg.com/800/300/any',
+      title: ''
+    },
+    {
+      url: 'https://placeimg.com/800/300/any',
+      title: ''
+    },
+    {
+      url: 'https://placeimg.com/800/300/any',
+      title: ''
+    },
+    {
+      url: 'https://placeimg.com/800/300/any',
+      title: ''
+    }
+  ],
+  "source": {
+    "name": "Media Contacts",
+    "url": "https://www.adb.org/news/contacts"
+  }
+};
+<Card
+  card={card}  
+/>
+```
+
 #### List
 
 ```js
@@ -151,6 +189,48 @@ const card = {
   "template": "list",
   "title": "Media Contact",
   "elements": [
+    {
+      "buttons": [
+        {
+          title: "Send email",
+          type: 'email',
+          url: 'vinay@olasearch.com'
+        }
+      ],
+      "fields": [
+        {
+          "label": "Topic",
+          "value": "Development Effectiveness and Results"
+        },
+        {
+          "label": "Website",
+          "value": "https://www.adb.org/site/development-effectiveness/contacts"
+        }
+      ],
+      "subtitle": null,
+      "title": "Planning and Results Management contacts"
+    },
+    {
+      "buttons": [
+        {
+          title: "Send email",
+          type: 'email',
+          url: 'vinay@olasearch.com'
+        }
+      ],
+      "fields": [
+        {
+          "label": "Topic",
+          "value": "Development Effectiveness and Results"
+        },
+        {
+          "label": "Website",
+          "value": "https://www.adb.org/site/development-effectiveness/contacts"
+        }
+      ],
+      "subtitle": null,
+      "title": "Planning and Results Management contacts"
+    },
     {
       "buttons": [
         {

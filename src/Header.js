@@ -5,12 +5,12 @@ import { darken } from './utils'
 /**
  * Chatbot Header
  */
-export default function Header ({ onHide, title, theme }) {
+export default function Header ({ onHide, title, allowHide, theme }) {
   if (!title && !onHide) return null
   return (
     <div className='olachat-header'>
-      <p className='olachat-header-title'>{title}</p>
-      {onHide ? (
+      <div className='olachat-header-title'>{title}</div>
+      {allowHide && onHide ? (
         <button className='olachat-header-hide' onClick={onHide}>
           <Cross />
         </button>
@@ -26,4 +26,8 @@ export default function Header ({ onHide, title, theme }) {
       `}</style>
     </div>
   )
+}
+
+Header.defaultProps = {
+  allowHide: true
 }

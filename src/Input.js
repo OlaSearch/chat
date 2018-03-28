@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import Voice from './Voice'
-import { Settings, Actions, Decorators } from '@olasearch/core'
+import { Settings, Actions, Decorators, utilities } from '@olasearch/core'
 import Textarea from '@olasearch/textarea-elastic'
 import QuerySuggestions from './QuerySuggestions'
 import { connect } from 'react-redux'
@@ -11,12 +11,15 @@ import listensToClickOutside from '@olasearch/react-onclickoutside'
 import Send from '@olasearch/icons/lib/arrow-right-circle'
 import { GeoLocation } from '@olasearch/core'
 import { ThemeConsumer } from '@olasearch/core'
+import { getFacetSuggestions } from './utils'
 
 const supportsVoice =
   (navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia) &&
   (window.SpeechRecognition || window.webkitSpeechRecognition)
+
+const { getWordPosition } = utilities
 
 class Input extends React.Component {
   constructor (props) {
@@ -26,7 +29,10 @@ class Input extends React.Component {
       suggestions: [],
       suggestedIndex: null,
       suggestedTerm: null,
-      isFocused: false
+      isFocused: false,
+      tokens: [],
+      startToken: null,
+      endToken: null
     }
   }
   static contextTypes = {
@@ -39,7 +45,17 @@ class Input extends React.Component {
   }
   onChange = event => {
     let text = event && event.target ? event.target.value : event
-    this.setState({ text })
+    /* Get cursor position */
+    const {
+      word: partialWord,
+      leftPosition,
+      startToken,
+      endToken
+    } = getWordPosition(event.target)
+
+    /* Update state */
+    this.setState({ text, startToken, endToken })
+
     if (text) {
       /**
        * Auto suggest queries
@@ -52,15 +68,42 @@ class Input extends React.Component {
         this.props
           .dispatch(Actions.AutoSuggest.executeFuzzyAutoSuggest(text))
           .then(values => {
-            if (!values) return this.closeSuggestion()
+            if (values === null) return
+            if (!values.length) {
+              if (!partialWord) return this.closeSuggestion()
+              /**
+               * Get facet suggestions
+               */
 
-            this.setState({
-              suggestions: values
-                .slice(0, 5)
-                .map(item => ({ term: item.term })),
-              suggestedTerm: null,
-              suggestedIndex: null
-            })
+              this.props
+                .dispatch(
+                  Actions.Search.executeFacetSearch(
+                    text,
+                    partialWord,
+                    startToken,
+                    endToken,
+                    this.props.config.fieldTypeMapping,
+                    this.state.tokens
+                  )
+                )
+                .then(response => {
+                  const suggestions = getFacetSuggestions(response)
+
+                  this.setState({
+                    suggestions,
+                    suggestedTerm: null,
+                    suggestedIndex: null
+                  })
+
+                  if (!suggestions.length) return this.closeSuggestion()
+                })
+            } else {
+              this.setState({
+                suggestions: values.map(item => ({ term: item.term })),
+                suggestedTerm: null,
+                suggestedIndex: null
+              })
+            }
           })
       } else {
         this.closeSuggestion()
@@ -93,17 +136,35 @@ class Input extends React.Component {
       () => this.onSubmit(null, cb, 300, Settings.SEARCH_INPUTS.VOICE)
     )
   }
+  updateCursor = start => {
+    setTimeout(() => this.Input.el.setSelectionRange(start, start))
+  }
+  getFullTerm = () => {
+    const { suggestedTerm } = this.state
+    const { startToken, endToken } = this.state
+    const { term, value, name, partial } = suggestedTerm
+    const { text } = this.state
+    const selection = partial
+      ? text.substr(0, startToken) + term + text.substr(endToken)
+      : term
+    return selection
+  }
   onFormSubmit = event => {
     /* Stop form submission */
     event && event.preventDefault()
     /* Check if suggestedTerm is active */
     if (this.state.suggestedTerm) {
       this.setState({
-        text: this.state.suggestedTerm.term
+        text: this.getFullTerm()
       })
     }
     /* Close any suggestions */
     this.closeSuggestion()
+
+    /* Remove tokens */
+    this.setState({
+      tokens: []
+    })
 
     /* Stop submitting if text is empty */
     if (!this.state.text || !this.state.text.trim()) {
@@ -157,8 +218,27 @@ class Input extends React.Component {
       suggestedTerm: null
     })
   }
+  updateFuzzyQueryTerm = index => {
+    const item = index === null ? null : this.state.suggestions[index]
+    this.setState(
+      {
+        suggestedIndex: index,
+        suggestedTerm: item
+      },
+      () => {
+        if (!item) return
+        const { startToken } = this.state
+        const { partial, term } = item
+        if (partial) {
+          const tokenIndex = startToken + term.length
+          this.updateCursor(tokenIndex)
+        }
+      }
+    )
+  }
   onKeyDown = event => {
     let index = null
+    const { suggestedIndex, suggestions, text } = this.state
     switch (event.nativeEvent.which) {
       case 13: // Enter key
         this.closeSuggestion()
@@ -169,11 +249,11 @@ class Input extends React.Component {
 
       case 27: // Escape
         /* Check if suggestion is active */
-        if (this.state.suggestedIndex || this.state.suggestions.length) {
+        if (suggestedIndex || suggestions.length) {
           return this.closeSuggestion()
         }
         /* Close chatbot */
-        if (!this.state.text) {
+        if (!text) {
           this.props.onRequestClose && this.props.onRequestClose()
         } else {
           return this.clearText()
@@ -181,47 +261,87 @@ class Input extends React.Component {
         break
 
       case 38: // Up
-        if (this.state.suggestedIndex === null) {
-          index = this.state.suggestions.length - 1
+        if (suggestedIndex === null) {
+          index = suggestions.length - 1
         } else {
-          let i = this.state.suggestedIndex - 1
+          let i = suggestedIndex - 1
           if (i < 0) {
             index = null
           } else {
             index = i
           }
         }
-        this.setState({
-          suggestedIndex: index,
-          suggestedTerm: index === null ? null : this.state.suggestions[index]
-        })
+        this.updateFuzzyQueryTerm(index)
         break
       case 40: // Down
-        if (this.state.suggestedIndex === null) {
+        if (suggestedIndex === null) {
           index = 0
         } else {
-          let i = this.state.suggestedIndex + 1
-          if (i >= this.state.suggestions.length) {
+          let i = suggestedIndex + 1
+          if (i >= suggestions.length) {
             index = null
           } else {
             index = i
           }
         }
-        this.setState({
-          suggestedIndex: index,
-          suggestedTerm: index === null ? null : this.state.suggestions[index]
-        })
+        this.updateFuzzyQueryTerm(index)
+        break
+
+      case 32: // Tab
+      case 9: // Space
+        const item = suggestions[suggestedIndex]
+          ? suggestions[suggestedIndex]
+          : null
+        if (item) {
+          this.onSuggestionChange(item)
+        }
         break
     }
   }
   registerRef = el => {
     this.Input = el
   }
-  onSuggestionChange = text => {
+  /**
+   * term: Selected query term
+   * value: 12|Cynthia, value of the facet term
+   * name: facet name
+   * partial: boolean partial or full
+   * startToken:
+   * endToken
+   */
+  onSuggestionChange = item => {
+    const { startToken, endToken } = this.state
+    const { term, value, name, partial } = item
+    const { text } = this.state
+    const selection = partial
+      ? text.substr(0, startToken) + term + text.substr(endToken)
+      : term
+    const cursorPosition = selection.length
+
+    if (partial) {
+      /* Update cursor */
+      this.updateCursor(cursorPosition)
+    }
+
     this.setState(
-      { text, suggestedIndex: null, suggestedTerm: null, suggestions: [] },
+      {
+        text: selection,
+        tokens: partial
+          ? [{ value, name }, ...this.state.tokens]
+          : this.state.tokens,
+        suggestions: [],
+        suggestedTerm: null,
+        suggestedIndex: null
+      },
       () => {
-        this.onFormSubmit()
+        if (partial) {
+          /**
+           * Focus on the input
+           */
+          this.Input.el.focus()
+        } else {
+          this.onFormSubmit()
+        }
       }
     )
   }
@@ -247,9 +367,19 @@ class Input extends React.Component {
       suggestedIndex,
       suggestedTerm,
       text,
-      isFocused
+      isFocused,
+      startToken,
+      endToken
     } = this.state
-    let inputValue = suggestedTerm ? suggestedTerm.term : text
+
+    let inputValue = suggestedTerm
+      ? suggestedTerm.partial
+        ? text.substr(0, startToken) +
+          suggestedTerm.term +
+          text.substr(endToken)
+        : suggestedTerm.term
+      : text
+
     const classes = cx('olachat-footer', {
       'olachat-footer-focused': isFocused
     })
@@ -310,11 +440,20 @@ class Input extends React.Component {
             }
             .olachat-submit :global(.ola-icon) {
               fill: ${theme.primaryColor};
+              color: white;
+            }
+            .olachat-submit:disabled :global(.ola-icon) {
+              fill: #888;
+              color: white;
             }
             .olachat-submit :global(.ola-icon circle) {
               stroke: ${theme.primaryColor};
             }
-            .olachat-footer :global(.ola-link-geo, .ola-link-geo:hover) {
+            .olachat-submit:disabled :global(.ola-icon circle) {
+              stroke: #888;
+            }
+            .olachat-footer :global(.ola-link-geo),
+            .olachat-footer :global(.ola-link-geo:hover) {
               background: none;
               color: red;
             }
@@ -326,11 +465,15 @@ class Input extends React.Component {
 }
 
 export default connect(null)(
-  Decorators.withTranslate(
-    listensToClickOutside(Input, {
-      getDocument (instance) {
-        return instance.context.document || document
-      }
-    })
+  Decorators.withConfig(
+    Decorators.withTranslate(
+      listensToClickOutside(Input, {
+        getDocument (instance) {
+          return instance.context && instance.context.document
+            ? instance.context.document
+            : document
+        }
+      })
+    )
   )
 )

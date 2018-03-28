@@ -116,7 +116,9 @@ class HelpMenu extends React.Component {
 
 const HelpMenuContainer = listensToClickOutside(HelpMenu, {
   getDocument (instance) {
-    return instance.context ? instance.context.document : document
+    return instance.context && instance.context.document
+      ? instance.context.document
+      : document
   }
 })
 

@@ -35,7 +35,8 @@ class BotFrame extends React.Component {
     height: BUBBLE_FULL_HEIGHT,
     heightActive: '100%' /* 620 */,
     /* Flag to add the chatbot as an inline element */
-    inline: false,
+    inlineBubble: false,
+    inlineChat: false,
     zIndex: BOT_ZINDEX,
     iframeStyle: {
       border: 'none',
@@ -92,15 +93,17 @@ class BotFrame extends React.Component {
     }
   }
   render () {
-    let { isBotActive } = this.props
-    let {
+    const { isBotActive } = this.props
+    const {
       iframeStyle,
+      css,
       width,
       widthMobile,
       widthActive,
       height,
       heightActive,
-      inline,
+      inlineBubble,
+      inlineChat,
       zIndex,
       isDesktop,
       activeStyle,
@@ -113,22 +116,22 @@ class BotFrame extends React.Component {
       ? bubbleProps && !!bubbleProps.label
       : false
 
-    let frameStyles = {
+    const frameStyles = {
       ...iframeStyle,
       ...(isBotActive
         ? {
           top: 'auto',
           bottom: 0,
           right: 0,
-          position: 'fixed',
+          position: inlineChat && isDesktop ? 'relative' : 'fixed',
           width: isDesktop ? widthActive : '100%',
-          height: heightActive,
+          height: inlineChat && isDesktop ? 600 : heightActive,
           maxHeight: '100%',
           zIndex,
           ...activeStyle
         }
         : {
-          ...(inline
+          ...(inlineBubble
             ? {
               height: BUBBLE_FULL_HEIGHT
             }
@@ -151,6 +154,7 @@ class BotFrame extends React.Component {
           head={
             <div>
               <link rel='stylesheet' href={this.props.cssUrl} />
+              <style>{css}</style>
               <meta
                 name='viewport'
                 content='width=device-width, initial-scale=1'
@@ -194,7 +198,7 @@ class BotFrame extends React.Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps (state, ownProps) {
   return {
     isDesktop: state.Device.isDesktop,
     isBotActive: state.Conversation.isBotActive,

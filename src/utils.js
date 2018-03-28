@@ -1,5 +1,7 @@
 /* global Element */
 import { EMOJI_LIST } from './Settings'
+import flatten from 'ramda/src/flatten'
+import { utilities } from '@olasearch/core'
 
 export function createHTMLMarkup (html) {
   if (Array.isArray(html)) html = html.join('')
@@ -125,4 +127,19 @@ export function imagesLoaded (imgs, callback) {
       callback()
     }
   }
+}
+
+export function getFacetSuggestions (response) {
+  // console.log(response)
+  if (!response || !response.facets) return []
+  return flatten(
+    response.facets.map(({ values, name: facetName }) =>
+      values.map(({ name }) => ({
+        term: utilities.getDisplayName(name),
+        value: name,
+        name: facetName,
+        partial: true
+      }))
+    )
+  )
 }

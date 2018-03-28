@@ -9,16 +9,22 @@ const { createHTMLMarkup } = utilities
  * Display as you type suggestions
  * @example ./../styleguide/QuerySuggestions.md
  */
-function QuerySuggestions (props) {
-  let { suggestions, onChange, activeIndex, queryTerm, style } = props
+function QuerySuggestions ({
+  suggestions,
+  onChange,
+  activeIndex,
+  queryTerm,
+  style,
+  limit
+}) {
   return (
     <div className='olachat-query-suggestions' style={style}>
-      {suggestions.map((item, idx) => {
+      {suggestions.slice(0, limit).map((item, idx) => {
         return (
           <QuerySuggestionItem
             key={idx}
             onChange={onChange}
-            term={item.term}
+            item={item}
             isActive={idx === activeIndex}
             queryTerm={queryTerm}
           />
@@ -28,9 +34,10 @@ function QuerySuggestions (props) {
   )
 }
 
-function QuerySuggestionItem ({ queryTerm, term, onChange, isActive }) {
+function QuerySuggestionItem ({ queryTerm, item, onChange, isActive }) {
+  const { term, partial } = item
   function handleChange (e) {
-    onChange && onChange(term)
+    onChange && onChange(item)
   }
   let pattern =
     '(^' +
@@ -40,7 +47,9 @@ function QuerySuggestionItem ({ queryTerm, term, onChange, isActive }) {
       .join('|') +
     ')'
   /* Create term */
-  let value = term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
+  let value = partial
+    ? `...${term}`
+    : term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
   let klass = 'olachat-query-suggestion' + (isActive ? ' is-active' : '')
   return (
     <div className='olachat-query-suggestion-item'>
@@ -59,6 +68,10 @@ QuerySuggestions.propTypes = {
   onChange: PropTypes.func,
   activeIndex: PropTypes.number,
   queryTerm: PropTypes.string
+}
+
+QuerySuggestions.defaultProps = {
+  limit: 5
 }
 
 export default QuerySuggestions

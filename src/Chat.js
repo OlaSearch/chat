@@ -46,6 +46,7 @@ class Chat extends React.Component {
           onHide={this.props.onHide}
           title={this.props.title}
           theme={theme}
+          allowHide={this.props.allowHide}
         />
         <OfflineIndicator />
         <Messages
@@ -98,6 +99,10 @@ class Chat extends React.Component {
         </style>
         <style jsx>
           {`
+            /* Reset */
+            .olachat :global(button) {
+              line-height: 1.5;
+            }
             .olachat :global(.ola-link-load-more) {
               color: ${theme.primaryColor};
               background: transparent;

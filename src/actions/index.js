@@ -335,6 +335,26 @@ export function setBotStatus (status) {
 }
 
 /**
+ * ShowBot: Show
+ */
+export function showBot () {
+  return {
+    type: types.SET_BOT_STATUS,
+    status: true
+  }
+}
+
+/**
+ * Hidebot
+ */
+export function hideBot () {
+  return {
+    type: types.SET_BOT_STATUS,
+    status: false
+  }
+}
+
+/**
  * [toggleSearchVisibility Show or hide search results inside a message]
  * @param  {String} messageId
  */

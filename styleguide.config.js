@@ -23,8 +23,8 @@ module.exports = {
   },
   template: './styleguide/styleguide.template.html',
   editorConfig: { theme: 'cobalt' },  
-  theme,
-  styles,
+  // theme,
+  // styles,
   // resolver: require('react-docgen').resolver.findAllComponentDefinitions,
   context: {
     olaconfig: path.resolve(__dirname, './styleguide/styleguide.olaconfig'),    
@@ -55,6 +55,7 @@ module.exports = {
       components: () => {
         return [
           './src/Avatar.js',
+          './src/BotFrame.js',
           './src/Bubble.js',
           './src/Card.js',
           './src/FailureButtons.js',
@@ -75,7 +76,11 @@ module.exports = {
           './src/Voice.js',
         ]
       }
-    }  
+    },
+    {
+      name: 'Actions',
+      content: './styleguide/Actions.md'
+    },
   ],
   require: [
     // path.resolve(__dirname, './setup.js'),

@@ -6,6 +6,7 @@ import {
   AnswerWordMap,
   AnswerMap,
   AnswerCard,
+  AnswerCarousel,
   Decorators
 } from '@olasearch/core'
 
@@ -13,7 +14,7 @@ import {
  * Cards
  * @example ./../styleguide/Card.md
  */
-function Card ({ card, templates, results, location, theme }) {
+function Card ({ card, templates, results, location, theme, ...rest }) {
   if (!card || !card.title) return null
   let { buttons = [], template } = card
   let classes = cx('ola-card', `ola-card-template-${template}`)
@@ -26,19 +27,29 @@ function Card ({ card, templates, results, location, theme }) {
 
     switch (template) {
       case 'list':
-        return <AnswerList card={card} />
+        return <AnswerList card={card} swipe {...rest} />
 
       case 'wordmap':
-        return <AnswerWordMap card={card} maxLen={20} shuffle />
+        return <AnswerWordMap card={card} maxLen={20} shuffle {...rest} />
 
       case 'image':
         return <AnswerCard card={card} />
 
       case 'map':
-        return <AnswerMap card={card} results={results} location={location} />
+        return (
+          <AnswerMap
+            card={card}
+            results={results}
+            location={location}
+            {...rest}
+          />
+        )
+
+      case 'carousel':
+        return <AnswerCarousel card={card} {...rest} />
 
       default:
-        return <AnswerCard card={card} />
+        return <AnswerCard card={card} {...rest} />
     }
   }
 
@@ -76,7 +87,8 @@ Card.propTypes = {
     title: PropTypes.string,
     buttons: PropTypes.array,
     subtitle: PropTypes.string,
-    image: PropTypes.string
+    image: PropTypes.string,
+    images: PropTypes.array
   }),
   /**
    * Search results
