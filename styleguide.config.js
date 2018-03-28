@@ -14,10 +14,8 @@ function upperFirst(string) {
 
 const aliases = process.env.NODE_ENV === 'production'
   ? {}
-  : {
-    'olasearchconfig': path.join(__dirname, 'styleguide/styleguide.olaconfig'),
-    '@olasearch/core': path.join(__dirname, './../npm-olasearch'),
-    '@olasearch/chat': path.join(__dirname, './src')
+  : {    
+    '@olasearch/core': path.join(__dirname, './../npm-olasearch'),    
   }
 
 module.exports = {
@@ -109,6 +107,8 @@ module.exports = {
     resolve: {
       alias: {        
         'OlaSearch': '@olasearch/core',
+        '@olasearch/chat': path.join(__dirname, './src'),
+        'olasearchconfig': path.join(__dirname, 'styleguide/styleguide.olaconfig'),
         ...aliases
       }
     },
