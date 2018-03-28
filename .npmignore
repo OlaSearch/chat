@@ -7,3 +7,4 @@ node_modules
 .DS_Store
 olachat-sprite
 __tests__
+docs
