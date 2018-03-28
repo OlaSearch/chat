@@ -12,6 +12,14 @@ function upperFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+const aliases = process.env.NODE_ENV === 'production'
+  ? {}
+  : {
+    'olasearchconfig': path.join(__dirname, 'styleguide/styleguide.olaconfig'),
+    '@olasearch/core': path.join(__dirname, './../npm-olasearch'),
+    '@olasearch/chat': path.join(__dirname, './src')
+  }
+
 module.exports = {
   title: `Ola Chat UI - ${version}`,
   showUsage: true,
@@ -99,12 +107,9 @@ module.exports = {
   webpackConfig: {
     // crossOriginLoading: true,
     resolve: {
-      alias: {
-        'olasearchconfig': path.join(__dirname, 'styleguide/styleguide.olaconfig'),
-        '@olasearch/core': path.join(__dirname, './../npm-olasearch'),
-        '@olasearch/chat': path.join(__dirname, './src'),
-        'OlaSearch': '@olasearch/core',        
-        // 'OlaSearch': path.join(__dirname, './../npm-olasearch'),
+      alias: {        
+        'OlaSearch': '@olasearch/core',
+        ...aliases
       }
     },
     externals: {
