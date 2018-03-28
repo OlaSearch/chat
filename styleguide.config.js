@@ -89,10 +89,9 @@ module.exports = {
     },
   ],
   require: [
-    // path.resolve(__dirname, './setup.js'),
-    path.join(__dirname, './../npm-olasearch/style/core.scss'),
-    path.join(__dirname, './style/chat.scss'),    
-    // path.resolve(__dirname, './src/index.js')
+    '@olasearch/core/style/core.scss',
+    // path.join(__dirname, './../npm-olasearch/style/core.scss'),
+    path.join(__dirname, './style/chat.scss')
   ],
   getComponentPathLine: (componentPath) => {
     const dirname = path.dirname(componentPath, '.js')
