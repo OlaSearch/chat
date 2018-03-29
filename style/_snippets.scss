@@ -3,7 +3,7 @@
     
     @include media(tablet) {
       width: 33.33%;
-      padding: 0 1rem 1rem 0;
+      padding: 0 16px 16px 0;
       margin: 0;
 
       &:nth-child(3n+3) {
@@ -13,11 +13,11 @@
   }
 
   .ola-card {
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
   }
 
-  .ola-card-template-map {
-    // margin: 0;
+  .ola-card-template-list {
+    margin: 0;
   }
 
   .ola-snippet-inner, .ola-card-inner {

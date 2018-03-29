@@ -296,6 +296,15 @@ export default class Messages extends React.Component {
               background-color: ${theme.chatUserMessageBackground};
               color: ${theme.chatUserMessageColor};
             }
+            .olachat-messages :global(.olachat-message) {
+              font-size: ${theme.chatMessageFontSize};
+            }
+            .olachat-messages :global(.olachat-quickreplies) {
+              font-size: ${theme.chatQuickReplyFontSize};
+            }
+            .olachat-messages :global(.olachat-slots-button) {
+              font-size: ${theme.chatSlotButtonFontSize};
+            }
             .olachat-messages
               :global(.olachat-message-bot .olachat-message-reply) {
               background-color: ${theme.chatBotMessageBackground};

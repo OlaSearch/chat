@@ -3,10 +3,8 @@
  */
 
 .ola-snippet-answer {
-  // box-shadow: 0 3px 10px rgba(0,0,0,0.25);
   background: white;
   position: relative;
-  // z-index: 1;
   padding: 0;
   margin-bottom: 1em;
 }
@@ -19,7 +17,6 @@
   sup {
     font-size: 16px;
     top: auto;
-    // vertical-align: middle;
   }
 }
 
@@ -27,7 +24,7 @@
  * Wrapper
  */
 .ola-answer-card-wrapper,
-.ola-answer-list-wrapper,
+// .ola-answer-list-wrapper,
 .ola-answer-carousel-item-wrapper {
   padding: 14px;
   background: white;
@@ -38,36 +35,39 @@
 /**
  * Answer card
  */
-.ola-answer-card,
-.ola-answer-list {
-  margin: 0 0 16px 0;
+.ola-answer-card {
+  // margin: 0 0 16px 0;
 }
 
 /**
  * Swipeable inside chatbot
  */
 
-.ola-swipeable-flow {  
+.ola-swipeable {  
   /* On desktop */
-  margin-left: -56px - 14px;
-  margin-right: -80px - 14px;
+  margin-left: -60px;
+  margin-right: -80px;
 
   .olachat-bot-mobile &{
-    margin-left: -16px - 16px;
-    margin-right: -16px - 14px;
-    padding-top: 8px;
+    margin-left: -16px;
+    margin-right: -16px;
   }
 }
   /**
    * Row
    */
-  .ola-swipeable-row {
-    padding-left: 56px + 14px;
-    padding-right: 80px + 14px;
+  .ola-swipeable {
+    padding-left: 0;
+    padding-right: 0; 
+  }
+
+  .ola-swipeable-flow {
+    padding-left: 60px;
+    padding-right: 80px;
 
     .olachat-bot-mobile & {
-      padding-left: 16px + 8px;
-      padding-right: 16px + 8px;
+      padding-left: 16px;
+      padding-right: 16px;
     }
   }
 
@@ -80,6 +80,12 @@
     .ola-answer-card-wrapper,
     .ola-answer-carousel-item-wrapper,
     .ola-answer-list-wrapper {
-      height: 100%;
+      display: flex;
+      flex: 1;
     }
+  }
+
+  .olachat-bot-desktop .ola-swipeable-prev,
+  .olachat-bot-desktop .ola-swipeable-next {
+    display: block;
   }

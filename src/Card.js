@@ -7,8 +7,11 @@ import {
   AnswerMap,
   AnswerCard,
   AnswerCarousel,
-  Decorators
+  Decorators,
+  Settings
 } from '@olasearch/core'
+
+const { BUTTON_TYPE } = Settings
 
 /**
  * Cards
@@ -26,6 +29,30 @@ function Card ({
   if (!card || !card.title) return null
   let { buttons = [], template } = card
   let classes = cx('ola-card', `ola-card-template-${template}`)
+
+  function handleClick ({ type, label, title, payload, url }) {
+    /**
+     * Label will be displayed in the bot
+     */
+    if (type === BUTTON_TYPE.POSTBACK) {
+      return (
+        onSelect &&
+        onSelect({
+          ...payload,
+          label,
+          query: label || title
+        })
+      )
+    }
+    if (type === BUTTON_TYPE.WEB) {
+      return (window.location.href = url)
+    }
+    if (type === BUTTON_TYPE.EMAIL) {
+      return (window.location.href = `mailto:${url}`)
+    }
+    onSelect && onSelect({ card })
+  }
+
   function pickTemplate (template) {
     /* Check for user defined templates */
     if (templates && templates.hasOwnProperty(template)) {
@@ -35,21 +62,21 @@ function Card ({
 
     switch (template) {
       case 'list':
-        return <AnswerList card={card} swipe onSelect={onSelect} {...rest} />
+        return <AnswerList card={card} swipe onSelect={handleClick} {...rest} />
 
       case 'wordmap':
         return (
           <AnswerWordMap
             card={card}
             maxLen={20}
-            onSelect={onSelect}
+            onSelect={handleClick}
             shuffle
             {...rest}
           />
         )
 
       case 'image':
-        return <AnswerCard card={card} onSelect={onSelect} />
+        return <AnswerCard card={card} onSelect={handleClick} />
 
       case 'map':
         return (
@@ -62,10 +89,10 @@ function Card ({
         )
 
       case 'carousel':
-        return <AnswerCarousel card={card} onSelect={onSelect} {...rest} />
+        return <AnswerCarousel card={card} onSelect={handleClick} {...rest} />
 
       default:
-        return <AnswerCard card={card} onSelect={onSelect} {...rest} />
+        return <AnswerCard card={card} onSelect={handleClick} {...rest} />
     }
   }
 

@@ -46,7 +46,7 @@ class Chat extends React.Component {
           onHide={this.props.onHide}
           title={this.props.title}
           theme={theme}
-          allowHide={this.props.allowHide}
+          debug={this.props.debug}
           isDesktop={this.props.isDesktop}
         />
         <OfflineIndicator />

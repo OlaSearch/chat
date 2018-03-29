@@ -5,9 +5,9 @@ import { darken } from './utils'
 /**
  * Chatbot Header
  */
-export default function Header ({ onHide, title, allowHide, isDesktop, theme }) {
-  if (!title) return null
-  const showHideButton = (!isDesktop || allowHide) && onHide
+export default function Header ({ onHide, title, debug, isDesktop, theme }) {
+  if (!title && !debug) return null
+  const showHideButton = debug || !isDesktop ? true : !!onHide
   return (
     <div className='olachat-header'>
       <div className='olachat-header-title'>{title}</div>
@@ -30,5 +30,5 @@ export default function Header ({ onHide, title, allowHide, isDesktop, theme }) 
 }
 
 Header.defaultProps = {
-  allowHide: true
+  debug: false
 }

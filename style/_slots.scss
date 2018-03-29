@@ -26,8 +26,11 @@
   .olachat-bot-tablet &, .olachat-bot-mobile & {
     width: 100%;
     margin-bottom: -1px;
+    margin-top: 0;
     color: $link-color;
-    padding: 7px 14px;
+    padding: 10px 14px;
+    border-radius: 0;
+    white-space: normal;
   }
 
 

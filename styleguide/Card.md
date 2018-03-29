@@ -37,33 +37,6 @@ const card = {
 
 #### Map
 
-With source
-```js
-const card = {
-  title: 'Result title',
-  subtitle: 'Result subtitle',
-  image: 'https://placeimg.com/800/300/any',
-  buttons: [
-    {
-      title: 'View webpage',
-      type: 'web_url',
-      url: '//olasearch.com'
-    },
-    {
-      title: 'Contact us',
-      type: 'web_url',
-      url: '//olasearch.com'
-    }
-  ],
-  source: {
-    name: 'CIA Fact Sheet',
-    url: '//olasearch.com'
-  }
-};
-<Card
-  card={card}  
-/>
-```
 
 ```js
 const card = {
@@ -152,23 +125,23 @@ const card = {
   "title": "Media Contact",
   "images": [
     {
-      url: 'https://placeimg.com/800/300/any',
+      src: 'https://placeimg.com/800/300/any',
       title: ''
     },
     {
-      url: 'https://placeimg.com/800/300/any',
+      src: 'https://placeimg.com/800/300/any',
       title: ''
     },
     {
-      url: 'https://placeimg.com/800/300/any',
+      src: 'https://placeimg.com/800/300/any',
       title: ''
     },
     {
-      url: 'https://placeimg.com/800/300/any',
+      src: 'https://placeimg.com/800/300/any',
       title: ''
     },
     {
-      url: 'https://placeimg.com/800/300/any',
+      src: 'https://placeimg.com/800/300/any',
       title: ''
     }
   ],

@@ -1,11 +1,10 @@
 .olachat-messages {
   flex: 1;
   -webkit-flex: 1;
-  padding: 1em 0 1em 0;
+  padding: 16px 0 16px 0;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
   position: relative;
-  // transition: all 0.2s ease-in;
   @include media (phablet) {
     height: calc(100% + 1px);
   }
@@ -13,8 +12,6 @@
   @include media (desktop) {
     overflow: auto;
   }
-  // background: url("https://olasearch.com/assets/images/ola-logo-small.svg") center center no-repeat;
-  // filter: grayscale(20%);
 }
 
 .olachat-messages-wrapper {
@@ -26,7 +23,7 @@
 }
 
 .olachat-messages-list {
-  padding: 1.5rem 0 12px 0;
+  padding: 1.5rem 0 8px 0;
   position: relative;
 }
 
@@ -40,6 +37,7 @@
   @include clearfix;  
   min-height: 56px;
   animation: slideUpFade 0.2s linear;
+  padding-bottom: 8px;
 
   &:hover {
     // background-color: #f1f1f1;
@@ -69,12 +67,12 @@
 
   .olachat-message-inner {
     @include flexbox;
-    padding: 0 20px 0 12px;
+    padding: 0 20px 0 16px;
     flex-direction: row-reverse;
     position: relative;
 
     .olachat-bot-mobile & {
-      padding: 0 1rem 0rem 12px; /* Cos the logo is [4 + 32 + 4] */
+      padding: 0 16px 0rem 16px; /* Cos the logo is [4 + 32 + 4] */
     }
     .olachat-message-bot & {
       flex-direction: row;
@@ -162,8 +160,9 @@
   padding: 7px 14px;
   // position: relative;
   display: inline-block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 8px;
   max-width: 500px;
+  text-align: left;
 
   .olachat-bot-mobile & {
     max-width: 300px;
@@ -274,7 +273,7 @@
   // padding-top: 0.5rem;
   margin-right: 80px;  
   // margin-right: 16px;
-  margin-left: 12px + 36px + 8px;
+  margin-left: 16px + 36px + 8px;
   .olachat-bot-mobile & {
     margin-left: 16px;
     margin-right: 16px;
