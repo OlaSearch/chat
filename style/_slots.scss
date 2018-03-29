@@ -1,12 +1,6 @@
 .olachat-slots {
   background-color: transparent;
   animation: 0.3s ease-in-out 0s 1 slideUp;
-  // animation: slideUp 0.2s linear;
-  // overflow: hidden;
-  // position: absolute;
-  // bottom: 100%;
-  // left: 0;
-  // right: 0;
   overflow-x: auto;
   padding-bottom: 0.5rem;
 }
@@ -14,16 +8,27 @@
 
 .olachat-slots-button {
   background-color: white;
-  border: 1px $light-grey-color solid;
-  color: $link-color;  
-  padding: 0.6rem 1rem;
+  border: 1px $light-grey-color solid;    
   font-size: 14px;
   line-height: 1.5;
   white-space: nowrap;
-  display: block;
-  width: 100%;
+  display: block;  
+
+
+  border-radius: 20px;
+  padding: 7px 14px;
+  margin: 0.5rem 0.5rem 1px 0;
+  color: $base-color;
+  font-weight: 600;
+  width: auto;
   min-width: 80px;
-  margin-bottom: -1px;
+
+  .olachat-bot-tablet &, .olachat-bot-mobile & {
+    width: 100%;
+    margin-bottom: -1px;
+    color: $link-color;
+    padding: 7px 14px;
+  }
 
 
   &:first-child {
@@ -36,17 +41,6 @@
     border-bottom-right-radius: 20px;
   }
 
-  @include media (tablet) {
-    border-radius: 20px;
-    padding: 0.45rem 1rem;
-    margin: 0.5rem 0.5rem 1px 0;
-    color: $base-color;
-    font-weight: 600;
-  }
-
-  @include media (tablet) {
-    width: auto;
-  }
 
   &:disabled {
     opacity: 0.5;

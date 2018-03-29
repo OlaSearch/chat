@@ -69,18 +69,13 @@
 
   .olachat-message-inner {
     @include flexbox;
-    padding: 0 1rem 0rem 12px; /* Cos the logo is [4 + 32 + 4] */
+    padding: 0 20px 0 12px;
     flex-direction: row-reverse;
     position: relative;
 
-    @include media (tablet) {
-      padding: 0 20px 0 12px;
+    .olachat-bot-mobile & {
+      padding: 0 1rem 0rem 12px; /* Cos the logo is [4 + 32 + 4] */
     }
-
-    .olachat-message-with-search & {
-      // padding-bottom: 0.5rem;
-    }
-
     .olachat-message-bot & {
       flex-direction: row;
     }
@@ -105,18 +100,8 @@
   .olachat-message-bot & {
     text-align: left;
   }
-  // padding-right: 80px;
 }
 
-  .olachat-bot-testing {
-    .olachat-message-body {
-      padding-right: 50px;
-
-      @include media (tablet) {
-        padding-right: 0;
-      }
-    }
-  }
 
 /**
  * Date
@@ -178,15 +163,11 @@
   // position: relative;
   display: inline-block;
   margin-bottom: 0.5rem;
-  max-width: 300px;
+  max-width: 500px;
 
-  @include media (tablet) {
-    max-width: 500px;
-  }
-
-  .olachat-message-bot & {
-    // background: $blue;
-  }
+  .olachat-bot-mobile & {
+    max-width: 300px;
+  }  
 
   .olachat-message-error & {
     background: $red;
@@ -196,6 +177,7 @@
   p {
     margin-bottom: 0;    
   }
+
   p:last-child {
     // margin-bottom: 0.5em;
   }

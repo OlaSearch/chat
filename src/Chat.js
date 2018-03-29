@@ -47,6 +47,7 @@ class Chat extends React.Component {
           title={this.props.title}
           theme={theme}
           allowHide={this.props.allowHide}
+          isDesktop={this.props.isDesktop}
         />
         <OfflineIndicator />
         <Messages
@@ -66,7 +67,6 @@ class Chat extends React.Component {
           newMessageId={this.props.newMessageId}
           theme={theme}
         />
-
         <Input
           onSubmit={this.addMessage}
           voiceAdapter={this.props.voiceAdapter}
@@ -99,9 +99,9 @@ class Chat extends React.Component {
         </style>
         <style jsx>
           {`
-            /* Reset */
-            .olachat :global(button) {
-              line-height: 1.5;
+            /* Background */
+            .olachat {
+              background: ${theme.chatBackground};
             }
             .olachat :global(.ola-link-load-more) {
               color: ${theme.primaryColor};
@@ -140,6 +140,7 @@ function mapStateToProps (state) {
     newMessageId: state.Conversation.newMessageId,
     isTyping: state.Conversation.isTyping,
     isPhone: state.Device.isPhone,
+    isDesktop: state.Device.isDesktop,
     location: state.Context.location,
     searchInput: state.QueryState.searchInput
   }

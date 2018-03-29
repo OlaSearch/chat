@@ -38,7 +38,9 @@ class HelpMenu extends React.Component {
     this.props.updateQueryTerm(event.target.text)
     this.props.onSubmit()
   }
-  handlePrint = () => {
+  handlePrint = e => {
+    /* Prevent default */
+    e.preventDefault()
     if (this.context.window) {
       this.context.window.print()
     } else {
@@ -79,13 +81,19 @@ class HelpMenu extends React.Component {
                   href={url || null}
                   key={idx}
                   target='_blank'
+                  tabIndex={0}
                   onClick={this.handleClick}
                 >
                   {title}
                 </a>
               )
             })}
-            <a onClick={this.handlePrint} className='olachat-menu-link'>
+            <a
+              onClick={this.handlePrint}
+              className='olachat-menu-link'
+              tabIndex={0}
+              href='#'
+            >
               <Print /> {translate('chat_print')}
             </a>
           </div>

@@ -1,7 +1,6 @@
 $gutter: 15px;
 .olachat-footer {
-  // @include flexbox;
-  display: flex;
+  // @include flexbox;  
   padding: 0;
   background: white;
   // border-top: 1px #ccc solid;
@@ -30,6 +29,13 @@ $gutter: 15px;
 }
 
   /**
+   * Inner
+   */
+  .olachat-footer-inner {
+    display: flex;
+  }
+
+  /**
    * Input
    */
   .olachat-input {
@@ -46,11 +52,15 @@ $gutter: 15px;
       width: 100%;
       border: none;
       // padding: $gutter $gutter $gutter 0;
-      padding: 16px 1rem 1rem 0;
+      // padding: 17px 16px 17px 0;
       font-size: 16px;
+      min-height: 50px;
+      line-height: 1;
+      padding: 16px 16px 16px 0;
 
       .olachat-bot-desktop & {
         font-size: 14px;
+        // padding: 18px 16px 18px 0; /* Check this ??? */
       }
       // margin-right: $gutter;
       max-height: 100px;

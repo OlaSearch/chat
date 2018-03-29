@@ -22,22 +22,78 @@ import InviteNotification from './InviteNotification'
 
 const { STYLE_TAG_ID, MODAL_ROOT_CLASSNAME } = OlaSettings
 
+/**
+ * Iframe Bot holder
+ * @example ./../styleguide/BotFrame.md
+ */
 class BotFrame extends React.Component {
   constructor (props) {
     super(props)
     this.addedIframeClickEvent = false
     this.addedMessageClickEvent = false
   }
+  static propTypes = {
+    /**
+     * Show the chatbot as part of page content
+     */
+    inline: PropTypes.bool,
+    /** Additional CSS that can be injected into iframe */
+    css: PropTypes.string,
+    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    widthMobile: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    widthActive: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    heightActive: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    inlineHeightActive: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
+    /**
+     * z-index of the chatbot
+     */
+    zIndex: PropTypes.number,
+    iframeStyle: PropTypes.object,
+    cssUrl: PropTypes.string,
+    activeStyle: PropTypes.object,
+    initialContent: PropTypes.string,
+    /**
+     * Header props
+     */
+    headerProps: PropTypes.shape({
+      title: PropTypes.string
+    }),
+    /**
+     * Avatar props
+     */
+    avatarProps: PropTypes.shape({
+      avatarBot: PropTypes.string,
+      avatarUser: PropTypes.string
+    }),
+    /**
+     * Bubble props
+     */
+    bubbleProps: PropTypes.shape({
+      label: PropTypes.string
+    }),
+    /**
+     * Bot props
+     */
+    botProps: PropTypes.shape({
+      botName: PropTypes.string,
+      userName: PropTypes.string
+    })
+  }
   static defaultProps = {
     width: BUBBLE_FULL_WIDTH_DESKTOP,
     widthMobile: BUBBLE_FULL_WIDTH_MOBILE,
     widthActive: BOT_WIDTH_ACTIVE /* 410 */,
     height: BUBBLE_FULL_HEIGHT,
+    inlineHeightActive: 600,
     heightActive: '100%' /* 620 */,
     /* Flag to add the chatbot as an inline element */
-    inlineBubble: false,
-    inlineChat: false,
+    inline: false,
     zIndex: BOT_ZINDEX,
+    css: null,
     iframeStyle: {
       border: 'none',
       maxWidth: '100%'
@@ -102,8 +158,8 @@ class BotFrame extends React.Component {
       widthActive,
       height,
       heightActive,
-      inlineBubble,
-      inlineChat,
+      inlineHeightActive,
+      inline,
       zIndex,
       isDesktop,
       activeStyle,
@@ -112,9 +168,10 @@ class BotFrame extends React.Component {
     } = this.props
 
     /* Check if chatbot label is present */
+    const hasLabel = bubbleProps && !!bubbleProps.label
     const showBubbleLabel = this.props.isDesktop
-      ? bubbleProps && !!bubbleProps.label
-      : false
+      ? hasLabel
+      : inline ? hasLabel : false
 
     const frameStyles = {
       ...iframeStyle,
@@ -123,17 +180,18 @@ class BotFrame extends React.Component {
           top: 'auto',
           bottom: 0,
           right: 0,
-          position: inlineChat && isDesktop ? 'relative' : 'fixed',
+          position: inline && isDesktop ? 'relative' : 'fixed',
           width: isDesktop ? widthActive : '100%',
-          height: inlineChat && isDesktop ? 600 : heightActive,
+          height: inline && isDesktop ? inlineHeightActive : heightActive,
           maxHeight: '100%',
           zIndex,
           ...activeStyle
         }
         : {
-          ...(inlineBubble
+          ...(inline
             ? {
-              height: BUBBLE_FULL_HEIGHT
+              height: BUBBLE_FULL_HEIGHT,
+              width: showBubbleLabel ? width : widthMobile
             }
             : {
               bottom: BUBBLE_SPACING,
@@ -154,7 +212,7 @@ class BotFrame extends React.Component {
           head={
             <div>
               <link rel='stylesheet' href={this.props.cssUrl} />
-              <style>{css}</style>
+              {css && <style>{css}</style>}
               <meta
                 name='viewport'
                 content='width=device-width, initial-scale=1'

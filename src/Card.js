@@ -14,7 +14,15 @@ import {
  * Cards
  * @example ./../styleguide/Card.md
  */
-function Card ({ card, templates, results, location, theme, ...rest }) {
+function Card ({
+  card,
+  templates,
+  results,
+  location,
+  onSelect,
+  theme,
+  ...rest
+}) {
   if (!card || !card.title) return null
   let { buttons = [], template } = card
   let classes = cx('ola-card', `ola-card-template-${template}`)
@@ -27,13 +35,21 @@ function Card ({ card, templates, results, location, theme, ...rest }) {
 
     switch (template) {
       case 'list':
-        return <AnswerList card={card} swipe {...rest} />
+        return <AnswerList card={card} swipe onSelect={onSelect} {...rest} />
 
       case 'wordmap':
-        return <AnswerWordMap card={card} maxLen={20} shuffle {...rest} />
+        return (
+          <AnswerWordMap
+            card={card}
+            maxLen={20}
+            onSelect={onSelect}
+            shuffle
+            {...rest}
+          />
+        )
 
       case 'image':
-        return <AnswerCard card={card} />
+        return <AnswerCard card={card} onSelect={onSelect} />
 
       case 'map':
         return (
@@ -46,10 +62,10 @@ function Card ({ card, templates, results, location, theme, ...rest }) {
         )
 
       case 'carousel':
-        return <AnswerCarousel card={card} {...rest} />
+        return <AnswerCarousel card={card} onSelect={onSelect} {...rest} />
 
       default:
-        return <AnswerCard card={card} {...rest} />
+        return <AnswerCard card={card} onSelect={onSelect} {...rest} />
     }
   }
 

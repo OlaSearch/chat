@@ -227,7 +227,12 @@ class Message extends React.Component {
             loader={isActive ? <Loader theme={theme} /> : null}
             showWhileFiltering
           />
-          <Card card={card} results={results} location={location} />
+          <Card
+            card={card}
+            results={results}
+            location={location}
+            onSelect={addMessage}
+          />
           {isSearchActive ? (
             <SearchResultsMessage
               results={results}

@@ -2,6 +2,7 @@ import types from './../ActionTypes'
 import { checkIfAwaitingResponse } from './../utils'
 import { utilities, Actions, Settings } from '@olasearch/core'
 import invariant from 'invariant'
+import omit from 'ramda/src/omit'
 
 /* Query sanitization */
 const { sanitizeText, uuid } = utilities
@@ -45,6 +46,10 @@ export function addMessage (payload) {
       : null
     const showUserMessage = !(payload && payload.hidden)
     const stopSubmit = payload && payload.disableSubmit
+    /**
+     * Parameters that needs to added to the query
+     */
+    const payloadParams = omit(['value', 'label', 'intent', 'query'], payload)
 
     /**
      * Check if payload has `label` => THis will be displayed in bot
@@ -78,7 +83,8 @@ export function addMessage (payload) {
       msgId,
       language,
       in_response_to,
-      ...intent
+      ...intent,
+      ...payloadParams
     }
 
     const { projectId, env = 'staging', searchInput } = query

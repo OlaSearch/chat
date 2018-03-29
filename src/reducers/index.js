@@ -27,7 +27,7 @@ const initialState = {
   ignoreLocation: false,
 
   /* Invite */
-  inviteVisible: true,
+  inviteVisible: false,
   invite: {
     title: 'Ola Team',
     subtitle: '',

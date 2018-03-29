@@ -26,23 +26,20 @@
 /**
  * Wrapper
  */
-.ola-answer-card-wrapper, .ola-answer-list-wrapper {
+.ola-answer-card-wrapper,
+.ola-answer-list-wrapper,
+.ola-answer-carousel-item-wrapper {
   padding: 14px;
   background: white;
   box-shadow: $sharp-box-shadow;
   border-radius: 5px;
-
-  /* Inside swipeable list */
-  .ola-swipeable-item & {
-    box-shadow: none;
-    padding: 0;
-  }
 }
 
 /**
  * Answer card
  */
-.ola-answer-card, .ola-answer-list {
+.ola-answer-card,
+.ola-answer-list {
   margin: 0 0 16px 0;
 }
 
@@ -75,18 +72,14 @@
   }
 
   /**
-   * item
+   * Inside swipeable, set height as 100%
    */
-  .ola-swipeable-item {
-  }
-
-  /**
-   * Swipeable item inner
-   */
-  .ola-swipeable-item-inner {
-    box-shadow: $sharp-box-shadow;
-    padding: 12px;
-    background: white;
-    position: relative;
-    border-radius: 5px;
+  .ola-swipeable {
+    .ola-answer-card, 
+    .ola-answer-carousel-item,
+    .ola-answer-card-wrapper,
+    .ola-answer-carousel-item-wrapper,
+    .ola-answer-list-wrapper {
+      height: 100%;
+    }
   }

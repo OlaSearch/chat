@@ -41,7 +41,7 @@
   color: $blue;
   background-color: transparent;
   // height: 34px;
-  padding: 0.5rem 1rem;
+  padding: 7px 14px;
   margin: 0 3px 0 3px;
   flex: 0 0 auto;
 
@@ -63,6 +63,6 @@
 .olachat-quickreplies-list {
   pointer-events: all;
   /* Message inner has a bottom padding of 0.5rem */
-  padding: 8px 12px 12px 12px;
+  padding: 8px 12px 8px 12px;
   display: flex;
 }

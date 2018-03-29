@@ -5,12 +5,13 @@ import { darken } from './utils'
 /**
  * Chatbot Header
  */
-export default function Header ({ onHide, title, allowHide, theme }) {
-  if (!title && !onHide) return null
+export default function Header ({ onHide, title, allowHide, isDesktop, theme }) {
+  if (!title) return null
+  const showHideButton = (!isDesktop || allowHide) && onHide
   return (
     <div className='olachat-header'>
       <div className='olachat-header-title'>{title}</div>
-      {allowHide && onHide ? (
+      {showHideButton ? (
         <button className='olachat-header-hide' onClick={onHide}>
           <Cross />
         </button>
@@ -21,7 +22,7 @@ export default function Header ({ onHide, title, allowHide, theme }) {
           color: ${theme.chatHeaderColor};
         }
         .olachat-header .olachat-header-hide:hover {
-          background-color: ${theme.chatHeaderBackground};
+          background-color: ${darken(theme.chatHeaderBackground, 10)};
         }
       `}</style>
     </div>

@@ -385,54 +385,56 @@ class Input extends React.Component {
     })
     return (
       <form className={classes} onSubmit={this.onFormSubmit}>
-        {suggestions.length && text ? (
-          <QuerySuggestions
-            onChange={this.onSuggestionChange}
-            suggestions={suggestions}
-            activeIndex={suggestedIndex}
-            queryTerm={text}
+        <div className='olachat-footer-inner'>
+          {suggestions.length && text ? (
+            <QuerySuggestions
+              onChange={this.onSuggestionChange}
+              suggestions={suggestions}
+              activeIndex={suggestedIndex}
+              queryTerm={text}
+            />
+          ) : null}
+          <HelpMenu
+            onSubmit={this.props.onSubmit}
+            updateQueryTerm={this.props.updateQueryTerm}
+            theme={theme}
           />
-        ) : null}
-        <HelpMenu
-          onSubmit={this.props.onSubmit}
-          updateQueryTerm={this.props.updateQueryTerm}
-          theme={theme}
-        />
-        <div className='olachat-input'>
-          <Textarea
-            className='olachat-input-textarea'
-            placeholder={translate('chat_type_a_message')}
-            onChange={this.onChange}
-            onKeyDown={this.onKeyDown}
-            onFocus={this.handleFocus}
-            onBlur={this.handleBlur}
-            value={inputValue}
-            rows={1}
-            cols={20}
-            ref={this.registerRef}
-            autoFocus={!this.props.isPhone}
-            initialHeight={50}
-            disabled={this.props.disabled}
-          />
-        </div>
-        {this.props.location ? (
-          <GeoLocation refreshOnGeoChange={false} showLabel={false} />
-        ) : null}
-        {voiceInput && supportsVoice ? (
-          <div className='olachat-input-voice'>
-            <Voice
-              onResult={this.onVoiceChange}
-              onFinalResult={this.onVoiceFinal}
-              voiceAdapter={this.props.voiceAdapter}
+          <div className='olachat-input'>
+            <Textarea
+              className='olachat-input-textarea'
+              placeholder={translate('chat_type_a_message')}
+              onChange={this.onChange}
+              onKeyDown={this.onKeyDown}
+              onFocus={this.handleFocus}
+              onBlur={this.handleBlur}
+              value={inputValue}
+              rows={1}
+              cols={20}
+              ref={this.registerRef}
+              autoFocus={!this.props.isPhone}
+              initialHeight={50}
+              disabled={this.props.disabled}
             />
           </div>
-        ) : null}
-        <button
-          disabled={isTyping || !this.state.text || this.props.disabled}
-          className='olachat-submit'
-        >
-          <Send />
-        </button>
+          {this.props.location ? (
+            <GeoLocation refreshOnGeoChange={false} showLabel={false} />
+          ) : null}
+          {voiceInput && supportsVoice ? (
+            <div className='olachat-input-voice'>
+              <Voice
+                onResult={this.onVoiceChange}
+                onFinalResult={this.onVoiceFinal}
+                voiceAdapter={this.props.voiceAdapter}
+              />
+            </div>
+          ) : null}
+          <button
+            disabled={isTyping || !this.state.text || this.props.disabled}
+            className='olachat-submit'
+          >
+            <Send />
+          </button>
+        </div>
         <style jsx>
           {`
             .olachat-submit {
@@ -443,8 +445,8 @@ class Input extends React.Component {
               color: white;
             }
             .olachat-submit:disabled :global(.ola-icon) {
-              fill: #888;
-              color: white;
+              fill: white;
+              color: #888;
             }
             .olachat-submit :global(.ola-icon circle) {
               stroke: ${theme.primaryColor};
@@ -456,6 +458,9 @@ class Input extends React.Component {
             .olachat-footer :global(.ola-link-geo:hover) {
               background: none;
               color: red;
+            }
+            .olachat-input-textarea {
+              line-height: 1.2;
             }
           `}
         </style>

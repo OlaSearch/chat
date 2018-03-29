@@ -312,6 +312,7 @@ export default class Messages extends React.Component {
               color: ${theme.chatBotSlotButtonColor};
               background-color: ${theme.chatBotSlotButtonBackground};
               border-color: ${theme.chatBotSlotButtonColor};
+              line-height: 1.5;
             }
             .olachat-messages :global(.olachat-slots-button:hover) {
               background-color: ${theme.chatBotSlotButtonColor};
@@ -340,13 +341,14 @@ export default class Messages extends React.Component {
             }
             /* Quick replies */
             .olachat-messages :global(.olachat-quickreplies-button) {
-              box-shadow: inset 0 0 0 1px ${theme.primaryButtonBackground};
-              color: ${theme.primaryButtonBackground};
-              border-color: ${theme.primaryButtonBackground};
+              box-shadow: inset 0 0 0 1px ${theme.chatQuickReplyColor};
+              color: ${theme.chatQuickReplyColor};
+              border-color: ${theme.chatQuickReplyColor};
+              line-height: 1.5;
             }
             .olachat-messages :global(.olachat-quickreplies-button:hover) {
-              background: ${theme.primaryButtonBackground};
-              color: ${theme.primaryButtonColor};
+              background: ${theme.chatQuickReplyHoverBackground};
+              color: ${theme.chatQuickReplyHoverColor};
             }
           `}
         </style>
