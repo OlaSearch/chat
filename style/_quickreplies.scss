@@ -2,15 +2,6 @@
   font-size: 14px;
   background-color: transparent;
   animation: 0.3s ease-in-out 0s 1 slideUp;
-  // margin-bottom: -16px;
-  // padding-bottom: 8px;
-  // position: absolute;
-  // bottom: 50px;
-  // left: 0;
-  // right: 0;
-  // height: 60px;
-  // margin: 0 -10px 0 -14px;
-  // pointer-events: none;
   display: flex;
   overflow-x: auto;
   border-top: none;
@@ -42,12 +33,9 @@
   line-height: 1.5;
   color: $blue;
   background-color: transparent;
-  // height: 34px;
   padding: 7px 14px;
   margin: 0 3px 0 3px;
   flex: 0 0 auto;
-
-  // white-space: nowrap;
   display: block;
 
   @include media (tablet) {

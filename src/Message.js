@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import cx from 'classnames'
 import Avatar from './Avatar'
 import Card from './Card'
-import { createMessageMarkup } from './utils'
 import { DateParser, AnswerMC, Decorators } from '@olasearch/core'
 import SlotOptions from './SlotOptions'
 import Geo from './Geo'
@@ -13,6 +12,7 @@ import TopicSuggestions from './TopicSuggestions'
 import Loader from './Loader'
 import FailureButtons from './FailureButtons'
 import QuickReplies from './QuickReplies'
+import ReplyText from './ReplyText'
 
 /**
  * Chatbot message
@@ -159,7 +159,6 @@ class Message extends React.Component {
         </div>
       )
     }
-
     return (
       <div className={messageClass}>
         {/* Message flex */}
@@ -177,12 +176,7 @@ class Message extends React.Component {
               {isBot ? botName : userName}
             </div>
             <div className='olachat-message-content'>
-              {text ? (
-                <div
-                  className='olachat-message-reply'
-                  dangerouslySetInnerHTML={createMessageMarkup(text)}
-                />
-              ) : null}
+              <ReplyText text={text} />
             </div>
             {showTimestamp ? (
               <div className='olachat-message-date'>
