@@ -4,7 +4,7 @@ A chatbot framework for Ola Search powered by React. It can be embedded as a wid
 
 [![npm package](https://img.shields.io/npm/v/@olasearch/chat.svg)](https://www.npmjs.com/package/@olasearch/chat)
 [![npm download](https://img.shields.io/npm/dm/@olasearch/chat.svg)](https://www.npmjs.org/package/@olasearch/chat)
-[![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/OlaSearch/chat)
+[![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/OlaSearch/chat.svg?branch=master)
 ![Code style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)
 [![PeerDependencies](https://img.shields.io/david/peer/OlaSearch/chat.svg)](https://david-dm.org/OlaSearch/chat#info=peerDependencies&view=list)
 [![Dependencies](https://img.shields.io/david/OlaSearch/chat.svg)](https://david-dm.org/OlaSearch/chat)
