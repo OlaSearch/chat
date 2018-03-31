@@ -159,6 +159,7 @@ class Message extends React.Component {
         </div>
       )
     }
+    // text = ['Hello', 'How are you', 'How is it going']
     return (
       <div className={messageClass}>
         {/* Message flex */}

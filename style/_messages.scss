@@ -200,7 +200,8 @@
  */
 .olachat-message-bot .olachat-message-reply-multiple {
   .olachat-message-reply {
-    border-top-left-radius: 0px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
     margin-bottom: 2px;
   }
   &:first-child .olachat-message-reply{
@@ -209,8 +210,19 @@
   }
   &:last-child .olachat-message-reply{
     margin-bottom: 8px;
+    border-bottom-left-radius: 20px;
   }
 }
+  /**
+   * Add border radius for single reply
+   */
+  .olachat-message-bot .olachat-message-reply-single {
+    .olachat-message-reply{
+      border-bottom-left-radius: 20px; 
+      border-top-left-radius: 20px; 
+    }
+  }
+
 
 /* Reply suggestion */
 .olachat-message-reply-suggestion {

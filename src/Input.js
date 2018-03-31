@@ -254,7 +254,12 @@ class Input extends React.Component {
         }
         /* Close chatbot */
         if (!text) {
-          this.props.onRequestClose && this.props.onRequestClose()
+          /**
+           * Only if the chatbot is not inline
+           */
+          !this.props.config.chatBotInline &&
+            this.props.onRequestClose &&
+            this.props.onRequestClose()
         } else {
           return this.clearText()
         }
