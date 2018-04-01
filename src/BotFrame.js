@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Bot from './Bot'
-import Frame from 'react-frame-component'
+import Frame from '@olasearch/react-frame-portal'
 import { connect } from 'react-redux'
 import { Decorators, Settings as OlaSettings } from '@olasearch/core'
 import { triggerMouseEvent } from './utils'
@@ -210,14 +210,14 @@ class BotFrame extends React.Component {
         <Frame
           style={frameStyles}
           head={
-            <div>
+            <React.Fragment>
               <link rel='stylesheet' href={this.props.cssUrl} />
               {css && <style>{css}</style>}
               <meta
                 name='viewport'
                 content='width=device-width, initial-scale=1'
               />
-            </div>
+            </React.Fragment>
           }
           id={OLACHAT_IFRAME_ID}
           initialContent={this.props.initialContent}
@@ -236,13 +236,13 @@ class BotFrame extends React.Component {
               height: 120
             }}
             head={
-              <div>
+              <React.Fragment>
                 <link rel='stylesheet' href={this.props.cssUrl} />
                 <meta
                   name='viewport'
                   content='width=device-width, initial-scale=1'
                 />
-              </div>
+              </React.Fragment>
             }
             id={OLACHAT_INVITE_IFRAME_ID}
             initialContent={this.props.initialContent}

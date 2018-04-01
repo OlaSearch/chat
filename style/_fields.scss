@@ -7,22 +7,22 @@
 }
 
 .ola-field-img {
-  display: block;
-  padding: 0;
-  margin-bottom: 1rem;
+  // display: block;
+  // padding: 0;
+  // margin-bottom: 1rem;
 
-  @include media (tablet) {
-    width: 180px;
-  }
+  // @include media (tablet) {
+  //   width: 180px;
+  // }
 
-  img {
-    max-width: 100%;
-    vertical-align: top;
-  }
+  // img {
+  //   max-width: 100%;
+  //   vertical-align: top;
+  // }
 
-  .ola-module & {
-    width: 80px;
-  }
+  // .ola-module & {
+  //   width: 80px;
+  // }
 }
 
 .ola-field-component-label {

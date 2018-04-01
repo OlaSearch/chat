@@ -479,7 +479,7 @@ export default connect(null)(
     Decorators.withTranslate(
       listensToClickOutside(Input, {
         getDocument (instance) {
-          return instance.context && instance.context.document
+          return instance && instance.context && instance.context.document
             ? instance.context.document
             : document
         }

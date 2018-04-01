@@ -12,7 +12,7 @@ export function createMessageMarkup (text) {
   if (!text) return null
   const emojiRegex = /^\\[a-z|0-9]+\b/g
   let t = text.replace(emojiRegex, match => {
-    return '<span class="' + `${EMOJI_LIST[match]}` + '"></span>'
+    return '<span class="ola-emoji ' + `${EMOJI_LIST[match]}` + '"></span>'
   })
   return createHTMLMarkup(t)
 }
@@ -73,7 +73,7 @@ export function isClosest (iframeEl, element, elementClosest) {
 }
 
 export function rgb2hex (rgb) {
-  if (rgb.search('rgb') == -1) {
+  if (rgb.indexOf('rgb') === -1) {
     return rgb
   } else {
     rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/)
