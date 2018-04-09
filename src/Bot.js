@@ -49,7 +49,7 @@ class Bot extends Component {
     const currentActiveStatus = !this.props.isBotActive
 
     /* Check if bot is closed */
-    if (this.props.startOver) {
+    if (currentActiveStatus && this.props.startOver) {
       this.props.clearMessages()
       this.props.clearBotQueryTerm()
     }
@@ -105,10 +105,18 @@ class Bot extends Component {
         payload: { bot: true }
       })
     }
+
+    /* Check if bot is closed */
+    if (this.props.startOver) {
+      this.props.clearMessages()
+      this.props.clearBotQueryTerm()
+    }
   }
   render () {
     const passProps = {
       onHide: this.toggleActive,
+      startOver: this.props.startOver,
+      headerProps: this.props.headerProps,
       ...this.props.headerProps,
       ...this.props.avatarProps,
       ...this.props.botProps,

@@ -159,7 +159,7 @@ class Message extends React.Component {
         </div>
       )
     }
-    // text = ['Hello', 'How are you', 'How is it going']
+    // text = ['Hello', "Welcome! Wondering what's required to bring in your medications into Singapore? We're here to help.", 'How are you']
     return (
       <div className={messageClass}>
         {/* Message flex */}
@@ -177,7 +177,7 @@ class Message extends React.Component {
               {isBot ? botName : userName}
             </div>
             <div className='olachat-message-content'>
-              <ReplyText text={text} />
+              <ReplyText text={text} isActive={isActive} />
             </div>
             {showTimestamp ? (
               <div className='olachat-message-date'>

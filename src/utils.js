@@ -73,6 +73,7 @@ export function isClosest (iframeEl, element, elementClosest) {
 }
 
 export function rgb2hex (rgb) {
+  if (!rgb) return ''
   if (rgb.indexOf('rgb') === -1) {
     return rgb
   } else {

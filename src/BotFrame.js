@@ -5,6 +5,7 @@ import Frame from '@olasearch/react-frame-portal'
 import { connect } from 'react-redux'
 import { Decorators, Settings as OlaSettings } from '@olasearch/core'
 import { triggerMouseEvent } from './utils'
+import { setBotStatus } from './actions'
 import {
   OLACHAT_IFRAME_ID,
   OLACHAT_INVITE_IFRAME_ID,
@@ -29,8 +30,6 @@ const { STYLE_TAG_ID, MODAL_ROOT_CLASSNAME } = OlaSettings
 class BotFrame extends React.Component {
   constructor (props) {
     super(props)
-    this.addedIframeClickEvent = false
-    this.addedMessageClickEvent = false
   }
   static propTypes = {
     /**
@@ -113,6 +112,11 @@ class BotFrame extends React.Component {
     `
   }
   componentDidMount () {
+    /**
+     * If the bot is inline, always show it
+     */
+    if (this.props.inline && this.props.isDesktop) this.props.setBotStatus(true)
+
     /* On Mount */
     this.props.onMount &&
       this.props.onMount(
@@ -124,8 +128,11 @@ class BotFrame extends React.Component {
       document.documentElement.classList.add(MODAL_ROOT_CLASSNAME)
     }
 
+    this.appendStyles()
+  }
+  appendStyles () {
     /* Check if style tag is already added */
-    if (document.getElementById(STYLE_TAG_ID) || this.props.isDesktop) return
+    if (this.props.isDesktop || document.getElementById(STYLE_TAG_ID)) return
     /* Add inline css */
     var style = document.createElement('style')
     style.id = STYLE_TAG_ID
@@ -146,6 +153,7 @@ class BotFrame extends React.Component {
         MODAL_ROOT_CLASSNAME,
         this.props.isBotActive
       )
+      // this.appendStyles()
     }
   }
   render () {
@@ -264,4 +272,6 @@ function mapStateToProps (state, ownProps) {
   }
 }
 
-export default connect(mapStateToProps)(Decorators.withLogger(BotFrame))
+export default connect(mapStateToProps, { setBotStatus })(
+  Decorators.withLogger(BotFrame)
+)

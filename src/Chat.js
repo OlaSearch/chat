@@ -17,7 +17,7 @@ class Chat extends React.Component {
     /**
      * Check if the user has any messages
      */
-    if (!this.props.messages.length && !this.props.disabled) {
+    if (this.props.startOver || !this.props.messages.length) {
       this.props.addMessage({ intent: this.props.initialIntent, start: true })
     }
     /**
@@ -48,6 +48,7 @@ class Chat extends React.Component {
           theme={theme}
           debug={this.props.debug}
           isDesktop={this.props.isDesktop}
+          {...this.props.headerProps}
         />
         <OfflineIndicator />
         <Messages

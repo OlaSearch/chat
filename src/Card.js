@@ -26,7 +26,7 @@ function Card ({
   theme,
   ...rest
 }) {
-  if (!card || !card.title) return null
+  if (!card) return null
   let { buttons = [], template } = card
   let classes = cx('ola-card', `ola-card-template-${template}`)
 

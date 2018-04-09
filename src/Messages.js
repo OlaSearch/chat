@@ -332,7 +332,8 @@ export default class Messages extends React.Component {
             .olachat-messages :global(.ola-link-geo),
             .olachat-messages :global(.ola-link-geo:hover),
             .olachat-messages :global(.ola-link-geo:focus),
-            .olachat-messages :global(.ola-link-geo:disabled:hover) {
+            .olachat-messages :global(.ola-link-geo:disabled:hover),
+            .olachat-messages :global(.ola-answer-button) {
               color: ${theme.primaryButtonColor};
               background-color: ${theme.primaryButtonBackground};
             }

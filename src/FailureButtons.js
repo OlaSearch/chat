@@ -17,7 +17,11 @@ function FailureButtons ({ onSubmit, message, isActive, translate }) {
         <button
           className='olachat-slots-button'
           type='button'
-          onClick={() => onSubmit(message.message)}
+          onClick={() =>
+            onSubmit({
+              query: message.message
+            })
+          }
           disabled={!isActive}
         >
           <Repeat size={14} />

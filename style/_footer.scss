@@ -57,6 +57,7 @@ $gutter: 15px;
       min-height: 50px;
       line-height: 1;
       padding: 16px 16px 16px 0;
+      vertical-align: top;
 
       .olachat-bot-desktop & {
         font-size: 14px;
@@ -115,3 +116,22 @@ $gutter: 15px;
   }
 
   
+
+
+/**
+ * Content editable
+ */
+.olachat {
+  .ContentEditable-Fake {
+    padding: 16px 16px 16px 0;
+    font-size: 16px;
+    min-height: 50px;
+    line-height: 1;
+    padding: 16px 16px 16px 0;
+    vertical-align: top;
+
+    .olachat-bot-desktop & {
+      font-size: 14px;
+    }
+  }
+}

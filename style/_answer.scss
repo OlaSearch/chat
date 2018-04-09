@@ -33,6 +33,24 @@
 }
 
 /**
+ * Remove shadow inside carousel
+ */
+.ola-answer-carousel {
+  > .ola-answer-card-wrapper {
+    box-shadow: none;
+    padding: 0;
+  }
+}
+
+
+/**
+ * Carousel title
+ */
+.ola-answer-carousel-title {
+  padding-top: 8px;
+}
+
+/**
  * Answer card
  */
 .ola-answer-card {
@@ -81,6 +99,7 @@
     .ola-answer-carousel-item-wrapper,
     .ola-answer-list-wrapper {
       display: flex;
+      flex-direction: column;
       flex: 1;
     }
   }

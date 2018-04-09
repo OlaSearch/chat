@@ -5,7 +5,18 @@ import { darken } from './utils'
 /**
  * Chatbot Header
  */
-export default function Header ({ onHide, title, debug, isDesktop, theme }) {
+export default function Header ({
+  onHide,
+  title,
+  debug,
+  isDesktop,
+  inline,
+  theme
+}) {
+  /**
+   * Hide header if its inline and inside a
+   */
+  if (isDesktop && inline) return null
   if (!title && !debug) return null
   const showHideButton = debug || !isDesktop ? true : !!onHide
   return (
