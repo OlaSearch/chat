@@ -172,7 +172,7 @@
   // border-radius: 20px 0 20px 20px;
   border-radius: 20px;
   padding: 7px 14px;
-  // position: relative;
+  position: relative;
   display: inline-block;
   margin-bottom: 8px;
   max-width: 500px;
@@ -321,6 +321,31 @@
     // margin-left: 12px + 30px + 8px;
   }
 }
+
+/**
+ * Arrow
+ */
+// .olachat-message-arrow {
+//   background: none;
+//   overflow: hidden;
+//   height: 8px;
+//   width: 7px;
+//   position: absolute;
+//   top: 0;
+//   bottom: auto;
+//   right: -5px;
+
+//   &:after {
+//     border: 8px solid #fff;
+//     right: -8px;
+//     content: " ";
+//     border-radius: 50%;
+//     width: 16px;
+//     height: 16px;
+//     position: absolute;
+//     top: -8px;
+//   }
+// }
 
 // .olachat-bot-mobile {
 //   .olachat-results {
