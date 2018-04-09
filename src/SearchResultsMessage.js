@@ -65,8 +65,7 @@ class SearchResultsMessage extends React.Component {
             baseUrl={search && search.baseUrl}
             logPayload={{
               bot: true,
-              msgId: message.id,
-              page: message.page
+              message
             }}
           />
 

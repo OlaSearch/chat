@@ -66,7 +66,7 @@ class Bot extends Component {
       eventCategory: 'bot',
       eventType: 'O',
       setNewUser: false,
-      debounce: true,
+      debounce: false,
       payload: { bot: true }
     })
 

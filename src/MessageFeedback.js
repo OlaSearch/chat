@@ -6,7 +6,8 @@ import { setFeedbackMessage, setFeedbackRating } from './actions'
 import {
   IGNORE_FEEDBACK_INTENTS,
   EMOJI_POSITIVE,
-  EMOJI_NEGATIVE
+  EMOJI_NEGATIVE,
+  FEEDBACK_INTENT
 } from './Settings'
 import { checkIfAwaitingResponse } from './utils'
 
@@ -26,7 +27,7 @@ class MessageFeedback extends React.Component {
     /* Set positive or negative feedback */
     this.props.setFeedbackRating(EMOJI_POSITIVE)
     /* Send the message */
-    this.props.onSubmit({ intent: 'OLA.FeedbackIntent' })
+    this.props.onSubmit({ intent: FEEDBACK_INTENT })
   }
   handleNegative = () => {
     /* Update the query term */
@@ -36,7 +37,7 @@ class MessageFeedback extends React.Component {
     /* Set positive or negative feedback */
     this.props.setFeedbackRating(EMOJI_NEGATIVE)
     /* Send the message */
-    this.props.onSubmit({ intent: 'OLA.FeedbackIntent' })
+    this.props.onSubmit({ intent: FEEDBACK_INTENT })
   }
   render () {
     let {
