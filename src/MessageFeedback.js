@@ -40,14 +40,10 @@ class MessageFeedback extends React.Component {
     this.props.onSubmit({ intent: FEEDBACK_INTENT })
   }
   render () {
-    let {
-      isActive,
-      isBot,
-      message: { awaitingUserInput, intent, mc }
-    } = this.props
+    let { isActive, message: { awaitingUserInput, intent, mc } } = this.props
 
     /* If user is typing */
-    if (!isActive || !isBot || !awaitingUserInput) return null
+    if (!isActive || !awaitingUserInput) return null
     /* Check if ignored intents or MC */
     if (intent && intent === this.props.config.initialIntent) return null
     if (IGNORE_FEEDBACK_INTENTS.indexOf(intent) !== -1 && !mc) return null

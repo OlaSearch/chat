@@ -26,13 +26,19 @@ const initialState = {
   /* Location ignore states */
   ignoreLocation: false,
 
+  /* Sidebar */
+  isSidebarOpen: false,
+
   /* Invite */
   inviteVisible: false,
   invite: {
     title: 'Ola Team',
     subtitle: '',
     body: 'Hi there! What brings you to our website today?'
-  }
+  },
+
+  /* Cart */
+  cart: null
 }
 
 export default (state = initialState, action) => {
@@ -59,7 +65,8 @@ export default (state = initialState, action) => {
         totalResults,
         page,
         suggestedTerm,
-        spellSuggestions
+        spellSuggestions,
+        sequence
       } = action
 
       /**
@@ -110,7 +117,8 @@ export default (state = initialState, action) => {
         spellSuggestions,
         originalQuery: payload.originalQuery,
         context: payload.context,
-        ignoreLocation: state.ignoreLocation
+        ignoreLocation: state.ignoreLocation,
+        sequence
       })
       return {
         ...state,
@@ -123,6 +131,7 @@ export default (state = initialState, action) => {
            * 1. Profanity check
            * 2. Spell check
            */
+
           if (item.id === in_response_to) {
             return {
               ...item,
@@ -149,6 +158,7 @@ export default (state = initialState, action) => {
           /**
            * Replace typing message with new message from Intent Engne
            */
+
           if (item.msgId && msg.in_response_to === item.msgId) {
             return msg
           }
@@ -308,6 +318,31 @@ export default (state = initialState, action) => {
       return {
         ...state,
         inviteVisible: false
+      }
+
+    case types.SHOW_SIDEBAR:
+      return {
+        ...state,
+        isSidebarOpen: true
+      }
+
+    case types.HIDE_SIDEBAR:
+      return {
+        ...state,
+        isSidebarOpen: false
+      }
+
+    case types.TOGGLE_SIDEBAR:
+      return {
+        ...state,
+        isSidebarOpen: !state.isSidebarOpen
+      }
+
+    case types.REQUEST_CART_SUCCESS:
+      return {
+        ...state,
+        cart: action.answer.card,
+        isSidebarOpen: action.isSidebarOpen
       }
 
     default:

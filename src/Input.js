@@ -8,10 +8,12 @@ import QuerySuggestions from './QuerySuggestions'
 import { connect } from 'react-redux'
 import HelpMenu from './HelpMenu'
 import listensToClickOutside from '@olasearch/react-onclickoutside'
-import Send from '@olasearch/icons/lib/arrow-right-circle'
+import Send from '@olasearch/icons/lib/material-send'
+import Menu from '@olasearch/icons/lib/menu'
+import SidebarIcon from '@olasearch/icons/lib/sidebar'
 import { GeoLocation } from '@olasearch/core'
 import { ThemeConsumer } from '@olasearch/core'
-import { getFacetSuggestions } from './utils'
+import { getFacetSuggestions, getSuggestSlotType } from './utils'
 
 const supportsVoice =
   (navigator.getUserMedia ||
@@ -60,15 +62,22 @@ class Input extends React.Component {
       /**
        * Auto suggest queries
        */
-      let lastMsg = this.props.messages[this.props.messages.length - 1]
-      let hasQuickReply =
-        lastMsg && lastMsg.slot_options && lastMsg.slot_options.length
-
-      if (!hasQuickReply || this.props.isTyping) {
+      const currentMessage = this.props.messages[this.props.messages.length - 1]
+      const expectingSlot =
+        currentMessage &&
+        currentMessage.slot_options &&
+        currentMessage.slot_options.length
+      const slotTypeToSuggest = currentMessage.slot
+        ? currentMessage.slot.suggest_type || currentMessage.slot.type
+        : undefined
+      const slotType = currentMessage.slot
+        ? getSuggestSlotType(slotTypeToSuggest)
+        : undefined
+      if (!expectingSlot || this.props.isTyping) {
         this.props
-          .dispatch(Actions.AutoSuggest.executeFuzzyAutoSuggest(text))
+          .dispatch(Actions.AutoSuggest.executeFuzzyAutoSuggest(text, slotType))
           .then(values => {
-            if (values === null) return
+            if (!values || values === null) return
             if (!values.length) {
               if (!partialWord) return this.closeSuggestion()
               /**
@@ -233,6 +242,8 @@ class Input extends React.Component {
           const tokenIndex = startToken + term.length
           this.updateCursor(tokenIndex)
         }
+        /* Grow the input */
+        this.Input.autoGrow()
       }
     )
   }
@@ -360,7 +371,8 @@ class Input extends React.Component {
       nextState.suggestedTerm !== this.state.suggestedTerm ||
       nextState.suggestedIndex !== this.state.suggestedIndex ||
       nextState.suggestions !== this.state.suggestions ||
-      nextProps.theme !== this.props.theme
+      nextProps.theme !== this.props.theme ||
+      nextProps.cart !== this.props.cart
     )
   }
   handleFocus = () => this.setState({ isFocused: true })
@@ -403,6 +415,9 @@ class Input extends React.Component {
             onSubmit={this.props.onSubmit}
             updateQueryTerm={this.props.updateQueryTerm}
             theme={theme}
+            enableCart={this.props.enableCart}
+            toggleSidebar={this.props.toggleSidebar}
+            cart={this.props.cart}
           />
           <div className='olachat-input'>
             <Textarea
@@ -447,11 +462,9 @@ class Input extends React.Component {
             }
             .olachat-submit :global(.ola-icon) {
               fill: ${theme.primaryColor};
-              color: white;
             }
             .olachat-submit:disabled :global(.ola-icon) {
-              fill: white;
-              color: #888;
+              fill: #888;
             }
             .olachat-submit :global(.ola-icon circle) {
               stroke: ${theme.primaryColor};
@@ -463,9 +476,6 @@ class Input extends React.Component {
             .olachat-footer :global(.ola-link-geo:hover) {
               background: none;
               color: red;
-            }
-            .olachat-input-textarea {
-              line-height: 1.2;
             }
           `}
         </style>

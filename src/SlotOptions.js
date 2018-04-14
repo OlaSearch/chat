@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import { updateBotQueryTerm } from './actions'
 import TransitionGroup from 'react-transition-group/TransitionGroup'
 import CSSTransition from 'react-transition-group/CSSTransition'
-import { DISAMBIGUATION_INTENT_NAME } from './Settings'
+import { DISAMBIGUATION_INTENT_NAME, SLOT_STYLE_LIST } from './Settings'
+import SlotMultiple from './SlotMultiple'
+import cx from 'classnames'
 
 /**
  * Slot options
@@ -28,8 +30,22 @@ class SlotOptions extends Component {
     this.props.onSubmit(args)
   }
   render () {
-    let { options, isActive } = this.props
+    const { slot, isActive } = this.props
+    const { options, multiple, style } = slot
     if (!options || !options.length) return null
+    if (multiple) {
+      return (
+        <CSSTransition timeout={300} classNames='slots'>
+          <SlotMultiple
+            slot={slot}
+            isActive={isActive}
+            onSubmit={this.props.onSubmit}
+            intent={this.props.intent}
+            updateQueryTerm={this.props.updateQueryTerm}
+          />
+        </CSSTransition>
+      )
+    }
     let replies = options.map(({ label, value, intent }, idx) => (
       <CSSTransition
         key={idx}
@@ -46,8 +62,12 @@ class SlotOptions extends Component {
       </CSSTransition>
     ))
 
+    const classes = cx('olachat-slots', {
+      'olachat-slots-style-list': style === SLOT_STYLE_LIST
+    })
+
     return (
-      <div className='olachat-slots'>
+      <div className={classes}>
         <TransitionGroup appear className='olachat-slots-list'>
           {replies}
         </TransitionGroup>

@@ -1,5 +1,5 @@
 import types from './../ActionTypes'
-import { checkIfAwaitingResponse } from './../utils'
+import { checkIfAwaitingResponse, createMessageSequence } from './../utils'
 import { utilities, Actions, Settings } from '@olasearch/core'
 import invariant from 'invariant'
 import omit from 'ramda/src/omit'
@@ -96,6 +96,14 @@ export function addMessage (payload) {
       id: msgId,
       userId: context.userId,
       message: query.q,
+      sequence: {
+        message: [
+          {
+            type: 'text',
+            content: query.q
+          }
+        ]
+      },
       label,
       timestamp,
       in_response_to
@@ -131,6 +139,7 @@ export function addMessage (payload) {
     )
 
     return new Promise((resolve, reject) => {
+      const outerResolve = resolve
       /* Simulate delay */
       setTimeout(() => {
         return dispatch({
@@ -143,10 +152,14 @@ export function addMessage (payload) {
           context,
           api,
           beforeSuccessCallback: response => {
-            if (!response.results) return response
             return {
               ...response,
-              results: response.results.slice(0, perPage)
+              sequence: createMessageSequence(response),
+              ...(response.results
+                ? {
+                  results: response.results.slice(0, perPage)
+                }
+                : {})
             }
           },
           payload: {
@@ -185,6 +198,8 @@ export function addMessage (payload) {
             dispatch(clearBotQueryTerm())
             /* Ask for more messages */
             dispatch(addMessage(payload))
+
+            return outerResolve(response)
           }
 
           /**
@@ -387,5 +402,56 @@ export function showInvite () {
 export function hideInvite () {
   return {
     type: types.HIDE_INVITE
+  }
+}
+
+export function hideSidebar () {
+  return {
+    type: types.HIDE_SIDEBAR
+  }
+}
+
+export function showSidebar () {
+  return {
+    type: types.SHOW_SIDEBAR
+  }
+}
+
+export function toggleSidebar () {
+  return {
+    type: types.TOGGLE_SIDEBAR
+  }
+}
+
+export function getShoppingCart (intent) {
+  const api = 'search'
+  return (dispatch, getState) => {
+    const state = getState()
+    const context = state.Context
+    return dispatch({
+      types: [
+        types.REQUEST_CART,
+        types.REQUEST_CART_SUCCESS,
+        types.REQUEST_CART_FAILURE
+      ],
+      api,
+      beforeSuccessCallback: response => {
+        return {
+          ...response,
+          isSidebarOpen:
+            state.Conversation.cart === null && response.answer.card
+              ? true
+              : !response.answer.card ? false : state.isSidebarOpen
+        }
+      },
+      context,
+      payload: {
+        bot: true
+      },
+      query: {
+        q: 'Show me summary',
+        intent
+      }
+    })
   }
 }

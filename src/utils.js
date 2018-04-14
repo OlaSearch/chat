@@ -1,5 +1,5 @@
 /* global Element */
-import { EMOJI_LIST } from './Settings'
+import { EMOJI_LIST, SLOT_TEXT } from './Settings'
 import flatten from 'ramda/src/flatten'
 import { utilities } from '@olasearch/core'
 
@@ -143,4 +143,85 @@ export function getFacetSuggestions (response) {
       }))
     )
   )
+}
+
+export function getSuggestSlotType (type) {
+  switch (type) {
+    case SLOT_TEXT:
+    case undefined:
+    case null:
+      return undefined
+
+    default:
+      return type
+  }
+}
+
+export function createMessageSequence (response) {
+  const { answer, results, suggestedTerm, payload } = response
+  if (!answer) return []
+  const { reply, search } = answer
+  const { originalQuery } = payload
+  const isBot = !answer.userId
+  const isSearchActive = isBot && results && results.length
+  const sequence = {
+    message: [],
+    detached: [],
+    outer: []
+  }
+
+  if (answer.reply) {
+    var isMultiple = Array.isArray(answer.reply)
+    if (isMultiple) {
+      for (let i = 0; i < answer.reply.length; i++) {
+        sequence.message.push({
+          type: 'text',
+          content: answer.reply[i]
+        })
+      }
+    } else {
+      sequence.message.push({
+        type: 'text',
+        content: answer.reply
+      })
+    }
+  }
+  if (answer.slot && answer.slot.options) {
+    sequence.message.push({
+      type: 'slot'
+    })
+  }
+
+  if (answer.mc) {
+    sequence.detached.push({
+      type: 'mc'
+    })
+  }
+
+  if (answer.card) {
+    sequence.detached.push({
+      type: 'card'
+    })
+  }
+
+  if (isSearchActive) {
+    /**
+     * Always push a message along with search
+     */
+    if (!sequence.message.length) {
+      sequence.message.push({
+        type: 'text',
+        search: true
+      })
+    }
+    sequence.detached.push({
+      type: 'search'
+    })
+  }
+  if (answer.quick_replies && answer.quick_replies.length) {
+    sequence.outer.push({
+      type: 'quick_replies'
+    })
+  }
+  return sequence
 }

@@ -28,7 +28,7 @@ export default function ReplyText ({ text, isActive }) {
       <CSSTransition
         key={idx}
         timeout={{
-          enter: 300 * idx
+          enter: 400 * idx
         }}
         classNames='message-anim'
         unmountOnExit

@@ -40,7 +40,7 @@ function QuerySuggestionItem ({ queryTerm, item, onChange, isActive }) {
     onChange && onChange(item)
   }
   let pattern =
-    '(^' +
+    '(' +
     queryTerm
       .replace(RE_ESCAPE, '\\$1')
       .split(/\s/)

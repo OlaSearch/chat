@@ -31,6 +31,7 @@ export default function Header ({
         .olachat-header {
           background-color: ${theme.chatHeaderBackground};
           color: ${theme.chatHeaderColor};
+          font-size: ${theme.mediumFontSize};
         }
         .olachat-header .olachat-header-hide:hover {
           background-color: ${darken(theme.chatHeaderBackground, 10)};

@@ -1,0 +1,179 @@
+$radius: 4px;
+$border: #cbd0d1;
+$active: #fdeece;
+$active-border: #f7ad0e;
+
+.olachat-module {
+  box-shadow: $sharp-box-shadow;
+  background: white;
+  border-radius: $radius;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+/**
+ * Module wrapper
+ */
+.olachat-module-wrap {
+  flex: 1;
+  display: flex;
+  margin-top: 16px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+/* Title */
+.olachat-module-title {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  line-height: 1.2;
+  min-height: 52px;
+  background: #e5e7e8;
+  font-size: 18px;
+  text-transform: uppercase;
+  border-radius: $radius $radius 0 0;
+
+}
+
+/* Body */
+.olachat-module-body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.olachat-module-flex {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Empty message */
+.olachat-empty {
+  font-size: 14px;
+  text-align: center;
+  color: #7e898e;
+
+  p {
+    margin: 0 0 12px 0;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/**
+ * Footer
+ */
+.olachat-module-footer {
+  padding: 12px 16px;
+  border-top: 1px $border solid;;
+}
+
+/**
+ * Module items
+ */
+.olachat-module-item {
+  padding: 14px 16px;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  border-top: 4px white solid;
+}
+  /**
+   * IsOpen
+   */
+  .olachat-module-isOpen {
+    .olachat-module-item {
+      background: #FDEECE;
+      border-top: 4px #F7AD0E solid;
+    }
+  }
+
+  /**
+   * Status
+   */
+  .olachat-module-item-subtitle {
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: block;
+    padding-top: 4px;
+  }
+
+  /**
+   * Group
+   */
+  .olachat-module-group {
+    border-bottom: 1px $border solid;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  /**
+   * Field
+   */
+  .olachat-module-field {
+    padding: 8px 16px;
+  }
+
+  /**
+   * Title
+   */
+  .olachat-module-item-title {
+    cursor: pointer;
+  }
+
+  /**
+   * Field label
+   */
+  .olachat-module-field-label {
+    font-size: 14px;
+    display: block; 
+    padding-bottom: 4px;
+    font-weight: 500;
+  }
+
+  /**
+   * Field value
+   */
+  .olachat-module-field-value {
+    padding: 0 0 8px 0;
+    list-style: none;    
+    align-items: flex-start;
+  }
+
+  /**
+   * Multiple field values
+   */
+  .olachat-module-field-values {
+    margin: 0 0 0 8px;
+    padding: 0;
+
+    .olachat-module-field-value {
+      /* Add a bullet */
+      &:before {
+        content: '•';
+        font-size: 30px;
+        line-height: 20px;
+        vertical-align: top;
+        display: inline-block;
+        padding-right: 6px;
+        color: #facd6e;
+      }
+    }
+  }
+
+  /**
+   * Expand button
+   */
+  .olachat-module-expand {
+    margin-right: 8px;
+  }

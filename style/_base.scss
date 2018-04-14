@@ -19,6 +19,15 @@ a {
   text-decoration: underline;
 }
 
-img, iframe {
+img, iframe, .ola-icon, svg {
   vertical-align: top;
+}
+
+/**
+ * Checkbox
+ */
+.olachat-checkbox, .olachat-radio {
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
 }

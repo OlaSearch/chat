@@ -18,6 +18,36 @@
     }
   }
 
+/**
+ * Olachat primary button
+ */
+.olachat-btn-primary {
+  border-radius: 10px;
+  border: 1px $blue solid;
+  line-height: 1.5;
+  color: $blue;
+  background-color: transparent;
+  padding: 6px 14px;
+  margin: 0 0 16px 0;
+  &:hover {
+    color: white;
+    background-color: $blue;
+  }
+}
+
+/**
+ * Plain button
+ */
+.olachat-plain-button {
+  background: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.olachat-icon-button {
+  min-width: 60px;
+}
 
 /* Geo */
 .ola-link-geo {
@@ -50,8 +80,32 @@
 }
 
 /**
- * Dismiss button
+ * Badge
  */
-.ola-btn-dismiss {
-  
+.ola-with-badge {
+  position: relative;
 }
+
+  /**
+   * BAdge
+   */
+  .ola-badge {
+    margin: 0 8px;
+    background: #facd6e;
+    color: black;
+    font-size: 12px;
+    line-height: 1;
+    padding: 2px 4px;
+    border-radius: 4px;
+    position: absolute;
+    top: 4px;
+    right: 0;
+    animation: slideUpFade 0.2s linear;
+  }
+
+    .ola-badge-inline {
+      position: static;
+      left: auto;
+      right: auto;
+      top: auto;
+    }

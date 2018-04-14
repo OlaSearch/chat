@@ -1,7 +1,7 @@
 .olachat-quickreplies {
   font-size: 14px;
   background-color: transparent;
-  animation: 0.3s ease-in-out 0s 1 slideUp;
+  // animation: 0.3s ease-in-out 0s 1 slideUp;
   display: flex;
   overflow-x: auto;
   border-top: none;
@@ -27,13 +27,12 @@
 
 .olachat-quickreplies-button {
   border-radius: 20px;
-  // border: 1px $blue solid;
   border: none;
-  box-shadow: 0px 0px 0px 1px $blue inset;
+  border: 1px $blue solid;
   line-height: 1.5;
   color: $blue;
   background-color: transparent;
-  padding: 7px 14px;
+  padding: 6px 14px;
   margin: 0 3px 0 3px;
   flex: 0 0 auto;
   display: block;

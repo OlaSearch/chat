@@ -220,11 +220,11 @@ class BotFrame extends React.Component {
           head={
             <React.Fragment>
               <link rel='stylesheet' href={this.props.cssUrl} />
-              {css && <style>{css}</style>}
               <meta
                 name='viewport'
                 content='width=device-width, initial-scale=1'
               />
+              {css && <style>{css}</style>}
             </React.Fragment>
           }
           id={OLACHAT_IFRAME_ID}
@@ -250,6 +250,7 @@ class BotFrame extends React.Component {
                   name='viewport'
                   content='width=device-width, initial-scale=1'
                 />
+                {css && <style>{css}</style>}
               </React.Fragment>
             }
             id={OLACHAT_INVITE_IFRAME_ID}

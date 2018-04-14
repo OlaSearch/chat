@@ -2,7 +2,7 @@
  * generic
  */
 .ola-card {
-  padding-top: 8px;
+  // padding-top: 8px;
   font-size: 14px;
 }
   
@@ -114,3 +114,11 @@
     // color: #9B9B9B;
     // text-decoration: none;
   }
+
+
+/**
+ * Remove padding
+ */
+.olachat .ola-swipeable-flow {
+  padding-bottom: 0;
+}

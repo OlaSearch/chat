@@ -13,14 +13,6 @@ $gutter: 15px;
     border-radius: 0 0 5px 5px;
   }
 
-  /* Geo button */
-  .ola-link-geo {
-    // box-shadow: none;
-    // margin: 0;
-    // height: auto;
-    // width: 40px;
-  }
-
   /* All buttons */
   button {
     /* reset line height */
@@ -33,6 +25,7 @@ $gutter: 15px;
    */
   .olachat-footer-inner {
     display: flex;
+    justify-content: center;
   }
 
   /**
@@ -74,6 +67,16 @@ $gutter: 15px;
       &:disabled {
         opacity: 0.2;
       }
+    }
+  }
+
+  /**
+   * Safari bug
+   */
+  @supports (-webkit-overflow-scrolling: touch) { 
+    .olachat-input-textarea{
+      text-indent: -3px;      
+      flex: 1;
     }
   }
 
@@ -134,4 +137,12 @@ $gutter: 15px;
       font-size: 14px;
     }
   }
+}
+
+/**
+ * Footer button
+ */
+.olachat-footer-button {
+  @extend .olachat-plain-button;
+  @extend .olachat-icon-button;
 }

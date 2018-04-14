@@ -13,9 +13,6 @@ import Loader from './Loader'
 import FailureButtons from './FailureButtons'
 import QuickReplies from './QuickReplies'
 import ReplyText from './ReplyText'
-import { createMessageMarkup } from './utils'
-import TransitionGroup from 'react-transition-group/TransitionGroup'
-import CSSTransition from 'react-transition-group/CSSTransition'
 
 /**
  * Chatbot message
@@ -38,9 +35,6 @@ class Message extends React.Component {
   static defaultProps = {
     showTimestamp: false
   }
-  scrollIntoView = node => {
-    this.props.scrollIntoView({ id: this.props.message.id })
-  }
   render () {
     let {
       message,
@@ -55,8 +49,7 @@ class Message extends React.Component {
       translate,
       theme,
       updateQueryTerm,
-      showTimestamp,
-      enableFeedback
+      showTimestamp
     } = this.props
     let {
       userId,
@@ -64,7 +57,7 @@ class Message extends React.Component {
       awaitingUserInput,
       fulfilled,
       card,
-      slot,
+      slot_options: slotOptions,
       results,
       intent,
       mc /* Machine comprehension */,
@@ -77,8 +70,7 @@ class Message extends React.Component {
       error,
       context = {},
       payload,
-      quick_replies: quickReplies,
-      sequence
+      quick_replies: quickReplies
     } = message
     let isBot = !userId
     let text = isBot ? message.reply : message.label || message.message
@@ -103,11 +95,19 @@ class Message extends React.Component {
      *
      */
     let needsLocation = message.location && !context.location
+
+    /**
+     * Do not render SearchResultsMessage unless required. Takes a perf hit
+     */
+    let isSearchActive = false
+
     /**
      * search => only exists if intent engine is ON
      */
     if (isBot) {
       if (results && results.length) {
+        /* Flag to display search results */
+        isSearchActive = true
         text =
           suggestedTerm && suggestedTerm !== originalQuery
             ? translate('chat_could_not_find', { originalQuery, suggestedTerm })
@@ -132,7 +132,6 @@ class Message extends React.Component {
         }
       }
     }
-
     if (needsLocation) {
       return (
         <div className={messageClass}>
@@ -160,164 +159,7 @@ class Message extends React.Component {
         </div>
       )
     }
-
-    const duration = isActive ? 300 : 0
-    const timeout = isActive ? 400 : 0
-    const defaultStyle = {
-      transition: `all ${duration}ms ease-in-out`,
-      opacity: 0,
-      maxHeight: 0,
-      overflow: 'hidden'
-    }
-
-    const transitionStyles = {
-      entering: { opacity: 0, maxHeight: 0, overflow: 'hidden' },
-      exited: { opacity: 0, maxHeight: 0, overflow: 'hidden' },
-      entered: { opacity: 1, maxHeight: 'none', overflow: 'visible' }
-    }
-    const messageComponents = sequence.message.map(
-      ({ type, content, search }, idx) => {
-        return (
-          <CSSTransition
-            key={idx}
-            timeout={idx * timeout}
-            classNames='message-animation'
-            onEntered={this.scrollIntoView}
-            mountOnEnter
-            unmountOnExit
-          >
-            {state => {
-              return (
-                <div
-                  style={{
-                    ...defaultStyle,
-                    ...transitionStyles[state]
-                  }}
-                >
-                  {type === 'text' ? (
-                    search ? (
-                      <div
-                        className='olachat-message-reply'
-                        dangerouslySetInnerHTML={createMessageMarkup(text)}
-                      />
-                    ) : (
-                      <div
-                        className='olachat-message-reply'
-                        dangerouslySetInnerHTML={createMessageMarkup(content)}
-                      />
-                    )
-                  ) : null}
-                  {type === 'slot' ? (
-                    <SlotOptions
-                      onSubmit={addMessage}
-                      updateQueryTerm={updateQueryTerm}
-                      slot={slot}
-                      isActive={isActive}
-                      intent={intent}
-                      log={log}
-                    />
-                  ) : null}
-                </div>
-              )
-            }}
-          </CSSTransition>
-        )
-      }
-    )
-    const detachedComponents =
-      sequence.detached &&
-      sequence.detached.map(({ type }, idx) => {
-        return (
-          <CSSTransition
-            key={idx}
-            timeout={(messageComponents.length + idx) * timeout}
-            classNames='message-animation'
-            mountOnEnter
-            unmountOnExit
-            onEntered={type === 'search' ? this.scrollIntoView : null}
-          >
-            {state => {
-              return (
-                <div
-                  style={{
-                    ...defaultStyle,
-                    ...transitionStyles[state]
-                  }}
-                >
-                  {type === 'mc' ? (
-                    <AnswerMC
-                      mc={mc}
-                      payload={{ messageId: message.id, bot: true }}
-                      loader={isActive ? <Loader theme={theme} /> : null}
-                      showWhileFiltering
-                    />
-                  ) : null}
-                  {type === 'card' ? (
-                    <Card
-                      card={card}
-                      results={results}
-                      location={location}
-                      onSelect={addMessage}
-                    />
-                  ) : null}
-                  {type === 'search' ? (
-                    <SearchResultsMessage
-                      results={results}
-                      botName={botName}
-                      message={message}
-                      isActive={isActive}
-                      page={page}
-                      totalResults={totalResults}
-                    />
-                  ) : null}
-                </div>
-              )
-            }}
-          </CSSTransition>
-        )
-      })
-
-    const outerComponents =
-      isActive &&
-      sequence.outer &&
-      sequence.outer.map(({ type }, idx) => {
-        return (
-          <CSSTransition
-            key={idx}
-            timeout={{
-              enter:
-                (messageComponents.length + detachedComponents.length + idx) *
-                timeout,
-              exit: 0
-            }}
-            classNames='message-animation'
-            onEntered={this.scrollIntoView}
-            mountOnEnter
-            unmountOnExit
-          >
-            {state => {
-              return (
-                <div
-                  style={{
-                    ...defaultStyle,
-                    ...transitionStyles[state]
-                  }}
-                >
-                  {type === 'quick_replies' && isActive ? (
-                    <QuickReplies
-                      onSubmit={addMessage}
-                      updateQueryTerm={updateQueryTerm}
-                      theme={theme}
-                      quickReplies={quickReplies}
-                    />
-                  ) : null}
-                </div>
-              )
-            }}
-          </CSSTransition>
-        )
-      })
-
+    // text = ['Hello', "Welcome! Wondering what's required to bring in your medications into Singapore? We're here to help.", 'How are you']
     return (
       <div className={messageClass}>
         {/* Message flex */}
@@ -335,12 +177,23 @@ class Message extends React.Component {
               {isBot ? botName : userName}
             </div>
             <div className='olachat-message-content'>
-              <TransitionGroup appear>{messageComponents}</TransitionGroup>
+              <ReplyText text={text} isActive={isActive} />
             </div>
             {showTimestamp ? (
               <div className='olachat-message-date'>
                 {DateParser.format(timestamp * 1000, 'DD MMM h:mm a')}
               </div>
+            ) : null}
+            {isBot ? (
+              <SlotOptions
+                onSubmit={addMessage}
+                updateQueryTerm={updateQueryTerm}
+                options={slotOptions}
+                isActive={isActive}
+                intent={intent}
+                message={message}
+                log={log}
+              />
             ) : null}
 
             {error ? (
@@ -354,9 +207,30 @@ class Message extends React.Component {
         </div>
         {/* / Message flex */}
         <div className='olachat-message-detach'>
-          <TransitionGroup appear>{detachedComponents}</TransitionGroup>
+          <AnswerMC
+            mc={mc}
+            payload={{ messageId: message.id, bot: true }}
+            loader={isActive ? <Loader theme={theme} /> : null}
+            showWhileFiltering
+          />
+          <Card
+            card={card}
+            results={results}
+            location={location}
+            onSelect={addMessage}
+          />
+          {isSearchActive ? (
+            <SearchResultsMessage
+              results={results}
+              botName={botName}
+              message={message}
+              isActive={isActive}
+              page={page}
+              totalResults={totalResults}
+            />
+          ) : null}
         </div>
-        {isBot && enableFeedback ? (
+        {isBot ? (
           <MessageFeedback
             isBot={isBot}
             message={message}
@@ -365,7 +239,14 @@ class Message extends React.Component {
             updateQueryTerm={updateQueryTerm}
           />
         ) : null}
-        <TransitionGroup appear>{outerComponents}</TransitionGroup>
+        {isActive ? (
+          <QuickReplies
+            onSubmit={addMessage}
+            updateQueryTerm={updateQueryTerm}
+            theme={theme}
+            quickReplies={quickReplies}
+          />
+        ) : null}
       </div>
     )
   }

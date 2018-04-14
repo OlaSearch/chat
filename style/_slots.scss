@@ -11,12 +11,9 @@
   border: 1px $light-grey-color solid;    
   font-size: 14px;
   line-height: 1.5;
-  white-space: nowrap;
   display: block;  
-
-
   border-radius: 20px;
-  padding: 7px 14px;
+  padding: 6px 14px;
   margin: 0.5rem 0.5rem 1px 0;
   color: $base-color;
   font-weight: 600;
@@ -31,6 +28,10 @@
     padding: 10px 14px;
     border-radius: 0;
     white-space: normal;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
 
@@ -85,7 +86,33 @@
     justify-content: flex-end;
   }
 
+  .olachat-bot-mobile &, .olachat-bot-tablet & {
+    flex-direction: column;
+  }
+
   .olachat-message-bot & {
     justify-content: flex-start;
   }
 }
+
+
+
+/**
+ * Multiple slots
+ */
+.olachat-slots-multiple {
+  border: 1px #ccc solid;
+  border-radius: 20px;
+  margin-bottom: 16px;  
+}
+
+  .olachat-slots-multiple-item {
+    padding: 14px 16px;
+    border-bottom: 1px #ccc solid;
+    align-items: flex-start;
+    cursor: pointer;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }  

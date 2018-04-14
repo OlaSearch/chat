@@ -214,13 +214,14 @@ export default class Messages extends React.Component {
   /**
    * Scroll in to view. Pass the message ID
    */
-  scrollIntoView = ({ id, position = 'start' }) => {
-    const doc = this.context.document || document
-    const domId = id
-    const domNode = doc.getElementById(domId)
-    if (!domNode) return
+  scrollIntoView = ({ id, position = 'start', force, ...rest }) => {
+    if (id !== this.props.newMessageId && !force) return
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
+        const doc = this.context.document || document
+        const domId = id
+        const domNode = doc.getElementById(domId)
+        if (!domNode) return
         /* Fixes a bug in Mobile devices where keyboard loses focus */
         scrollIntoView(domNode, this.messagesEl, {
           onlyScrollIfNeeded: true,
@@ -267,7 +268,8 @@ export default class Messages extends React.Component {
                         avatarUser={this.props.avatarUser}
                         message={message}
                         addMessage={this.props.addMessage}
-                        isActive={idx === messages.length - 1}
+                        // isActive={idx === messages.length - 1}
+                        isActive={message.id === this.props.newMessageId}
                         botName={this.props.botName}
                         userName={this.props.userName}
                         log={this.props.log}
@@ -275,6 +277,8 @@ export default class Messages extends React.Component {
                         isMounted={this.isComponentMounted}
                         updateQueryTerm={this.props.updateQueryTerm}
                         theme={theme}
+                        scrollIntoView={this.scrollIntoView}
+                        enableFeedback={this.props.enableFeedback}
                       />
                     )}
                   </div>
@@ -320,10 +324,21 @@ export default class Messages extends React.Component {
             .olachat-messages :global(.olachat-slots-button:disabled:hover) {
               color: ${theme.chatBotSlotButtonColor};
               background-color: ${theme.chatBotSlotButtonBackground};
-              border-color: ${theme.chatBotSlotButtonColor};
+              border-color: ${theme.chatUserMessageBackground};
               line-height: 1.5;
             }
             .olachat-messages :global(.olachat-slots-button:hover) {
+              background-color: ${theme.chatBotSlotButtonColor};
+              color: ${theme.chatBotSlotButtonBackground};
+            }
+
+            /* Button */
+            .olachat-messages :global(.olachat-btn-primary) {
+              line-height: 1.5;
+              border-color: ${theme.chatBotSlotButtonColor};
+              color: ${theme.chatBotSlotButtonColor};
+            }
+            .olachat-messages :global(.olachat-btn-primary:hover) {
               background-color: ${theme.chatBotSlotButtonColor};
               color: ${theme.chatBotSlotButtonBackground};
             }
@@ -351,7 +366,6 @@ export default class Messages extends React.Component {
             }
             /* Quick replies */
             .olachat-messages :global(.olachat-quickreplies-button) {
-              box-shadow: inset 0 0 0 1px ${theme.chatQuickReplyColor};
               color: ${theme.chatQuickReplyColor};
               border-color: ${theme.chatQuickReplyColor};
               line-height: 1.5;
@@ -359,6 +373,17 @@ export default class Messages extends React.Component {
             .olachat-messages :global(.olachat-quickreplies-button:hover) {
               background: ${theme.chatQuickReplyHoverBackground};
               color: ${theme.chatQuickReplyHoverColor};
+            }
+
+            /* Carousel buttons */
+            .olachat-messages :global(.ola-swipeable-prev),
+            .olachat-messages :global(.ola-swipeable-next) {
+              color: ${theme.primaryColor};
+            }
+            .olachat-messages :global(.ola-swipeable-prev:hover),
+            .olachat-messages :global(.ola-swipeable-next:hover) {
+              color: ${theme.primaryButtonColor};
+              background-color: ${theme.primaryButtonBackground};
             }
           `}
         </style>

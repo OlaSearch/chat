@@ -114,6 +114,7 @@ class Bot extends Component {
   }
   render () {
     const passProps = {
+      onNewMesage: this.props.onNewMesage,
       onHide: this.toggleActive,
       startOver: this.props.startOver,
       headerProps: this.props.headerProps,
@@ -149,7 +150,6 @@ class Bot extends Component {
     })
     return (
       <div className={botClass} style={{ opacity: 0 }}>
-        <div className='olachat-bot-overlay' />
         {isBotActive ? null : showBubble ? (
           <Bubble
             onClick={this.toggleActive}
