@@ -92,7 +92,8 @@ class Bot extends Component {
     avatarProps: {
       avatarBot: null,
       avatarUser: null
-    }
+    },
+    onMessage: null
   }
   componentDidMount () {
     /* Send load log for new user */
@@ -114,7 +115,7 @@ class Bot extends Component {
   }
   render () {
     const passProps = {
-      onNewMesage: this.props.onNewMesage,
+      onMessage: this.props.onMessage,
       onHide: this.toggleActive,
       startOver: this.props.startOver,
       headerProps: this.props.headerProps,

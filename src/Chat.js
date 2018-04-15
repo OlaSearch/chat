@@ -46,8 +46,9 @@ class Chat extends React.Component {
   }
   addMessage = args => {
     /* Add message */
-    return this.props.addMessage(args).then(response => {
-      this.props.onNewMesage && this.props.onNewMesage(response)
+    return this.props.addMessage({
+      ...args,
+      callback: this.props.onMessage
     })
   }
   registerRef = el => {

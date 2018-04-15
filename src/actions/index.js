@@ -127,6 +127,9 @@ export function addMessage (payload) {
           type: types.REQUEST_ADD_MESSAGE,
           message
         })
+
+        /* Add a callback */
+        if (payload && payload.callback) payload.callback(message)
       }
     }
 
@@ -139,7 +142,6 @@ export function addMessage (payload) {
     )
 
     return new Promise((resolve, reject) => {
-      const outerResolve = resolve
       /* Simulate delay */
       setTimeout(() => {
         return dispatch({
@@ -198,9 +200,10 @@ export function addMessage (payload) {
             dispatch(clearBotQueryTerm())
             /* Ask for more messages */
             dispatch(addMessage(payload))
-
-            return outerResolve(response)
           }
+
+          /* Add a callback */
+          if (payload && payload.callback) payload.callback(response)
 
           /**
            * Log views. When user views a
