@@ -125,7 +125,7 @@ function ShoppingCart ({
   config
 }) {
   if (!cart) return null
-  const { cartConfig } = config
+  const { cartConfig = {} } = config
   const {
     checkoutLinkComponent: Checkout,
     emptyTitle,

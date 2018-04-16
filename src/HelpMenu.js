@@ -63,7 +63,7 @@ class HelpMenu extends React.Component {
       'olachat-helpmenu-open': this.props.isCollapsed
     })
     const { translate, config, cart } = this.props
-    const { botLinks = [], chatBotPrint = true, cartConfig } = config
+    const { botLinks = [], chatBotPrint = true, cartConfig = {} } = config
     const cartCount = cart && cart.elements ? cart.elements.length : null
     return (
       <div className={klass}>
