@@ -92,6 +92,7 @@ class Chat extends React.Component {
               newMessageId={this.props.newMessageId}
               theme={theme}
               enableFeedback={chatBotFeedback}
+              chatBotMessageTimeout={this.props.config.chatBotMessageTimeout}
             />
             <Input
               onSubmit={this.addMessage}

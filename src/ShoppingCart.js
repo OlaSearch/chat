@@ -1,5 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
+import { Decorators } from '@olasearch/core'
 import ClipBoard from '@olasearch/icons/lib/clipboard'
 import Trash from '@olasearch/icons/lib/trash-2'
 import Close from '@olasearch/icons/lib/x'
@@ -9,13 +10,23 @@ import Transition from 'react-transition-group/Transition'
 import { connect } from 'react-redux'
 import Button from './Button'
 
-function EmptyCart () {
+function EmptyCart ({ icon, title, subtitle }) {
   return (
     <div className='olachat-empty'>
-      <p>Your list is empty.</p>
-      <p>Use the chatbot to find out your medication requirements.</p>
+      {icon && (
+        <div className='olachat-empty-icon'>
+          <img src={icon} />
+        </div>
+      )}
+      <div className='olachat-empty-title'>{title}</div>
+      <div className='olachat-empty-subtitle'>{subtitle}</div>
     </div>
   )
+}
+EmptyCart.defaultProps = {
+  title: 'Your list is empty.',
+  icon: null,
+  subtitle: 'Use the chatbot to buy items.'
 }
 
 function CardField ({ label, value }) {
@@ -110,10 +121,18 @@ function ShoppingCart ({
   theme,
   onClose,
   showClose,
-  addMessage
+  addMessage,
+  config
 }) {
   if (!cart) return null
-  const { title, elements } = cart
+  const { cartConfig } = config
+  const {
+    checkoutLinkComponent: Checkout,
+    emptyTitle,
+    emptySubtitle,
+    emptyIcon
+  } = cartConfig
+  const { title, elements = [] } = cart
   const len = elements.length
   return (
     <div className='olachat-module-wrap'>
@@ -155,14 +174,18 @@ function ShoppingCart ({
                     />
                   ))
                 ) : (
-                  <EmptyCart />
+                  <EmptyCart
+                    title={emptyTitle}
+                    icon={emptyIcon}
+                    subtitle={emptySubtitle}
+                  />
                 )}
               </div>
-              <div className='olachat-module-footer'>
-                <a className='ola-link' href='#'>
-                  Download summary
-                </a>
-              </div>
+              {elements.length ? (
+                <div className='olachat-module-footer'>
+                  <Checkout />
+                </div>
+              ) : null}
             </div>
           </div>
         )}
@@ -188,4 +211,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)(ShoppingCart)
+export default connect(mapStateToProps)(Decorators.withConfig(ShoppingCart))

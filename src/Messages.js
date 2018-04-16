@@ -268,8 +268,8 @@ export default class Messages extends React.Component {
                         avatarUser={this.props.avatarUser}
                         message={message}
                         addMessage={this.props.addMessage}
-                        // isActive={idx === messages.length - 1}
-                        isActive={message.id === this.props.newMessageId}
+                        isActive={idx === messages.length - 1}
+                        // isActive={message.id === this.props.newMessageId}
                         botName={this.props.botName}
                         userName={this.props.userName}
                         log={this.props.log}
@@ -279,6 +279,7 @@ export default class Messages extends React.Component {
                         theme={theme}
                         scrollIntoView={this.scrollIntoView}
                         enableFeedback={this.props.enableFeedback}
+                        chatBotMessageTimeout={this.props.chatBotMessageTimeout}
                       />
                     )}
                   </div>
@@ -341,6 +342,10 @@ export default class Messages extends React.Component {
             .olachat-messages :global(.olachat-btn-primary:hover) {
               background-color: ${theme.chatBotSlotButtonColor};
               color: ${theme.chatBotSlotButtonBackground};
+            }
+            .olachat-messages :global(.olachat-btn-primary:disabled:hover) {
+              background: transparent;
+              color: ${theme.chatBotSlotButtonColor};
             }
 
             /* Request geo location button */

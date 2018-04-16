@@ -46,7 +46,8 @@ class Input extends React.Component {
     this.closeSuggestion()
   }
   onChange = event => {
-    let text = event && event.target ? event.target.value : event
+    const text = event && event.target ? event.target.value : event
+    const { filterInAutoComplete } = this.props.config
     /* Get cursor position */
     const {
       word: partialWord,
@@ -83,6 +84,7 @@ class Input extends React.Component {
               /**
                * Get facet suggestions
                */
+              if (!filterInAutoComplete) return this.closeSuggestion()
 
               this.props
                 .dispatch(

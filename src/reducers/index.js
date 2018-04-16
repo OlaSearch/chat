@@ -38,7 +38,9 @@ const initialState = {
   },
 
   /* Cart */
-  cart: null
+  cart: {
+    title: 'Your medications'
+  }
 }
 
 export default (state = initialState, action) => {

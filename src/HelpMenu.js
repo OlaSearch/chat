@@ -63,7 +63,7 @@ class HelpMenu extends React.Component {
       'olachat-helpmenu-open': this.props.isCollapsed
     })
     const { translate, config, cart } = this.props
-    const { botLinks = [], chatBotPrint = true } = config
+    const { botLinks = [], chatBotPrint = true, cartConfig } = config
     const cartCount = cart && cart.elements ? cart.elements.length : null
     return (
       <div className={klass}>
@@ -92,7 +92,7 @@ class HelpMenu extends React.Component {
                 </a>
               )
             })}
-            {cartCount && this.props.enableCart ? (
+            {this.props.enableCart ? (
               <a
                 onClick={() => {
                   this.props.toggleSidebar()
@@ -100,9 +100,8 @@ class HelpMenu extends React.Component {
                 }}
                 className='olachat-menu-link'
                 tabIndex={0}
-                href='#'
               >
-                Your medication summary <Badge inline count={cartCount} />
+                {cartConfig.menuLinkText} <Badge inline count={cartCount} />
               </a>
             ) : null}
             {chatBotPrint ? (
@@ -110,7 +109,6 @@ class HelpMenu extends React.Component {
                 onClick={this.handlePrint}
                 className='olachat-menu-link'
                 tabIndex={0}
-                href='#'
               >
                 <Print /> {translate('chat_print')}
               </a>

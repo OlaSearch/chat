@@ -32,14 +32,15 @@ class SlotMultiple extends React.Component {
       .map(({ label }) => label)
       .join(', ')
     this.props.updateQueryTerm(messageLabel)
-    this.props.onSubmit({
-      slots
-    })
+    this.props.onSubmit({ slots })
   }
   render () {
     const { slot, isActive } = this.props
     const { selected } = this.state
     const { options } = slot
+    const buttonClass = cx('olachat-btn-primary', {
+      'ola-visibility-hidden': !selected.length
+    })
     return (
       <div className='olachat-slots-multiple-group'>
         <div className='olachat-slots-multiple'>
@@ -65,11 +66,12 @@ class SlotMultiple extends React.Component {
             )
           })}
         </div>
-        {selected.length && isActive ? (
+        {isActive ? (
           <button
-            className='olachat-btn-primary'
+            className={buttonClass}
             type='button'
             onClick={this.handleSubmit}
+            disabled={!selected.length}
           >
             Next
           </button>

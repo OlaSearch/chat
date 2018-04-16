@@ -4,19 +4,6 @@ import ShoppingCart from './ShoppingCart'
 import Overlay from './Overlay'
 import Transition from 'react-transition-group/Transition'
 
-const items = [
-  {
-    title: 'Codeine phosphate',
-    status: 'Approval required',
-    attributes: [
-      {
-        title: 'Active ingredients',
-        items: ['Codeine phosphate']
-      }
-    ]
-  }
-]
-
 const duration = 200
 const desktopStyles = {
   width: 0

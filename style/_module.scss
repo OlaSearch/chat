@@ -57,15 +57,18 @@ $active-border: #f7ad0e;
   font-size: 14px;
   text-align: center;
   color: #7e898e;
-
-  p {
-    margin: 0 0 12px 0;
-  }
-
-  p:last-child {
-    margin-bottom: 0;
-  }
+  padding: 16px;
 }
+  /**
+   * Empty title
+   */
+  .olachat-empty-title {
+    padding-bottom: 8px;
+  }
+
+  .olachat-empty-icon {
+    padding: 16px 0;
+  }
 
 /**
  * Footer

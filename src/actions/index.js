@@ -439,12 +439,16 @@ export function getShoppingCart (intent) {
       ],
       api,
       beforeSuccessCallback: response => {
+        /**
+         * Only show sidebar if there is a new item in cart
+         */
         return {
           ...response,
-          isSidebarOpen:
-            state.Conversation.cart === null && response.answer.card
+          isSidebarOpen: state.Device.isDesktop
+            ? state.Conversation.cart !== response.answer.card
               ? true
-              : !response.answer.card ? false : state.isSidebarOpen
+              : state.Conversation.isSidebarOpen
+            : false
         }
       },
       context,

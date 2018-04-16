@@ -35,7 +35,8 @@ class Message extends React.Component {
     this.props.onUpdate && this.props.onUpdate()
   }
   static defaultProps = {
-    showTimestamp: false
+    showTimestamp: false,
+    chatBotMessageTimeout: 400
   }
   scrollIntoView = node => {
     this.props.scrollIntoView({ id: this.props.message.id })
@@ -55,7 +56,8 @@ class Message extends React.Component {
       theme,
       updateQueryTerm,
       showTimestamp,
-      enableFeedback
+      enableFeedback,
+      chatBotMessageTimeout
     } = this.props
     let {
       userId,
@@ -161,7 +163,7 @@ class Message extends React.Component {
     }
 
     const duration = isActive ? 300 : 0
-    const timeout = isActive ? 400 : 0
+    const timeout = isActive ? chatBotMessageTimeout : 0
     const defaultStyle = {
       transition: `all ${duration}ms ease-in-out`,
       opacity: 0,
@@ -174,12 +176,19 @@ class Message extends React.Component {
       exited: { opacity: 0, maxHeight: 0, overflow: 'hidden' },
       entered: { opacity: 1, maxHeight: 'none', overflow: 'visible' }
     }
+    const messageLen = sequence.message.filter(({ type }) => type === 'text')
+      .length
     const messageComponents = sequence.message.map(
       ({ type, content, search }, idx) => {
+        /**
+         * Make sure messages and slots appear together
+         * @type {Boolean}
+         */
+        const isSlot = type === 'slot'
         return (
           <CSSTransition
             key={idx}
-            timeout={idx * timeout}
+            timeout={isSlot ? (idx - 1) * timeout : idx * timeout}
             classNames='message-animation'
             onEntered={this.scrollIntoView}
             mountOnEnter
@@ -206,7 +215,7 @@ class Message extends React.Component {
                       />
                     )
                   ) : null}
-                  {type === 'slot' ? (
+                  {isSlot ? (
                     <SlotOptions
                       onSubmit={addMessage}
                       updateQueryTerm={updateQueryTerm}
