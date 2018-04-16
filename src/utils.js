@@ -158,7 +158,7 @@ export function getSuggestSlotType (type) {
 }
 
 export function createMessageSequence (response) {
-  const { answer, results, suggestedTerm, payload } = response
+  const { answer, results, suggestedTerm, payload, mc } = response
   if (!answer) return []
   const { reply, search } = answer
   const { originalQuery } = payload
@@ -192,7 +192,7 @@ export function createMessageSequence (response) {
     })
   }
 
-  if (answer.mc) {
+  if (mc) {
     sequence.detached.push({
       type: 'mc'
     })

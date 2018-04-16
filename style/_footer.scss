@@ -46,17 +46,10 @@ $gutter: 15px;
       border: none;
       // padding: $gutter $gutter $gutter 0;
       // padding: 17px 16px 17px 0;
-      font-size: 16px;
       min-height: 50px;
       line-height: 1;
       padding: 16px 16px 16px 0;
       vertical-align: top;
-
-      .olachat-bot-desktop & {
-        font-size: 14px;
-        // padding: 18px 16px 18px 0; /* Check this ??? */
-      }
-      // margin-right: $gutter;
       max-height: 100px;
       resize: none;
 
@@ -68,6 +61,10 @@ $gutter: 15px;
         opacity: 0.2;
       }
     }
+  }
+
+  .olachat-bot-desktop .olachat-input-textarea {
+    font-size: 14px;
   }
 
   /**

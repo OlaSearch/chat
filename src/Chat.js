@@ -48,6 +48,7 @@ class Chat extends React.Component {
     /* Add message */
     return this.props.addMessage({
       ...args,
+      chatBotMessageTimeout: this.props.config.chatBotMessageTimeout,
       callback: this.props.onMessage
     })
   }
@@ -150,8 +151,12 @@ class Chat extends React.Component {
             .olachat :global(button) {
               font-family: ${theme.chatFontFamily};
             }
-            .olachat :global(.olachat-input-textarea),
-            .olachat :global(.olachat-query-suggestion) {
+            :global(.olachat-bot-desktop)
+              .olachat
+              :global(.olachat-input-textarea),
+            :global(.olachat-bot-desktop)
+              .olachat
+              :global(.olachat-query-suggestion) {
               font-size: ${theme.mediumFontSize};
             }
             .olachat :global(.ola-share-links) {

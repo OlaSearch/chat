@@ -199,7 +199,22 @@ export function addMessage (payload) {
             /* Clear previous query */
             dispatch(clearBotQueryTerm())
             /* Ask for more messages */
-            dispatch(addMessage(payload))
+            /**
+             * Add a delay based on no of messages
+             */
+            var delayNextMessage = 0
+            if (
+              payload &&
+              payload.chatBotMessageTimeout &&
+              Array.isArray(response.answer.reply)
+            ) {
+              delayNextMessage =
+                payload.chatBotMessageTimeout *
+                (response.answer.reply.length - 1)
+            }
+            setTimeout(() => {
+              dispatch(addMessage(payload))
+            }, delayNextMessage)
           }
 
           /* Add a callback */

@@ -45,6 +45,13 @@ class Input extends React.Component {
     if (!this.state.suggestedTerm && !this.state.suggestions.length) return
     this.closeSuggestion()
   }
+  componentDidUpdate (prevProps) {
+    if (prevProps.messages !== this.props.messages) {
+      const currentMessage = this.props.messages[this.props.messages.length - 1]
+      /* Focus input: Expecting user input */
+      if (currentMessage && currentMessage.slot) { setTimeout(this.Input.el.focus()) }
+    }
+  }
   onChange = event => {
     const text = event && event.target ? event.target.value : event
     const { filterInAutoComplete } = this.props.config

@@ -125,14 +125,12 @@ function ShoppingCart ({
   config
 }) {
   if (!cart) return null
-  const { cartConfig = {} } = config
   const {
-    checkoutLinkComponent: Checkout,
-    emptyTitle,
-    emptySubtitle,
-    emptyIcon
-  } = cartConfig
-  const { title, elements = [] } = cart
+    chatbotCartEmptyTitle,
+    chatbotCartEmptySubtitle,
+    chatbotCartEmptyIcon
+  } = config
+  const { title, elements = [], buttons = [] } = cart
   const len = elements.length
   return (
     <div className='olachat-module-wrap'>
@@ -175,17 +173,17 @@ function ShoppingCart ({
                   ))
                 ) : (
                   <EmptyCart
-                    title={emptyTitle}
-                    icon={emptyIcon}
-                    subtitle={emptySubtitle}
+                    title={chatbotCartEmptyTitle}
+                    subtitle={chatbotCartEmptySubtitle}
+                    icon={chatbotCartEmptyIcon}
                   />
                 )}
               </div>
-              {elements.length ? (
-                <div className='olachat-module-footer'>
-                  <Checkout />
-                </div>
-              ) : null}
+              <div className='olachat-module-footer'>
+                {buttons.map((button, idx) => (
+                  <Button className='ola-btn ola-link' {...button} key={idx} />
+                ))}
+              </div>
             </div>
           </div>
         )}
