@@ -3,7 +3,6 @@ import cx from 'classnames'
 import { Decorators } from '@olasearch/core'
 import ClipBoard from '@olasearch/icons/lib/clipboard'
 import Trash from '@olasearch/icons/lib/trash-2'
-import Close from '@olasearch/icons/lib/x'
 import Plus from '@olasearch/icons/lib/plus-circle'
 import Minus from '@olasearch/icons/lib/minus-circle'
 import Transition from 'react-transition-group/Transition'
@@ -115,15 +114,7 @@ const transitionStyles = {
   entered: { opacity: 1 }
 }
 
-function ShoppingCart ({
-  cart,
-  isVisible,
-  theme,
-  onClose,
-  showClose,
-  addMessage,
-  config
-}) {
+function ShoppingCart ({ cart, isVisible, theme, addMessage, config }) {
   if (!cart) return null
   const {
     chatbotCartEmptyTitle,
@@ -132,6 +123,7 @@ function ShoppingCart ({
   } = config
   const { title, elements = [], buttons = [] } = cart
   const len = elements.length
+  const isEmptyCart = len === 0
   return (
     <div className='olachat-module-wrap'>
       <Transition
@@ -151,18 +143,16 @@ function ShoppingCart ({
           >
             <div className='olachat-module olachat-module-cart'>
               <div className='olachat-module-title ola-flex'>
-                <div className='ola-flex-icon'>
-                  <ClipBoard />
-                </div>
                 <div className='ola-flex-content'>{title}</div>
-                {showClose ? (
-                  <button className='ola-btn' onClick={onClose}>
-                    <Close />
-                  </button>
-                ) : null}
               </div>
               <div className='olachat-module-body'>
-                {elements.length ? (
+                {isEmptyCart ? (
+                  <EmptyCart
+                    title={chatbotCartEmptyTitle}
+                    subtitle={chatbotCartEmptySubtitle}
+                    icon={chatbotCartEmptyIcon}
+                  />
+                ) : (
                   elements.map((element, idx) => (
                     <CardItem
                       onDelete={addMessage}
@@ -171,19 +161,19 @@ function ShoppingCart ({
                       {...element}
                     />
                   ))
-                ) : (
-                  <EmptyCart
-                    title={chatbotCartEmptyTitle}
-                    subtitle={chatbotCartEmptySubtitle}
-                    icon={chatbotCartEmptyIcon}
-                  />
                 )}
               </div>
-              <div className='olachat-module-footer'>
-                {buttons.map((button, idx) => (
-                  <Button className='ola-btn ola-link' {...button} key={idx} />
-                ))}
-              </div>
+              {isEmptyCart ? null : (
+                <div className='olachat-module-footer'>
+                  {buttons.map((button, idx) => (
+                    <Button
+                      className='ola-btn ola-link'
+                      {...button}
+                      key={idx}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}

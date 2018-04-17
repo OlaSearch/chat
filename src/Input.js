@@ -13,7 +13,7 @@ import Menu from '@olasearch/icons/lib/menu'
 import SidebarIcon from '@olasearch/icons/lib/sidebar'
 import { GeoLocation } from '@olasearch/core'
 import { ThemeConsumer } from '@olasearch/core'
-import { getFacetSuggestions, getSuggestSlotType } from './utils'
+import { getFacetSuggestions, getSuggestSlotType, createSlot } from './utils'
 
 const supportsVoice =
   (navigator.getUserMedia ||
@@ -49,7 +49,9 @@ class Input extends React.Component {
     if (prevProps.messages !== this.props.messages) {
       const currentMessage = this.props.messages[this.props.messages.length - 1]
       /* Focus input: Expecting user input */
-      if (currentMessage && currentMessage.slot) { setTimeout(this.Input.el.focus()) }
+      if (currentMessage && currentMessage.slot) {
+        setTimeout(this.Input.el.focus())
+      }
     }
   }
   onChange = event => {
@@ -117,7 +119,7 @@ class Input extends React.Component {
                 })
             } else {
               this.setState({
-                suggestions: values.map(item => ({ term: item.term })),
+                suggestions: values, // values.map(item => ({ term: item.term, payload })),
                 suggestedTerm: null,
                 suggestedIndex: null
               })
@@ -167,7 +169,7 @@ class Input extends React.Component {
       : term
     return selection
   }
-  onFormSubmit = event => {
+  onFormSubmit = (event, payload) => {
     /* Stop form submission */
     event && event.preventDefault()
     /* Check if suggestedTerm is active */
@@ -189,13 +191,14 @@ class Input extends React.Component {
       return this.Input.el.focus()
     }
 
-    setTimeout(this.onSubmit, 0)
+    setTimeout(() => this.onSubmit(null, null, null, undefined, payload), 0)
   }
   onSubmit = (
     event,
     callback,
     textClearingDelay = 0,
-    searchInput = Settings.SEARCH_INPUTS.KEYBOARD
+    searchInput = Settings.SEARCH_INPUTS.KEYBOARD,
+    payload
   ) => {
     /* Update query term */
     this.props.updateQueryTerm(this.state.text, searchInput)
@@ -224,7 +227,7 @@ class Input extends React.Component {
     }, textClearingDelay)
 
     /* Submit the message */
-    return this.props.onSubmit().then(response => {
+    return this.props.onSubmit(payload).then(response => {
       /* Callbacks */
       callback && typeof callback === 'function' && callback(response)
     })
@@ -336,11 +339,32 @@ class Input extends React.Component {
    */
   onSuggestionChange = item => {
     const { startToken, endToken } = this.state
-    const { term, value, name, partial } = item
+    const { term, value, name, partial, payload } = item
     const { text } = this.state
+    var args = null
+
+    /**
+     * If the current message requires slots
+     */
+    const currentMessage = this.props.messages[this.props.messages.length - 1]
+    if (currentMessage && currentMessage.slot) {
+      const jsonPayload = payload ? JSON.parse(payload) : {}
+      args = {
+        slots: [
+          createSlot({
+            id: jsonPayload.id,
+            type: jsonPayload.label,
+            value: jsonPayload.suggestion_raw,
+            name: currentMessage.slot ? currentMessage.slot.name : null
+          })
+        ]
+      }
+    }
+
     const selection = partial
       ? text.substr(0, startToken) + term + text.substr(endToken)
       : term
+
     const cursorPosition = selection.length
 
     if (partial) {
@@ -365,7 +389,7 @@ class Input extends React.Component {
            */
           this.Input.el.focus()
         } else {
-          this.onFormSubmit()
+          this.onFormSubmit(null, args)
         }
       }
     )

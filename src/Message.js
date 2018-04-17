@@ -242,7 +242,7 @@ class Message extends React.Component {
             classNames='message-animation'
             mountOnEnter
             unmountOnExit
-            onEntered={type === 'search' ? this.scrollIntoView : null}
+            onEntered={this.scrollIntoView}
           >
             {state => {
               return (

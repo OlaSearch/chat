@@ -41,16 +41,32 @@ class Chat extends React.Component {
      * Check for items in shopping cart
      */
     if (this.props.config.chatBotCart) {
-      // this.props.getShoppingCart(this.props.config.chatBotCartIntent)
+      this.props.getShoppingCart({
+        intent: this.props.config.chatBotCartIntent,
+        firstTime: true
+      })
     }
   }
   addMessage = args => {
     /* Add message */
-    return this.props.addMessage({
-      ...args,
-      chatBotMessageTimeout: this.props.config.chatBotMessageTimeout,
-      callback: this.props.onMessage
-    })
+    return (
+      this.props
+        .addMessage({
+          ...args,
+          chatBotMessageTimeout: this.props.config.chatBotMessageTimeout,
+          callback: this.props.onMessage
+        })
+        /**
+         * Get shopping cart if an intent is fulfilled
+         */
+        .then(({ answer }) => {
+          if (answer && answer.intent && answer.fulfilled) {
+            this.props.getShoppingCart({
+              intent: this.props.config.chatBotCartIntent
+            })
+          }
+        })
+    )
   }
   registerRef = el => {
     this.MessageContainer = el

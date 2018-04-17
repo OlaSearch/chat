@@ -1,5 +1,6 @@
 import React from 'react'
 import { Decorators } from '@olasearch/core'
+import Close from '@olasearch/icons/lib/x'
 import ShoppingCart from './ShoppingCart'
 import Overlay from './Overlay'
 import Transition from 'react-transition-group/Transition'
@@ -60,15 +61,22 @@ class Sidebar extends React.Component {
                 ...transitionStyles[state]
               }}
             >
-              <div className='olachat-sidebar-content'>
-                <ShoppingCart
-                  isVisible={isSidebarOpen}
-                  theme={theme}
-                  onClose={toggle}
-                  showClose
-                  addMessage={addMessage}
-                />
-              </div>
+              <React.Fragment>
+                <button
+                  className='ola-btn olachat-sidebar-close'
+                  onClick={toggle}
+                >
+                  <span className='olachat-sidebar-close-text'>Hide</span>
+                  <Close />
+                </button>
+                <div className='olachat-sidebar-content'>
+                  <ShoppingCart
+                    isVisible={isSidebarOpen}
+                    theme={theme}
+                    addMessage={addMessage}
+                  />
+                </div>
+              </React.Fragment>
             </div>
           )}
         </Transition>

@@ -218,10 +218,27 @@ export function createMessageSequence (response) {
       type: 'search'
     })
   }
+
+  if (isBot && !sequence.message.length && !sequence.detached.length) {
+    sequence.message.push({
+      type: 'text',
+      search: true
+    })
+  }
+
   if (answer.quick_replies && answer.quick_replies.length) {
     sequence.outer.push({
       type: 'quick_replies'
     })
   }
   return sequence
+}
+
+export function createSlot ({ id, name, value, type }) {
+  return {
+    entity_id: id,
+    name,
+    type,
+    value
+  }
 }

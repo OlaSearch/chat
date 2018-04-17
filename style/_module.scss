@@ -34,8 +34,11 @@ $active-border: #f7ad0e;
   min-height: 52px;
   background: #e5e7e8;
   font-size: 18px;
-  text-transform: uppercase;
-  border-radius: $radius $radius 0 0;
+  text-transform: uppercase;  
+
+  @include media (desktop) {
+    border-radius: $radius $radius 0 0;
+  }
 
 }
 
@@ -50,6 +53,7 @@ $active-border: #f7ad0e;
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: 0;
 }
 
 /* Empty message */

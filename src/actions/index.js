@@ -91,6 +91,14 @@ export function addMessage (payload) {
     const api = 'search'
     const timestamp = new Date().getTime() / 1000
 
+    /**
+     * Check if original query is filled
+     * Only use if you want to dynamically replace the query
+     */
+    if (payload && typeof payload.query !== 'undefined') {
+      query.q = payload.query
+    }
+
     /* User message */
     const message = {
       id: msgId,
@@ -107,14 +115,6 @@ export function addMessage (payload) {
       label,
       timestamp,
       in_response_to
-    }
-
-    /**
-     * Check if original query is filled
-     * Only use if you want to dynamically replace the query
-     */
-    if (payload && typeof payload.query !== 'undefined') {
-      query.q = payload.query
     }
 
     /* Add this to ui */
@@ -441,7 +441,7 @@ export function toggleSidebar () {
   }
 }
 
-export function getShoppingCart (intent) {
+export function getShoppingCart ({ intent, firstTime }) {
   const api = 'search'
   return (dispatch, getState) => {
     const state = getState()
@@ -457,13 +457,15 @@ export function getShoppingCart (intent) {
         /**
          * Only show sidebar if there is a new item in cart
          */
+        /* if its the firstTime call, check if sidebar needs to be open ? */
         return {
           ...response,
-          isSidebarOpen: state.Device.isDesktop
-            ? state.Conversation.cart !== response.answer.card
-              ? true
-              : state.Conversation.isSidebarOpen
-            : false
+          isSidebarOpen:
+            firstTime || !state.Device.isDesktop
+              ? false
+              : state.Conversation.cart !== response.answer.card
+                ? true
+                : state.Conversation.isSidebarOpen
         }
       },
       context,
@@ -472,7 +474,8 @@ export function getShoppingCart (intent) {
       },
       query: {
         q: 'Show me summary',
-        intent
+        intent,
+        skipPersistState: true
       }
     })
   }
