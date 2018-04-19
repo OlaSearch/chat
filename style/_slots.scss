@@ -21,7 +21,7 @@
   display: block;  
   border-radius: 20px;
   padding: 6px 14px;
-  margin: 0.5rem 0.5rem 1px 0;
+  margin: 8px 8px 1px 0;
   color: $base-color;
   font-weight: 600;
   width: auto;
@@ -119,6 +119,9 @@
 /**
  * Multiple slots
  */
+.olachat-slots-multiple-group {
+  margin-top: 8px;
+}
 .olachat-slots-multiple {
   border: 1px #ccc solid;
   border-radius: 20px;

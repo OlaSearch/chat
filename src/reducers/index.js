@@ -131,18 +131,29 @@ export default (state = initialState, action) => {
            * 1. Profanity check
            * 2. Spell check
            */
-
           if (item.id === in_response_to) {
+            /**
+             * TODO: Also update message sequence
+             */
+            const editedMessage =
+              message && item.message === message
+                ? item.message
+                : suggestedTerm
+                  ? message === suggestedTerm
+                    ? payload.originalQuery
+                    : message /* bigot federen => **** federen */
+                  : message || item.message /* To prevent re-render */
             return {
               ...item,
-              message:
-                message && item.message === message
-                  ? item.message
-                  : suggestedTerm
-                    ? message === suggestedTerm
-                      ? payload.originalQuery
-                      : message /* bigot federen => **** federen */
-                    : message || item.message /* To prevent re-render */
+              sequence: {
+                message: [
+                  {
+                    type: 'text',
+                    content: item.label || editedMessage
+                  }
+                ]
+              },
+              message: editedMessage
             }
           }
           /**

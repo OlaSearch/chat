@@ -5,6 +5,7 @@ import ClipBoard from '@olasearch/icons/lib/clipboard'
 import Trash from '@olasearch/icons/lib/trash-2'
 import Plus from '@olasearch/icons/lib/plus-circle'
 import Minus from '@olasearch/icons/lib/minus-circle'
+import EditIcon from '@olasearch/icons/lib/arrow-right'
 import Transition from 'react-transition-group/Transition'
 import { connect } from 'react-redux'
 import Button from './Button'
@@ -55,12 +56,21 @@ class CardItem extends React.Component {
       isOpen: props.isOpen
     }
   }
+  static getDerivedStateFromProps (nextProps, prevState) {
+    if (nextProps.isOpen === prevState.isOpen) {
+      return null
+    }
+    return {
+      isOpen: nextProps.isOpen
+    }
+  }
   toggle = () => this.setState({ isOpen: !this.state.isOpen })
   render () {
-    const { title, subtitle, fields, buttons, onDelete } = this.props
+    const { title, subtitle, fields, buttons, onDelete, isEditing } = this.props
     const { isOpen } = this.state
     const classes = cx('olachat-module-group', {
-      'olachat-module-isOpen': isOpen
+      'olachat-module-isOpen': isOpen,
+      'olachat-module-isEdit': isEditing
     })
     return (
       <div className={classes}>
@@ -69,7 +79,9 @@ class CardItem extends React.Component {
             onClick={this.toggle}
             className='ola-btn olachat-module-expand'
           >
-            {isOpen ? (
+            {isEditing ? (
+              <EditIcon size='20' color='grey' />
+            ) : isOpen ? (
               <Minus size='20' color='grey' />
             ) : (
               <Plus size='20' color='grey' />
@@ -157,7 +169,8 @@ function ShoppingCart ({ cart, isVisible, theme, addMessage, config }) {
                     <CardItem
                       onDelete={addMessage}
                       key={idx}
-                      isOpen={idx === len - 1}
+                      isOpen={!element.subtitle}
+                      isEditing={!element.subtitle}
                       {...element}
                     />
                   ))
@@ -180,7 +193,7 @@ function ShoppingCart ({ cart, isVisible, theme, addMessage, config }) {
       </Transition>
       <style jsx>
         {`
-          .olachat-module-wrap :global(.olachat-module-item-title) {
+          :global(.olachat-module-item-title) {
             color: ${theme.primaryColor};
           }
         `}

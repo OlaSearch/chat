@@ -8,10 +8,10 @@ import { EMPTY_ARRAY } from './Settings'
  * @example ./../styleguide/QuickReplies.md
  */
 class QuickReplies extends React.PureComponent {
-  handleClick = (label, intent) => {
+  handleClick = (label, intent, payload) => {
     let args = {}
     if (intent) {
-      args = { intent }
+      args = { intent, ...payload }
     }
     this.props.updateQueryTerm(label)
     this.props.onSubmit(args)
@@ -47,9 +47,9 @@ class QuickReplies extends React.PureComponent {
   }
 }
 
-function QuickReplyButton ({ label, intent, handleClick, isActive }) {
+function QuickReplyButton ({ label, intent, payload, handleClick, isActive }) {
   function onClick () {
-    handleClick(label, intent)
+    handleClick(label, intent, payload)
   }
 
   return (

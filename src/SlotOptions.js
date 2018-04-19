@@ -24,11 +24,11 @@ class SlotOptions extends Component {
       isOpen: true
     })
   }
-  handleClick = ({ label, value, intent: selectedIntent }) => {
+  handleClick = ({ label, value, intent: selectedIntent, payload }) => {
     /**
      * Check if current active intent is DISAMBIGUATION_INTENT_NAME
      */
-    let args = { intent: selectedIntent, value, label }
+    let args = { intent: selectedIntent, value, label, ...payload }
     if (this.props.intent === DISAMBIGUATION_INTENT_NAME) {
       /* Send for Intent training */
       this.props.log({
@@ -100,9 +100,16 @@ class SlotOptions extends Component {
   }
 }
 
-function QuickReplyButton ({ label, value, intent, handleClick, isActive }) {
+function QuickReplyButton ({
+  label,
+  value,
+  intent,
+  payload,
+  handleClick,
+  isActive
+}) {
   function onClick () {
-    handleClick({ label, value, intent })
+    handleClick({ label, value, intent, payload })
   }
   return (
     <button

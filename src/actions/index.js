@@ -108,7 +108,7 @@ export function addMessage (payload) {
         message: [
           {
             type: 'text',
-            content: query.q
+            content: label || query.q
           }
         ]
       },

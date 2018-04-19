@@ -1,5 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
+import CheckBox from './CheckBox'
 
 class SlotMultiple extends React.Component {
   constructor (props) {
@@ -46,23 +47,16 @@ class SlotMultiple extends React.Component {
         <div className='olachat-slots-multiple'>
           {options.map(({ label, value, intent }, idx) => {
             const isChecked = selected.indexOf(value) !== -1
-            const classes = cx('olachat-slots-multiple-item ola-flex', {
-              'olachat-slots-disabled': !isActive
-            })
             return (
-              <label className={classes} key={idx}>
-                <span className='ola-flex-icon'>
-                  <input
-                    onChange={this.onSelect}
-                    type='checkbox'
-                    value={value}
-                    checked={isChecked}
-                    className='olachat-checkbox'
-                    disabled={!isActive}
-                  />
-                </span>
-                <span className='ola-flex-content'>{label}</span>
-              </label>
+              <CheckBox
+                key={idx}
+                onChange={this.onSelect}
+                value={value}
+                checked={isChecked}
+                disabled={!isActive}
+                label={label}
+                parentClassName='olachat-slots-multiple-item'
+              />
             )
           })}
         </div>

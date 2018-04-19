@@ -355,7 +355,7 @@ class Input extends React.Component {
             id: jsonPayload.id,
             type: jsonPayload.label,
             value: jsonPayload.suggestion_raw,
-            name: currentMessage.slot ? currentMessage.slot.name : null
+            name: currentMessage.slot.suggest_name || currentMessage.slot.name
           })
         ]
       }

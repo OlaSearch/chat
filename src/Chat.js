@@ -25,7 +25,11 @@ class Chat extends React.Component {
      * Check if the user has any messages
      */
     if (this.props.startOver || !this.props.messages.length) {
-      this.props.addMessage({ intent: this.props.initialIntent, start: true })
+      this.props.addMessage({
+        intent: this.props.initialIntent,
+        start: true,
+        chatBotMessageTimeout: this.props.config.chatBotMessageTimeout
+      })
     }
     /**
      * If its disabled
@@ -153,7 +157,7 @@ class Chat extends React.Component {
           `}
         </style>
         <style jsx>
-          {`
+          {`            
             /* Background */
             .olachat {
               background: ${theme.chatBackground};
@@ -167,13 +171,15 @@ class Chat extends React.Component {
             .olachat :global(button) {
               font-family: ${theme.chatFontFamily};
             }
-            :global(.olachat-bot-desktop)
-              .olachat
-              :global(.olachat-input-textarea),
-            :global(.olachat-bot-desktop)
-              .olachat
-              :global(.olachat-query-suggestion) {
+            // prettier-ignore
+            :global(.olachat-bot-desktop) .olachat :global(.olachat-input-textarea),
+            :global(.olachat-bot-desktop) .olachat :global(.olachat-query-suggestion) {
               font-size: ${theme.mediumFontSize};
+            }
+            // prettier-ignore
+            .olachat :global(.ola-faux-checkbox-checked .ola-checkbox-icon) {
+              background-color: ${theme.primaryColor};
+              border-color: ${theme.primaryColor};
             }
             .olachat :global(.ola-share-links) {
               display: block;
