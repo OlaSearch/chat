@@ -1,0 +1,212 @@
+.ola-swipeable {
+  position: relative;
+}
+
+.ola-swipeable-flow {
+  display: block;
+  overflow-x: auto;
+  overflow-y: hidden;
+  transform: translate3d(0,0,0);
+  position: relative;
+  padding-bottom: 8px; /* Push the scrollbar */
+}
+
+.ola-swipeable-flow::-webkit-scrollbar {
+  display: none;
+}
+
+  .ola-swipeable-row {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex-wrap: nowrap;
+  }
+
+  .ola-swipeable-item {
+    flex: 1 1 auto;
+    display: flex;
+    padding: 8px 16px 8px 0;
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  /**
+   * Innner
+   */
+  .ola-swipeable-item-inner {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+
+    img {
+      min-width: 100%;
+    }
+  }
+
+/**
+ * Hide next prev in mobile
+ */
+.ola-swipeable-prev,
+.ola-swipeable-next {
+  display: none;
+  background: none;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -20px;
+  bottom: 0;
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  color: white;  
+  box-shadow: $small-box-shadow;
+  // border-radius: 50%;
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 0.2s ease-in;
+
+  .ola-swipeable:hover & {
+    opacity: 1;
+    background: white;
+    color: $link-color;
+  }
+
+  &, &:focus {
+    outline: none;
+  }
+
+  &[disabled]{
+    &, .ola-swipeable:hover & {
+      opacity: 0;
+      background: white;
+      box-shadow: none;
+    }
+  }
+
+  &:focus, &:active, &:hover {
+    
+  }  
+
+  @include media (desktop) {
+    display: block;
+  }
+}
+
+  /**
+   * Previos
+   */
+  .ola-swipeable-prev {
+    left: 0;
+    right: auto;
+  }
+
+/**
+ * Show button
+ */
+.ola-swipeable-button {
+  @extend .ola-chat-btn;
+  text-align: center;
+  width: 60px;  
+
+  .ola-icon {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    border-radius: 50%;
+    box-shadow: $small-box-shadow;
+    margin: 3px;
+    background: white;
+  }  
+}
+
+.ola-swipeable-button-text {
+  display: block;
+  padding-top: 8px;
+  font-size: 12px;
+}
+
+.ola-swipeable-show {
+  display: flex;
+  align-items: center;
+}
+
+
+/**
+ * Answer list
+ */
+.ola-answer-list-swipe .ola-answer-list-items{
+  display: block;
+}
+
+
+
+/**
+ * For chatbot
+ */
+
+/**
+ * Swipeable inside chatbot
+ */
+
+.ola-swipeable {  
+  // /* On desktop */
+  // margin-left: -60px;
+  // margin-right: -80px;
+
+  // .olachat-bot-mobile &{
+  //   margin-left: -16px;
+  //   margin-right: -16px;
+  // }
+}
+  /**
+   * Row
+   */
+  .ola-swipeable {
+    // padding-left: 0;
+    // padding-right: 0; 
+  }
+
+  .ola-swipeable-flow {
+    padding-left: 60px;
+    padding-right: 80px;
+
+    .olachat-bot-mobile & {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+
+  /**
+   * Inside swipeable, set height as 100%
+   */
+  .ola-swipeable {
+    .ola-answer-card, 
+    .ola-answer-carousel-item,
+    .ola-answer-card-wrapper,
+    .ola-answer-carousel-item-wrapper,
+    .ola-answer-list-wrapper {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+  }
+
+  .olachat-bot-desktop .ola-swipeable-prev,
+  .olachat-bot-desktop .ola-swipeable-next {
+    display: block;
+  }
+
+
+/**
+ * Inside modal
+ */
+.ola-modal-portal {
+  .ola-swipeable-flow {
+    padding: 0;
+  }
+}
