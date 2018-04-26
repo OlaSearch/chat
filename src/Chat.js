@@ -28,6 +28,7 @@ class Chat extends React.Component {
       this.props.addMessage({
         intent: this.props.initialIntent,
         start: true,
+        callback: this.getCart,
         chatBotMessageTimeout: this.props.config.chatBotMessageTimeout
       })
     }
@@ -46,31 +47,30 @@ class Chat extends React.Component {
      */
     if (this.props.config.chatBotCart) {
       this.props.getShoppingCart({
-        intent: this.props.config.chatBotCartIntent,
-        firstTime: true
+        intent: this.props.config.chatBotCartIntent
       })
+    }
+  }
+  getCart = response => {
+    /**
+     * Get shopping cart if an intent is fulfilled
+     */
+    if (!response || !response.answer) return
+    if (response.answer.intent && response.answer.fulfilled) {
+      if (this.props.config.chatBotCart) {
+        this.props.getShoppingCart({
+          intent: this.props.config.chatBotCartIntent
+        })
+      }
     }
   }
   addMessage = args => {
     /* Add message */
-    return (
-      this.props
-        .addMessage({
-          ...args,
-          chatBotMessageTimeout: this.props.config.chatBotMessageTimeout,
-          callback: this.props.onMessage
-        })
-        /**
-         * Get shopping cart if an intent is fulfilled
-         */
-        .then(({ answer }) => {
-          if (answer && answer.intent && answer.fulfilled) {
-            this.props.getShoppingCart({
-              intent: this.props.config.chatBotCartIntent
-            })
-          }
-        })
-    )
+    return this.props.addMessage({
+      ...args,
+      chatBotMessageTimeout: this.props.config.chatBotMessageTimeout,
+      callback: this.getCart
+    })
   }
   registerRef = el => {
     this.MessageContainer = el
@@ -180,6 +180,12 @@ class Chat extends React.Component {
             .olachat :global(.ola-faux-checkbox-checked .ola-checkbox-icon) {
               background-color: ${theme.primaryColor};
               border-color: ${theme.primaryColor};
+            }
+            .olachat :global(.ola-faux-checkbox-checked.ola-faux-checkbox-disabled .ola-checkbox-icon) {
+              background-color: #cbd0d1;
+            }
+            .olachat :global(.ola-faux-checkbox-disabled .ola-checkbox-icon) {
+              border-color: #cbd0d1;
             }
             .olachat :global(.ola-share-links) {
               display: block;

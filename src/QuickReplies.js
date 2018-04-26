@@ -8,10 +8,10 @@ import { EMPTY_ARRAY } from './Settings'
  * @example ./../styleguide/QuickReplies.md
  */
 class QuickReplies extends React.PureComponent {
-  handleClick = (label, intent, payload) => {
+  handleClick = ({ label, intent, value, payload }) => {
     let args = {}
     if (intent) {
-      args = { intent, ...payload }
+      args = { label, intent, value, ...payload }
     }
     this.props.updateQueryTerm(label)
     this.props.onSubmit(args)
@@ -33,12 +33,11 @@ class QuickReplies extends React.PureComponent {
     return (
       <div className='olachat-quickreplies'>
         <div className='olachat-quickreplies-list'>
-          {quickReplies.map(({ label, intent }, idx) => (
+          {quickReplies.map((item, idx) => (
             <QuickReplyButton
               key={idx}
               handleClick={this.handleClick}
-              intent={intent}
-              label={label}
+              {...item}
             />
           ))}
         </div>
@@ -47,9 +46,10 @@ class QuickReplies extends React.PureComponent {
   }
 }
 
-function QuickReplyButton ({ label, intent, payload, handleClick, isActive }) {
+function QuickReplyButton (item) {
+  const { label, handleClick } = item
   function onClick () {
-    handleClick(label, intent, payload)
+    handleClick(item)
   }
 
   return (

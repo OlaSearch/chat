@@ -56,6 +56,20 @@ export default (state = initialState, action) => {
         isLoading: true
       }
 
+    case types.UPDATE_TYPING_MESSAGE_ID:
+      return {
+        ...state,
+        messages: state.messages.map(item => {
+          if (item.msgId === action.oldId) {
+            return {
+              ...item,
+              msgId: action.newId
+            }
+          }
+          return item
+        })
+      }
+
     case types.REQUEST_BOT_SUCCESS:
       let {
         answer = {},
@@ -66,7 +80,8 @@ export default (state = initialState, action) => {
         page,
         suggestedTerm,
         spellSuggestions,
-        sequence
+        sequence,
+        isSidebarOpen
       } = action
 
       /**
@@ -125,6 +140,7 @@ export default (state = initialState, action) => {
         isLoading: false,
         newMessageId: msg.id,
         ignoreLocation: false,
+        isSidebarOpen,
         messages: state.messages.map(item => {
           /**
            * Replace the message text after profanity check from Intent engine
@@ -352,8 +368,7 @@ export default (state = initialState, action) => {
     case types.REQUEST_CART_SUCCESS:
       return {
         ...state,
-        cart: action.answer.card,
-        isSidebarOpen: action.isSidebarOpen
+        cart: action.answer.card
       }
 
     default:

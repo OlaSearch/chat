@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
-import CheckBox from './CheckBox'
+import { Checkbox } from '@olasearch/core'
 
 class SlotMultiple extends React.Component {
   constructor (props) {
@@ -22,6 +22,7 @@ class SlotMultiple extends React.Component {
   }
   handleSubmit = () => {
     const { selected } = this.state
+    const { intent } = this.props
     const slots = selected.map(value => {
       return {
         name: this.props.slot.name,
@@ -33,7 +34,7 @@ class SlotMultiple extends React.Component {
       .map(({ label }) => label)
       .join(', ')
     this.props.updateQueryTerm(messageLabel)
-    this.props.onSubmit({ slots })
+    this.props.onSubmit({ slots, intent })
   }
   render () {
     const { slot, isActive } = this.props
@@ -48,7 +49,7 @@ class SlotMultiple extends React.Component {
           {options.map(({ label, value, intent }, idx) => {
             const isChecked = selected.indexOf(value) !== -1
             return (
-              <CheckBox
+              <Checkbox
                 key={idx}
                 onChange={this.onSelect}
                 value={value}

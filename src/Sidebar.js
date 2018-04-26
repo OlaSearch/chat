@@ -1,8 +1,7 @@
 import React from 'react'
-import { Decorators } from '@olasearch/core'
+import { Overlay, Decorators } from '@olasearch/core'
 import Close from '@olasearch/icons/lib/x'
 import ShoppingCart from './ShoppingCart'
-import Overlay from './Overlay'
 import Transition from 'react-transition-group/Transition'
 
 const duration = 200

@@ -26,7 +26,7 @@ export function clearBotQueryTerm () {
 
 export function addMessage (payload) {
   return (dispatch, getState) => {
-    var state = getState()
+    const state = getState()
     var {
       messages,
       language,
@@ -46,10 +46,18 @@ export function addMessage (payload) {
       : null
     const showUserMessage = !(payload && payload.hidden)
     const stopSubmit = payload && payload.disableSubmit
+    const hideTyping = payload && payload.prevMsgId
     /**
      * Parameters that needs to added to the query
      */
     const payloadParams = omit(['value', 'label', 'intent', 'query'], payload)
+
+    /**
+     * Update typing
+     */
+    if (payload.prevMsgId) {
+      dispatch(updateMessageId(payload.prevMsgId, msgId))
+    }
 
     /**
      * Check if payload has `label` => THis will be displayed in bot
@@ -136,10 +144,12 @@ export function addMessage (payload) {
     if (stopSubmit) return
 
     /* Simulate delay - Show typing indicator */
-    setTimeout(
-      () => dispatch(showTypingIndicator(msgId)),
-      (payload && payload.start) || !showUserMessage ? 0 : CHAT_DELAY
-    )
+    if (!hideTyping) {
+      setTimeout(
+        () => dispatch(showTypingIndicator(msgId)),
+        (payload && payload.start) || !showUserMessage ? 0 : CHAT_DELAY
+      )
+    }
 
     return new Promise((resolve, reject) => {
       /* Simulate delay */
@@ -157,6 +167,13 @@ export function addMessage (payload) {
             return {
               ...response,
               sequence: createMessageSequence(response),
+              isSidebarOpen:
+                state.Device.isDesktop &&
+                response.answer &&
+                response.answer.cart &&
+                response.answer.cart === true
+                  ? true
+                  : state.Conversation.isSidebarOpen,
               ...(response.results
                 ? {
                   results: response.results.slice(0, perPage)
@@ -198,6 +215,10 @@ export function addMessage (payload) {
             }
             /* Clear previous query */
             dispatch(clearBotQueryTerm())
+
+            /* Check if response from this message is empty */
+            const isEmptyResponse = response.answer.empty
+
             /* Ask for more messages */
             /**
              * Add a delay based on no of messages
@@ -213,7 +234,12 @@ export function addMessage (payload) {
                 (response.answer.reply.length - 1)
             }
             setTimeout(() => {
-              dispatch(addMessage(payload))
+              dispatch(
+                addMessage({
+                  ...payload,
+                  prevMsgId: isEmptyResponse ? msgId : null
+                })
+              )
             }, delayNextMessage)
           }
 
@@ -441,7 +467,15 @@ export function toggleSidebar () {
   }
 }
 
-export function getShoppingCart ({ intent, firstTime }) {
+export function updateMessageId (oldId, newId) {
+  return {
+    type: types.UPDATE_TYPING_MESSAGE_ID,
+    oldId,
+    newId
+  }
+}
+
+export function getShoppingCart ({ intent }) {
   const api = 'search'
   return (dispatch, getState) => {
     const state = getState()
@@ -453,21 +487,6 @@ export function getShoppingCart ({ intent, firstTime }) {
         types.REQUEST_CART_FAILURE
       ],
       api,
-      beforeSuccessCallback: response => {
-        /**
-         * Only show sidebar if there is a new item in cart
-         */
-        /* if its the firstTime call, check if sidebar needs to be open ? */
-        return {
-          ...response,
-          isSidebarOpen:
-            firstTime || !state.Device.isDesktop
-              ? false
-              : state.Conversation.cart !== response.answer.card
-                ? true
-                : state.Conversation.isSidebarOpen
-        }
-      },
       context,
       payload: {
         bot: true
