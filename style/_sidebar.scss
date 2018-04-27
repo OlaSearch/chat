@@ -1,6 +1,7 @@
 .olachat-group {
   display: flex;
   flex: 1;
+  min-height: 0;
 }
 
 .olachat-main {
@@ -8,7 +9,7 @@
   flex-direction: column;
   -webkit-flex-direction: column;
   justify-content: space-between;
-  flex: 1;  
+  flex: 1;    
 }
 
 .olachat-sidebar {  
@@ -26,7 +27,7 @@
   width: 0;
   opacity: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  
 
   .olachat-bot-desktop & {
     position: relative;
@@ -58,6 +59,7 @@
     display: flex;
     flex-direction: column;
     padding: 16px;
+    min-height: 0;
 
     @include media (desktop) {
       padding: 24px;

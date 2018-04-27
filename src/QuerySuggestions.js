@@ -14,12 +14,11 @@ function QuerySuggestions ({
   onChange,
   activeIndex,
   queryTerm,
-  style,
-  limit
+  style
 }) {
   return (
     <div className='olachat-query-suggestions' style={style}>
-      {suggestions.slice(0, limit).map((item, idx) => {
+      {suggestions.map((item, idx) => {
         return (
           <QuerySuggestionItem
             key={idx}
@@ -70,8 +69,6 @@ QuerySuggestions.propTypes = {
   queryTerm: PropTypes.string
 }
 
-QuerySuggestions.defaultProps = {
-  limit: 5
-}
+QuerySuggestions.defaultProps = {}
 
 export default QuerySuggestions

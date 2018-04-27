@@ -14,6 +14,7 @@ import SidebarIcon from '@olasearch/icons/lib/sidebar'
 import { GeoLocation } from '@olasearch/core'
 import { ThemeConsumer } from '@olasearch/core'
 import { getFacetSuggestions, getSuggestSlotType, createSlot } from './utils'
+import withDocument from '@olasearch/react-frame-portal/lib/withDocument'
 
 const supportsVoice =
   (navigator.getUserMedia ||
@@ -39,6 +40,9 @@ class Input extends React.Component {
   }
   static contextTypes = {
     document: PropTypes.object
+  }
+  static defaultProps = {
+    suggestionsLimit: 5
   }
   handleClickOutside = event => {
     /* Check if its already closed */
@@ -73,28 +77,38 @@ class Input extends React.Component {
        * Auto suggest queries
        */
       const currentMessage = this.props.messages[this.props.messages.length - 1]
-      const expectingSlot =
+      const slotHasOptions =
         currentMessage &&
         currentMessage.slot_options &&
         currentMessage.slot_options.length
-      const slotTypeToSuggest = currentMessage.slot
+      const shouldRequestSlots =
+        !slotHasOptions && currentMessage && currentMessage.slot
+      const slotTypeToSuggest = shouldRequestSlots
         ? currentMessage.slot.suggest_type || currentMessage.slot.type
         : undefined
-      const slotType = currentMessage.slot
+      const slotType = shouldRequestSlots
         ? getSuggestSlotType(slotTypeToSuggest)
         : undefined
-      if (!expectingSlot || this.props.isTyping) {
+      if (!slotHasOptions || this.props.isTyping) {
         this.props
-          .dispatch(Actions.AutoSuggest.executeFuzzyAutoSuggest(text, slotType))
+          .dispatch(
+            Actions.AutoSuggest.executeFuzzyAutoSuggest(
+              text,
+              this.props.suggestionsLimit,
+              slotType
+            )
+          )
           .then(values => {
             if (!values || values === null) return
             if (!values.length) {
-              if (!partialWord) return this.closeSuggestion()
+              if (!filterInAutoComplete || slotType || !partialWord) { return this.closeSuggestion() }
+
               /**
                * Get facet suggestions
+               * 1. Only if slot Type is not an input
+               * 2. There is partial word
+               * 3. And filterInAutocomplete is ON
                */
-              if (!filterInAutoComplete) return this.closeSuggestion()
-
               this.props
                 .dispatch(
                   Actions.Search.executeFacetSearch(
@@ -264,6 +278,18 @@ class Input extends React.Component {
     const { suggestedIndex, suggestions, text } = this.state
     switch (event.nativeEvent.which) {
       case 13: // Enter key
+        /* Check if suggestion is active */
+        if (suggestedIndex !== null) {
+          const item = suggestions[suggestedIndex]
+            ? suggestions[suggestedIndex]
+            : null
+          if (item) {
+            this.onSuggestionChange(item)
+            /* Stop enter key event */
+            event.preventDefault()
+            break
+          }
+        }
         this.closeSuggestion()
         if (!event.nativeEvent.shiftKey) {
           this.onFormSubmit(event)
@@ -519,14 +545,6 @@ class Input extends React.Component {
 
 export default connect(null)(
   Decorators.withConfig(
-    Decorators.withTranslate(
-      listensToClickOutside(Input, {
-        getDocument (instance) {
-          return instance && instance.context && instance.context.document
-            ? instance.context.document
-            : document
-        }
-      })
-    )
+    Decorators.withTranslate(withDocument(listensToClickOutside(Input)))
   )
 )

@@ -14,7 +14,7 @@ import FailureButtons from './FailureButtons'
 import QuickReplies from './QuickReplies'
 import { createMessageMarkup } from './utils'
 import TransitionGroup from 'react-transition-group/TransitionGroup'
-import CSSTransition from 'react-transition-group/CSSTransition'
+import Transition from 'react-transition-group/Transition'
 
 /**
  * Chatbot message
@@ -178,6 +178,7 @@ class Message extends React.Component {
     }
     const messageLen = sequence.message.filter(({ type }) => type === 'text')
       .length
+
     const messageComponents = sequence.message.map(
       ({ type, content, search }, idx) => {
         /**
@@ -186,7 +187,7 @@ class Message extends React.Component {
          */
         const isSlot = type === 'slot'
         return (
-          <CSSTransition
+          <Transition
             key={idx}
             timeout={isSlot ? (idx - 1) * timeout : idx * timeout}
             classNames='message-animation'
@@ -228,7 +229,7 @@ class Message extends React.Component {
                 </div>
               )
             }}
-          </CSSTransition>
+          </Transition>
         )
       }
     )
@@ -236,7 +237,7 @@ class Message extends React.Component {
       sequence.detached &&
       sequence.detached.map(({ type }, idx) => {
         return (
-          <CSSTransition
+          <Transition
             key={idx}
             timeout={(messageComponents.length + idx) * timeout}
             classNames='message-animation'
@@ -281,7 +282,7 @@ class Message extends React.Component {
                 </div>
               )
             }}
-          </CSSTransition>
+          </Transition>
         )
       })
 
@@ -290,7 +291,7 @@ class Message extends React.Component {
       sequence.outer &&
       sequence.outer.map(({ type }, idx) => {
         return (
-          <CSSTransition
+          <Transition
             key={idx}
             timeout={{
               enter:
@@ -322,7 +323,7 @@ class Message extends React.Component {
                 </div>
               )
             }}
-          </CSSTransition>
+          </Transition>
         )
       })
 
