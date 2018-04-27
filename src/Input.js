@@ -101,7 +101,9 @@ class Input extends React.Component {
           .then(values => {
             if (!values || values === null) return
             if (!values.length) {
-              if (!filterInAutoComplete || slotType || !partialWord) { return this.closeSuggestion() }
+              if (!filterInAutoComplete || slotType || !partialWord) {
+                return this.closeSuggestion()
+              }
 
               /**
                * Get facet suggestions
