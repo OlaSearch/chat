@@ -14,7 +14,7 @@ import SidebarIcon from '@olasearch/icons/lib/sidebar'
 import { GeoLocation } from '@olasearch/core'
 import { ThemeConsumer } from '@olasearch/core'
 import { getFacetSuggestions, getSuggestSlotType, createSlot } from './utils'
-import withDocument from '@olasearch/react-frame-portal/lib/withDocument'
+import { withDocument } from '@olasearch/react-frame-portal'
 
 const supportsVoice =
   (navigator.getUserMedia ||

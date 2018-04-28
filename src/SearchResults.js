@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import classNames from 'classnames'
 import { SearchFooter, SearchResults, Decorators } from '@olasearch/core'
 import { loadMore, toggleSearchVisibility } from './actions'
+import { withDocument } from '@olasearch/react-frame-portal'
 
 const MAX_RESULTS_MOBILE = 1
 const MAX_RESULTS_DESKTOP = 3
@@ -63,6 +64,9 @@ class SearchResultsMessage extends React.Component {
             bookmarks={bookmarks}
             dispatch={dispatch}
             baseUrl={search && search.baseUrl}
+            passProps={{
+              document: this.props.document
+            }}
             logPayload={{
               bot: true,
               message
@@ -97,5 +101,5 @@ function mapStateToProps (state, ownProps) {
 }
 
 export default connect(mapStateToProps, { loadMore, toggleSearchVisibility })(
-  Decorators.withTranslate(SearchResultsMessage)
+  Decorators.withTranslate(withDocument(SearchResultsMessage))
 )

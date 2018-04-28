@@ -6,7 +6,7 @@ import Card from './Card'
 import { DateParser, AnswerMC, Decorators } from '@olasearch/core'
 import SlotOptions from './SlotOptions'
 import Geo from './Geo'
-import SearchResultsMessage from './SearchResultsMessage'
+import SearchResults from './SearchResults'
 import MessageFeedback from './MessageFeedback'
 import TopicSuggestions from './TopicSuggestions'
 import Loader from './Loader'
@@ -270,7 +270,7 @@ class Message extends React.Component {
                     />
                   ) : null}
                   {type === 'search' ? (
-                    <SearchResultsMessage
+                    <SearchResults
                       results={results}
                       botName={botName}
                       message={message}

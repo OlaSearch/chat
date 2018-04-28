@@ -7,7 +7,7 @@ import { OLACHAT_IFRAME_ID } from './Settings'
 import Badge from './Badge'
 import Menu from '@olasearch/icons/lib/menu'
 import Print from '@olasearch/icons/lib/printer'
-import withDocument from '@olasearch/react-frame-portal/lib/withDocument'
+import { withDocument } from '@olasearch/react-frame-portal'
 
 /**
  * Help menu
