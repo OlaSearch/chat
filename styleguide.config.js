@@ -74,7 +74,7 @@ module.exports = {
           './src/MessageFeedback.js',
           './src/OfflineIndicator.js',
           './src/QuerySuggestions.js',
-          './src/SearchResultsMessage.js',
+          './src/SearchResults.js',
           './src/QuickReplies.js',
           './src/SlotOptions.js',
           './src/TopicSuggestions.js',
