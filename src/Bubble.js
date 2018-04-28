@@ -18,7 +18,7 @@ function Bubble ({
   badge,
   theme
 }) {
-  let klass = classNames('olachat-bubble', {
+  const classes = classNames('olachat-bubble', {
     'olachat-bubble-active': isActive
   })
   const style = showBubbleLabel
@@ -30,7 +30,7 @@ function Bubble ({
       padding: 0
     }
   return (
-    <button style={style} className={klass} onClick={onClick}>
+    <button style={style} className={classes} onClick={onClick}>
       <span className='olachat-bubble-inner'>
         {showBubbleLabel ? (
           <span className='olachat-bubble-text'>{label}</span>

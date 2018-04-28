@@ -439,8 +439,8 @@ class Input extends React.Component {
   handleFocus = () => this.setState({ isFocused: true })
   handleBlur = () => this.setState({ isFocused: false })
   render () {
-    let { isTyping, voiceInput, translate, theme } = this.props
-    let {
+    const { isTyping, voiceInput, translate, theme } = this.props
+    const {
       suggestions,
       suggestedIndex,
       suggestedTerm,
@@ -450,7 +450,7 @@ class Input extends React.Component {
       endToken
     } = this.state
 
-    let inputValue = suggestedTerm
+    const inputValue = suggestedTerm
       ? suggestedTerm.partial
         ? text.substr(0, startToken) +
           suggestedTerm.term +

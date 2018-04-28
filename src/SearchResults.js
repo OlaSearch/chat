@@ -24,17 +24,17 @@ class SearchResultsMessage extends React.Component {
     this.props.loadMore(this.props.message)
   }
   render () {
-    let {
+    const {
       isPhone,
       dispatch,
       isActive,
       message,
-      results,
       bookmarks,
       isLoading,
       translate
     } = this.props
-    let { search, mc, showSearch } = message
+    var { results } = this.props
+    const { search, mc, showSearch } = message
     const maxResults = isPhone ? MAX_RESULTS_MOBILE : MAX_RESULTS_DESKTOP
 
     /* When showing CURRRENT message, do not stack */

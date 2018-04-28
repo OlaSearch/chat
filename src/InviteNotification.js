@@ -8,7 +8,7 @@ class InviteNotification extends React.Component {
     this.props.setBotStatus(true)
   }
   render () {
-    let { theme } = this.props
+    const { theme } = this.props
     return (
       <div className='olachat-invite' style={{ opacity: 0 }}>
         <button

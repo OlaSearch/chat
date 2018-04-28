@@ -28,7 +28,7 @@ class QuickReplies extends React.PureComponent {
     quickReplies: EMPTY_ARRAY
   }
   render () {
-    let { quickReplies } = this.props
+    const { quickReplies } = this.props
     if (!quickReplies.length) return null
     return (
       <div className='olachat-quickreplies'>

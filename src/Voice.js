@@ -156,8 +156,8 @@ class Voice extends React.Component {
     this.props.handleVoiceButtonClick && this.props.handleVoiceButtonClick()
   }
   render () {
-    let { isRecording, isSpeaking } = this.state
-    let {
+    const { isRecording, isSpeaking } = this.state
+    const {
       isTyping,
       className,
       containerClass,
@@ -167,16 +167,16 @@ class Voice extends React.Component {
       iconSize,
       translate
     } = this.props
-    let klass = cx('olachat-mic', className, {
+    const klass = cx('olachat-mic', className, {
       'olachat-mic-isrecording': isRecording && !isTyping,
       'olachat-mic-isloading': isTyping,
       'olachat-mic-isspeaking': isSpeaking
     })
-    let containerKlass = cx('olachat-voice', {
+    const containerKlass = cx('olachat-voice', {
       [`${containerClass}`]: hasUsedVoice && !isSpeaking && !isRecording,
       'olachat-voice-isrecording': isRecording && !isTyping
     })
-    let showLoadingIndicator = isTyping && searchInput === 'voice'
+    const showLoadingIndicator = isTyping && searchInput === 'voice'
     return (
       <div className={containerKlass} onClick={this.handleSpeechStart}>
         <button type='button' className={klass}>

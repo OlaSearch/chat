@@ -42,7 +42,7 @@ class Message extends React.Component {
     this.props.scrollIntoView({ id: this.props.message.id })
   }
   render () {
-    let {
+    const {
       message,
       avatarBot,
       avatarUser,
@@ -59,7 +59,7 @@ class Message extends React.Component {
       enableFeedback,
       chatBotMessageTimeout
     } = this.props
-    let {
+    const {
       userId,
       timestamp,
       awaitingUserInput,
@@ -81,10 +81,10 @@ class Message extends React.Component {
       quick_replies: quickReplies,
       sequence
     } = message
-    let isBot = !userId
-    let text = isBot ? message.reply : message.label || message.message
+    const isBot = !userId
+    var text = isBot ? message.reply : message.label || message.message
 
-    let messageClass = cx('olachat-message', {
+    const messageClass = cx('olachat-message', {
       'olachat-message-bot': isBot,
       'olachat-message-fulfilled': fulfilled,
       'olachat-message-collapse':
@@ -103,7 +103,7 @@ class Message extends React.Component {
      * isActive message, needs location
      *
      */
-    let needsLocation = message.location && !context.location
+    const needsLocation = message.location && !context.location
     /**
      * search => only exists if intent engine is ON
      */

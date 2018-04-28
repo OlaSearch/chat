@@ -153,7 +153,6 @@ class BotFrame extends React.Component {
         MODAL_ROOT_CLASSNAME,
         this.props.isBotActive
       )
-      // this.appendStyles()
     }
   }
   render () {

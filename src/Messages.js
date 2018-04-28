@@ -242,12 +242,13 @@ export default class Messages extends React.Component {
     )
   }
   render () {
-    let { messages, flipped, messageComponent, theme } = this.props
-    let { isInfiniteLoading } = this.state
+    const { flipped, messageComponent, theme } = this.props
+    var { messages } = this.props
+    const { isInfiniteLoading } = this.state
     if (!flipped) {
       messages = messages.slice().reverse()
     }
-    let loadingSpinner = isInfiniteLoading ? <div>Loading</div> : null
+    const loadingSpinner = isInfiniteLoading ? <div>Loading</div> : null
     return (
       <div className='olachat-messages' ref={this.registerRef}>
         {this.state.shouldRender ? (

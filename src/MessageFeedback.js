@@ -40,7 +40,7 @@ class MessageFeedback extends React.Component {
     this.props.onSubmit({ intent: FEEDBACK_INTENT })
   }
   render () {
-    let { isActive, message: { awaitingUserInput, intent, mc } } = this.props
+    const { isActive, message: { awaitingUserInput, intent, mc } } = this.props
 
     /* If user is typing */
     if (!isActive || !awaitingUserInput) return null

@@ -10,6 +10,7 @@ import {
   Decorators,
   Settings
 } from '@olasearch/core'
+import { withDocument } from '@olasearch/react-frame-portal'
 
 const { BUTTON_TYPE } = Settings
 
@@ -27,8 +28,8 @@ function Card ({
   ...rest
 }) {
   if (!card) return null
-  let { buttons = [], template } = card
-  let classes = cx('ola-card', `ola-card-template-${template}`)
+  const { buttons = [], template } = card
+  const classes = cx('ola-card', `ola-card-template-${template}`)
 
   function handleClick ({ type, label, title, payload, url }) {
     /**
@@ -62,7 +63,15 @@ function Card ({
 
     switch (template) {
       case 'list':
-        return <AnswerList card={card} swipe onSelect={handleClick} {...rest} />
+        return (
+          <AnswerList
+            card={card}
+            swipe
+            onSelect={handleClick}
+            document={this.props.document}
+            {...rest}
+          />
+        )
 
       case 'wordmap':
         return (
@@ -71,12 +80,19 @@ function Card ({
             maxLen={20}
             onSelect={handleClick}
             shuffle
+            document={this.props.document}
             {...rest}
           />
         )
 
       case 'image':
-        return <AnswerCard card={card} onSelect={handleClick} />
+        return (
+          <AnswerCard
+            card={card}
+            onSelect={handleClick}
+            document={this.props.document}
+          />
+        )
 
       case 'map':
         return (
@@ -89,10 +105,24 @@ function Card ({
         )
 
       case 'carousel':
-        return <AnswerCarousel card={card} onSelect={handleClick} {...rest} />
+        return (
+          <AnswerCarousel
+            card={card}
+            onSelect={handleClick}
+            document={this.props.document}
+            {...rest}
+          />
+        )
 
       default:
-        return <AnswerCard card={card} onSelect={handleClick} {...rest} />
+        return (
+          <AnswerCard
+            card={card}
+            onSelect={handleClick}
+            document={this.props.document}
+            {...rest}
+          />
+        )
     }
   }
 
@@ -144,4 +174,4 @@ Card.propTypes = {
   templates: PropTypes.object
 }
 
-export default Decorators.withTheme(Card)
+export default Decorators.withTheme(withDocument(Card))

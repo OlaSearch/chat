@@ -39,11 +39,11 @@ class Geo extends Component {
     })
   }
   render () {
-    let { isActive } = this.props
+    const { isActive, needsLocation } = this.props
     /**
      * If message requires location and isActive
      */
-    if (this.props.needsLocation) {
+    if (needsLocation) {
       return (
         <div>
           <GeoLocation

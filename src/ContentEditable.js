@@ -31,7 +31,7 @@ export default class ContentEditable extends React.PureComponent {
     this.props.innerRef && this.props.innerRef(el)
   }
   render () {
-    let {
+    const {
       formatValue,
       onMatchChange,
       value,
