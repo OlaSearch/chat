@@ -451,19 +451,19 @@ export function hideInvite () {
 
 export function hideSidebar () {
   return {
-    type: types.HIDE_SIDEBAR
+    type: types.HIDE_CHAT_SIDEBAR
   }
 }
 
 export function showSidebar () {
   return {
-    type: types.SHOW_SIDEBAR
+    type: types.SHOW_CHAT_SIDEBAR
   }
 }
 
 export function toggleSidebar () {
   return {
-    type: types.TOGGLE_SIDEBAR
+    type: types.TOGGLE_CHAT_SIDEBAR
   }
 }
 

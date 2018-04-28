@@ -347,19 +347,19 @@ export default (state = initialState, action) => {
         inviteVisible: false
       }
 
-    case types.SHOW_SIDEBAR:
+    case types.SHOW_CHAT_SIDEBAR:
       return {
         ...state,
         isSidebarOpen: true
       }
 
-    case types.HIDE_SIDEBAR:
+    case types.HIDE_CHAT_SIDEBAR:
       return {
         ...state,
         isSidebarOpen: false
       }
 
-    case types.TOGGLE_SIDEBAR:
+    case types.TOGGLE_CHAT_SIDEBAR:
       return {
         ...state,
         isSidebarOpen: !state.isSidebarOpen

@@ -154,14 +154,14 @@
  */
 
 .ola-swipeable {  
-  // /* On desktop */
-  // margin-left: -60px;
-  // margin-right: -80px;
+  /* On desktop */
+  margin-left: -60px;
+  margin-right: -80px;
 
-  // .olachat-bot-mobile &{
-  //   margin-left: -16px;
-  //   margin-right: -16px;
-  // }
+  .olachat-bot-mobile &{
+    margin-left: -16px;
+    margin-right: -16px;
+  }
 }
   /**
    * Row
