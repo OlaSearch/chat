@@ -9,10 +9,7 @@ import { EMPTY_ARRAY } from './Settings'
  */
 class QuickReplies extends React.PureComponent {
   handleClick = ({ label, intent, value, payload }) => {
-    let args = {}
-    if (intent) {
-      args = { label, intent, value, ...payload }
-    }
+    const args = intent ? { label, intent, value, ...payload } : {}
     this.props.updateQueryTerm(label)
     this.props.onSubmit(args)
     this.props.log({

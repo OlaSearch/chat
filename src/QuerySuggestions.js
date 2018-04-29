@@ -38,7 +38,7 @@ function QuerySuggestionItem ({ queryTerm, item, onChange, isActive }) {
   function handleChange (e) {
     onChange && onChange(item)
   }
-  let pattern =
+  const pattern =
     '(' +
     queryTerm
       .replace(RE_ESCAPE, '\\$1')
@@ -46,15 +46,15 @@ function QuerySuggestionItem ({ queryTerm, item, onChange, isActive }) {
       .join('|') +
     ')'
   /* Create term */
-  let value = partial
+  const value = partial
     ? `...${term}`
     : term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
-  let klass = 'olachat-query-suggestion' + (isActive ? ' is-active' : '')
+  const classes = 'olachat-query-suggestion' + (isActive ? ' is-active' : '')
   return (
     <div className='olachat-query-suggestion-item'>
       <button
         type='button'
-        className={klass}
+        className={classes}
         onClick={handleChange}
         dangerouslySetInnerHTML={createHTMLMarkup(value)}
       />

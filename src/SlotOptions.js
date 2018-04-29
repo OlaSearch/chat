@@ -28,7 +28,7 @@ class SlotOptions extends Component {
     /**
      * Check if current active intent is DISAMBIGUATION_INTENT_NAME
      */
-    let args = { intent: selectedIntent, value, label, ...payload }
+    const args = { intent: selectedIntent, value, label, ...payload }
     if (this.props.intent === DISAMBIGUATION_INTENT_NAME) {
       /* Send for Intent training */
       this.props.log({

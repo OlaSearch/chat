@@ -25,6 +25,7 @@ function Card ({
   location,
   onSelect,
   theme,
+  document: doc,
   ...rest
 }) {
   if (!card) return null
@@ -57,7 +58,7 @@ function Card ({
   function pickTemplate (template) {
     /* Check for user defined templates */
     if (templates && templates.hasOwnProperty(template)) {
-      let Component = templates[template]
+      const Component = templates[template]
       return <Component {...card} />
     }
 
@@ -68,7 +69,7 @@ function Card ({
             card={card}
             swipe
             onSelect={handleClick}
-            document={this.props.document}
+            document={doc}
             {...rest}
           />
         )
@@ -80,19 +81,13 @@ function Card ({
             maxLen={20}
             onSelect={handleClick}
             shuffle
-            document={this.props.document}
+            document={doc}
             {...rest}
           />
         )
 
       case 'image':
-        return (
-          <AnswerCard
-            card={card}
-            onSelect={handleClick}
-            document={this.props.document}
-          />
-        )
+        return <AnswerCard card={card} onSelect={handleClick} document={doc} />
 
       case 'map':
         return (
@@ -100,6 +95,7 @@ function Card ({
             card={card}
             results={results}
             location={location}
+            document={doc}
             {...rest}
           />
         )
@@ -109,7 +105,7 @@ function Card ({
           <AnswerCarousel
             card={card}
             onSelect={handleClick}
-            document={this.props.document}
+            document={doc}
             {...rest}
           />
         )
@@ -119,7 +115,7 @@ function Card ({
           <AnswerCard
             card={card}
             onSelect={handleClick}
-            document={this.props.document}
+            document={doc}
             {...rest}
           />
         )

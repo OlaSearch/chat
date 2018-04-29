@@ -44,11 +44,11 @@ class SearchResultsMessage extends React.Component {
       results = results.filter((item, idx) => idx < maxResults)
     }
 
-    const klass = classNames('olachat-results', {
+    const classes = classNames('olachat-results', {
       'olachat-results-stack': isStacked
     })
     return (
-      <div className={klass}>
+      <div className={classes}>
         <div className='olachat-results-wrapper'>
           {/* <div className='olachat-results-overlay' />
           <button
