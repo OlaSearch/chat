@@ -27,7 +27,9 @@ export default function ({ name, icon }) {
       if (!action.answer) return next(action)
       let { reply_voice: reply, search } = action.answer
       if (!reply && search && search.title) reply = search.title
-      if (isValidReply(reply)) { debounceNotify({ body: reply, title: name, icon }) }
+      if (isValidReply(reply)) {
+        debounceNotify({ body: reply, title: name, icon })
+      }
     }
     return next(action)
   }

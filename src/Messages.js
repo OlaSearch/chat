@@ -83,24 +83,26 @@ export default class Messages extends React.Component {
   }
   clickListener = e => {
     if (!e.target || e.target.nodeName !== 'A') return
-    let href = e.target.getAttribute('href')
-
-    /**
-     * Is this link inside a message? Log it separately
-     */
+    const href = e.target.getAttribute('href')
     const isMessageLink = e.target.closest('.olachat-message-reply')
-    const messageItem = e.target.closest('.olachat-messages-item')
-    const message = this.props.messages
-      .filter(({ id }) => id === messageItem.getAttribute('id'))
-      .reduce((_, a) => a, null)
+
     /**
      * If there is a href tag, consider the link as a message
      */
-    if (!href) {
+    if (!href && isMessageLink) {
       this.props.updateQueryTerm(e.target.text)
       e.preventDefault()
       return this.props.addMessage()
     }
+
+    /**
+     * Is this link inside a message? Log it separately
+     */
+
+    const messageItem = e.target.closest('.olachat-messages-item')
+    const message = this.props.messages
+      .filter(({ id }) => id === messageItem.getAttribute('id'))
+      .reduce((_, a) => a, null)
 
     /* Log */
     if (isMessageLink) {
@@ -115,11 +117,12 @@ export default class Messages extends React.Component {
       })
     }
 
+    /* TODO: When should we close the chatbot ? */
     /**
      * Final pass. Link has href and it goes to a new page
      * Hide the bot
      */
-    setTimeout(() => this.props.setBotStatus(false), 200)
+    // setTimeout(() => this.props.setBotStatus(false), 200)
   }
   componentWillUnmount () {
     this.isComponentMounted = false

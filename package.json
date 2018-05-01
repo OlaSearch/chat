@@ -1,6 +1,6 @@
 {
   "name": "@olasearch/chat",
-  "version": "3.2.8",
+  "version": "3.2.9",
   "description": "Chat User Interface elements",
   "main": "lib/index.js",
   "scripts": {
@@ -62,7 +62,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "expect": "^22.4.3",
     "jest": "^22.4.3",
-    "jsdom": "^11.9.0",
+    "jsdom": "^11.10.0",
     "node-sass": "^4.9.0",
     "pre-commit": "^1.2.2",
     "prettier-standard": "^8.0.1",
@@ -84,7 +84,7 @@
   },
   "dependencies": {
     "@olasearch/alite": "^1.0.5",
-    "@olasearch/core": "^3.2.1",
+    "@olasearch/core": "^3.2.4",
     "@olasearch/icons": "^1.0.2",
     "@olasearch/logger": "^1.3.6",
     "@olasearch/react-frame-portal": "^3.0.4",

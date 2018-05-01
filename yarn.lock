@@ -108,12 +108,11 @@
     redux-thunk "^2.2.0"
     xss-filters "^1.2.7"
 
-"@olasearch/core@^3.1.9":
-  version "3.1.9"
-  resolved "https://registry.yarnpkg.com/@olasearch/core/-/core-3.1.9.tgz#7d11b3939419a462f57a5c258aa84221c4a0c29b"
+"@olasearch/core@^3.2.3":
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/@olasearch/core/-/core-3.2.3.tgz#511bc6ff7dea4db90faa4e203d9c05df1dc1c38a"
   dependencies:
     "@olasearch/icons" "^1.0.2"
-    "@olasearch/react-frame-portal" "^3.0.2"
     "@olasearch/react-onclickoutside" "^6.7.3"
     "@olasearch/styled-jsx" "^2.2.6"
     babel-runtime "^6.26.0"
@@ -147,13 +146,9 @@
     "@olasearch/alite" "^1.0.2"
     "@olasearch/core" "^3.1.1"
 
-"@olasearch/react-frame-portal@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@olasearch/react-frame-portal/-/react-frame-portal-3.0.2.tgz#38becd290989d8b0a119bc60b02d16b16c3a37dc"
-
-"@olasearch/react-frame-portal@^3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@olasearch/react-frame-portal/-/react-frame-portal-3.0.3.tgz#a46ae18a005d09fcbc5888c752c41e9cba46ae00"
+"@olasearch/react-frame-portal@^3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@olasearch/react-frame-portal/-/react-frame-portal-3.0.4.tgz#776f7bc1b268cd52e90d80125b5ee97dbe6ac65a"
 
 "@olasearch/react-onclickoutside@^6.7.1-rc":
   version "6.7.1-rc"
@@ -4805,9 +4800,9 @@ jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
 
-jsdom@^11.5.1:
-  version "11.7.0"
-  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-11.7.0.tgz#8b45b657dae90d6d2d3a5f5d1126bb7102d0a172"
+jsdom@^11.10.0:
+  version "11.10.0"
+  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-11.10.0.tgz#a42cd54e88895dc765f03f15b807a474962ac3b5"
   dependencies:
     abab "^1.0.4"
     acorn "^5.3.0"
@@ -4836,9 +4831,9 @@ jsdom@^11.5.1:
     ws "^4.0.0"
     xml-name-validator "^3.0.0"
 
-jsdom@^11.9.0:
-  version "11.9.0"
-  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-11.9.0.tgz#58ac6dfd248d560d736b0202d74eedad55590cd9"
+jsdom@^11.5.1:
+  version "11.7.0"
+  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-11.7.0.tgz#8b45b657dae90d6d2d3a5f5d1126bb7102d0a172"
   dependencies:
     abab "^1.0.4"
     acorn "^5.3.0"
