@@ -2,16 +2,23 @@
   flex: 1;
   -webkit-flex: 1;
   padding: 16px 0 16px 0;
-  border-radius: 5px 5px 0 0;
-  overflow: scroll;
+  // border-radius: 5px 5px 0 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   position: relative;
+  /**
+   * Fixes delayed scroll in safari
+   */
+  border-radius: 0;
+  transform: translateZ(0);
+  
   @include media (phablet) {
     height: calc(100% + 1px);
   }
   position: relative;
   @include media (desktop) {
-    overflow: auto;
+    overflow-y: auto;
   }
 }
 

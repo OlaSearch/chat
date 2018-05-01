@@ -9,7 +9,7 @@
   flex-direction: column;
   -webkit-flex-direction: column;
   justify-content: space-between;
-  flex: 1;    
+  flex: 1;
 }
 
 .olachat-sidebar {  
@@ -27,7 +27,7 @@
   width: 0;
   opacity: 0;
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
 
   .olachat-bot-desktop & {
     position: relative;

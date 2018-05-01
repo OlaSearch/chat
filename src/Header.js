@@ -11,13 +11,19 @@ export default function Header ({
   debug,
   isDesktop,
   inline,
-  theme
+  theme,
+  component
 }) {
   /**
    * Hide header if its inline and inside a
    */
-  if (isDesktop && inline) return null
+
+  if (isDesktop && inline && !debug) return null
   if (!title && !debug) return null
+  /**
+   * If there is a custom component, render it
+   */
+  if (component) return component({ title, onHide })
   const showHideButton = debug || !isDesktop ? true : !!onHide
   return (
     <div className='olachat-header'>
@@ -42,5 +48,6 @@ export default function Header ({
 }
 
 Header.defaultProps = {
-  debug: false
+  debug: false,
+  component: null
 }

@@ -36,7 +36,7 @@ class Message extends React.Component {
   }
   static defaultProps = {
     showTimestamp: false,
-    chatBotMessageTimeout: 400
+    chatBotMessageTimeout: 600
   }
   scrollIntoView = node => {
     this.props.scrollIntoView({ id: this.props.message.id })
@@ -172,24 +172,17 @@ class Message extends React.Component {
     }
 
     const transitionStyles = {
-      entering: { opacity: 0, maxHeight: 0, overflow: 'hidden' },
-      exited: { opacity: 0, maxHeight: 0, overflow: 'hidden' },
+      entering: { opacity: 0 },
+      exited: { opacity: 0 },
       entered: { opacity: 1, maxHeight: 'none', overflow: 'visible' }
     }
-    const messageLen = sequence.message.filter(({ type }) => type === 'text')
-      .length
 
     const messageComponents = sequence.message.map(
       ({ type, content, search }, idx) => {
-        /**
-         * Make sure messages and slots appear together
-         * @type {Boolean}
-         */
-        const isSlot = type === 'slot'
         return (
           <Transition
             key={idx}
-            timeout={isSlot ? (idx - 1) * timeout : idx * timeout}
+            timeout={idx * timeout}
             classNames='message-animation'
             onEntered={this.scrollIntoView}
             mountOnEnter
@@ -202,29 +195,24 @@ class Message extends React.Component {
                     ...defaultStyle,
                     ...transitionStyles[state]
                   }}
+                  className='olachat-message-reply-outer'
                 >
                   {type === 'text' ? (
                     search ? (
-                      <div
-                        className='olachat-message-reply'
-                        dangerouslySetInnerHTML={createMessageMarkup(text)}
-                      />
+                      <div className='olachat-message-reply'>
+                        <div
+                          dangerouslySetInnerHTML={createMessageMarkup(text)}
+                        />
+                        <div className='olachat-message-arrow' />
+                      </div>
                     ) : (
-                      <div
-                        className='olachat-message-reply'
-                        dangerouslySetInnerHTML={createMessageMarkup(content)}
-                      />
+                      <div className='olachat-message-reply'>
+                        <div
+                          dangerouslySetInnerHTML={createMessageMarkup(content)}
+                        />
+                        <div className='olachat-message-arrow' />
+                      </div>
                     )
-                  ) : null}
-                  {isSlot ? (
-                    <SlotOptions
-                      onSubmit={addMessage}
-                      updateQueryTerm={updateQueryTerm}
-                      slot={slot}
-                      isActive={isActive}
-                      intent={intent}
-                      log={log}
-                    />
                   ) : null}
                 </div>
               )
@@ -233,13 +221,18 @@ class Message extends React.Component {
         )
       }
     )
+    const messageLen = messageComponents.length
     const detachedComponents =
       sequence.detached &&
       sequence.detached.map(({ type }, idx) => {
+        const isSlot = type === 'slot'
+        const seqTimeout = isSlot
+          ? (messageLen - 1 + idx) * timeout
+          : (messageLen + idx) * timeout
         return (
           <Transition
             key={idx}
-            timeout={(messageComponents.length + idx) * timeout}
+            timeout={seqTimeout}
             classNames='message-animation'
             mountOnEnter
             unmountOnExit
@@ -279,6 +272,16 @@ class Message extends React.Component {
                       totalResults={totalResults}
                     />
                   ) : null}
+                  {type === 'slot' ? (
+                    <SlotOptions
+                      onSubmit={addMessage}
+                      updateQueryTerm={updateQueryTerm}
+                      slot={slot}
+                      isActive={isActive}
+                      intent={intent}
+                      log={log}
+                    />
+                  ) : null}
                 </div>
               )
             }}
@@ -294,12 +297,14 @@ class Message extends React.Component {
           <Transition
             key={idx}
             timeout={{
+              /**
+               * Check this TODO
+               */
               enter:
                 (messageComponents.length + detachedComponents.length + idx) *
                 timeout,
               exit: 0
             }}
-            classNames='message-animation'
             onEntered={this.scrollIntoView}
             mountOnEnter
             unmountOnExit
@@ -330,37 +335,39 @@ class Message extends React.Component {
     return (
       <div className={messageClass}>
         {/* Message flex */}
-        <div className='olachat-message-inner'>
-          {isBot ? (
-            <Avatar
-              isBot={isBot}
-              userId={userId}
-              avatarBot={avatarBot}
-              avatarUser={avatarUser}
-            />
-          ) : null}
-          <div className='olachat-message-body'>
-            <div className='olchat-message-name'>
-              {isBot ? botName : userName}
-            </div>
-            <div className='olachat-message-content'>
-              <TransitionGroup appear>{messageComponents}</TransitionGroup>
-            </div>
-            {showTimestamp ? (
-              <div className='olachat-message-date'>
-                {DateParser.format(timestamp * 1000, 'DD MMM h:mm a')}
-              </div>
-            ) : null}
-
-            {error ? (
-              <FailureButtons
-                message={message}
-                onSubmit={addMessage}
-                isActive={isActive}
+        {messageLen ? (
+          <div className='olachat-message-inner'>
+            {isBot ? (
+              <Avatar
+                isBot={isBot}
+                userId={userId}
+                avatarBot={avatarBot}
+                avatarUser={avatarUser}
               />
             ) : null}
+            <div className='olachat-message-body'>
+              <div className='olchat-message-name'>
+                {isBot ? botName : userName}
+              </div>
+              <div className='olachat-message-content'>
+                <TransitionGroup appear>{messageComponents}</TransitionGroup>
+              </div>
+              {showTimestamp ? (
+                <div className='olachat-message-date'>
+                  {DateParser.format(timestamp * 1000, 'DD MMM h:mm a')}
+                </div>
+              ) : null}
+
+              {error ? (
+                <FailureButtons
+                  message={message}
+                  onSubmit={addMessage}
+                  isActive={isActive}
+                />
+              ) : null}
+            </div>
           </div>
-        </div>
+        ) : null}
         {/* / Message flex */}
         <div className='olachat-message-detach'>
           <TransitionGroup appear>{detachedComponents}</TransitionGroup>
@@ -374,7 +381,9 @@ class Message extends React.Component {
             updateQueryTerm={updateQueryTerm}
           />
         ) : null}
-        <TransitionGroup appear>{outerComponents}</TransitionGroup>
+        <div className='olachat-message-outer'>
+          <TransitionGroup appear>{outerComponents}</TransitionGroup>
+        </div>
       </div>
     )
   }

@@ -1,5 +1,6 @@
 import { utilities } from '@olasearch/core'
 import types from './../ActionTypes'
+import { isValidReply } from './../utils'
 
 const debounceNotify = utilities.debounce(notify, 300)
 
@@ -26,7 +27,7 @@ export default function ({ name, icon }) {
       if (!action.answer) return next(action)
       let { reply_voice: reply, search } = action.answer
       if (!reply && search && search.title) reply = search.title
-      if (reply) debounceNotify({ body: reply, title: name, icon })
+      if (isValidReply(reply)) { debounceNotify({ body: reply, title: name, icon }) }
     }
     return next(action)
   }

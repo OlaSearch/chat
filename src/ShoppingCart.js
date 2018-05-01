@@ -129,9 +129,9 @@ const transitionStyles = {
 function ShoppingCart ({ cart, isVisible, theme, addMessage, config }) {
   if (!cart) return null
   const {
-    chatbotCartEmptyTitle,
-    chatbotCartEmptySubtitle,
-    chatbotCartEmptyIcon
+    chatBotCartEmptyTitle,
+    chatBotCartEmptySubtitle,
+    chatBotCartEmptyIcon
   } = config
   const { title, elements = [], buttons = [] } = cart
   const len = elements.length
@@ -160,9 +160,9 @@ function ShoppingCart ({ cart, isVisible, theme, addMessage, config }) {
               <div className='olachat-module-body'>
                 {isEmptyCart ? (
                   <EmptyCart
-                    title={chatbotCartEmptyTitle}
-                    subtitle={chatbotCartEmptySubtitle}
-                    icon={chatbotCartEmptyIcon}
+                    title={chatBotCartEmptyTitle}
+                    subtitle={chatBotCartEmptySubtitle}
+                    icon={chatBotCartEmptyIcon}
                   />
                 ) : (
                   elements.map((element, idx) => (

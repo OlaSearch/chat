@@ -33,3 +33,12 @@
 .olachat-menu-link {
   cursor: pointer;
 }
+
+/**
+ * If menu title is empty
+ */
+.olachat-dp-body:first-child {
+  .olachat-menu-link:first-child {
+    border-radius: 5px 5px 0 0;
+  }
+}

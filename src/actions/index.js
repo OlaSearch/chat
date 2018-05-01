@@ -492,7 +492,7 @@ export function getShoppingCart ({ intent }) {
         bot: true
       },
       query: {
-        q: 'Show me summary',
+        q: '',
         intent,
         skipPersistState: true
       }

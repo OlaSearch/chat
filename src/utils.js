@@ -187,7 +187,7 @@ export function createMessageSequence (response) {
     }
   }
   if (answer.slot && answer.slot.options) {
-    sequence.message.push({
+    sequence.detached.push({
       type: 'slot'
     })
   }
@@ -241,4 +241,9 @@ export function createSlot ({ id, name, value, type }) {
     type,
     value
   }
+}
+
+export function isValidReply (reply) {
+  if (Array.isArray(reply)) return reply.length
+  return !!reply
 }

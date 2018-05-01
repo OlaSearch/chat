@@ -64,8 +64,9 @@ class HelpMenu extends React.Component {
       'olachat-helpmenu-open': this.props.isCollapsed
     })
     const { translate, config, cart } = this.props
-    const { botLinks = [], chatBotPrint = true, chatbotCartMenuText } = config
+    const { botLinks = [], chatBotPrint = true, chatBotCartMenuText } = config
     const cartCount = cart && cart.elements ? cart.elements.length : null
+    const menuTitle = translate('chat_menu')
     return (
       <div className={klass}>
         <button
@@ -77,7 +78,7 @@ class HelpMenu extends React.Component {
           {cartCount ? <Badge count={cartCount} /> : null}
         </button>
         <div className='olachat-dp'>
-          <div className='olachat-dp-title'>{translate('chat_menu')}</div>
+          {menuTitle && <div className='olachat-dp-title'>{menuTitle}</div>}
           <div className='olachat-dp-body'>
             {botLinks.map(({ title, url }, idx) => {
               return (
@@ -102,7 +103,7 @@ class HelpMenu extends React.Component {
                 className='olachat-menu-link'
                 tabIndex={0}
               >
-                {chatbotCartMenuText} <Badge inline count={cartCount} />
+                {chatBotCartMenuText} <Badge inline count={cartCount} />
               </a>
             ) : null}
             {chatBotPrint ? (

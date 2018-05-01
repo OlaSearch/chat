@@ -32,6 +32,7 @@ class Chat extends React.Component {
         chatBotMessageTimeout: this.props.config.chatBotMessageTimeout
       })
     }
+
     /**
      * If its disabled
      */
@@ -85,6 +86,7 @@ class Chat extends React.Component {
     const classes = cx('olachat', { 'olachat-sidebar-visible': showSidebar })
     return (
       <div className={classes}>
+        <OfflineIndicator />
         <div className='olachat-group'>
           <div className='olachat-main'>
             <Header
@@ -92,10 +94,10 @@ class Chat extends React.Component {
               title={this.props.title}
               theme={theme}
               debug={this.props.debug}
+              inline={this.props.config.chatBotInline}
               isDesktop={this.props.isDesktop}
               {...this.props.headerProps}
             />
-            <OfflineIndicator />
             <Messages
               messages={this.props.messages}
               flipped={this.props.flipped}
@@ -174,7 +176,7 @@ class Chat extends React.Component {
             // prettier-ignore
             :global(.olachat-bot-desktop) .olachat :global(.olachat-input-textarea),
             :global(.olachat-bot-desktop) .olachat :global(.olachat-query-suggestion) {
-              font-size: ${theme.mediumFontSize};
+              font-size: ${theme.chatInputFontSize};
             }
             // prettier-ignore
             .olachat :global(.ola-faux-checkbox-checked .ola-checkbox-icon) {

@@ -119,9 +119,18 @@
 /**
  * Multiple slots
  */
-.olachat-slots-multiple-group {
-  margin-top: 8px;
+.olachat-slots-multiple-group, .olachat-slots {
+  max-width: 500px;
+  .olachat-bot-mobile & {
+    padding-left: 30px + 8px;    
+  }
 }
+.olachat-message-error {
+  .olachat-slots-multiple-group, .olachat-slots {
+    max-width: none;
+  }
+}
+
 .olachat-slots-multiple {
   border: 1px #ccc solid;
   border-radius: 20px;
