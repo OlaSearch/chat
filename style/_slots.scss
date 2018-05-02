@@ -2,7 +2,7 @@
   background-color: transparent;
   animation: 0.3s ease-in-out 0s 1 slideUp;
   overflow-x: auto;
-  padding-bottom: 8px;
+  margin-bottom: 8px;
 }
 
   /**
@@ -20,7 +20,7 @@
   line-height: 1.5;
   display: block;  
   border-radius: 20px;
-  padding: 6px 14px;
+  padding: 7px 14px;
   margin: 8px 8px 1px 0;
   color: $base-color;
   font-weight: 600;
@@ -47,7 +47,6 @@
     margin-bottom: -1px;
     margin-top: 0;
     color: $link-color;
-    padding: 10px 14px;
     border-radius: 0;
     white-space: normal;
 
@@ -65,10 +64,6 @@
   &:last-child {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-  }
-
-  &.olachat-slots-show {
-    text-transform: uppercase;
   }
 
 
@@ -90,6 +85,13 @@
   }  
 }
 
+.olachat-slots .olachat-slots-showmore {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .olachat-slots-list {
   display: flex;
   padding: 0 0 0 0;
@@ -107,10 +109,26 @@
 
   .olachat-message-bot & {
     justify-content: flex-start;
-  }
+  }  
+}
 
-  .olachat-slots-style-list & {
+.olachat-slots-style-list {
+  border: 1px $blue solid;
+  border-radius: 20px;
+  transform: translateZ(0);
+  overflow: hidden;
+  .olachat-slots-list {
     display: block;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .olachat-slots-button {
+    border-width: 1px 0 0 0;
+    border-radius: 0;
+
+    &:first-child {
+      border-top-width: 0;
+    }
   }
 }
 
@@ -119,10 +137,15 @@
 /**
  * Multiple slots
  */
-.olachat-slots-multiple-group, .olachat-slots {
+.olachat-slots-multiple-group, .olachat-slots {  
+  .olachat-bot-mobile & {
+    margin-left: 30px + 8px;    
+  }
+}
+.olachat-slots-multiple-group, .olachat-slots-style-list {
   max-width: 500px;
   .olachat-bot-mobile & {
-    padding-left: 30px + 8px;    
+    max-width: 300px;
   }
 }
 .olachat-message-error {

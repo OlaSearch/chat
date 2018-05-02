@@ -86,7 +86,7 @@ class SlotOptions extends Component {
           {replies}
           {showMoreButton ? (
             <button
-              className='olachat-slots-button olachat-slots-show'
+              className='olachat-slots-button olachat-slots-showmore'
               type='button'
               disabled={!isActive}
               onClick={this.handleOpen}

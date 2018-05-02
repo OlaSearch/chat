@@ -1,29 +1,29 @@
-.olachat-quickreplies {
-  font-size: 14px;
-  background-color: transparent;
-  animation: 0.3s ease-in-out 0s 1 slideUp;
-  display: flex;
-  overflow-x: auto;
-  border-top: none;
-  -webkit-overflow-scrolling: touch;
-  flex-wrap: nowrap;
+// .olachat-quickreplies {
+//   font-size: 14px;
+//   background-color: transparent;
+//   animation: 0.3s ease-in-out 0s 1 slideUp;
+//   display: flex;
+//   overflow-x: auto;
+//   border-top: none;
+//   -webkit-overflow-scrolling: touch;
+//   flex-wrap: nowrap;
   
-  justify-content: center;
-}
+//   justify-content: center;
+// }
 
-/**
- * Hide scrollbar
- * @type {[type]}
- */
-.olachat-quickreplies::-webkit-scrollbar {
-  display: none;
-}
+// /**
+//  * Hide scrollbar
+//  * @type {[type]}
+//  */
+// .olachat-quickreplies::-webkit-scrollbar {
+//   display: none;
+// }
 
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
-  .olachat-quickreplies {
-    animation: none;
-  }
-}
+// @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+//   .olachat-quickreplies {
+//     animation: none;
+//   }
+// }
 
 .olachat-quickreplies-button {
   border-radius: 20px;
@@ -33,15 +33,10 @@
   color: $blue;
   background-color: transparent;
   padding: 6px 14px;
-  margin: 0 3px 0 3px;
+  margin: 0;
   flex: 0 0 auto;
   display: block;
-
-  @include media (tablet) {
-    // display: inline-block;
-    // margin-bottom: 0;
-    // width: auto;
-  }
+  white-space: nowrap;
 
   &:hover {
     color: white;
@@ -49,9 +44,42 @@
   }
 }
 
-.olachat-quickreplies-list {
-  pointer-events: all;
-  /* Message inner has a bottom padding of 0.5rem */
-  padding: 8px 12px 8px 12px;
-  display: flex;
+
+// .olachat-quickreplies-list {
+//   pointer-events: all;
+//   padding: 8px 12px 8px 12px;
+//   display: flex;
+// }
+
+/**
+ * Swipeable inside outer
+ */
+.olachat-message-outer {
+  .ola-swipeable {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .ola-swipeable-flow {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+/**
+ * Swipeable
+ */
+.olachat-quickreplies-swipe {
+  text-align: center;
+
+  .ola-swipeable-item {
+    padding: 8px 4px;
+
+    &:first-child {
+      padding-left: 16px;
+    }
+    &:last-child {
+      padding-right: 16px;
+    }
+  }
 }

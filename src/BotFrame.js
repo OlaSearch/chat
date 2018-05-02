@@ -144,6 +144,8 @@ class BotFrame extends React.Component {
         -webkit-overflow-scrolling : touch !important;
         overflow: hidden !important;
         height: 100% !important;
+        margin: 0;
+        padding: 0;
     `
     document.getElementsByTagName('head')[0].appendChild(style)
   }

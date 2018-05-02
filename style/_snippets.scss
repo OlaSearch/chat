@@ -16,8 +16,15 @@
     margin-bottom: 16px;
   }
 
-  .ola-card-template-list {
+  .ola-card-template-list, .ola-card-template-map {
     margin: 0;
+  }
+
+  /**
+   * Swipeable adds 8px padding-bottom
+   */
+  .ola-card-template-carousel {
+    margin-bottom: 8px;
   }
 
   .ola-snippet-inner, .ola-card-inner {
@@ -43,6 +50,12 @@
     font-weight: bold;
     padding: 0;
     margin: 0 0 5px 0;
+  }
+
+  .ola-answer-header .ola-field-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: normal;
   }
 
   .ola-link-bookmark-action {

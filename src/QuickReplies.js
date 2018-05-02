@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Decorators } from '@olasearch/core'
+import { Decorators, Swipeable } from '@olasearch/core'
 import { EMPTY_ARRAY } from './Settings'
 
 /**
@@ -28,17 +28,19 @@ class QuickReplies extends React.PureComponent {
     const { quickReplies } = this.props
     if (!quickReplies.length) return null
     return (
-      <div className='olachat-quickreplies'>
-        <div className='olachat-quickreplies-list'>
-          {quickReplies.map((item, idx) => (
-            <QuickReplyButton
-              key={idx}
-              handleClick={this.handleClick}
-              {...item}
-            />
-          ))}
-        </div>
-      </div>
+      <Swipeable
+        className='olachat-quickreplies-swipe'
+        itemWidth='auto'
+        showNavigation={false}
+      >
+        {quickReplies.map((item, idx) => (
+          <QuickReplyButton
+            key={idx}
+            handleClick={this.handleClick}
+            {...item}
+          />
+        ))}
+      </Swipeable>
     )
   }
 }

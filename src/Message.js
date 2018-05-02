@@ -31,9 +31,6 @@ class Message extends React.Component {
       this.props.theme !== nextProps.theme
     )
   }
-  componentDidUpdate () {
-    this.props.onUpdate && this.props.onUpdate()
-  }
   static defaultProps = {
     showTimestamp: false,
     chatBotMessageTimeout: 600
@@ -57,7 +54,8 @@ class Message extends React.Component {
       updateQueryTerm,
       showTimestamp,
       enableFeedback,
-      chatBotMessageTimeout
+      chatBotMessageTimeout,
+      intentsFeedbackDisabled
     } = this.props
     const {
       userId,
@@ -79,7 +77,8 @@ class Message extends React.Component {
       context = {},
       payload,
       quick_replies: quickReplies,
-      sequence
+      sequence,
+      stale
     } = message
     const isBot = !userId
     var text = isBot ? message.reply : message.label || message.message
@@ -104,6 +103,13 @@ class Message extends React.Component {
      *
      */
     const needsLocation = message.location && !context.location
+
+    /**
+     * Show feedback
+     */
+    const showFeedback =
+      isBot && enableFeedback && intentsFeedbackDisabled.indexOf(intent) === -1
+
     /**
      * search => only exists if intent engine is ON
      */
@@ -162,13 +168,35 @@ class Message extends React.Component {
       )
     }
 
-    const duration = isActive ? 300 : 0
-    const timeout = isActive ? chatBotMessageTimeout : 0
+    const duration = isActive && !stale ? 300 : 0
+    const timeout = isActive && !stale ? chatBotMessageTimeout : 0
     const defaultStyle = {
       transition: `all ${duration}ms ease-in-out`,
       opacity: 0,
       maxHeight: 0,
       overflow: 'hidden'
+    }
+    const defaultSlideUpStyle = {
+      transition: `all ${duration}ms ease-in-out`,
+      transform: 'translate3d(0, 10px, 0)',
+      opacity: 0,
+      maxHeight: 0,
+      overflow: 'hidden'
+    }
+    const transitionSlideUpStyle = {
+      entering: {
+        opacity: 0,
+        maxHeight: 0,
+        transform: 'translate3d(0, 10px, 0)',
+        overflow: 'hidden'
+      },
+      exited: {},
+      entered: {
+        opacity: 1,
+        maxHeight: 'none',
+        overflow: 'visible',
+        transform: 'translate3d(0, 0, 0)'
+      }
     }
 
     const transitionStyles = {
@@ -222,10 +250,12 @@ class Message extends React.Component {
       }
     )
     const messageLen = messageComponents.length
+    var hasSlot = false
     const detachedComponents =
       sequence.detached &&
       sequence.detached.map(({ type }, idx) => {
         const isSlot = type === 'slot'
+        if (isSlot) hasSlot = true
         const seqTimeout = isSlot
           ? (messageLen - 1 + idx) * timeout
           : (messageLen + idx) * timeout
@@ -289,10 +319,20 @@ class Message extends React.Component {
         )
       })
 
+    const detachedLen = detachedComponents && detachedComponents.length
     const outerComponents =
       isActive &&
       sequence.outer &&
       sequence.outer.map(({ type }, idx) => {
+        /**
+         * Removed detachedLen
+         */
+        const outerTimeout =
+          ((hasSlot || (messageLen === 1 && !detachedLen)
+            ? messageLen - 1
+            : messageLen) +
+            idx) *
+          timeout
         return (
           <Transition
             key={idx}
@@ -300,9 +340,7 @@ class Message extends React.Component {
               /**
                * Check this TODO
                */
-              enter:
-                (messageComponents.length + detachedComponents.length + idx) *
-                timeout,
+              enter: outerTimeout,
               exit: 0
             }}
             onEntered={this.scrollIntoView}
@@ -313,8 +351,8 @@ class Message extends React.Component {
               return (
                 <div
                   style={{
-                    ...defaultStyle,
-                    ...transitionStyles[state]
+                    ...defaultSlideUpStyle,
+                    ...transitionSlideUpStyle[state]
                   }}
                 >
                   {type === 'quick_replies' && isActive ? (
@@ -372,7 +410,7 @@ class Message extends React.Component {
         <div className='olachat-message-detach'>
           <TransitionGroup appear>{detachedComponents}</TransitionGroup>
         </div>
-        {isBot && enableFeedback ? (
+        {showFeedback ? (
           <MessageFeedback
             isBot={isBot}
             message={message}

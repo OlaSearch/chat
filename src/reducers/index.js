@@ -371,6 +371,17 @@ export default (state = initialState, action) => {
         cart: action.answer.card
       }
 
+    case types.MARK_MESSAGES_STALE:
+      return {
+        ...state,
+        messages: state.messages.map(item => {
+          return {
+            ...item,
+            stale: true
+          }
+        })
+      }
+
     default:
       return state
   }

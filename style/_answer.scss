@@ -23,13 +23,15 @@
 /**
  * Wrapper
  */
-.ola-answer-card-wrapper,
-// .ola-answer-list-wrapper,
-.ola-answer-carousel-item-wrapper {
+.ola-answer-card-wrapper {
   padding: 14px;
-  background: white;
-  box-shadow: $small-box-shadow;
-  border-radius: 5px;
+}
+
+/**
+ * Answer list wrapper
+ */
+.olachat .ola-answer-list-wrapper, .olachat .ola-answer-map {
+  padding: 8px 0;
 }
 
 /**
@@ -39,6 +41,7 @@
   > .ola-answer-card-wrapper {
     box-shadow: none;
     padding: 0;
+    background: transparent;
   }
 }
 
@@ -62,4 +65,14 @@
  */
 .ola-answer-card {
   // margin: 0 0 16px 0;
+}
+
+
+/**
+ * Answer button
+ */
+.ola-answer-button {
+  .olachat-bot-desktop &, .olachat-bot-tablet & {
+    width: auto;
+  }
 }

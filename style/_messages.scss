@@ -49,14 +49,8 @@
 .olachat-message {  
   font-size: 14px;
   @include clearfix;  
-  min-height: 56px;
   animation: slideUpFade 0.2s linear;
   padding-bottom: 8px;
-
-  &:hover {
-    // background-color: #f1f1f1;
-  }
-
 
   /**
    * List

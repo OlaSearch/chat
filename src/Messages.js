@@ -273,16 +273,17 @@ export default class Messages extends React.Component {
                         message={message}
                         addMessage={this.props.addMessage}
                         isActive={idx === messages.length - 1}
-                        // isActive={message.id === this.props.newMessageId}
                         botName={this.props.botName}
                         userName={this.props.userName}
                         log={this.props.log}
                         location={this.props.location}
-                        isMounted={this.isComponentMounted}
                         updateQueryTerm={this.props.updateQueryTerm}
                         theme={theme}
                         scrollIntoView={this.scrollIntoView}
                         enableFeedback={this.props.enableFeedback}
+                        intentsFeedbackDisabled={
+                          this.props.intentsFeedbackDisabled
+                        }
                         chatBotMessageTimeout={this.props.chatBotMessageTimeout}
                       />
                     )}
@@ -304,15 +305,48 @@ export default class Messages extends React.Component {
             .olachat-messages :global(.olachat-message-reply) {
               background-color: ${theme.chatUserMessageBackground};
               color: ${theme.chatUserMessageColor};
+              padding: ${theme.chatMessagePadding};
+              border-radius: ${theme.chatMessageBorderRadius};
+            }
+            .olachat-messages :global(.typing-indicator) {
+              font-size: ${theme.chatSlotButtonFontSize};
+              padding: ${theme.chatTypingIndicatorPadding};
+              border-radius: ${theme.chatMessageBorderRadius};
             }
             .olachat-messages :global(.olachat-message) {
               font-size: ${theme.chatMessageFontSize};
+              min-height: ${theme.chatMessageMinHeight};
             }
             .olachat-messages :global(.olachat-quickreplies) {
               font-size: ${theme.chatQuickReplyFontSize};
             }
             .olachat-messages :global(.olachat-slots-button) {
               font-size: ${theme.chatSlotButtonFontSize};
+              padding: ${theme.chatSlotsPadding};
+              border-radius: ${theme.chatMessageBorderRadius};
+            }
+            :global(.olachat-bot-mobile)
+              .olachat-messages
+              :global(.olachat-slots-button) {
+              border-radius: 0;
+            }
+            .olachat-messages :global(.olachat-slots-button:first-child) {
+              border-top-left-radius: ${theme.chatMessageBorderRadius};
+              border-top-right-radius: ${theme.chatMessageBorderRadius};
+            }
+            .olachat-messages :global(.olachat-slots-button:last-child) {
+              border-bottom-left-radius: ${theme.chatMessageBorderRadius};
+              border-bottom-right-radius: ${theme.chatMessageBorderRadius};
+            }
+            .olachat-messages
+              :global(.olachat-slots-style-list .olachat-slots-button) {
+              border-radius: 0;
+            }
+            .olachat-messages :global(.olachat-slots-showmore) {
+              font-size: 14px;
+            }
+            .olachat-messages :global(.olachat-slots-style-list) {
+              border-color: ${theme.chatBotSlotButtonColor};
             }
             .olachat-messages
               :global(.olachat-message-bot .olachat-message-reply) {
@@ -342,6 +376,7 @@ export default class Messages extends React.Component {
               line-height: 1.5;
               border-color: ${theme.chatBotSlotButtonColor};
               color: ${theme.chatBotSlotButtonColor};
+              padding: ${theme.chatSlotsPadding};
             }
             .olachat-messages :global(.olachat-btn-primary:hover) {
               background-color: ${theme.chatBotSlotButtonColor};
@@ -378,6 +413,8 @@ export default class Messages extends React.Component {
               color: ${theme.chatQuickReplyColor};
               border-color: ${theme.chatQuickReplyColor};
               line-height: 1.5;
+              padding: ${theme.chatQuickReplyPadding};
+              border-radius: ${theme.chatMessageBorderRadius};
             }
             .olachat-messages :global(.olachat-quickreplies-button:hover) {
               background: ${theme.chatQuickReplyHoverBackground};

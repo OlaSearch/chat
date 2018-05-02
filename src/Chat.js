@@ -116,6 +116,9 @@ class Chat extends React.Component {
               theme={theme}
               enableFeedback={chatBotFeedback}
               chatBotMessageTimeout={this.props.config.chatBotMessageTimeout}
+              intentsFeedbackDisabled={
+                this.props.config.intentsFeedbackDisabled
+              }
             />
             <Input
               onSubmit={this.addMessage}
@@ -226,6 +229,7 @@ function mapStateToProps (state) {
     isDesktop: state.Device.isDesktop,
     location: state.Context.location,
     isSidebarOpen: state.Conversation.isSidebarOpen,
+    intentsFeedbackDisabled: state.Conversation.intentsFeedbackDisabled,
     searchInput: state.QueryState.searchInput,
     cart: state.Conversation.cart
   }

@@ -393,9 +393,19 @@ export function setFeedbackRating (rating) {
  */
 export function setBotStatus (status) {
   invariant(typeof status !== 'undefined', 'Status is required (Boolean)')
-  return {
-    type: types.SET_BOT_STATUS,
-    status
+  return (dispatch, getState) => {
+    dispatch({
+      type: types.SET_BOT_STATUS,
+      status
+    })
+    /**
+     * If the bot is hidden, update all messages to mark them as stale
+     */
+    if (status === false) {
+      dispatch({
+        type: types.MARK_MESSAGES_STALE
+      })
+    }
   }
 }
 
