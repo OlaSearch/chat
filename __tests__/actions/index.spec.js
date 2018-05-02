@@ -38,8 +38,13 @@ describe('Actions', () => {
 
   it('will dispatch show hide bot', () => {
     expect(() => actions.setBotStatus()).toThrowError()
-    // expect(actions.setBotStatus(true)).toEqual({ type: ActionTypes.SET_BOT_STATUS, status: true})
-    // expect(actions.setBotStatus(false)).toEqual({ type: ActionTypes.SET_BOT_STATUS, status: false})
+    expect(typeof actions.setBotStatus(true)).toBe('function')
+    const getState = () => ({users: 'foo'});
+    const dispatch = jest.fn()
+    actions.setBotStatus(true)(dispatch, getState)
+    expect(dispatch).toHaveBeenCalledWith({ type: ActionTypes.SET_BOT_STATUS, status: true})
+    actions.setBotStatus(false)(dispatch, getState)
+    expect(dispatch).toHaveBeenCalledWith({ type: ActionTypes.SET_BOT_STATUS, status: false})
   })
 
   it('will dispatch show hide bot search results', () => {
