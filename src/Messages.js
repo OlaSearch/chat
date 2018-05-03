@@ -325,9 +325,8 @@ export default class Messages extends React.Component {
               padding: ${theme.chatSlotsPadding};
               border-radius: ${theme.chatMessageBorderRadius};
             }
-            :global(.olachat-bot-mobile)
-              .olachat-messages
-              :global(.olachat-slots-button) {
+            // prettier-ignore
+            :global(.olachat-bot-mobile) .olachat-messages :global(.olachat-slots-button) {
               border-radius: 0;
             }
             .olachat-messages :global(.olachat-slots-button:first-child) {
