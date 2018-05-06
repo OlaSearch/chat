@@ -14,7 +14,6 @@ import SidebarIcon from '@olasearch/icons/lib/sidebar'
 import { GeoLocation } from '@olasearch/core'
 import { ThemeConsumer } from '@olasearch/core'
 import { getFacetSuggestions, getSuggestSlotType, createSlot } from './utils'
-import { withDocument } from '@olasearch/react-frame-portal'
 
 const supportsVoice =
   (navigator.getUserMedia ||
@@ -37,9 +36,6 @@ class Input extends React.Component {
       startToken: null,
       endToken: null
     }
-  }
-  static contextTypes = {
-    document: PropTypes.object
   }
   static defaultProps = {
     suggestionsLimit: 5,
@@ -482,6 +478,7 @@ class Input extends React.Component {
             enableCart={this.props.enableCart}
             toggleSidebar={this.props.toggleSidebar}
             cart={this.props.cart}
+            document={this.props.document}
           />
           <div className='olachat-input'>
             <Textarea
@@ -549,7 +546,5 @@ class Input extends React.Component {
 }
 
 export default connect(null)(
-  Decorators.withConfig(
-    Decorators.withTranslate(withDocument(listensToClickOutside(Input)))
-  )
+  Decorators.withConfig(Decorators.withTranslate(listensToClickOutside(Input)))
 )

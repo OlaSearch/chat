@@ -1,7 +1,6 @@
 import React from 'react'
 import { Bookmarks as Bookmarking, Decorators, Arrow } from '@olasearch/core'
 import listensToClickOutside from '@olasearch/react-onclickoutside'
-import { withDocument } from '@olasearch/react-frame-portal'
 import { createMessageMarkup } from './utils'
 import Close from '@olasearch/icons/lib/x'
 import BookMark from '@olasearch/icons/lib/bookmark'
@@ -66,4 +65,4 @@ function BookmarkRender ({ bookmarks, removeBookmark, toggle }) {
 
 const BookmarksContainer = listensToClickOutside(Bookmarks)
 
-export default Decorators.withToggle(withDocument(BookmarksContainer))
+export default Decorators.withToggle(BookmarksContainer)

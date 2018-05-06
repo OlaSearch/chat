@@ -113,7 +113,9 @@ class Chat extends React.Component {
               isDesktop={this.props.isDesktop}
               {...this.props.headerProps}
             />
-            {chatBotMessageActions && <Bookmarks />}
+            {chatBotMessageActions && (
+              <Bookmarks document={this.props.document} />
+            )}
             <Messages
               messages={this.props.messages}
               flipped={this.props.flipped}
@@ -156,6 +158,7 @@ class Chat extends React.Component {
               enableCart={chatBotCart}
               cart={this.props.cart}
               closeOnEscape={this.props.closeOnEscape}
+              document={this.props.document}
             />
           </div>
           <Sidebar

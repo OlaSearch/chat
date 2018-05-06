@@ -7,7 +7,6 @@ import { OLACHAT_IFRAME_ID } from './Settings'
 import Badge from './Badge'
 import Menu from '@olasearch/icons/lib/menu'
 import Print from '@olasearch/icons/lib/printer'
-import { withDocument } from '@olasearch/react-frame-portal'
 
 /**
  * Help menu
@@ -145,8 +144,6 @@ const HelpMenuContainer = listensToClickOutside(HelpMenu)
 
 export default Decorators.withToggle(
   Decorators.withConfig(
-    Decorators.withTranslate(
-      Decorators.withLogger(withDocument(HelpMenuContainer))
-    )
+    Decorators.withTranslate(Decorators.withLogger(HelpMenuContainer))
   )
 )
