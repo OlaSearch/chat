@@ -119,6 +119,7 @@ class Bot extends Component {
       onHide: this.toggleActive,
       startOver: this.props.startOver,
       headerProps: this.props.headerProps,
+      closeOnEscape: this.props.closeOnEscape,
       ...this.props.headerProps,
       ...this.props.avatarProps,
       ...this.props.botProps,

@@ -235,6 +235,7 @@ export default class Messages extends React.Component {
   }
   registerRef = el => {
     this.messagesEl = el
+    this.props.innerRef && this.props.innerRef(el)
   }
   shouldComponentUpdate (nextProps, nextState) {
     return (
@@ -281,6 +282,8 @@ export default class Messages extends React.Component {
                         theme={theme}
                         scrollIntoView={this.scrollIntoView}
                         enableFeedback={this.props.enableFeedback}
+                        chatBotMessageActions={this.props.chatBotMessageActions}
+                        isPhone={this.props.isPhone}
                         intentsFeedbackDisabled={
                           this.props.intentsFeedbackDisabled
                         }

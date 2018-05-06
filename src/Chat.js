@@ -2,6 +2,7 @@ import React from 'react'
 import Header from './Header'
 import Input from './Input'
 import Messages from './Messages'
+import Bookmarks from './Bookmarks'
 import { connect } from 'react-redux'
 import {
   addMessage,
@@ -13,6 +14,7 @@ import { Decorators } from '@olasearch/core'
 import OfflineIndicator from './OfflineIndicator'
 import Sidebar from './Sidebar'
 import cx from 'classnames'
+import scrollIntoView from 'dom-scroll-into-view'
 
 class Chat extends React.Component {
   static defaultProps = {
@@ -76,11 +78,23 @@ class Chat extends React.Component {
   registerRef = el => {
     this.MessageContainer = el
   }
+  // handleScrollTop = () => {
+  //   scrollIntoView(this.MessageContainer, document, {
+  //     onlyScrollIfNeeded: true
+  //   })
+  //   this.MessageContainer.scrollIntoView(true)
+  // }
   render () {
     const {
       theme,
       isSidebarOpen,
-      config: { chatBotFeedback, chatBotCart }
+      config: {
+        chatBotFeedback,
+        chatBotCart,
+        chatBotMessageActions,
+        chatBotMessageTimeout,
+        intentsFeedbackDisabled
+      }
     } = this.props
     const showSidebar = isSidebarOpen && chatBotCart
     const classes = cx('olachat', { 'olachat-sidebar-visible': showSidebar })
@@ -98,10 +112,11 @@ class Chat extends React.Component {
               isDesktop={this.props.isDesktop}
               {...this.props.headerProps}
             />
+            {chatBotMessageActions && <Bookmarks />}
             <Messages
               messages={this.props.messages}
               flipped={this.props.flipped}
-              ref={this.registerRef}
+              innerRef={this.registerRef}
               onLoad={this.props.onLoad}
               avatarBot={this.props.avatarBot}
               avatarUser={this.props.avatarUser}
@@ -114,11 +129,11 @@ class Chat extends React.Component {
               location={this.props.location}
               newMessageId={this.props.newMessageId}
               theme={theme}
+              isPhone={this.props.isPhone}
               enableFeedback={chatBotFeedback}
-              chatBotMessageTimeout={this.props.config.chatBotMessageTimeout}
-              intentsFeedbackDisabled={
-                this.props.config.intentsFeedbackDisabled
-              }
+              chatBotMessageTimeout={chatBotMessageTimeout}
+              chatBotMessageActions={chatBotMessageActions}
+              intentsFeedbackDisabled={intentsFeedbackDisabled}
             />
             <Input
               onSubmit={this.addMessage}
@@ -128,6 +143,7 @@ class Chat extends React.Component {
               isTyping={this.props.isTyping}
               searchInput={this.props.searchInput}
               isPhone={this.props.isPhone}
+              isDesktop={this.props.isDesktop}
               onRequestClose={this.props.onRequestClose}
               messages={this.props.messages}
               voiceInput={this.props.voiceInput}
@@ -137,6 +153,7 @@ class Chat extends React.Component {
               disabled={this.props.disabled}
               enableCart={chatBotCart}
               cart={this.props.cart}
+              closeOnEscape={this.props.closeOnEscape}
             />
           </div>
           <Sidebar

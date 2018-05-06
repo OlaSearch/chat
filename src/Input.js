@@ -42,7 +42,8 @@ class Input extends React.Component {
     document: PropTypes.object
   }
   static defaultProps = {
-    suggestionsLimit: 5
+    suggestionsLimit: 5,
+    closeOnEscape: true
   }
   handleClickOutside = event => {
     /* Check if its already closed */
@@ -54,7 +55,7 @@ class Input extends React.Component {
       const currentMessage = this.props.messages[this.props.messages.length - 1]
       /* Focus input: Expecting user input */
       if (currentMessage && currentMessage.slot) {
-        setTimeout(this.Input.el.focus())
+        if (this.props.isDesktop) setTimeout(this.Input.el.focus())
       }
     }
   }
@@ -239,7 +240,7 @@ class Input extends React.Component {
       this.Input.autoGrow()
 
       /* Focus */
-      if (!this.props.isPhone) this.Input.el.focus()
+      if (this.props.isDesktop) this.Input.el.focus()
     }, textClearingDelay)
 
     /* Submit the message */
@@ -308,7 +309,9 @@ class Input extends React.Component {
           /**
            * Only if the chatbot is not inline
            */
+          if (!this.props.closeOnEscape) return
           !this.props.config.chatBotInline &&
+            this.props.closeOnEscape &&
             this.props.onRequestClose &&
             this.props.onRequestClose()
         } else {

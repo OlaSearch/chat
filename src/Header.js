@@ -12,6 +12,7 @@ export default function Header ({
   isDesktop,
   inline,
   theme,
+  onClick,
   component
 }) {
   /**
@@ -23,10 +24,10 @@ export default function Header ({
   /**
    * If there is a custom component, render it
    */
-  if (component) return component({ title, onHide })
+  if (component) return component({ title, onHide, onClick })
   const showHideButton = debug || !isDesktop ? true : !!onHide
   return (
-    <div className='olachat-header'>
+    <div className='olachat-header' onClick={onClick}>
       <div className='olachat-header-title'>{title}</div>
       {showHideButton ? (
         <button className='olachat-header-hide' onClick={onHide}>

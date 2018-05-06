@@ -225,14 +225,16 @@ class BotFrame extends React.Component {
                 name='viewport'
                 content='width=device-width, initial-scale=1'
               />
-              {css && <style>{css}</style>}
             </React.Fragment>
           }
           id={OLACHAT_IFRAME_ID}
           initialContent={this.props.initialContent}
           title='Ola Chat'
         >
-          <Bot {...this.props} showBubbleLabel={showBubbleLabel} iFrame />
+          <React.Fragment>
+            {css && <style>{css}</style>}
+            <Bot {...this.props} showBubbleLabel={showBubbleLabel} iFrame />
+          </React.Fragment>
         </Frame>
         {inviteVisible ? (
           <Frame
@@ -251,14 +253,16 @@ class BotFrame extends React.Component {
                   name='viewport'
                   content='width=device-width, initial-scale=1'
                 />
-                {css && <style>{css}</style>}
               </React.Fragment>
             }
             id={OLACHAT_INVITE_IFRAME_ID}
             initialContent={this.props.initialContent}
             title='Ola Chat'
           >
-            <InviteNotification {...this.props} iFrame />
+            <React.Fragment>
+              {css && <style>{css}</style>}
+              <InviteNotification {...this.props} iFrame />
+            </React.Fragment>
           </Frame>
         ) : null}
       </React.Fragment>

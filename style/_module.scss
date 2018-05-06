@@ -95,6 +95,7 @@ $active-border: #f7ad0e;
   display: flex;
   align-items: flex-start;
   border-top: 4px white solid;
+  line-height: 24px; /* Icons are 24px in height */
 }
   /**
    * IsOpen
@@ -114,7 +115,6 @@ $active-border: #f7ad0e;
     font-weight: bold;
     text-transform: uppercase;
     display: block;
-    padding-top: 4px;
   }
 
   /**

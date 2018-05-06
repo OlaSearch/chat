@@ -5,7 +5,7 @@ import ClipBoard from '@olasearch/icons/lib/clipboard'
 import Trash from '@olasearch/icons/lib/trash-2'
 import Plus from '@olasearch/icons/lib/plus-circle'
 import Minus from '@olasearch/icons/lib/minus-circle'
-import EditIcon from '@olasearch/icons/lib/arrow-right'
+import Edit from '@olasearch/icons/lib/arrow-right'
 import Transition from 'react-transition-group/Transition'
 import { connect } from 'react-redux'
 import Button from './Button'
@@ -66,12 +66,27 @@ class CardItem extends React.Component {
   }
   toggle = () => this.setState({ isOpen: !this.state.isOpen })
   render () {
-    const { title, subtitle, fields, buttons, onDelete, isEditing } = this.props
+    const {
+      title,
+      subtitle,
+      fields,
+      buttons,
+      onDelete,
+      isEditing,
+      deleteIcon: DeleteIcon,
+      editIcon: EditIcon
+    } = this.props
     const { isOpen } = this.state
     const classes = cx('olachat-module-group', {
       'olachat-module-isOpen': isOpen,
       'olachat-module-isEdit': isEditing
     })
+    const deleteIcon = DeleteIcon ? (
+      <DeleteIcon />
+    ) : (
+      <Trash stroke='grey' size='20' />
+    )
+    const editIcon = EditIcon ? <EditIcon /> : <Edit size='20' color='grey' />
     return (
       <div className={classes}>
         <div className='olachat-module-item ola-flex'>
@@ -80,7 +95,7 @@ class CardItem extends React.Component {
             className='ola-btn olachat-module-expand'
           >
             {isEditing ? (
-              <EditIcon size='20' color='grey' />
+              editIcon
             ) : isOpen ? (
               <Minus size='20' color='grey' />
             ) : (
@@ -100,7 +115,7 @@ class CardItem extends React.Component {
               onClick={onDelete}
               key={idx}
             >
-              <Trash stroke='grey' size='20' />
+              {deleteIcon}
             </Button>
           ))}
         </div>
@@ -131,7 +146,9 @@ function ShoppingCart ({ cart, isVisible, theme, addMessage, config }) {
   const {
     chatBotCartEmptyTitle,
     chatBotCartEmptySubtitle,
-    chatBotCartEmptyIcon
+    chatBotCartEmptyIcon,
+    deleteIcon,
+    editIcon
   } = config
   const { title, elements = [], buttons = [] } = cart
   const len = elements.length
@@ -171,6 +188,8 @@ function ShoppingCart ({ cart, isVisible, theme, addMessage, config }) {
                       key={idx}
                       isOpen={!element.subtitle}
                       isEditing={!element.subtitle}
+                      deleteIcon={deleteIcon}
+                      editIcon={editIcon}
                       {...element}
                     />
                   ))

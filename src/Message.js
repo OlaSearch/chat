@@ -12,6 +12,7 @@ import TopicSuggestions from './TopicSuggestions'
 import Loader from './Loader'
 import FailureButtons from './FailureButtons'
 import QuickReplies from './QuickReplies'
+import MessageActions from './MessageActions'
 import { createMessageMarkup } from './utils'
 import TransitionGroup from 'react-transition-group/TransitionGroup'
 import Transition from 'react-transition-group/Transition'
@@ -55,7 +56,9 @@ class Message extends React.Component {
       showTimestamp,
       enableFeedback,
       chatBotMessageTimeout,
-      intentsFeedbackDisabled
+      intentsFeedbackDisabled,
+      chatBotMessageActions,
+      isPhone
     } = this.props
     const {
       userId,
@@ -205,8 +208,13 @@ class Message extends React.Component {
       entered: { opacity: 1, maxHeight: 'none', overflow: 'visible' }
     }
 
+    const messageLen = sequence.message && sequence.message.length
     const messageComponents = sequence.message.map(
       ({ type, content, search }, idx) => {
+        const showActions =
+          isBot && chatBotMessageActions
+            ? isPhone ? idx === 0 : idx === messageLen - 1
+            : false
         return (
           <Transition
             key={idx}
@@ -239,6 +247,12 @@ class Message extends React.Component {
                           dangerouslySetInnerHTML={createMessageMarkup(content)}
                         />
                         <div className='olachat-message-arrow' />
+                        {showActions ? (
+                          <MessageActions
+                            result={message}
+                            position='top-left'
+                          />
+                        ) : null}
                       </div>
                     )
                   ) : null}
@@ -249,7 +263,6 @@ class Message extends React.Component {
         )
       }
     )
-    const messageLen = messageComponents.length
     var hasSlot = false
     const detachedComponents =
       sequence.detached &&

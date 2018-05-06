@@ -5,6 +5,7 @@ import {
   AnswerList,
   AnswerWordMap,
   AnswerMap,
+  // AnswerForm,
   AnswerCard,
   AnswerCarousel,
   Decorators,
@@ -88,6 +89,9 @@ function Card ({
 
       case 'image':
         return <AnswerCard card={card} onSelect={handleClick} document={doc} />
+
+      // case 'form':
+      //   return <AnswerForm card={card} onSelect={handleClick} document={doc} />
 
       case 'map':
         return (

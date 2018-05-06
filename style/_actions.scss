@@ -1,0 +1,39 @@
+.ola-message-actions {
+  position: absolute;
+  left: 100%;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  margin-left: 8px;
+  visibility: hidden;
+  opacity: 0;
+  transform: translate3d(-5px, 0px, 0);
+  transition: all 0.2s ease-in-out;
+  transition-delay: 0.2s;
+
+  .olachat-bot-mobile &, .olachat-bot-tablet & {
+    bottom: 100%;
+    left: 0;
+    margin-left: 0;
+  }
+
+  .olachat-message:hover &, .olachat-bookmarks-item & {
+    visibility: visible;
+    opacity: 0.99; /* Prevents browser re-flow */
+    transform: translate3d(0, 0, 0);
+  }
+
+  .ola-btn {
+    color: $blue;
+    width: 40px;
+    height: 40px;
+  }
+
+  .ola-btn {
+    vertical-align: bottom;
+  }
+
+  .ola-share-links {
+    margin-bottom: 0;
+  }
+}
