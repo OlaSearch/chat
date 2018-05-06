@@ -184,6 +184,7 @@
   margin-bottom: 8px;
   max-width: 500px;
   text-align: left;
+  @extend %breakword;
 
   .olachat-bot-mobile & {
     max-width: 300px;

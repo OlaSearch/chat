@@ -16,10 +16,6 @@ class HelpMenu extends React.Component {
   constructor (props) {
     super(props)
   }
-  static contextTypes = {
-    document: PropTypes.object,
-    window: PropTypes.object
-  }
   static propTypes = {
     config: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     theme: PropTypes.object

@@ -338,9 +338,12 @@ export default class Messages extends React.Component {
               border-bottom-left-radius: ${theme.chatMessageBorderRadius};
               border-bottom-right-radius: ${theme.chatMessageBorderRadius};
             }
-            .olachat-messages
-              :global(.olachat-slots-style-list .olachat-slots-button) {
+            // prettier-ignore
+            .olachat-messages :global(.olachat-slots-style-list .olachat-slots-button) {
               border-radius: 0;
+            }
+            .olachat-messages :global(.olachat-slots-style-list) {
+              border-radius: ${theme.chatMessageBorderRadius};
             }
             .olachat-messages :global(.olachat-slots-showmore) {
               font-size: 14px;
