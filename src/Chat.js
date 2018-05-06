@@ -15,6 +15,7 @@ import OfflineIndicator from './OfflineIndicator'
 import Sidebar from './Sidebar'
 import cx from 'classnames'
 import scrollIntoView from 'dom-scroll-into-view'
+import { withDocument } from '@olasearch/react-frame-portal'
 
 class Chat extends React.Component {
   static defaultProps = {
@@ -134,6 +135,7 @@ class Chat extends React.Component {
               chatBotMessageTimeout={chatBotMessageTimeout}
               chatBotMessageActions={chatBotMessageActions}
               intentsFeedbackDisabled={intentsFeedbackDisabled}
+              document={this.props.document}
             />
             <Input
               onSubmit={this.addMessage}
@@ -257,4 +259,8 @@ export default connect(mapStateToProps, {
   updateQueryTerm: updateBotQueryTerm,
   toggleSidebar,
   getShoppingCart
-})(Decorators.withTheme(Decorators.withLogger(Decorators.withConfig(Chat))))
+})(
+  Decorators.withTheme(
+    Decorators.withLogger(Decorators.withConfig(withDocument(Chat)))
+  )
+)

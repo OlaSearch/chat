@@ -251,6 +251,7 @@ class Message extends React.Component {
                           <MessageActions
                             result={message}
                             position='top-left'
+                            document={this.props.document}
                           />
                         ) : null}
                       </div>
@@ -303,6 +304,7 @@ class Message extends React.Component {
                       results={results}
                       location={location}
                       onSelect={addMessage}
+                      document={this.props.document}
                     />
                   ) : null}
                   {type === 'search' ? (
@@ -313,6 +315,7 @@ class Message extends React.Component {
                       isActive={isActive}
                       page={page}
                       totalResults={totalResults}
+                      document={this.props.document}
                     />
                   ) : null}
                   {type === 'slot' ? (

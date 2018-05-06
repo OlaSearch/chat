@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import classNames from 'classnames'
 import { SearchFooter, SearchResults, Decorators } from '@olasearch/core'
 import { loadMore, toggleSearchVisibility } from './actions'
-import { withDocument } from '@olasearch/react-frame-portal'
 
 const MAX_RESULTS_MOBILE = 1
 const MAX_RESULTS_DESKTOP = 3
@@ -101,5 +100,5 @@ function mapStateToProps (state, ownProps) {
 }
 
 export default connect(mapStateToProps, { loadMore, toggleSearchVisibility })(
-  Decorators.withTranslate(withDocument(SearchResultsMessage))
+  Decorators.withTranslate(SearchResultsMessage)
 )

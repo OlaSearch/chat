@@ -1,6 +1,5 @@
 import React from 'react'
 import { SnippetActions, Fields } from '@olasearch/core'
-import { withDocument } from '@olasearch/react-frame-portal'
 import ShareIcon from '@olasearch/icons/lib/share'
 
 const { Bookmark } = SnippetActions
@@ -23,4 +22,4 @@ MessageActions.defaultProps = {
   size: 20
 }
 
-export default withDocument(MessageActions)
+export default MessageActions

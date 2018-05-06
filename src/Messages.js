@@ -41,9 +41,6 @@ export default class Messages extends React.Component {
     }
     this.isComponentMounted = false
   }
-  static contextTypes = {
-    document: PropTypes.object
-  }
   static defaultProps = {
     flipped: true /* Messages start from bottom to top */,
     scrollLoadThreshold: 10,
@@ -221,7 +218,7 @@ export default class Messages extends React.Component {
     if (id !== this.props.newMessageId && !force) return
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
-        const doc = this.context.document || document
+        const doc = this.props.document || document
         const domId = id
         const domNode = doc.getElementById(domId)
         if (!domNode) return
@@ -287,6 +284,7 @@ export default class Messages extends React.Component {
                         intentsFeedbackDisabled={
                           this.props.intentsFeedbackDisabled
                         }
+                        document={this.props.document}
                         chatBotMessageTimeout={this.props.chatBotMessageTimeout}
                       />
                     )}

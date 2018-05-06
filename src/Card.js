@@ -11,7 +11,6 @@ import {
   Decorators,
   Settings
 } from '@olasearch/core'
-import { withDocument } from '@olasearch/react-frame-portal'
 
 const { BUTTON_TYPE } = Settings
 
@@ -174,4 +173,4 @@ Card.propTypes = {
   templates: PropTypes.object
 }
 
-export default Decorators.withTheme(withDocument(Card))
+export default Decorators.withTheme(Card)
