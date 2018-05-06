@@ -21,7 +21,7 @@ import {
 } from './Settings'
 import InviteNotification from './InviteNotification'
 
-const { STYLE_TAG_ID, MODAL_ROOT_CLASSNAME } = OlaSettings
+const { STYLE_TAG_ID, MODAL_ROOT_CLASSNAME, BODY_STYLE_MODAL } = OlaSettings
 
 /**
  * Iframe Bot holder
@@ -137,16 +137,7 @@ class BotFrame extends React.Component {
     var style = document.createElement('style')
     style.id = STYLE_TAG_ID
     style.type = 'text/css'
-    style.innerHTML = this.props.isDesktop
-      ? ``
-      : `
-      .${MODAL_ROOT_CLASSNAME}, .${MODAL_ROOT_CLASSNAME} body{
-        -webkit-overflow-scrolling : touch !important;
-        overflow: hidden !important;
-        height: 100% !important;
-        margin: 0;
-        padding: 0;
-    `
+    style.innerHTML = BODY_STYLE_MODAL
     document.getElementsByTagName('head')[0].appendChild(style)
   }
   componentDidUpdate (prevProps) {
