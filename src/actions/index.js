@@ -406,6 +406,13 @@ export function setBotStatus (status) {
         type: types.MARK_MESSAGES_STALE
       })
     }
+
+    /**
+     * Also make sure remove any typing messages
+     */
+    dispatch({
+      type: types.CLEANUP_MESSAGES
+    })
   }
 }
 
@@ -413,9 +420,8 @@ export function setBotStatus (status) {
  * ShowBot: Show
  */
 export function showBot () {
-  return {
-    type: types.SET_BOT_STATUS,
-    status: true
+  return (dispatch, getState) => {
+    dispatch(setBotStatus(true))
   }
 }
 
@@ -423,9 +429,8 @@ export function showBot () {
  * Hidebot
  */
 export function hideBot () {
-  return {
-    type: types.SET_BOT_STATUS,
-    status: false
+  return (dispatch, getState) => {
+    dispatch(setBotStatus(false))
   }
 }
 
@@ -471,7 +476,7 @@ export function showSidebar () {
   }
 }
 
-export function toggleChatSidebar () {
+export function toggleSidebar () {
   return {
     type: types.TOGGLE_CHAT_SIDEBAR
   }

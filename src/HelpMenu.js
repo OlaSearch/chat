@@ -55,8 +55,7 @@ class HelpMenu extends React.Component {
     this.props.hide()
   }
   handleCartOpen = () => {
-    console.log('called')
-    this.props.toggleChatSidebar()
+    this.props.toggleSidebar()
     this.props.hide()
   }
   render () {

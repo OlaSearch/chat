@@ -184,7 +184,8 @@
   margin-bottom: 8px;
   max-width: 500px;
   text-align: left;
-  @extend %breakword;
+  @extend %breakword_nohyphens;
+  hyphens: none;
 
   .olachat-bot-mobile & {
     max-width: 300px;

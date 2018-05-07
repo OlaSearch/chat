@@ -382,6 +382,14 @@ export default (state = initialState, action) => {
         })
       }
 
+    case types.CLEANUP_MESSAGES:
+      return {
+        ...state,
+        messages: state.messages.filter(item => {
+          return !item.isTyping
+        })
+      }
+
     default:
       return state
   }
