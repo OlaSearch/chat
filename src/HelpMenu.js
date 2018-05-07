@@ -54,6 +54,11 @@ class HelpMenu extends React.Component {
   handleClickOutside = () => {
     this.props.hide()
   }
+  handleCartOpen = () => {
+    console.log('called')
+    this.props.toggleChatSidebar()
+    this.props.hide()
+  }
   render () {
     const klass = classNames('olachat-helpmenu', {
       'olachat-helpmenu-open': this.props.isCollapsed
@@ -91,10 +96,7 @@ class HelpMenu extends React.Component {
             })}
             {this.props.enableCart ? (
               <a
-                onClick={() => {
-                  this.props.toggleSidebar()
-                  this.props.hide()
-                }}
+                onClick={this.handleCartOpen}
                 className='olachat-menu-link'
                 tabIndex={0}
               >

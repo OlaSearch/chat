@@ -471,7 +471,7 @@ export function showSidebar () {
   }
 }
 
-export function toggleSidebar () {
+export function toggleChatSidebar () {
   return {
     type: types.TOGGLE_CHAT_SIDEBAR
   }

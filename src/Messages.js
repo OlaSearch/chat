@@ -285,6 +285,7 @@ export default class Messages extends React.Component {
                           this.props.intentsFeedbackDisabled
                         }
                         document={this.props.document}
+                        window={this.props.window}
                         chatBotMessageTimeout={this.props.chatBotMessageTimeout}
                       />
                     )}

@@ -138,6 +138,7 @@ class Chat extends React.Component {
               chatBotMessageActions={chatBotMessageActions}
               intentsFeedbackDisabled={intentsFeedbackDisabled}
               document={this.props.document}
+              window={this.props.window}
             />
             <Input
               onSubmit={this.addMessage}

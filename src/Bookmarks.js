@@ -29,7 +29,7 @@ function BookmarkRender ({ bookmarks, removeBookmark, toggle }) {
   const hasBookmarks = bookmarks.length
   return (
     <div className='olachat-bookmarks-panel'>
-      <Arrow />
+      <Arrow position='bottom-right' />
       <div className='olachat-bookmarks-header'>
         Pinned items
         <button onClick={toggle} className='ola-btn ola-btn-close'>

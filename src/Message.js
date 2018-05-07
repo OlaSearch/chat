@@ -305,6 +305,7 @@ class Message extends React.Component {
                       location={location}
                       onSelect={addMessage}
                       document={this.props.document}
+                      window={this.props.window}
                     />
                   ) : null}
                   {type === 'search' ? (

@@ -36,9 +36,9 @@ $active-border: #f7ad0e;
   min-height: 52px;
   background: #e5e7e8;
   font-size: 18px;
-  text-transform: uppercase;  
+  text-transform: uppercase;
 
-  @include media (desktop) {
+  .olachat-bot-desktop & {
     border-radius: $radius $radius 0 0;
   }
 

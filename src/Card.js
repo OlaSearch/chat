@@ -26,6 +26,7 @@ function Card ({
   onSelect,
   theme,
   document: doc,
+  window: win,
   ...rest
 }) {
   if (!card) return null
@@ -99,6 +100,7 @@ function Card ({
             results={results}
             location={location}
             document={doc}
+            window={win}
             {...rest}
           />
         )
