@@ -1,6 +1,6 @@
 {
   "name": "@olasearch/chat",
-  "version": "3.3.9",
+  "version": "3.4.0",
   "description": "Chat User Interface elements",
   "main": "lib/index.js",
   "scripts": {

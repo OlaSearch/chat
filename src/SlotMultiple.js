@@ -32,7 +32,7 @@ class SlotMultiple extends React.Component {
     const messageLabel = this.props.slot.options
       .filter(({ value }) => selected.indexOf(value) !== -1)
       .map(({ label }) => label)
-      .join(', ')
+      .join('\r\n')
     this.props.updateQueryTerm(messageLabel)
     this.props.onSubmit({ slots, intent })
   }

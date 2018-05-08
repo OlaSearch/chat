@@ -14,6 +14,12 @@ export function createMessageMarkup (text) {
   let t = text.replace(emojiRegex, match => {
     return '<span class="ola-emoji ' + `${EMOJI_LIST[match]}` + '"></span>'
   })
+  /**
+   * Cleanup
+   * 1. Remove starting and ending linebreaks
+   * 2. Replace new lines with line breaks
+   */
+  t = t.replace(/^\n|\n$/gi, '').replace(/\n/gim, '<br />')
   return createHTMLMarkup(t)
 }
 

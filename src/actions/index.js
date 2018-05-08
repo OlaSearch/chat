@@ -197,21 +197,24 @@ export function addMessage (payload) {
             /* Remove intent */
             if (payload && 'intent' in payload) {
               delete payload['intent'] /* Remove intent */
-              if ('start' in payload) {
-                delete payload['start']
-              } /* Remove start flag */
-              /**
-               * Remove value and label from payload
-               */
-              if ('value' in payload) {
-                delete payload['value']
-              }
-              if ('label' in payload) {
-                delete payload['label']
-              }
-              if ('hidden' in payload) {
-                delete payload['hidden']
-              }
+            }
+            if ('start' in payload) {
+              delete payload['start']
+            } /* Remove start flag */
+            /**
+             * Remove value and label from payload
+             */
+            if ('value' in payload) {
+              delete payload['value']
+            }
+            if ('label' in payload) {
+              delete payload['label']
+            }
+            if ('hidden' in payload) {
+              delete payload['hidden']
+            }
+            if ('query' in payload) {
+              delete payload['query']
             }
             /* Clear previous query */
             dispatch(clearBotQueryTerm())
