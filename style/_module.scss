@@ -37,6 +37,7 @@ $active-border: #f7ad0e;
   background: #e5e7e8;
   font-size: 18px;
   text-transform: uppercase;
+  border-bottom: 1px $border solid;
 
   .olachat-bot-desktop & {
     border-radius: $radius $radius 0 0;
@@ -83,7 +84,7 @@ $active-border: #f7ad0e;
  */
 .olachat-module-footer {
   padding: 12px 16px;
-  border-top: 1px $border solid;;
+  border-top: 1px $border solid;
 }
 
 /**

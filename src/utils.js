@@ -8,8 +8,9 @@ export function createHTMLMarkup (html) {
   return { __html: html }
 }
 
-export function createMessageMarkup (text) {
+export function createMessageMarkup (text, convertLinebreak = true) {
   if (!text) return null
+  if (Array.isArray(text)) text = text[0]
   const emojiRegex = /^\\[a-z|0-9]+\b/g
   let t = text.replace(emojiRegex, match => {
     return '<span class="ola-emoji ' + `${EMOJI_LIST[match]}` + '"></span>'
@@ -19,7 +20,9 @@ export function createMessageMarkup (text) {
    * 1. Remove starting and ending linebreaks
    * 2. Replace new lines with line breaks
    */
-  t = t.replace(/^\n|\n$/gi, '').replace(/\n/gim, '<br />')
+  if (convertLinebreak) {
+    t = t.replace(/^\n|\n$/gi, '').replace(/\n/gim, '<br />')
+  }
   return createHTMLMarkup(t)
 }
 

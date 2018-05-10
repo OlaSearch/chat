@@ -58,7 +58,7 @@ class Message extends React.Component {
       chatBotMessageTimeout,
       intentsFeedbackDisabled,
       chatBotMessageActions,
-      isPhone
+      isDesktop
     } = this.props
     const {
       userId,
@@ -213,7 +213,7 @@ class Message extends React.Component {
       ({ type, content, search }, idx) => {
         const showActions =
           isBot && chatBotMessageActions
-            ? isPhone ? idx === 0 : idx === messageLen - 1
+            ? isDesktop ? idx === messageLen - 1 : idx === 0
             : false
         return (
           <Transition
@@ -237,7 +237,9 @@ class Message extends React.Component {
                     search ? (
                       <div className='olachat-message-reply'>
                         <div
-                          dangerouslySetInnerHTML={createMessageMarkup(text)}
+                          dangerouslySetInnerHTML={createMessageMarkup(text, {
+                            convertLinebreak: !isBot
+                          })}
                         />
                         <div className='olachat-message-arrow' />
                       </div>
@@ -317,6 +319,7 @@ class Message extends React.Component {
                       page={page}
                       totalResults={totalResults}
                       document={this.props.document}
+                      isDesktop={isDesktop}
                     />
                   ) : null}
                   {type === 'slot' ? (

@@ -25,6 +25,7 @@ class SearchResultsMessage extends React.Component {
   render () {
     const {
       isPhone,
+      isDesktop,
       dispatch,
       isActive,
       message,
@@ -70,9 +71,28 @@ class SearchResultsMessage extends React.Component {
               bot: true,
               message
             }}
+            swipe={!isDesktop}
+            isLoading={isLoading}
+            pagination={
+              isDesktop ? null : (
+                <SearchFooter
+                  totalResults={this.props.totalResults}
+                  currentPage={this.props.page}
+                  perPage={this.props.perPage}
+                  dispatch={dispatch}
+                  isPhone={isPhone}
+                  isLoading={isLoading}
+                  onLoadMore={this.onLoadMore}
+                  infiniteScroll
+                  isShowMore
+                  textBottom
+                  key='footer'
+                />
+              )
+            }
           />
 
-          {isActive ? (
+          {isActive && isDesktop ? (
             <SearchFooter
               totalResults={this.props.totalResults}
               currentPage={this.props.page}

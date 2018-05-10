@@ -73,6 +73,7 @@ class Sidebar extends React.Component {
                     isVisible={isSidebarOpen}
                     theme={theme}
                     addMessage={addMessage}
+                    isDesktop={isDesktop}
                   />
                 </div>
               </React.Fragment>

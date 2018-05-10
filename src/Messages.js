@@ -280,7 +280,7 @@ export default class Messages extends React.Component {
                         scrollIntoView={this.scrollIntoView}
                         enableFeedback={this.props.enableFeedback}
                         chatBotMessageActions={this.props.chatBotMessageActions}
-                        isPhone={this.props.isPhone}
+                        isDesktop={this.props.isDesktop}
                         intentsFeedbackDisabled={
                           this.props.intentsFeedbackDisabled
                         }

@@ -141,88 +141,105 @@ const transitionStyles = {
   entered: { opacity: 1 }
 }
 
-function ShoppingCart ({ cart, isVisible, theme, addMessage, config }) {
-  if (!cart) return null
-  const {
-    chatBotCartEmptyTitle,
-    chatBotCartEmptySubtitle,
-    chatBotCartEmptyIcon,
-    deleteIcon,
-    editIcon
-  } = config
-  const { title, elements = [], buttons = [] } = cart
-  const len = elements.length
-  const isEmptyCart = len === 0
-  return (
-    <div className='olachat-module-wrap'>
-      <Transition
-        in={isVisible}
-        timeout={200}
-        appear
-        mountOnEnter
-        unmountOnExit
-      >
-        {state => (
-          <div
-            className='olachat-module-flex'
-            style={{
-              ...defaultStyle,
-              ...transitionStyles[state]
-            }}
-          >
-            <div className='olachat-module olachat-module-cart'>
-              <div className='olachat-module-title ola-flex'>
-                <div className='ola-flex-content'>{title}</div>
-              </div>
-              <div className='olachat-module-body'>
-                {isEmptyCart ? (
-                  <EmptyCart
-                    title={chatBotCartEmptyTitle}
-                    subtitle={chatBotCartEmptySubtitle}
-                    icon={chatBotCartEmptyIcon}
-                  />
-                ) : (
-                  elements.map((element, idx) => (
-                    <CardItem
-                      onDelete={addMessage}
-                      key={idx}
-                      isOpen={!element.subtitle}
-                      isEditing={!element.subtitle}
-                      deleteIcon={deleteIcon}
-                      editIcon={editIcon}
-                      {...element}
+class ShoppingCart extends React.Component {
+  static defaultProps = {
+    showClose: false
+  }
+  componentDidUpdate (prevProps) {
+    if (
+      this.props.isDesktop &&
+      prevProps.cart !== this.props.cart &&
+      this.bodyEl
+    ) {
+      /**
+       * Always scroll to bottom if new items are added
+       */
+      this.bodyEl.scrollTop = this.bodyEl.scrollHeight
+    }
+  }
+  registerRef = el => {
+    this.bodyEl = el
+  }
+  render () {
+    const { cart, isVisible, theme, addMessage, config } = this.props
+    if (!cart) return null
+    const {
+      chatBotCartEmptyTitle,
+      chatBotCartEmptySubtitle,
+      chatBotCartEmptyIcon,
+      deleteIcon,
+      editIcon
+    } = config
+    const { title, elements = [], buttons = [] } = cart
+    const len = elements.length
+    const isEmptyCart = len === 0
+    return (
+      <div className='olachat-module-wrap'>
+        <Transition
+          in={isVisible}
+          timeout={200}
+          appear
+          mountOnEnter
+          unmountOnExit
+        >
+          {state => (
+            <div
+              className='olachat-module-flex'
+              style={{
+                ...defaultStyle,
+                ...transitionStyles[state]
+              }}
+            >
+              <div className='olachat-module olachat-module-cart'>
+                <div className='olachat-module-title ola-flex'>
+                  <div className='ola-flex-content'>{title}</div>
+                </div>
+                <div className='olachat-module-body' ref={this.registerRef}>
+                  {isEmptyCart ? (
+                    <EmptyCart
+                      title={chatBotCartEmptyTitle}
+                      subtitle={chatBotCartEmptySubtitle}
+                      icon={chatBotCartEmptyIcon}
                     />
-                  ))
+                  ) : (
+                    elements.map((element, idx) => (
+                      <CardItem
+                        onDelete={addMessage}
+                        key={idx}
+                        isOpen={!element.subtitle}
+                        isEditing={!element.subtitle}
+                        deleteIcon={deleteIcon}
+                        editIcon={editIcon}
+                        {...element}
+                      />
+                    ))
+                  )}
+                </div>
+                {isEmptyCart ? null : (
+                  <div className='olachat-module-footer'>
+                    {buttons.map((button, idx) => (
+                      <Button
+                        className='ola-btn ola-link'
+                        {...button}
+                        key={idx}
+                      />
+                    ))}
+                  </div>
                 )}
               </div>
-              {isEmptyCart ? null : (
-                <div className='olachat-module-footer'>
-                  {buttons.map((button, idx) => (
-                    <Button
-                      className='ola-btn ola-link'
-                      {...button}
-                      key={idx}
-                    />
-                  ))}
-                </div>
-              )}
             </div>
-          </div>
-        )}
-      </Transition>
-      <style jsx>
-        {`
-          :global(.olachat-module-item-title) {
-            color: ${theme.primaryColor};
-          }
-        `}
-      </style>
-    </div>
-  )
-}
-
-ShoppingCart.defaultProps = {
-  showClose: false
+          )}
+        </Transition>
+        <style jsx>
+          {`
+            :global(.olachat-module-item-title) {
+              color: ${theme.primaryColor};
+            }
+          `}
+        </style>
+      </div>
+    )
+  }
 }
 
 function mapStateToProps (state) {

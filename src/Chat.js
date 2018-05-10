@@ -132,7 +132,7 @@ class Chat extends React.Component {
               location={this.props.location}
               newMessageId={this.props.newMessageId}
               theme={theme}
-              isPhone={this.props.isPhone}
+              isDesktop={this.props.isDesktop}
               enableFeedback={chatBotFeedback}
               chatBotMessageTimeout={chatBotMessageTimeout}
               chatBotMessageActions={chatBotMessageActions}
