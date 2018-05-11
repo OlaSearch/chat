@@ -8,8 +8,9 @@ export function createHTMLMarkup (html) {
   return { __html: html }
 }
 
-export function createMessageMarkup (text, convertLinebreak = true) {
+export function createMessageMarkup (text, options = {}) {
   if (!text) return null
+  const { convertLinebreak } = options
   if (Array.isArray(text)) text = text[0]
   const emojiRegex = /^\\[a-z|0-9]+\b/g
   let t = text.replace(emojiRegex, match => {
