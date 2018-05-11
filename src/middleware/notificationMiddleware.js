@@ -5,13 +5,17 @@ import { isValidReply } from './../utils'
 const debounceNotify = utilities.debounce(notify, 300)
 
 function notify ({ body, title, icon }) {
+  /**
+   * Check if local development mode
+   */
+  if (utilities.isDev()) return
   if (
     window.Notification &&
     Notification.permission !== 'denied' &&
     !document.hasFocus()
   ) {
     Notification.requestPermission(function (status) {
-      var n = new Notification(title, {
+      const n = new Notification(title, {
         body,
         icon
       })
@@ -25,7 +29,7 @@ export default function ({ name, icon }) {
   return ({ dispatch, getState }) => next => action => {
     if (action.type === types.REQUEST_BOT_SUCCESS) {
       if (!action.answer) return next(action)
-      let { reply_voice: reply, search } = action.answer
+      var { reply_voice: reply, search } = action.answer
       if (!reply && search && search.title) reply = search.title
       if (isValidReply(reply)) {
         debounceNotify({ body: reply, title: name, icon })
