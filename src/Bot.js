@@ -60,6 +60,9 @@ class Bot extends Component {
     /* Handle active status */
     this.props.onBubbleClick && this.props.onBubbleClick(currentActiveStatus)
 
+    /* Call back on status change */
+    this.props.onStatusChange && this.props.onStatusChange(currentActiveStatus)
+
     /* Log when chatbot opens or closes */
     this.props.log({
       eventLabel: currentActiveStatus ? 'open' : 'close',

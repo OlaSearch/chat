@@ -304,7 +304,8 @@ export default (state = initialState, action) => {
           !action.isNewSession && action.botState
             ? action.botState.messages.map(item => ({
               ...item,
-              showSearch: false
+              showSearch: false,
+              stale: true
             }))
             : [],
         newMessageId:

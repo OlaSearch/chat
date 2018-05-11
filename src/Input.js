@@ -201,7 +201,7 @@ class Input extends React.Component {
 
     /* Stop submitting if text is empty */
     if (!this.state.text || !this.state.text.trim()) {
-      return this.Input.el.focus()
+      if (this.props.isDesktop) return this.Input.el.focus()
     }
 
     setTimeout(() => this.onSubmit(null, null, null, undefined, payload), 0)
@@ -492,7 +492,7 @@ class Input extends React.Component {
               rows={1}
               cols={20}
               ref={this.registerRef}
-              autoFocus={!this.props.isPhone}
+              autoFocus={this.props.isDesktop}
               initialHeight={50}
               disabled={this.props.disabled}
             />
