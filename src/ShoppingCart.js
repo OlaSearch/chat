@@ -215,7 +215,7 @@ class ShoppingCart extends React.Component {
                     ))
                   )}
                 </div>
-                {isEmptyCart ? null : (
+                {isEmptyCart || !buttons.length ? null : (
                   <div className='olachat-module-footer'>
                     {buttons.map((button, idx) => (
                       <Button
