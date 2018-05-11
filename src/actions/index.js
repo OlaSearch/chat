@@ -232,9 +232,11 @@ export function addMessage (payload) {
               payload.chatBotMessageTimeout &&
               Array.isArray(response.answer.reply)
             ) {
+              /**
+               * Todo.. check the length of message.sequence => detached and outer components also
+               */
               delayNextMessage =
-                payload.chatBotMessageTimeout *
-                (response.answer.reply.length - 1)
+                payload.chatBotMessageTimeout * response.answer.reply.length
             }
             setTimeout(() => {
               dispatch(
