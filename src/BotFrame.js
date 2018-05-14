@@ -211,10 +211,20 @@ class BotFrame extends React.Component {
           style={frameStyles}
           head={
             <React.Fragment>
-              <link rel='stylesheet' href={this.props.cssUrl} />
               <meta
                 name='viewport'
                 content='width=device-width, initial-scale=1'
+              />
+              <link rel='stylesheet' href={this.props.cssUrl} />
+              <link
+                rel='preconnect'
+                href='https://fonts.googleapis.com'
+                crossOrigin='true'
+              />
+              <link
+                rel='preconnect'
+                href='https://fonts.gstatic.com'
+                crossOrigin='true'
               />
             </React.Fragment>
           }
@@ -239,11 +249,11 @@ class BotFrame extends React.Component {
             }}
             head={
               <React.Fragment>
-                <link rel='stylesheet' href={this.props.cssUrl} />
                 <meta
                   name='viewport'
                   content='width=device-width, initial-scale=1'
                 />
+                <link rel='stylesheet' href={this.props.cssUrl} />
               </React.Fragment>
             }
             id={OLACHAT_INVITE_IFRAME_ID}

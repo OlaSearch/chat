@@ -6,28 +6,7 @@ import TypingIndicator from './TypingIndicator'
 import Loader from '@olasearch/icons/lib/loader'
 import scrollIntoView from 'dom-scroll-into-view'
 import { imagesLoaded } from './utils'
-
-/**
- * Message interface
- * message = {
- *   id,
- *   user_id,
- *   text,
- *   timestamp
- * }
- */
-
-var supportsPassive = false
-try {
-  var opts = Object.defineProperty({}, 'passive', {
-    get () {
-      supportsPassive = true
-    }
-  })
-  window.addEventListener('test', null, opts)
-} catch (e) {
-  /* pass */
-}
+import { SUPPORTS_PASSIVE } from './Settings'
 
 export default class Messages extends React.Component {
   constructor (props) {
@@ -65,7 +44,7 @@ export default class Messages extends React.Component {
     // // Unless passive events are supported, we must not hook onScroll event
     // // directly - that will break hardware accelerated scrolling. We poll it
     // // with requestAnimationFrame instead.
-    if (supportsPassive) {
+    if (SUPPORTS_PASSIVE) {
       this.messagesEl.addEventListener('scroll', this.onScroll, {
         passive: true
       })

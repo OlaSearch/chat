@@ -69,3 +69,21 @@ export function createTypingMsg (msgId) {
     isTyping: true
   }
 }
+
+/**
+ * Passive support
+ * @type {Boolean}
+ */
+var supportsPassive = false
+try {
+  var opts = Object.defineProperty({}, 'passive', {
+    get () {
+      supportsPassive = true
+    }
+  })
+  window.addEventListener('test', null, opts)
+} catch (e) {
+  /* pass */
+}
+
+export const SUPPORTS_PASSIVE = supportsPassive

@@ -9,7 +9,7 @@ import Edit from '@olasearch/icons/lib/arrow-right'
 import Transition from 'react-transition-group/Transition'
 import { connect } from 'react-redux'
 import Button from './Button'
-import { OLACHAT_IFRAME_ID } from './Settings'
+import { OLACHAT_IFRAME_ID, SUPPORTS_PASSIVE } from './Settings'
 
 function EmptyCart ({ icon, title, subtitle }) {
   return (
@@ -160,12 +160,15 @@ class ShoppingCart extends React.Component {
     this.bodyEl = el
   }
   componentDidMount () {
-    const { stickySidebar } = this.props.config
-    if (stickySidebar) {
+    if (this.props.config.stickySidebar && this.props.isDesktop) {
       this.iframe = document.getElementById(OLACHAT_IFRAME_ID)
       this.doc =
         document.documentElement || document.body.parentNode || document.body
-      document.addEventListener('scroll', this.handleSticky)
+      document.addEventListener(
+        'scroll',
+        this.handleSticky,
+        SUPPORTS_PASSIVE ? { passive: true } : false
+      )
     }
   }
   handleSticky = () => {
@@ -179,8 +182,13 @@ class ShoppingCart extends React.Component {
         Math.max(0, scrollTop - iframeTop - initialTop) + 'px'
     })
   }
+  handleEnter = () => {
+    if (this.props.config.stickySidebar && this.props.isDesktop) { this.handleSticky() }
+  }
   componentWillUnmount () {
-    document.removeEventListener('scroll', this.handleSticky)
+    if (this.props.config.stickySidebar && this.props.isDesktop) {
+      document.removeEventListener('scroll', this.handleSticky)
+    }
   }
   registerModuleRef = el => {
     this.moduleEl = el
@@ -205,6 +213,8 @@ class ShoppingCart extends React.Component {
         appear
         mountOnEnter
         unmountOnExit
+        onEnter={this.handleEnter}
+        onExit={this.handleUnMount}
       >
         {state => (
           <div
