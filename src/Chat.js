@@ -236,6 +236,9 @@ class Chat extends React.Component {
                 border: 1px #ccc solid;
               }
             }
+            :global(.olachat-module-item-title) {
+              color: ${theme.primaryColor};
+            }
           `}
         </style>
       </div>

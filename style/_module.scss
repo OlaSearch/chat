@@ -16,16 +16,16 @@ $active-border: #f7ad0e;
 /**
  * Module wrapper
  */
-.olachat-module-wrap {
-  flex: 1;
-  display: flex;
-  margin-top: 16px;
-  min-height: 0;
+// .olachat-module-wrap {
+//   flex: 1;
+//   display: flex;
+//   margin-top: 16px;
+//   min-height: 0;
 
-  &:first-child {
-    margin-top: 0;
-  }
-}
+//   &:first-child {
+//     margin-top: 0;
+//   }
+// }
 
 /* Title */
 .olachat-module-title {
@@ -53,13 +53,13 @@ $active-border: #f7ad0e;
   -webkit-overflow-scrolling: touch;
 }
 
-.olachat-module-flex {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 0;
-  min-height: 0;
-}
+// .olachat-module-flex {
+//   display: flex;
+//   flex-direction: column;
+//   flex: 1;
+//   min-width: 0;
+//   min-height: 0;
+// }
 
 /* Empty message */
 .olachat-empty {

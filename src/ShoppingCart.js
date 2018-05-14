@@ -9,6 +9,7 @@ import Edit from '@olasearch/icons/lib/arrow-right'
 import Transition from 'react-transition-group/Transition'
 import { connect } from 'react-redux'
 import Button from './Button'
+import { OLACHAT_IFRAME_ID } from './Settings'
 
 function EmptyCart ({ icon, title, subtitle }) {
   return (
@@ -121,9 +122,7 @@ class CardItem extends React.Component {
         </div>
         {isOpen ? (
           <div className='olachat-module-attrs'>
-            {fields.map((item, idx) => {
-              return <CardField key={idx} {...item} />
-            })}
+            {fields.map((item, idx) => <CardField key={idx} {...item} />)}
           </div>
         ) : null}
       </div>
@@ -160,6 +159,32 @@ class ShoppingCart extends React.Component {
   registerRef = el => {
     this.bodyEl = el
   }
+  componentDidMount () {
+    const { stickySidebar } = this.props.config
+    if (stickySidebar) {
+      this.iframe = document.getElementById(OLACHAT_IFRAME_ID)
+      this.doc =
+        document.documentElement || document.body.parentNode || document.body
+      document.addEventListener('scroll', this.handleSticky)
+    }
+  }
+  handleSticky = () => {
+    const initialTop = 44
+    window.requestAnimationFrame(() => {
+      if (!this.moduleEl) return
+      const iframeTop = this.iframe.offsetTop
+      const moduleTop = this.moduleEl.offsetTop
+      const scrollTop = this.doc.scrollTop
+      this.moduleEl.style.marginTop =
+        Math.max(0, scrollTop - iframeTop - initialTop) + 'px'
+    })
+  }
+  componentWillUnmount () {
+    document.removeEventListener('scroll', this.handleSticky)
+  }
+  registerModuleRef = el => {
+    this.moduleEl = el
+  }
   render () {
     const { cart, isVisible, theme, addMessage, config } = this.props
     if (!cart) return null
@@ -174,70 +199,56 @@ class ShoppingCart extends React.Component {
     const len = elements.length
     const isEmptyCart = len === 0
     return (
-      <div className='olachat-module-wrap'>
-        <Transition
-          in={isVisible}
-          timeout={200}
-          appear
-          mountOnEnter
-          unmountOnExit
-        >
-          {state => (
-            <div
-              className='olachat-module-flex'
-              style={{
-                ...defaultStyle,
-                ...transitionStyles[state]
-              }}
-            >
-              <div className='olachat-module olachat-module-cart'>
-                <div className='olachat-module-title ola-flex'>
-                  <div className='ola-flex-content'>{title}</div>
-                </div>
-                <div className='olachat-module-body' ref={this.registerRef}>
-                  {isEmptyCart ? (
-                    <EmptyCart
-                      title={chatBotCartEmptyTitle}
-                      subtitle={chatBotCartEmptySubtitle}
-                      icon={chatBotCartEmptyIcon}
-                    />
-                  ) : (
-                    elements.map((element, idx) => (
-                      <CardItem
-                        onDelete={addMessage}
-                        key={idx}
-                        isOpen={!element.subtitle}
-                        isEditing={!element.subtitle}
-                        deleteIcon={deleteIcon}
-                        editIcon={editIcon}
-                        {...element}
-                      />
-                    ))
-                  )}
-                </div>
-                {isEmptyCart || !buttons.length ? null : (
-                  <div className='olachat-module-footer'>
-                    {buttons.map((button, idx) => (
-                      <Button
-                        className='ola-btn ola-link'
-                        {...button}
-                        key={idx}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
+      <Transition
+        in={isVisible}
+        timeout={200}
+        appear
+        mountOnEnter
+        unmountOnExit
+      >
+        {state => (
+          <div
+            className='olachat-module olachat-module-cart'
+            ref={this.registerModuleRef}
+            style={{
+              ...defaultStyle,
+              ...transitionStyles[state]
+            }}
+          >
+            <div className='olachat-module-title ola-flex'>
+              <div className='ola-flex-content'>{title}</div>
             </div>
-          )}
-        </Transition>
-        <style jsx>
-          {`
-            :global(.olachat-module-item-title) {
-              color: ${theme.primaryColor};
-            }
-          `}
-        </style>
-      </div>
+            <div className='olachat-module-body' ref={this.registerRef}>
+              {isEmptyCart ? (
+                <EmptyCart
+                  title={chatBotCartEmptyTitle}
+                  subtitle={chatBotCartEmptySubtitle}
+                  icon={chatBotCartEmptyIcon}
+                />
+              ) : (
+                elements.map((element, idx) => (
+                  <CardItem
+                    onDelete={addMessage}
+                    key={idx}
+                    isOpen={!element.subtitle}
+                    isEditing={!element.subtitle}
+                    deleteIcon={deleteIcon}
+                    editIcon={editIcon}
+                    {...element}
+                  />
+                ))
+              )}
+            </div>
+            {isEmptyCart || !buttons.length ? null : (
+              <div className='olachat-module-footer'>
+                {buttons.map((button, idx) => (
+                  <Button className='ola-btn ola-link' {...button} key={idx} />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </Transition>
     )
   }
 }
