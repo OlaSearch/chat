@@ -246,7 +246,10 @@ class Message extends React.Component {
                     ) : (
                       <div className='olachat-message-reply'>
                         <div
-                          dangerouslySetInnerHTML={createMessageMarkup(content)}
+                          dangerouslySetInnerHTML={createMessageMarkup(
+                            content,
+                            { convertLinebreak: !isBot }
+                          )}
                         />
                         <div className='olachat-message-arrow' />
                         {showActions ? (

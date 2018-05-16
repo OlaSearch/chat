@@ -183,7 +183,9 @@ class ShoppingCart extends React.Component {
     })
   }
   handleEnter = () => {
-    if (this.props.config.stickySidebar && this.props.isDesktop) { this.handleSticky() }
+    if (this.props.config.stickySidebar && this.props.isDesktop) {
+      this.handleSticky()
+    }
   }
   componentWillUnmount () {
     if (this.props.config.stickySidebar && this.props.isDesktop) {
