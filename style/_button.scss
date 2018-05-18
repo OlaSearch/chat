@@ -113,3 +113,14 @@
       right: auto;
       top: auto;
     }
+
+
+/**
+ * Btn share
+ */
+.ola-btn-primary {
+  .olachat-bot & {
+    width: 100%;
+    text-align: center;
+  }
+}

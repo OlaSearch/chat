@@ -47,7 +47,7 @@ $active-border: #f7ad0e;
 
 /* Body */
 .olachat-module-body {
-  flex: 1;
+  flex: 1 1 auto;
   overflow-y: auto;
   min-height: 0;
   -webkit-overflow-scrolling: touch;

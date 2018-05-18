@@ -31,6 +31,7 @@ function Card ({
 }) {
   if (!card) return null
   const { buttons = [], template } = card
+  if (!template) return null
   const classes = cx('ola-card', `ola-card-template-${template}`)
 
   function handleClick ({ type, label, title, payload, url }) {
