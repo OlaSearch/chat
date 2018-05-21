@@ -23,68 +23,14 @@ class Chat extends React.Component {
     title: 'Ola Bot',
     onLoad: () => new Promise((resolve, reject) => resolve())
   }
-  componentDidMount () {
-    /**
-     * Check if the user has any messages
-     */
-    if (this.props.startOver || !this.props.messages.length) {
-      this.props.addMessage({
-        intent: this.props.initialIntent,
-        start: true,
-        callback: this.getCart,
-        chatBotMessageTimeout: this.props.config.chatBotMessageTimeout
-      })
-    }
-
-    /**
-     * If its disabled
-     */
-    if (this.props.disabled) {
-      this.props.addMessage({
-        label: this.props.disabled,
-        value: this.props.disabled,
-        disableSubmit: true
-      })
-    }
-    /**
-     * Check for items in shopping cart
-     */
-    if (this.props.config.chatBotCart) {
-      this.props.getShoppingCart({
-        intent: this.props.config.chatBotCartIntent
-      })
-    }
-  }
-  getCart = response => {
-    /**
-     * Get shopping cart if an intent is fulfilled
-     */
-    if (!response || !response.answer) return
-    if (response.answer.intent && response.answer.fulfilled) {
-      if (this.props.config.chatBotCart) {
-        this.props.getShoppingCart({
-          intent: this.props.config.chatBotCartIntent
-        })
-      }
-    }
-  }
   addMessage = args => {
     /* Add message */
     return this.props.addMessage({
       ...args,
       chatBotMessageTimeout: this.props.config.chatBotMessageTimeout,
-      callback: this.getCart
+      callback: this.props.getCart
     })
   }
-  registerRef = el => {
-    this.MessageContainer = el
-  }
-  // handleScrollTop = () => {
-  //   scrollIntoView(this.MessageContainer, document, {
-  //     onlyScrollIfNeeded: true
-  //   })
-  //   this.MessageContainer.scrollIntoView(true)
-  // }
   render () {
     const {
       theme,
@@ -97,7 +43,7 @@ class Chat extends React.Component {
         intentsFeedbackDisabled
       }
     } = this.props
-    const showSidebar = isSidebarOpen && chatBotCart
+    const showSidebar = isSidebarOpen
     const classes = cx('olachat', { 'olachat-sidebar-visible': showSidebar })
     return (
       <div className={classes}>
@@ -119,7 +65,6 @@ class Chat extends React.Component {
             <Messages
               messages={this.props.messages}
               flipped={this.props.flipped}
-              innerRef={this.registerRef}
               onLoad={this.props.onLoad}
               avatarBot={this.props.avatarBot}
               avatarUser={this.props.avatarUser}
@@ -249,6 +194,7 @@ class Chat extends React.Component {
 function mapStateToProps (state) {
   return {
     messages: state.Conversation.messages,
+    href: state.Context.href,
     newMessageId: state.Conversation.newMessageId,
     isTyping: state.Conversation.isTyping,
     isPhone: state.Device.isPhone,

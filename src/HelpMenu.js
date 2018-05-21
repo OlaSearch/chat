@@ -3,7 +3,6 @@ import classNames from 'classnames'
 import listensToClickOutside from '@olasearch/react-onclickoutside'
 import PropTypes from 'prop-types'
 import { Decorators } from '@olasearch/core'
-import { OLACHAT_IFRAME_ID } from './Settings'
 import Badge from './Badge'
 import Menu from '@olasearch/icons/lib/menu'
 import Print from '@olasearch/icons/lib/printer'
@@ -62,7 +61,7 @@ class HelpMenu extends React.Component {
     const klass = classNames('olachat-helpmenu', {
       'olachat-helpmenu-open': this.props.isCollapsed
     })
-    const { translate, config, cart } = this.props
+    const { translate, config, cart, enableCart } = this.props
     const { botLinks = [], chatBotPrint = true, chatBotCartMenuText } = config
     const cartCount = cart && cart.elements ? cart.elements.length : null
     const menuTitle = translate('chat_menu')
@@ -93,7 +92,7 @@ class HelpMenu extends React.Component {
                 </a>
               )
             })}
-            {this.props.enableCart ? (
+            {enableCart ? (
               <a
                 onClick={this.handleCartOpen}
                 className='olachat-menu-link'

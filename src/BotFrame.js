@@ -7,8 +7,8 @@ import { Decorators, Settings as OlaSettings } from '@olasearch/core'
 import { triggerMouseEvent } from './utils'
 import { setBotStatus } from './actions'
 import {
-  OLACHAT_IFRAME_ID,
-  OLACHAT_INVITE_IFRAME_ID,
+  OLACHAT_IFRAME_CLASSNAME,
+  OLACHAT_INVITE_IFRAME_CLASSNAME,
   BOT_ZINDEX,
   BOT_WIDTH_ACTIVE,
   BUBBLE_HEIGHT_MOBILE,
@@ -117,12 +117,6 @@ class BotFrame extends React.Component {
      */
     if (this.props.inline && this.props.isDesktop) this.props.setBotStatus(true)
 
-    /* On Mount */
-    this.props.onMount &&
-      this.props.onMount(
-        document.getElementById(OLACHAT_IFRAME_ID).contentDocument
-      )
-
     /* Check if bot is active */
     if (this.props.isBotActive) {
       document.documentElement.classList.add(MODAL_ROOT_CLASSNAME)
@@ -209,6 +203,7 @@ class BotFrame extends React.Component {
       <React.Fragment>
         <Frame
           style={frameStyles}
+          innerRef={this.registerRef}
           head={
             <React.Fragment>
               <meta
@@ -228,7 +223,7 @@ class BotFrame extends React.Component {
               />
             </React.Fragment>
           }
-          id={OLACHAT_IFRAME_ID}
+          className={OLACHAT_IFRAME_CLASSNAME}
           initialContent={this.props.initialContent}
           title='Ola Chat'
         >
@@ -242,10 +237,29 @@ class BotFrame extends React.Component {
             style={{
               ...iframeStyle,
               position: 'fixed',
-              bottom: 86,
-              right: 20,
+              ...(isDesktop
+                ? {
+                  bottom: -5 /* There is a margin of 5px */,
+                  right:
+                      (showBubbleLabel ? width : widthMobile) + BUBBLE_SPACING
+                }
+                : {
+                  bottom: 86,
+                  right: 20
+                }),
               width: 300,
-              height: 120
+              height: 'auto'
+            }}
+            onLoad={() => {
+              if (!this.inviteFrame) return
+              /**
+               * Set the height of iframe
+               */
+              this.inviteFrame.style.height =
+                this.inviteFrame.contentWindow.document.body.scrollHeight + 'px'
+            }}
+            innerRef={el => {
+              this.inviteFrame = el
             }}
             head={
               <React.Fragment>
@@ -256,7 +270,7 @@ class BotFrame extends React.Component {
                 <link rel='stylesheet' href={this.props.cssUrl} />
               </React.Fragment>
             }
-            id={OLACHAT_INVITE_IFRAME_ID}
+            className={OLACHAT_INVITE_IFRAME_CLASSNAME}
             initialContent={this.props.initialContent}
             title='Ola Chat'
           >

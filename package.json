@@ -1,6 +1,6 @@
 {
   "name": "@olasearch/chat",
-  "version": "3.4.9",
+  "version": "3.5.0",
   "description": "Chat User Interface elements",
   "main": "lib/index.js",
   "scripts": {
@@ -70,7 +70,7 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
-    "react-styleguidist": "^7.0.13",
+    "react-styleguidist": "^7.0.14",
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0",
     "regenerator-runtime": "^0.11.1",
@@ -84,12 +84,12 @@
   },
   "dependencies": {
     "@olasearch/alite": "^1.0.5",
-    "@olasearch/core": "^3.3.7",
+    "@olasearch/core": "^3.4.4",
     "@olasearch/icons": "^1.0.2",
     "@olasearch/logger": "^1.3.8",
-    "@olasearch/react-frame-portal": "^3.0.4",
+    "@olasearch/react-frame-portal": "^3.0.6",
     "@olasearch/react-onclickoutside": "^6.7.3",
-    "@olasearch/solr-adapter": "^1.9.1",
+    "@olasearch/solr-adapter": "^1.9.2",
     "@olasearch/styled-jsx": "^2.2.6",
     "@olasearch/textarea-elastic": "^1.0.2",
     "classnames": "^2.2.5",

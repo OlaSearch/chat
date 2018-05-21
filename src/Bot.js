@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { clearMessages, setBotStatus, clearBotQueryTerm } from './actions'
+import {
+  clearMessages,
+  setBotStatus,
+  clearBotQueryTerm,
+  getShoppingCart
+} from './actions'
 import { Decorators } from '@olasearch/core'
 import classNames from 'classnames'
 import mitt from 'mitt'
 import Bubble from './Bubble'
 import Chat from './Chat'
+import ChatController from './ChatController'
 // import Vui from './Vui'
 
 const DEBUG = false
@@ -116,6 +122,19 @@ class Bot extends Component {
       this.props.clearBotQueryTerm()
     }
   }
+  getCart = response => {
+    /**
+     * Get shopping cart if an intent is fulfilled
+     */
+    if (!response || !response.answer) return
+    if (response.answer.intent && response.answer.fulfilled) {
+      if (this.props.config.chatBotCart) {
+        this.props.getShoppingCart({
+          intent: this.props.config.chatBotCartIntent
+        })
+      }
+    }
+  }
   render () {
     const passProps = {
       onMessage: this.props.onMessage,
@@ -131,6 +150,7 @@ class Bot extends Component {
       onRequestClose: this.toggleActive,
       voiceInput: this.props.voiceInput,
       setBotStatus: this.props.setBotStatus,
+      getCart: this.getCart,
       emitter
     }
     const HAS_VOICES = this.props.isPhone
@@ -155,6 +175,7 @@ class Bot extends Component {
     })
     return (
       <div className={botClass} style={{ opacity: 0 }}>
+        <ChatController {...passProps} />
         {isBotActive ? null : showBubble ? (
           <Bubble
             onClick={this.toggleActive}
@@ -181,5 +202,6 @@ function mapStateToProps (state) {
 export default connect(mapStateToProps, {
   clearMessages,
   setBotStatus,
-  clearBotQueryTerm
-})(Decorators.withLogger(Bot))
+  clearBotQueryTerm,
+  getShoppingCart
+})(Decorators.withConfig(Decorators.withLogger(Bot)))

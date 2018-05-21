@@ -10,12 +10,21 @@
   // @include prefix(transition, all 0.2s ease-in, (ms,webkit,moz));
   // @include prefix(transition-delay, 1s, (ms,webkit,moz));
   // animation-delay: 2s;
+
+  /* Arrow */
+  .ola-arrow {
+    &:after {
+      border-top-color: #333;
+    }
+    &:before {
+      border-top-color: transparent;
+    }
+  }
 }
 
 /* Snippet */
 .olachat-invite-snippet {
   clear: both;
-  background: white;
   box-shadow: $small-box-shadow;
   border-radius: 5px;
   padding: 1em;
@@ -29,7 +38,6 @@
  */
 .olachat-invite-snippet-title {
   font-weight: bold;
-  padding-bottom: 4px;
 }
 
 /**

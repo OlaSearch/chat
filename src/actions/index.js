@@ -407,9 +407,7 @@ export function setBotStatus (status) {
      * If the bot is hidden, update all messages to mark them as stale
      */
     if (status === false) {
-      dispatch({
-        type: types.MARK_MESSAGES_STALE
-      })
+      dispatch(markMessagesAsStale())
     }
 
     /**
@@ -418,6 +416,16 @@ export function setBotStatus (status) {
     dispatch({
       type: types.CLEANUP_MESSAGES
     })
+  }
+}
+
+/**
+ * Mark old messages as stale
+ */
+
+export function markMessagesAsStale () {
+  return {
+    type: types.MARK_MESSAGES_STALE
   }
 }
 
@@ -463,7 +471,14 @@ export function showInvite () {
   }
 }
 
-export function hideInvite () {
+export function updateInvite (invite) {
+  return {
+    type: types.UPDATE_INVITE,
+    invite
+  }
+}
+
+export function hideInvite (inviteUserDismissed) {
   return {
     type: types.HIDE_INVITE
   }

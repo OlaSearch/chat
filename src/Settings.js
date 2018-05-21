@@ -14,8 +14,8 @@ export const WELCOME_INTENT = 'OLA.WelcomeIntent'
 export const NONE_INTENT = 'OLA.NoneIntent'
 export const DISAMBIGUATION_INTENT_NAME = 'OLA.DisambiguateIntent'
 export const SLOT_TEXT = 'OLA.TEXT'
-export const OLACHAT_IFRAME_ID = 'olachat-iframe'
-export const OLACHAT_INVITE_IFRAME_ID = 'olachat-iframe-invite'
+export const OLACHAT_IFRAME_CLASSNAME = 'olachat-iframe'
+export const OLACHAT_INVITE_IFRAME_CLASSNAME = 'olachat-iframe-invite'
 export const OLACHAT_MESSAGE_ELEMENT = '.olachat-message-reply'
 export const SLOT_STYLE_LIST = 'list'
 export const BUBBLE_WIDTH_DESKTOP = 280
@@ -87,3 +87,6 @@ try {
 }
 
 export const SUPPORTS_PASSIVE = supportsPassive
+
+export const CONTEXT_TYPE_INVITE = 'invite'
+export const CONTEXT_TYPE_INTENT = 'intent'

@@ -257,3 +257,7 @@ export function isValidReply (reply) {
   if (Array.isArray(reply)) return reply.length
   return !!reply
 }
+
+export function getActiveContext (contexts, contextState) {
+  // for let
+}

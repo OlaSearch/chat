@@ -31,11 +31,8 @@ const initialState = {
 
   /* Invite */
   inviteVisible: false,
-  invite: {
-    title: 'Ola Team',
-    subtitle: '',
-    body: 'Hi there! What brings you to our website today?'
-  },
+  inviteUserDismissed: false,
+  invite: null,
 
   /* Cart */
   cart: null
@@ -346,6 +343,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         inviteVisible: false
+      }
+
+    case types.UPDATE_INVITE:
+      return {
+        ...state,
+        invite: action.invite
       }
 
     case types.SHOW_CHAT_SIDEBAR:

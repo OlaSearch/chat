@@ -9,7 +9,8 @@ import Edit from '@olasearch/icons/lib/arrow-right'
 import Transition from 'react-transition-group/Transition'
 import { connect } from 'react-redux'
 import Button from './Button'
-import { OLACHAT_IFRAME_ID, SUPPORTS_PASSIVE } from './Settings'
+import { SUPPORTS_PASSIVE } from './Settings'
+import { withDocument } from '@olasearch/react-frame-portal'
 
 function EmptyCart ({ icon, title, subtitle }) {
   return (
@@ -161,7 +162,6 @@ class ShoppingCart extends React.Component {
   }
   componentDidMount () {
     if (this.props.config.stickySidebar && this.props.isDesktop) {
-      this.iframe = document.getElementById(OLACHAT_IFRAME_ID)
       this.doc =
         document.documentElement || document.body.parentNode || document.body
       document.addEventListener(
@@ -175,7 +175,7 @@ class ShoppingCart extends React.Component {
     const initialTop = 44
     window.requestAnimationFrame(() => {
       if (!this.moduleEl) return
-      const iframeTop = this.iframe.offsetTop
+      const iframeTop = this.props.iframe.offsetTop
       const moduleTop = this.moduleEl.offsetTop
       const scrollTop = this.doc.scrollTop
       this.moduleEl.style.marginTop =
@@ -271,4 +271,6 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)(Decorators.withConfig(ShoppingCart))
+export default connect(mapStateToProps)(
+  Decorators.withConfig(withDocument(ShoppingCart))
+)
