@@ -159,5 +159,6 @@ export default connect(mapStateToProps, {
   updateInvite,
   hideInvite,
   hideBot,
+  getShoppingCart,
   markMessagesAsStale
 })(Decorators.withConfig(ChatController))
