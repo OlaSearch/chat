@@ -237,6 +237,7 @@ class BotFrame extends React.Component {
             style={{
               ...iframeStyle,
               position: 'fixed',
+              zIndex,
               ...(isDesktop
                 ? {
                   bottom: -5 /* There is a margin of 5px */,

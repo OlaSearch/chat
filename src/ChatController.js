@@ -22,19 +22,19 @@ function getActiveContext (contexts, ContextState) {
   var activeContext = null
   for (let i = 0; i < contexts.length; i++) {
     const { name, triggers, actions } = contexts[i]
+    var isMatched = true
     for (let j = 0; j < triggers.length; j++) {
       const { variable, value } = triggers[j]
       const reg = new RegExp(escapePaths(value))
-      if (
-        ContextState[variable] === value ||
-        reg.test(ContextState[variable])
-      ) {
-        activeContext = {
-          name,
-          actions
-        }
-        break
+      const contextValue = ContextState[variable]
+      if (contextValue !== value && !reg.test(contextValue)) isMatched = false
+    }
+    if (isMatched) {
+      activeContext = {
+        name,
+        actions
       }
+      break
     }
   }
   return activeContext
@@ -91,7 +91,7 @@ class ChatController extends React.Component {
       if (this.state.activeContextName === name) return
 
       for (let i = 0; i < actions.length; i++) {
-        const { type, value } = actions[i]
+        const { type, intent } = actions[i]
         if (type === CONTEXT_TYPE_INVITE) {
           /* Update the invite message */
           this.props.updateInvite(actions[i])
@@ -99,7 +99,7 @@ class ChatController extends React.Component {
         }
         if (type === CONTEXT_TYPE_INTENT) {
           this.setState({
-            initialIntent: value
+            initialIntent: intent
           })
         }
       }
