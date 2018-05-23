@@ -249,7 +249,7 @@ class BotFrame extends React.Component {
                   right: 20
                 }),
               width: 300,
-              height: 'auto'
+              height: 500 /* Adjust height later on */
             }}
             onLoad={() => {
               if (!this.inviteFrame) return

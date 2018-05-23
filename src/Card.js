@@ -7,6 +7,7 @@ import {
   AnswerMap,
   AnswerVideo,
   AnswerCard,
+  AnswerEmbed,
   AnswerCarousel,
   Decorators,
   Settings
@@ -93,6 +94,9 @@ function Card ({
 
       case 'video':
         return <AnswerVideo card={card} onSelect={handleClick} document={doc} />
+
+      case 'embed':
+        return <AnswerEmbed card={card} onSelect={handleClick} document={doc} />
 
       case 'map':
         return (
