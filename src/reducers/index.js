@@ -35,7 +35,8 @@ const initialState = {
   invite: null,
 
   /* Cart */
-  cart: null
+  cart: null,
+  isLoadingCart: false
 }
 
 export default (state = initialState, action) => {
@@ -44,7 +45,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         newMessageId: action.message.id,
-        messages: [...state.messages, action.message]
+        messages: [...state.messages, action.message],
+        isLoading: true
       }
 
     case types.REQUEST_BOT:
@@ -369,10 +371,22 @@ export default (state = initialState, action) => {
         isSidebarOpen: !state.isSidebarOpen
       }
 
+    case types.REQUEST_CART:
+      return {
+        ...state,
+        isLoadingCart: true
+      }
     case types.REQUEST_CART_SUCCESS:
       return {
         ...state,
-        cart: action.answer.card
+        cart: action.answer.card,
+        isLoadingCart: false
+      }
+
+    case types.REQUEST_CART_FAILURE:
+      return {
+        ...state,
+        isLoadingCart: false
       }
 
     case types.MARK_MESSAGES_STALE:

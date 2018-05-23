@@ -4,7 +4,7 @@ import { Settings } from '@olasearch/core'
 const { BUTTON_TYPE } = Settings
 
 export default function Button (props) {
-  const { title, onClick, className, children } = props
+  const { title, onClick, className, children, disabled } = props
   function handleClick () {
     const { type, label, title, payload, url } = props
     /**
@@ -29,7 +29,12 @@ export default function Button (props) {
     onClick && onClick({ card })
   }
   return (
-    <button className={className} type='button' onClick={handleClick}>
+    <button
+      className={className}
+      type='button'
+      onClick={handleClick}
+      disabled={disabled}
+    >
       {children || title}
     </button>
   )

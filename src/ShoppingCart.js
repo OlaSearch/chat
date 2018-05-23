@@ -75,6 +75,7 @@ class CardItem extends React.Component {
       buttons,
       onDelete,
       isEditing,
+      isLoading,
       deleteIcon: DeleteIcon,
       editIcon: EditIcon
     } = this.props
@@ -115,6 +116,7 @@ class CardItem extends React.Component {
               className='ola-btn olachat-module-remove'
               {...button}
               onClick={onDelete}
+              disabled={isLoading}
               key={idx}
             >
               {deleteIcon}
@@ -196,7 +198,7 @@ class ShoppingCart extends React.Component {
     this.moduleEl = el
   }
   render () {
-    const { cart, isVisible, theme, addMessage, config } = this.props
+    const { cart, isVisible, theme, addMessage, config, isLoading } = this.props
     if (!cart) return null
     const {
       chatBotCartEmptyTitle,
@@ -246,6 +248,7 @@ class ShoppingCart extends React.Component {
                     isEditing={!element.subtitle}
                     deleteIcon={deleteIcon}
                     editIcon={editIcon}
+                    isLoading={isLoading}
                     {...element}
                   />
                 ))
@@ -267,7 +270,8 @@ class ShoppingCart extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    cart: state.Conversation.cart
+    cart: state.Conversation.cart,
+    isLoading: state.Conversation.isLoading
   }
 }
 

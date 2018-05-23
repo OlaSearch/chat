@@ -32,7 +32,7 @@ class InviteNotification extends React.Component {
         >
           {image ? (
             <div className='ola-flex-icon'>
-              <img src={image} width='60' />
+              <img src={image} width='60' height='45' />
             </div>
           ) : null}
           <div className='ola-flex-content'>
