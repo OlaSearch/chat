@@ -526,6 +526,9 @@ export function getShoppingCart ({ intent }) {
       payload: {
         bot: true
       },
+      meta: {
+        log: false
+      },
       query: {
         q: '',
         intent,

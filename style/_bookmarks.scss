@@ -16,7 +16,7 @@ $header-background: #F9F9F9;
 .olachat-bookmarks {
   position: absolute;
   right: 16px;
-  top: 80px;
+  top: 50px + 16px; /* Header height: 50px */
   z-index: 2;
 }
 
