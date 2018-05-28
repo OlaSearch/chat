@@ -154,6 +154,10 @@ export function addMessage (payload) {
     return new Promise((resolve, reject) => {
       /* Simulate delay */
       setTimeout(() => {
+        /* Update timestamp */
+
+        dispatch(Actions.Search.addTimestamp(api))
+
         return dispatch({
           types: [
             types.REQUEST_BOT,
