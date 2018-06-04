@@ -369,6 +369,8 @@ class Input extends React.Component {
     const { term, value, name, partial, payload } = item
     const { text } = this.state
     var args = null
+    var currentSlotName = null
+    var currentIntent = null
 
     /**
      * If the current message requires slots
@@ -376,13 +378,16 @@ class Input extends React.Component {
     const currentMessage = this.props.messages[this.props.messages.length - 1]
     if (currentMessage && currentMessage.slot) {
       const jsonPayload = payload ? JSON.parse(payload) : {}
+      currentSlotName =
+        currentMessage.slot.suggest_name || currentMessage.slot.name
+      currentIntent = currentMessage.intent
       args = {
         slots: [
           createSlot({
             id: jsonPayload.id,
             type: jsonPayload.label,
             value: jsonPayload.suggestion_raw,
-            name: currentMessage.slot.suggest_name || currentMessage.slot.name
+            name: currentSlotName
           })
         ]
       }
@@ -420,6 +425,18 @@ class Input extends React.Component {
         }
       }
     )
+
+    this.props.log({
+      eventType: 'C',
+      eventSource: 'suggest',
+      eventCategory: 'autosuggest',
+      query: text /* override query */,
+      eventAction: 'click',
+      suggestion: term,
+      slot: currentSlotName,
+      intent: currentIntent,
+      payload: { bot: true }
+    })
   }
   shouldComponentUpdate (nextProps, nextState) {
     return (
@@ -546,5 +563,9 @@ class Input extends React.Component {
 }
 
 export default connect(null)(
-  Decorators.withConfig(Decorators.withTranslate(listensToClickOutside(Input)))
+  Decorators.withLogger(
+    Decorators.withConfig(
+      Decorators.withTranslate(listensToClickOutside(Input))
+    )
+  )
 )

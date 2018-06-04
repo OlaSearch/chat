@@ -10,6 +10,7 @@ const { SLOT_DATE } = Settings
 const CHAT_DELAY = 300
 const CHAT_REPLY_DELAY = 600
 const RESULTS_FOR_MC = 12
+const DEFAULT_EVENT_SOURCE = 'bot'
 
 export function updateBotQueryTerm (term) {
   return {
@@ -186,6 +187,7 @@ export function addMessage (payload) {
             }
           },
           payload: {
+            eventSource: DEFAULT_EVENT_SOURCE,
             ...payload,
             message,
             context,
