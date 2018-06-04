@@ -1,6 +1,6 @@
 {
   "name": "@olasearch/chat",
-  "version": "3.5.7",
+  "version": "3.5.8",
   "description": "Chat User Interface elements",
   "main": "lib/index.js",
   "scripts": {
@@ -16,10 +16,6 @@
   },
   "author": "",
   "license": "Copyright Ola Search Pte Ltd",
-  "peerDependencies": {
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
-  },
   "pre-commit": [
     "test",
     "prettier"
@@ -52,7 +48,7 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
-    "babel-jest": "^22.4.4",
+    "babel-jest": "^23.0.1",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
@@ -60,8 +56,8 @@
     "css-loader": "^0.28.11",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "expect": "^22.4.3",
-    "jest": "^22.4.4",
+    "expect": "^23.1.0",
+    "jest": "^23.1.0",
     "jsdom": "^11.11.0",
     "node-sass": "^4.9.0",
     "pre-commit": "^1.2.2",
@@ -69,12 +65,11 @@
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
-    "react-redux": "^5.0.7",
     "react-styleguidist": "^7.0.14",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.2.0",
+    "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.11.1",
-    "sass-loader": "^7.0.1",
+    "sass-loader": "^7.0.2",
     "standard": "^11.0.1",
     "style-loader": "^0.21.0",
     "webpack": "^4.8.3",
@@ -96,7 +91,6 @@
     "dom-scroll-into-view": "^1.2.1",
     "invariant": "^2.2.4",
     "mitt": "^1.1.3",
-    "react-list": "^0.8.8",
     "react-transition-group": "^2.3.1",
     "watson-html5-speech-recognition": "^0.6.6"
   }
