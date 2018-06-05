@@ -40,6 +40,17 @@ class SlotOptions extends Component {
     }
     this.props.updateQueryTerm(label)
     this.props.onSubmit(args)
+    /**
+     * Log slot click event
+     */
+    this.props.log({
+      eventCategory: 'slot',
+      eventLabel: label,
+      eventAction: 'click',
+      eventType: 'C',
+      result: { title: label } /* Used to quickly find title in admin panel */,
+      payload: { bot: true }
+    })
   }
   render () {
     const { slot, isActive, max } = this.props
