@@ -8,9 +8,13 @@
 
 .ola-swipeable {  
   /* On desktop */
-  // margin-left: -16px;
-  // margin-left: -60px;
-  // margin-right: -16px;
+  // margin-left: -16px;  
+  
+
+  .olachat-bot-desktop &, .olachat-bot-tablet & {
+    margin-left: -16px - 36px - 8px;
+    margin-right: -16px;
+  }
 
   .olachat-bot-mobile &{
     margin-left: -16px;
@@ -26,8 +30,12 @@
 
   .ola-swipeable-flow {
     // padding-left: 60px;
-    // padding-right: 16px;
+    
 
+    .olachat-bot-desktop &, .olachat-bot-tablet & {
+      padding-left: 60px;
+      padding-right: 16px;
+    }
     .olachat-bot-mobile & {
       padding-left: 16px;
       padding-right: 16px;

@@ -51,19 +51,21 @@ function CardField ({ label, value }) {
   )
 }
 
-class CardItem extends React.Component {
+class CartItem extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       isOpen: props.isOpen
     }
   }
-  static getDerivedStateFromProps (nextProps, prevState) {
-    if (nextProps.isOpen === prevState.isOpen) {
-      return null
-    }
-    return {
-      isOpen: nextProps.isOpen
+  componentDidUpdate (prevProps, prevState) {
+    if (
+      this.props.isOpen !== this.state.isOpen &&
+      this.state.isOpen === prevState.isOpen
+    ) {
+      this.setState({
+        isOpen: this.props.isOpen
+      })
     }
   }
   toggle = () => this.setState({ isOpen: !this.state.isOpen })
@@ -241,7 +243,7 @@ class ShoppingCart extends React.Component {
                 />
               ) : (
                 elements.map((element, idx) => (
-                  <CardItem
+                  <CartItem
                     onDelete={addMessage}
                     key={idx}
                     isOpen={!element.subtitle}
