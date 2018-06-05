@@ -55,7 +55,8 @@ class CartItem extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      isOpen: props.isOpen
+      isOpen: props.isOpen,
+      prevOpen: props.isOpen
     }
   }
   componentWillReceiveProps (nextProps) {
@@ -66,6 +67,15 @@ class CartItem extends React.Component {
       isOpen: nextProps.isOpen
     })
   }
+
+  // static getDerivedStateFromProps (props, state) {
+  //   return {
+  //     isOpen: state.prevOpen !== props.isOpen
+  //       ? props.isOpen
+  //       : state.isOpen,
+  //     prevOpen: state.isOpen
+  //   }
+  // }
 
   componentDidUpdate (prevProps, prevState) {
     if (

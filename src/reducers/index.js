@@ -118,7 +118,12 @@ export default (state = initialState, action) => {
       }
 
       /* Check if the answer is empty */
-      if (answer && (answer.empty || answer.error)) return state
+      if (answer && (answer.empty || answer.error)) {
+        return {
+          ...state,
+          isSidebarOpen
+        }
+      }
 
       let { in_response_to, message } = answer
       let msg = createMessageObj({
