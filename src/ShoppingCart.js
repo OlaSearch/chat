@@ -58,6 +58,15 @@ class CartItem extends React.Component {
       isOpen: props.isOpen
     }
   }
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.isOpen === this.state.nextProps) {
+      return
+    }
+    this.setState({
+      isOpen: nextProps.isOpen
+    })
+  }
+
   componentDidUpdate (prevProps, prevState) {
     if (
       this.props.isOpen !== this.state.isOpen &&
