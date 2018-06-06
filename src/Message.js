@@ -237,9 +237,12 @@ class Message extends React.Component {
                     search ? (
                       <div className='olachat-message-reply'>
                         <div
-                          dangerouslySetInnerHTML={createMessageMarkup(text, {
-                            convertLinebreak: !isBot
-                          })}
+                          dangerouslySetInnerHTML={createMessageMarkup(
+                            text || translate('chat_sorry_no_result'),
+                            {
+                              convertLinebreak: !isBot
+                            }
+                          )}
                         />
                         <div className='olachat-message-arrow' />
                       </div>

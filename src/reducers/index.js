@@ -121,7 +121,20 @@ export default (state = initialState, action) => {
       if (answer && (answer.empty || answer.error)) {
         return {
           ...state,
-          isSidebarOpen
+          isSidebarOpen,
+          messages: answer.awaiting_user_input
+            ? /* Is awaiting user input */
+            state.messages.map(item => {
+              if (item.isTyping) {
+                return {
+                  ...item,
+                  sequence,
+                  isTyping: false
+                }
+              }
+              return item
+            })
+            : state.messages
         }
       }
 
