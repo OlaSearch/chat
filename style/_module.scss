@@ -116,6 +116,7 @@ $active-border: #f7ad0e;
     font-weight: bold;
     text-transform: uppercase;
     display: block;
+    user-select: none;
   }
 
   /**
@@ -141,6 +142,7 @@ $active-border: #f7ad0e;
    */
   .olachat-module-item-title {
     cursor: pointer;
+    user-select: none;
   }
 
   /**

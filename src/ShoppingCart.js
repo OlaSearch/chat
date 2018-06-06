@@ -55,27 +55,9 @@ class CartItem extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      isOpen: props.isOpen,
-      prevOpen: props.isOpen
+      isOpen: props.isOpen
     }
   }
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.isOpen === this.state.nextProps) {
-      return
-    }
-    this.setState({
-      isOpen: nextProps.isOpen
-    })
-  }
-
-  // static getDerivedStateFromProps (props, state) {
-  //   return {
-  //     isOpen: state.prevOpen !== props.isOpen
-  //       ? props.isOpen
-  //       : state.isOpen,
-  //     prevOpen: state.isOpen
-  //   }
-  // }
 
   componentDidUpdate (prevProps, prevState) {
     if (
@@ -86,6 +68,9 @@ class CartItem extends React.Component {
         isOpen: this.props.isOpen
       })
     }
+    // if (prevProps.isOpen !== this.props.isOpen) {
+    //   console.log('called')
+    // }
   }
   toggle = () => this.setState({ isOpen: !this.state.isOpen })
   render () {
