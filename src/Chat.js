@@ -135,7 +135,10 @@ class Chat extends React.Component {
             .olachat {
               background: ${theme.chatBackground};
             }
-            .olachat :global(.ola-link-load-more) {
+            .olachat :global(.ola-link-load-more),
+            .olachat :global(.ola-link-load-more:hover),
+            .olachat :global(.ola-link-load-more:active),
+            .olachat :global(.ola-link-load-more:focus) {
               color: ${theme.primaryColor};
               background: transparent;
             }

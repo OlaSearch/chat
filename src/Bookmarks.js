@@ -1,11 +1,15 @@
 import React from 'react'
-import { Bookmarks as Bookmarking, Decorators, Arrow } from '@olasearch/core'
+import { BookmarksContainer, Decorators, Arrow } from '@olasearch/core'
 import listensToClickOutside from '@olasearch/react-onclickoutside'
 import { createMessageMarkup } from './utils'
 import Close from '@olasearch/icons/lib/x'
 import BookMark from '@olasearch/icons/lib/bookmark'
 import MessageActions from './MessageActions'
 
+/**
+ * Display bookmarks
+ * Has a custom render function
+ */
 class Bookmarks extends React.Component {
   handleClickOutside = () => {
     this.props.hide()
@@ -18,13 +22,16 @@ class Bookmarks extends React.Component {
           <BookMark />
         </button>
         {isCollapsed ? (
-          <Bookmarking render={BookmarkRender} toggle={toggle} />
+          <BookmarksContainer render={BookmarkRender} toggle={toggle} />
         ) : null}
       </div>
     )
   }
 }
 
+/**
+ * Bookmarks renderer
+ */
 function BookmarkRender ({ bookmarks, removeBookmark, toggle }) {
   const hasBookmarks = bookmarks.length
   return (
@@ -63,6 +70,4 @@ function BookmarkRender ({ bookmarks, removeBookmark, toggle }) {
   )
 }
 
-const BookmarksContainer = listensToClickOutside(Bookmarks)
-
-export default Decorators.withToggle(BookmarksContainer)
+export default Decorators.withToggle(listensToClickOutside(Bookmarks))

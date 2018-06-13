@@ -2,13 +2,13 @@ import React from 'react'
 import { SnippetActions, Fields } from '@olasearch/core'
 import ShareIcon from '@olasearch/icons/lib/share'
 
-const { Bookmark } = SnippetActions
+const { BookmarkButton } = SnippetActions
 const { Share } = Fields
 
 function MessageActions ({ size, ...props }) {
   return (
     <div className='ola-message-actions'>
-      <Bookmark {...props} buttonClassName='ola-btn' buttonSize={size} />
+      <BookmarkButton {...props} buttonClassName='ola-btn' buttonSize={size} />
       <Share
         {...props}
         label={<ShareIcon size={size} />}

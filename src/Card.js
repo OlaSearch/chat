@@ -6,9 +6,11 @@ import {
   AnswerWordMap,
   AnswerMap,
   AnswerVideo,
+  AnswerLineChart,
   AnswerCard,
   AnswerEmbed,
   AnswerCarousel,
+  AnswerTable,
   Decorators,
   Settings
 } from '@olasearch/core'
@@ -98,6 +100,9 @@ function Card ({
       case 'embed':
         return <AnswerEmbed card={card} onSelect={handleClick} document={doc} />
 
+      case 'table':
+        return <AnswerTable card={card} onSelect={handleClick} document={doc} />
+
       case 'map':
         return (
           <AnswerMap
@@ -113,6 +118,16 @@ function Card ({
       case 'carousel':
         return (
           <AnswerCarousel
+            card={card}
+            onSelect={handleClick}
+            document={doc}
+            {...rest}
+          />
+        )
+
+      case 'line_chart':
+        return (
+          <AnswerLineChart
             card={card}
             onSelect={handleClick}
             document={doc}

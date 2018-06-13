@@ -273,11 +273,18 @@ class Message extends React.Component {
       }
     )
     var hasSlot = false
+    const hasMc =
+      sequence.detached && sequence.detached.some(({ type }) => type === 'mc')
     const detachedComponents =
       sequence.detached &&
       sequence.detached.map(({ type }, idx) => {
         const isSlot = type === 'slot'
         if (isSlot) hasSlot = true
+        /**
+         * Show MC immediately
+         * MC can take more time to load because of 1 additional http call
+         */
+        if (hasMc) idx = idx - 1
         const seqTimeout = isSlot
           ? (messageLen - 1 + idx) * timeout
           : (messageLen + idx) * timeout
