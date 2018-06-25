@@ -11,6 +11,7 @@ import {
   AnswerEmbed,
   AnswerCarousel,
   AnswerTable,
+  AnswerArticle,
   Decorators,
   Settings
 } from '@olasearch/core'
@@ -128,6 +129,16 @@ function Card ({
       case 'line_chart':
         return (
           <AnswerLineChart
+            card={card}
+            onSelect={handleClick}
+            document={doc}
+            {...rest}
+          />
+        )
+
+      case 'article':
+        return (
+          <AnswerArticle
             card={card}
             onSelect={handleClick}
             document={doc}
