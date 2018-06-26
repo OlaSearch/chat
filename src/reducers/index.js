@@ -317,6 +317,9 @@ export default (state = initialState, action) => {
             ? true
             : action.botState.inviteVisible
           : state.inviteVisible,
+        isBotActive: action.botState
+          ? action.botState.isBotActive
+          : state.isBotActive,
         messages:
           !action.isNewSession && action.botState
             ? action.botState.messages.map(item => ({

@@ -95,7 +95,7 @@ export default class Messages extends React.Component {
 
     /* TODO: When should we close the chatbot ? */
     /**
-     * Final pass. Link has href and it goes to a new page
+     * Final pass. Link has href and it goes to an internal page
      * Hide the bot
      */
     // setTimeout(() => this.props.setBotStatus(false), 200)
