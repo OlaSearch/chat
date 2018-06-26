@@ -1,17 +1,23 @@
 import types from './../ActionTypes'
 import { checkIfAwaitingResponse, createMessageSequence } from './../utils'
 import { utilities, Actions, Settings } from '@olasearch/core'
+import {
+  CHAT_DELAY,
+  CHAT_REPLY_DELAY,
+  RESULTS_FOR_MC,
+  DEFAULT_EVENT_SOURCE
+} from './../Settings'
 import invariant from 'invariant'
 import omit from 'ramda/src/omit'
 
 /* Query sanitization */
 const { sanitizeText, uuid } = utilities
 const { SLOT_DATE } = Settings
-const CHAT_DELAY = 300
-const CHAT_REPLY_DELAY = 600
-const RESULTS_FOR_MC = 12
-const DEFAULT_EVENT_SOURCE = 'bot'
 
+/**
+ * Update query term in redux state
+ * @param  {string} term
+ */
 export function updateBotQueryTerm (term) {
   return {
     type: types.UPDATE_BOT_QUERY_TERM,
@@ -19,12 +25,24 @@ export function updateBotQueryTerm (term) {
   }
 }
 
+/**
+ * Clear query term
+ */
 export function clearBotQueryTerm () {
   return {
     type: types.CLEAR_BOT_QUERY_TERM
   }
 }
 
+/**
+ * Send a message to the chatbot
+ * @param {string} payload.intent
+ * @param {string} payload.value
+ * @param {string} payload.query
+ * @param {string} payload.label
+ * @param {boolean} payload.hidden Hides a message from displaying in the bot
+ * @param {Array} payload.slots
+ */
 export function addMessage (payload) {
   return (dispatch, getState) => {
     const state = getState()
@@ -352,6 +370,10 @@ export function loadMore (message) {
   }
 }
 
+/**
+ * Show typing indicator for a message
+ * @param  {string} msgId
+ */
 export function showTypingIndicator (msgId) {
   invariant(msgId, 'msgId is required')
   return {
@@ -360,25 +382,27 @@ export function showTypingIndicator (msgId) {
   }
 }
 
+/**
+ * Hide typing indicator
+ */
 export function hideTypingIndicator () {
   return {
     type: types.HIDE_TYPING_INDICATOR
   }
 }
 
+/**
+ * Clears all chatbot messages
+ */
 export function clearMessages () {
   return {
     type: types.CLEAR_MESSAGES
   }
 }
 
-export function changeLanguage (language) {
-  return {
-    type: types.CHANGE_LANGUAGE,
-    language
-  }
-}
-
+/**
+ * Poll the server when the chatbot is idle. Not used now.
+ */
 export function pollWhenIdle () {
   return (dispatch, getState) => {
     let { shouldPoll } = getState().Conversation
@@ -387,6 +411,10 @@ export function pollWhenIdle () {
   }
 }
 
+/**
+ * Add the message id for which user is sending a feedback in state
+ * @param {string} messageId
+ */
 export function setFeedbackMessage (messageId) {
   return {
     type: types.SET_FEEDBACK_MESSAGE_ID,
@@ -394,6 +422,10 @@ export function setFeedbackMessage (messageId) {
   }
 }
 
+/**
+ * Set a rating for a feedback
+ * @param {string} rating
+ */
 export function setFeedbackRating (rating) {
   return {
     type: types.SET_FEEDBACK_RATING,
@@ -429,9 +461,8 @@ export function setBotStatus (status) {
 }
 
 /**
- * Mark old messages as stale
+ * Mark old messages as stale. This is used to prevent old messages from animating when chatbot is opened
  */
-
 export function markMessagesAsStale () {
   return {
     type: types.MARK_MESSAGES_STALE
@@ -468,18 +499,28 @@ export function toggleSearchVisibility (messageId) {
   }
 }
 
+/**
+ * User choose to not share his current location
+ */
 export function ignoreLocation () {
   return {
     type: types.IGNORE_LOCATION
   }
 }
 
+/**
+ * Show a chatbot invite
+ */
 export function showInvite () {
   return {
     type: types.SHOW_INVITE
   }
 }
 
+/**
+ * Update message of an invite
+ * @param  {Object} invite
+ */
 export function updateInvite (invite) {
   return {
     type: types.UPDATE_INVITE,
@@ -487,30 +528,47 @@ export function updateInvite (invite) {
   }
 }
 
-export function hideInvite (inviteUserDismissed) {
+/**
+ * Hide an invite
+ */
+export function hideInvite () {
   return {
     type: types.HIDE_INVITE
   }
 }
 
+/**
+ * Hide sidebar
+ */
 export function hideSidebar () {
   return {
     type: types.HIDE_CHAT_SIDEBAR
   }
 }
 
+/**
+ * Show sidebar
+ */
 export function showSidebar () {
   return {
     type: types.SHOW_CHAT_SIDEBAR
   }
 }
 
+/**
+ * Toggle sidebar visiblity
+ */
 export function toggleSidebar () {
   return {
     type: types.TOGGLE_CHAT_SIDEBAR
   }
 }
 
+/**
+ * Update message id of a message in state
+ * @param  {string} oldId
+ * @param  {string} newId
+ */
 export function updateMessageId (oldId, newId) {
   return {
     type: types.UPDATE_TYPING_MESSAGE_ID,
@@ -519,6 +577,10 @@ export function updateMessageId (oldId, newId) {
   }
 }
 
+/**
+ * Get shopping cart items
+ * @param  {string} options.intent
+ */
 export function getShoppingCart ({ intent }) {
   const api = 'search'
   return (dispatch, getState) => {

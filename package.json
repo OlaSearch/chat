@@ -12,7 +12,8 @@
     "prettier-standard": "prettier-standard 'src/**/*.js'",
     "prettier": "yarn prettier-standard && git add src && git status",
     "docs": "styleguidist server",
-    "docs:build": "styleguidist build"
+    "docs:build": "styleguidist build",
+    "push": "git push origin master --tags && git push github master --tags"
   },
   "author": "",
   "license": "Copyright Ola Search Pte Ltd",
