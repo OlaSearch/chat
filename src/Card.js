@@ -38,7 +38,7 @@ function Card ({
   if (!template) return null
   const classes = cx('ola-card', `ola-card-template-${template}`)
 
-  function handleClick ({ type, label, title, payload, url }) {
+  function handleClick ({ type, label, title, payload, url, openInNewWindow }) {
     /**
      * Label will be displayed in the bot
      */
@@ -53,6 +53,7 @@ function Card ({
       )
     }
     if (type === BUTTON_TYPE.WEB) {
+      if (openInNewWindow) return window.open(url)
       return (window.location.href = url)
     }
     if (type === BUTTON_TYPE.EMAIL) {

@@ -216,6 +216,9 @@ export function addMessage (payload) {
             if ('label' in payload) {
               delete payload['label']
             }
+            if ('slots' in payload) {
+              delete payload['slots']
+            }
             if ('hidden' in payload) {
               delete payload['hidden']
             }

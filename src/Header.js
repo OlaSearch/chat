@@ -28,12 +28,14 @@ export default function Header ({
   const showHideButton = debug || !isDesktop ? true : !!onHide
   return (
     <div className='olachat-header' onClick={onClick}>
-      <div className='olachat-header-title'>{title}</div>
-      {showHideButton ? (
-        <button className='olachat-header-hide' onClick={onHide}>
-          <Cross />
-        </button>
-      ) : null}
+      <div className='olachat-header-inner'>
+        <div className='olachat-header-title'>{title}</div>
+        {showHideButton ? (
+          <button className='olachat-header-hide' onClick={onHide}>
+            <Cross />
+          </button>
+        ) : null}
+      </div>
       <style jsx>{`
         .olachat-header {
           background-color: ${theme.chatHeaderBackground};

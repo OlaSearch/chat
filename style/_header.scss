@@ -25,6 +25,14 @@
   }
 }
 
+/**
+ * Header wrapper
+ */
+.olachat-header-inner {
+  display: flex;
+  align-items: center;
+}
+
 .olachat-header-title{
   margin: 0;
   flex: 1;
