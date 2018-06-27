@@ -5,23 +5,33 @@ import {
   addMessage,
   setBotStatus,
   hideInvite,
-  setInitialIntent
+  setActiveIntent
 } from './actions'
 
 class InviteNotification extends React.Component {
   handleClick = () => {
     /* Trigger an intent */
     const { intent } = this.props.invite
+
     /* Set the initial intent */
-    if (intent) this.props.setInitialIntent(intent)
+    if (intent) this.props.setActiveIntent(intent)
+
     /* Show the chatbot */
     this.props.setBotStatus(true)
 
     /* Add a new message */
+    /**
+     * Here the chatbot is already open.
+     */
     if (this.props.isBotActive && intent) {
-      return this.props.addMessage({
-        intent
-      })
+      return this.props
+        .addMessage({
+          intent
+        })
+        .then(() => {
+          /* Clear the next active intent */
+          this.props.setActiveIntent(null)
+        })
     }
   }
   hideInvite = () => {
@@ -88,5 +98,5 @@ export default connect(mapStateToProps, {
   addMessage,
   setBotStatus,
   hideInvite,
-  setInitialIntent
+  setActiveIntent
 })(Decorators.withTheme(InviteNotification))

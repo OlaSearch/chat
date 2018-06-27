@@ -34,7 +34,7 @@ const initialState = {
   inviteUserDismissed: false,
   invite: null,
 
-  initialIntent: null,
+  activeIntent: null,
 
   /* Cart */
   cart: null,
@@ -431,10 +431,10 @@ export default (state = initialState, action) => {
         })
       }
 
-    case types.SET_INITIAL_INTENT:
+    case types.SET_ACTIVE_INTENT:
       return {
         ...state,
-        initialIntent: action.intent
+        activeIntent: action.intent
       }
 
     default:
