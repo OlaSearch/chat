@@ -110,7 +110,7 @@ class ChatController extends React.Component {
       })
     } else {
       /**
-       * The chatbot has been opened by an invite click
+       * The chatbot has been opened by the user, by clicking on bubble or invite
        */
       if (this.props.activeIntent) {
         this.props.addMessage({
@@ -119,6 +119,8 @@ class ChatController extends React.Component {
           callback: this.props.getCart,
           chatBotMessageTimeout: this.props.config.chatBotMessageTimeout
         })
+        /* Remove the active intent */
+        this.props.setActiveIntent(null)
       }
     }
 
