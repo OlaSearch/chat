@@ -7,6 +7,7 @@ import {
   hideInvite,
   setActiveIntent
 } from './actions'
+import { createMessageMarkup } from './utils'
 
 class InviteNotification extends React.Component {
   handleClick = () => {
@@ -67,7 +68,10 @@ class InviteNotification extends React.Component {
             {subtitle && (
               <div className='olachat-invite-snippet-title'>{subtitle}</div>
             )}
-            <div className='olachat-invite-snippet-body'>{body}</div>
+            <div
+              className='olachat-invite-snippet-body'
+              dangerouslySetInnerHTML={createMessageMarkup(body)}
+            />
           </div>
         </div>
         <style jsx>

@@ -54,6 +54,7 @@ class BotFrame extends React.Component {
     iframeStyle: PropTypes.object,
     cssUrl: PropTypes.string,
     activeStyle: PropTypes.object,
+    inviteStyle: PropTypes.object,
     initialContent: PropTypes.string,
     /**
      * Header props
@@ -143,7 +144,6 @@ class BotFrame extends React.Component {
     }
   }
   render () {
-    const { isBotActive } = this.props
     const {
       iframeStyle,
       css,
@@ -158,7 +158,9 @@ class BotFrame extends React.Component {
       isDesktop,
       activeStyle,
       bubbleProps,
-      inviteVisible
+      inviteVisible,
+      isBotActive,
+      inviteStyle
     } = this.props
 
     /* Check if chatbot label is present */
@@ -248,6 +250,7 @@ class BotFrame extends React.Component {
                   bottom: 86,
                   right: 20
                 }),
+              ...inviteStyle,
               width: 300,
               height: 500 /* Adjust height later on */
             }}
