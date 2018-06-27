@@ -23,6 +23,9 @@ import {
  */
 class ChatController extends React.Component {
   componentDidMount () {
+    /* Clear active intent */
+    this.props.setActiveIntent(null)
+
     /* Check for context on initial mount */
     this.triggerContextChange()
 
@@ -60,6 +63,9 @@ class ChatController extends React.Component {
     }
   }
   triggerContextChange = () => {
+    /* Clear active intent */
+    this.props.setActiveIntent(null)
+
     /**
      * Check for active contexts
      */
@@ -115,9 +121,6 @@ class ChatController extends React.Component {
         })
       }
     }
-
-    /* Clear the active context */
-    if (this.props.activeIntent) this.props.setActiveIntent(null)
 
     /* Disable chatbot.. More todo */
     if (this.props.disabled) {

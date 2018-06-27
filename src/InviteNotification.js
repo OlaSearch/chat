@@ -24,18 +24,16 @@ class InviteNotification extends React.Component {
      * Here the chatbot is already open.
      */
     if (this.props.isBotActive && intent) {
-      return this.props
-        .addMessage({
-          intent
-        })
-        .then(() => {
-          /* Clear the next active intent */
-          this.props.setActiveIntent(null)
-        })
+      this.props.addMessage({ intent })
+      this.props.setActiveIntent(null)
     }
   }
   hideInvite = () => {
+    /* Hide the invite */
     this.props.hideInvite()
+
+    /* Set active intent as null */
+    // this.props.setActiveIntent(null)
   }
   static defaultProps = {
     invite: {}

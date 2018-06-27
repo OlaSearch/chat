@@ -34,7 +34,7 @@ const initialState = {
   inviteUserDismissed: false,
   invite: null,
 
-  activeIntent: null,
+  activeIntent: null /* Which intent to go when user opens the chatbot or when user clicks on an invite */,
 
   /* Cart */
   cart: null,
