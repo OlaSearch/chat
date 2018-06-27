@@ -11,7 +11,8 @@ import {
   getShoppingCart,
   markMessagesAsStale,
   hideBot,
-  checkBotContext
+  checkBotContext,
+  setInitialIntent
 } from './actions'
 
 /**
@@ -21,13 +22,6 @@ import {
  * 3. when to trigger intents on context change
  */
 class ChatController extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      initialIntent: this.props.initialIntent,
-      activeContextName: null
-    }
-  }
   componentDidMount () {
     /* Check for context on initial mount */
     this.triggerContextChange()
@@ -48,10 +42,7 @@ class ChatController extends React.Component {
     if (this.props.startOver) this.props.hideBot()
   }
   componentDidUpdate (prevProps) {
-    if (
-      this.props.Context !== prevProps.Context ||
-      this.props.config.contexts !== prevProps.config.contexts
-    ) {
+    if (this.props.Context !== prevProps.Context) {
       this.triggerContextChange()
     }
 
@@ -85,9 +76,7 @@ class ChatController extends React.Component {
           setTimeout(this.props.showInvite, 500)
         }
         if (type === CONTEXT_TYPE_INTENT) {
-          this.setState({
-            initialIntent: intent
-          })
+          this.props.setInitialIntent(intent)
         }
       }
     })
@@ -101,7 +90,8 @@ class ChatController extends React.Component {
     if (!this.props.isBotActive) return
     if (this.props.startOver || !this.props.messages.length) {
       /* Check for context */
-      const initialIntent = this.state.initialIntent || this.props.initialIntent
+      const initialIntent =
+        this.props.initialIntent || this.props.config.initialIntent
       this.props.addMessage({
         intent: initialIntent,
         start: true,
@@ -137,6 +127,7 @@ function mapStateToProps (state) {
     messages: state.Conversation.messages,
     isBotActive: state.Conversation.isBotActive,
     inviteVisible: state.Conversation.inviteVisible,
+    initialIntent: state.Conversation.initialIntent,
     inviteUserDismissed: state.Conversation.inviteUserDismissed
   }
 }
@@ -149,5 +140,6 @@ export default connect(mapStateToProps, {
   hideBot,
   getShoppingCart,
   markMessagesAsStale,
-  checkBotContext
+  checkBotContext,
+  setInitialIntent
 })(Decorators.withConfig(ChatController))

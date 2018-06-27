@@ -1,11 +1,28 @@
 import React from 'react'
 import { Decorators, Arrow } from '@olasearch/core'
 import { connect } from 'react-redux'
-import { setBotStatus, hideInvite } from './actions'
+import {
+  addMessage,
+  setBotStatus,
+  hideInvite,
+  setInitialIntent
+} from './actions'
 
 class InviteNotification extends React.Component {
   handleClick = () => {
+    /* Trigger an intent */
+    const { intent } = this.props.invite
+    /* Set the initial intent */
+    if (intent) this.props.setInitialIntent(intent)
+    /* Show the chatbot */
     this.props.setBotStatus(true)
+
+    /* Add a new message */
+    if (this.props.isBotActive && intent) {
+      return this.props.addMessage({
+        intent
+      })
+    }
   }
   hideInvite = () => {
     this.props.hideInvite()
@@ -62,10 +79,14 @@ class InviteNotification extends React.Component {
 
 function mapStateToProps (state) {
   return {
-    invite: state.Conversation.invite
+    invite: state.Conversation.invite,
+    isBotActive: state.Conversation.isBotActive
   }
 }
 
-export default connect(mapStateToProps, { setBotStatus, hideInvite })(
-  Decorators.withTheme(InviteNotification)
-)
+export default connect(mapStateToProps, {
+  addMessage,
+  setBotStatus,
+  hideInvite,
+  setInitialIntent
+})(Decorators.withTheme(InviteNotification))

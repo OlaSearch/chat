@@ -145,7 +145,6 @@ class Bot extends Component {
       ...this.props.headerProps,
       ...this.props.avatarProps,
       ...this.props.botProps,
-      initialIntent: this.props.initialIntent,
       voiceAdapter: this.voiceAdapter,
       onRequestClose: this.toggleActive,
       voiceInput: this.props.voiceInput,

@@ -624,3 +624,13 @@ export function getShoppingCart ({ intent }) {
     })
   }
 }
+
+/**
+ * Change initial intent
+ */
+export function setInitialIntent (intent) {
+  return {
+    type: types.SET_INITIAL_INTENT,
+    intent
+  }
+}

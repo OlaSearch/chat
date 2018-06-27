@@ -24,12 +24,7 @@ function persistState (action, getState, namespace) {
 export default function ({ namespace }) {
   return createPersistMiddleware({
     namespace,
-    types: [
-      types.REQUEST_BOT_SUCCESS,
-      types.HIDE_INVITE,
-      types.SHOW_INVITE,
-      types.SET_BOT_STATUS
-    ],
+    types: [types.REQUEST_BOT_SUCCESS, types.HIDE_INVITE, types.SHOW_INVITE],
     callback: debouncePersist
   })
 }

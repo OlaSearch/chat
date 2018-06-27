@@ -34,6 +34,8 @@ const initialState = {
   inviteUserDismissed: false,
   invite: null,
 
+  initialIntent: null,
+
   /* Cart */
   cart: null,
   isLoadingCart: false
@@ -317,9 +319,9 @@ export default (state = initialState, action) => {
             ? true
             : action.botState.inviteVisible
           : state.inviteVisible,
-        isBotActive: action.botState
-          ? action.botState.isBotActive
-          : state.isBotActive,
+        isBotActive: action.isNewSession /* Check if its a new session */
+          ? state.isBotActive
+          : action.botState ? action.botState.isBotActive : state.isBotActive,
         messages:
           !action.isNewSession && action.botState
             ? action.botState.messages.map(item => ({
@@ -427,6 +429,12 @@ export default (state = initialState, action) => {
         messages: state.messages.filter(item => {
           return !item.isTyping
         })
+      }
+
+    case types.SET_INITIAL_INTENT:
+      return {
+        ...state,
+        initialIntent: action.intent
       }
 
     default:
