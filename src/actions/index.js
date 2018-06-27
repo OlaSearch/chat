@@ -294,6 +294,22 @@ export function addMessage (payload) {
 }
 
 /**
+ * Check for context variables
+ */
+export function checkBotContext () {
+  return (dispatch, getState) => {
+    const params = omit(['messages'], getState().Conversation)
+    const payload = { bot: true }
+    return dispatch(
+      Actions.Context.checkContext({
+        params,
+        payload
+      })
+    )
+  }
+}
+
+/**
  * Load more results
  * Only used on chat interface
  */

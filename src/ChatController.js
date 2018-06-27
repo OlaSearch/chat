@@ -10,35 +10,9 @@ import {
   updateInvite,
   getShoppingCart,
   markMessagesAsStale,
-  hideBot
+  hideBot,
+  checkBotContext
 } from './actions'
-
-function escapePaths (str) {
-  return str.replace(/([/])/gi, '\\$1')
-}
-
-function getActiveContext (contexts, ContextState) {
-  if (!contexts) return null
-  var activeContext = null
-  for (let i = 0; i < contexts.length; i++) {
-    const { name, triggers, actions } = contexts[i]
-    var isMatched = true
-    for (let j = 0; j < triggers.length; j++) {
-      const { variable, value } = triggers[j]
-      const reg = new RegExp(escapePaths(value))
-      const contextValue = ContextState[variable]
-      if (contextValue !== value && !reg.test(contextValue)) isMatched = false
-    }
-    if (isMatched) {
-      activeContext = {
-        name,
-        actions
-      }
-      break
-    }
-  }
-  return activeContext
-}
 
 /**
  * Decides
@@ -55,12 +29,22 @@ class ChatController extends React.Component {
     }
   }
   componentDidMount () {
-    this.triggerContext()
-    this.triggerContextAction()
+    /* Check for context on initial mount */
+    this.triggerContextChange()
+
+    /**
+     * Trigger default action
+     */
+    this.triggerDefaultActions()
   }
   componentWillUnmount () {
+    /* Hide invites */
     this.props.hideInvite()
+
+    /* Mark old messages */
     this.props.markMessagesAsStale()
+
+    /* Hide bot */
     if (this.props.startOver) this.props.hideBot()
   }
   componentDidUpdate (prevProps) {
@@ -68,33 +52,35 @@ class ChatController extends React.Component {
       this.props.Context !== prevProps.Context ||
       this.props.config.contexts !== prevProps.config.contexts
     ) {
-      this.triggerContext()
+      this.triggerContextChange()
     }
+
+    /**
+     * Check if any default actions needs to be executed
+     */
     if (
       this.props.isBotActive !== prevProps.isBotActive &&
       this.props.isBotActive
     ) {
       /**
-       * Trigger a context action
+       * Trigger default action
        */
-      this.triggerContextAction()
+      this.triggerDefaultActions()
     }
   }
-  triggerContext = () => {
-    const activeContext = getActiveContext(
-      this.props.config.contexts,
-      this.props.Context
-    )
-    if (activeContext) {
-      const { name, actions } = activeContext
-      /* If the active context is the same */
-      if (this.state.activeContextName === name) return
-
+  triggerContextChange = () => {
+    /**
+     * Check for active contexts
+     */
+    this.props.checkBotContext().then(response => {
+      const { actions } = response
       for (let i = 0; i < actions.length; i++) {
         const { type, intent } = actions[i]
         if (type === CONTEXT_TYPE_INVITE) {
           /* Update the invite message */
           this.props.updateInvite(actions[i])
+
+          /* We have a timeout here so as to wait for CSS urls in Iframe to resolve: Todo */
           setTimeout(this.props.showInvite, 500)
         }
         if (type === CONTEXT_TYPE_INTENT) {
@@ -103,12 +89,13 @@ class ChatController extends React.Component {
           })
         }
       }
-      this.setState({
-        activeContextName: name
-      })
-    }
+    })
   }
-  triggerContextAction (prevProps) {
+  triggerDefaultActions () {
+    /**
+     * Here we send a request to the intent engine
+     * 1. Note the initialIntent. Its is from config file (config.initialIntent)
+     */
     /* Only send a message if the bot is active */
     if (!this.props.isBotActive) return
     if (this.props.startOver || !this.props.messages.length) {
@@ -160,5 +147,6 @@ export default connect(mapStateToProps, {
   hideInvite,
   hideBot,
   getShoppingCart,
-  markMessagesAsStale
+  markMessagesAsStale,
+  checkBotContext
 })(Decorators.withConfig(ChatController))
