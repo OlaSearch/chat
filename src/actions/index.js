@@ -9,6 +9,7 @@ import {
 } from './../Settings'
 import invariant from 'invariant'
 import omit from 'ramda/src/omit'
+import { playPing } from '../utilities/audio'
 
 /* Query sanitization */
 const { sanitizeText, uuid } = utilities
@@ -528,8 +529,16 @@ export function ignoreLocation () {
  * Show a chatbot invite
  */
 export function showInvite () {
-  return {
-    type: types.SHOW_INVITE
+  return (dispatch, getState) => {
+    const currentState = getState()
+    const { isPhone } = currentState.Device
+
+    /** Play a ping sound */
+    playPing({ disabled: isPhone })
+
+    return dispatch({
+      type: types.SHOW_INVITE
+    })
   }
 }
 
@@ -538,9 +547,17 @@ export function showInvite () {
  * @param  {Object} invite
  */
 export function updateInvite (invite) {
-  return {
-    type: types.UPDATE_INVITE,
-    invite
+  return (dispatch, getState) => {
+    const currentState = getState()
+    const { isPhone } = currentState.Device
+
+    /** Play a ping sound */
+    playPing({ disabled: isPhone })
+
+    return dispatch({
+      type: types.UPDATE_INVITE,
+      invite
+    })
   }
 }
 

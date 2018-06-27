@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { Decorators } from '@olasearch/core'
 import Mic from '@olasearch/icons/lib/mic'
 import MicOff from '@olasearch/icons/lib/mic-off'
+import { playPing } from './utilities/audio'
 
 /* All voice events */
 const VOICE_EVENTS = ['onResult', 'onFinalResult', 'onStart', 'onEnd', 'onStop']
@@ -113,7 +114,7 @@ class Voice extends React.Component {
     })
 
     /* Play ping voice */
-    this.playPing()
+    this.playPingIfDesktop()
   }
   onEnd = () => {
     this.setState({
@@ -121,7 +122,7 @@ class Voice extends React.Component {
     })
 
     /* Play ping voice */
-    this.playPing()
+    this.playPingIfDesktop()
   }
   onStop = e => {
     /* Die if has already stopped recording */
@@ -133,16 +134,10 @@ class Voice extends React.Component {
     })
 
     /* Play ping voice */
-    this.playPing()
+    this.playPingIfDesktop()
   }
-  playPing = () => {
-    if (this.props.isPhone) {
-      return
-    }
-    var audio = new Audio()
-    audio.crossOrigin = true
-    audio.src = 'https://cdn.olasearch.com/assets/audio/tap.mp3'
-    audio.play()
+  playPingIfDesktop = () => {
+    playPing({ disabled: this.props.isPhone })
   }
   handleSpeechStart = () => {
     const { voiceAdapter } = this.props
