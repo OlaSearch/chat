@@ -74,6 +74,7 @@ class ChatController extends React.Component {
      */
     this.props.checkBotContext().then(response => {
       const { actions } = response
+      if (!actions) return
       for (let i = 0; i < actions.length; i++) {
         const { type, intent } = actions[i]
         if (type === CONTEXT_TYPE_INVITE) {
