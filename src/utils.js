@@ -214,6 +214,26 @@ export function createMessageSequence (response) {
     })
   }
 
+  /**
+   * Check if answer card source === 'results' and if search results are empty and no reply
+   */
+  if (
+    !results.length &&
+    answer.card &&
+    answer.card.source &&
+    answer.card.source === 'results'
+  ) {
+    /**
+     * Always push a message along with search
+     */
+    if (!sequence.message.length) {
+      sequence.message.push({
+        type: 'text',
+        search: true
+      })
+    }
+  }
+
   if (isSearchActive) {
     /**
      * Always push a message along with search
