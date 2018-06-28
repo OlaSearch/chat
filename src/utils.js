@@ -2,6 +2,7 @@
 import { EMOJI_LIST, SLOT_TEXT } from './Settings'
 import flatten from 'ramda/src/flatten'
 import { utilities } from '@olasearch/core'
+import invariant from 'invariant'
 
 export function createHTMLMarkup (html) {
   if (Array.isArray(html)) html = html.join('')
@@ -278,6 +279,14 @@ export function isValidReply (reply) {
   return !!reply
 }
 
-export function getActiveContext (contexts, contextState) {
-  // for let
+/**
+ * Play the audio track based on the audio url
+ * @param {String} audioPath | url of the audio track
+ */
+export function playAudio (audioPath) {
+  invariant(audioPath, 'Please specify the path of the audio track to play')
+  const audio = new Audio()
+  audio.crossOrigin = true
+  audio.src = audioPath
+  audio.play()
 }

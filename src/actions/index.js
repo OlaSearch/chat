@@ -1,5 +1,9 @@
 import types from './../ActionTypes'
-import { checkIfAwaitingResponse, createMessageSequence } from './../utils'
+import {
+  checkIfAwaitingResponse,
+  createMessageSequence,
+  playAudio
+} from './../utils'
 import { utilities, Actions, Settings } from '@olasearch/core'
 import {
   CHAT_DELAY,
@@ -538,9 +542,12 @@ export function showInvite () {
  * @param  {Object} invite
  */
 export function updateInvite (invite) {
-  return {
-    type: types.UPDATE_INVITE,
-    invite
+  return dispatch => {
+    dispatch(playPing())
+    return dispatch({
+      type: types.UPDATE_INVITE,
+      invite
+    })
   }
 }
 
@@ -632,5 +639,16 @@ export function setActiveIntent (intent) {
   return {
     type: types.SET_ACTIVE_INTENT,
     intent
+  }
+}
+
+export function playPing () {
+  return (dispatch, getState) => {
+    const PING_SOUND_URL = 'https://cdn.olasearch.com/assets/audio/tap.mp3'
+    const { isPhone } = getState().Device
+
+    if (!isPhone) {
+      playAudio(PING_SOUND_URL)
+    }
   }
 }

@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import { Decorators } from '@olasearch/core'
 import Mic from '@olasearch/icons/lib/mic'
 import MicOff from '@olasearch/icons/lib/mic-off'
+import { playPing } from './actions'
+import { bindActionCreators } from 'redux'
 
 /* All voice events */
 const VOICE_EVENTS = ['onResult', 'onFinalResult', 'onStart', 'onEnd', 'onStop']
@@ -113,7 +115,7 @@ class Voice extends React.Component {
     })
 
     /* Play ping voice */
-    this.playPing()
+    this.props.actions.playPing()
   }
   onEnd = () => {
     this.setState({
@@ -121,7 +123,7 @@ class Voice extends React.Component {
     })
 
     /* Play ping voice */
-    this.playPing()
+    this.props.actions.playPing()
   }
   onStop = e => {
     /* Die if has already stopped recording */
@@ -133,16 +135,7 @@ class Voice extends React.Component {
     })
 
     /* Play ping voice */
-    this.playPing()
-  }
-  playPing = () => {
-    if (this.props.isPhone) {
-      return
-    }
-    var audio = new Audio()
-    audio.crossOrigin = true
-    audio.src = 'https://cdn.olasearch.com/assets/audio/tap.mp3'
-    audio.play()
+    this.props.actions.playPing()
   }
   handleSpeechStart = () => {
     const { voiceAdapter } = this.props
@@ -211,6 +204,16 @@ function mapStateToProps (state) {
     isPhone: state.Device.isPhone
   }
 }
-export default connect(mapStateToProps, null)(
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  actions: bindActionCreators(
+    {
+      playPing
+    },
+    dispatch
+  )
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(
   Decorators.withTheme(Decorators.withTranslate(Voice))
 )
