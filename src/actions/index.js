@@ -1,5 +1,9 @@
 import types from './../ActionTypes'
-import { checkIfAwaitingResponse, createMessageSequence } from './../utils'
+import {
+  checkIfAwaitingResponse,
+  createMessageSequence,
+  playAudio
+} from './../utils'
 import { utilities, Actions, Settings } from '@olasearch/core'
 import {
   CHAT_DELAY,
@@ -9,7 +13,6 @@ import {
 } from './../Settings'
 import invariant from 'invariant'
 import omit from 'ramda/src/omit'
-import { playAudio } from '../utilities/audio'
 
 /* Query sanitization */
 const { sanitizeText, uuid } = utilities
