@@ -9,7 +9,7 @@ import {
 } from './../Settings'
 import invariant from 'invariant'
 import omit from 'ramda/src/omit'
-import { playPing } from '../utilities/audio'
+import { playAudio } from '../utilities/audio'
 
 /* Query sanitization */
 const { sanitizeText, uuid } = utilities
@@ -529,16 +529,8 @@ export function ignoreLocation () {
  * Show a chatbot invite
  */
 export function showInvite () {
-  return (dispatch, getState) => {
-    const currentState = getState()
-    const { isPhone } = currentState.Device
-
-    /** Play a ping sound */
-    playPing({ disabled: isPhone })
-
-    return dispatch({
-      type: types.SHOW_INVITE
-    })
+  return {
+    type: types.SHOW_INVITE
   }
 }
 
@@ -547,13 +539,8 @@ export function showInvite () {
  * @param  {Object} invite
  */
 export function updateInvite (invite) {
-  return (dispatch, getState) => {
-    const currentState = getState()
-    const { isPhone } = currentState.Device
-
-    /** Play a ping sound */
-    playPing({ disabled: isPhone })
-
+  return dispatch => {
+    dispatch(playPing())
     return dispatch({
       type: types.UPDATE_INVITE,
       invite
@@ -649,5 +636,16 @@ export function setActiveIntent (intent) {
   return {
     type: types.SET_ACTIVE_INTENT,
     intent
+  }
+}
+
+export function playPing () {
+  return (dispatch, getState) => {
+    const PING_SOUND_URL = 'https://cdn.olasearch.com/assets/audio/tap.mp3'
+    const { isPhone } = getState().Device
+
+    if (!isPhone) {
+      playAudio(PING_SOUND_URL)
+    }
   }
 }
