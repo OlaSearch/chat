@@ -15,12 +15,12 @@ import Chat from './Chat'
 import ChatController from './ChatController'
 // import Vui from './Vui'
 
-const DEBUG = false
-const supportsVoice = DEBUG
-  ? false
-  : navigator.getUserMedia ||
-    navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia
+// const DEBUG = false
+// const supportsVoice = DEBUG
+//   ? false
+//   : navigator.getUserMedia ||
+//     navigator.webkitGetUserMedia ||
+//     navigator.mozGetUserMedia
 
 /**
  * Same emitter is shared by context
@@ -152,9 +152,9 @@ class Bot extends Component {
       getCart: this.getCart,
       emitter
     }
-    const HAS_VOICES = this.props.isPhone
-      ? window.speechSynthesis.getVoices().length > 1
-      : true
+    // const HAS_VOICES = this.props.isPhone
+    //   ? window.speechSynthesis.getVoices().length > 1
+    //   : true
     const { isBotActive, showBubble } = this.props
     const component = isBotActive ? (
       <Chat {...passProps} />

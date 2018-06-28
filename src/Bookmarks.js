@@ -32,7 +32,7 @@ class Bookmarks extends React.Component {
 /**
  * Bookmarks renderer
  */
-function BookmarkRender ({ bookmarks, removeBookmark, toggle }) {
+function BookmarkRender ({ bookmarks, toggle }) {
   const hasBookmarks = bookmarks.length
   return (
     <div className='olachat-bookmarks-panel'>
@@ -46,7 +46,7 @@ function BookmarkRender ({ bookmarks, removeBookmark, toggle }) {
       <div className='olachat-bookmarks-body'>
         {hasBookmarks ? (
           bookmarks.map(item => {
-            const { reply, id, sequence } = item
+            const { id, sequence } = item
             return (
               <div key={id} className='olachat-bookmarks-item'>
                 {sequence &&

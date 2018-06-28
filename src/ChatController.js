@@ -4,7 +4,6 @@ import { Decorators } from '@olasearch/core'
 import { CONTEXT_TYPE_INVITE, CONTEXT_TYPE_INTENT } from './Settings'
 import {
   addMessage,
-  updateBotQueryTerm,
   showInvite,
   hideInvite,
   updateInvite,

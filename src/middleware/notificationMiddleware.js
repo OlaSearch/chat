@@ -14,7 +14,7 @@ function notify ({ body, title, icon }) {
     Notification.permission !== 'denied' &&
     !document.hasFocus()
   ) {
-    Notification.requestPermission(function (status) {
+    Notification.requestPermission(function () {
       const n = new Notification(title, {
         body,
         icon
@@ -26,7 +26,7 @@ function notify ({ body, title, icon }) {
   }
 }
 export default function ({ name, icon }) {
-  return ({ dispatch, getState }) => next => action => {
+  return () => next => action => {
     if (action.type === types.REQUEST_BOT_SUCCESS) {
       if (!action.answer) return next(action)
       var { reply_voice: reply, search } = action.answer

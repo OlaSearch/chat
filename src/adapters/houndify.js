@@ -1,3 +1,4 @@
+/*eslint-disable */
 import { TextToSpeech } from 'watson-speech'
 import reqwest from 'reqwest'
 import Houndify from 'houndify-web-sdk'
@@ -20,19 +21,19 @@ const adapter = ({ emitter }) => {
     onError: err => {
       emitter.emit('onStop')
     },
-    onTranscriptionUpdate: function (trObj) {
+    onTranscriptionUpdate: function(trObj) {
       emitter.emit('onResult', trObj.PartialTranscript)
     },
-    onRecordingStarted () {
+    onRecordingStarted() {
       emitter.emit('onStart')
     },
-    onRecordingStopped () {
+    onRecordingStopped() {
       emitter.emit('onStop')
     }
   })
 
   return {
-    start () {
+    start() {
       /* Stop speaking */
       this.stopSpeaking()
 
@@ -47,16 +48,16 @@ const adapter = ({ emitter }) => {
       /* Get tts token */
       this.getTtsToken()
     },
-    stop () {
+    stop() {
       client.voiceSearch.stop()
       if (window.OlaAudio) {
         window.OlaAudio.pause()
       }
     },
-    prefetchToken () {
+    prefetchToken() {
       this.getTtsToken().then(token => (this._ttsToken = token))
     },
-    getTtsToken () {
+    getTtsToken() {
       /* Cache tts token */
       if (this._ttsToken) {
         return new Promise((resolve, reject) => {
@@ -67,7 +68,7 @@ const adapter = ({ emitter }) => {
         url: ttsTokenUrl
       })
     },
-    stopSpeaking () {
+    stopSpeaking() {
       if (window.OlaAudio) {
         window.OlaAudio.pause()
       }
@@ -76,7 +77,7 @@ const adapter = ({ emitter }) => {
         window.speechSynthesis.pause()
       }
     },
-    speak (text, isPhone = false, callback) {
+    speak(text, isPhone = false, callback) {
       if (isPhone) {
         if (!window.speechSynthesis) return
         if (window.speechSynthesis) window.speechSynthesis.cancel()

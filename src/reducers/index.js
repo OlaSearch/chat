@@ -92,7 +92,7 @@ export default (state = initialState, action) => {
         return {
           ...state,
           isLoading: false,
-          messages: state.messages.map((item, idx) => {
+          messages: state.messages.map(item => {
             if (item.id === answer.in_response_to) {
               return {
                 ...item,

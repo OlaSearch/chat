@@ -35,7 +35,7 @@ function QuerySuggestions ({
 
 function QuerySuggestionItem ({ queryTerm, item, onChange, isActive }) {
   const { term, partial } = item
-  function handleChange (e) {
+  function handleChange () {
     onChange && onChange(item)
   }
   const pattern =

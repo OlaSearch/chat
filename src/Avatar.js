@@ -6,7 +6,7 @@ import cx from 'classnames'
  * Displays an avatar
  * @example ./../styleguide/Avatar.md
  */
-function Avatar ({ isBot, userId, avatarBot, avatarUser }) {
+function Avatar ({ isBot, avatarBot, avatarUser }) {
   const img = isBot ? (
     <img className='olachat-avatar' src={avatarBot} />
   ) : (
@@ -20,7 +20,6 @@ function Avatar ({ isBot, userId, avatarBot, avatarUser }) {
 
 Avatar.propTypes = {
   isBot: PropTypes.bool,
-  userId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   avatarBot: PropTypes.string,
   avatarUser: PropTypes.string
 }

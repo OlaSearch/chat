@@ -14,14 +14,13 @@ import { Decorators } from '@olasearch/core'
 import OfflineIndicator from './OfflineIndicator'
 import Sidebar from './Sidebar'
 import cx from 'classnames'
-import scrollIntoView from 'dom-scroll-into-view'
 import { withDocument } from '@olasearch/react-frame-portal'
 
 class Chat extends React.Component {
   static defaultProps = {
     flipped: true,
     title: 'Ola Bot',
-    onLoad: () => new Promise((resolve, reject) => resolve())
+    onLoad: () => new Promise(resolve => resolve())
   }
   addMessage = args => {
     /* Add message */

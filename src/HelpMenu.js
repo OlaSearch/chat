@@ -43,7 +43,7 @@ class HelpMenu extends React.Component {
       window.print()
     }
   }
-  shouldComponentUpdate (nextProps, nextState) {
+  shouldComponentUpdate (nextProps) {
     return (
       nextProps.theme !== this.props.theme ||
       nextProps.cart !== this.props.cart ||

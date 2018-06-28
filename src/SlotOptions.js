@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { updateBotQueryTerm } from './actions'
 import { DISAMBIGUATION_INTENT_NAME, SLOT_STYLE_LIST } from './Settings'
 import SlotMultiple from './SlotMultiple'
 import cx from 'classnames'

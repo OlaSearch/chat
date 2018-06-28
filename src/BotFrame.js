@@ -4,16 +4,12 @@ import Bot from './Bot'
 import Frame from '@olasearch/react-frame-portal'
 import { connect } from 'react-redux'
 import { Decorators, Settings as OlaSettings } from '@olasearch/core'
-import { triggerMouseEvent } from './utils'
 import { setBotStatus } from './actions'
 import {
   OLACHAT_IFRAME_CLASSNAME,
   OLACHAT_INVITE_IFRAME_CLASSNAME,
   BOT_ZINDEX,
   BOT_WIDTH_ACTIVE,
-  BUBBLE_HEIGHT_MOBILE,
-  BUBBLE_WIDTH_DESKTOP,
-  BUBBLE_WIDTH_MOBILE,
   BUBBLE_SPACING,
   BUBBLE_FULL_WIDTH_DESKTOP,
   BUBBLE_FULL_WIDTH_MOBILE,
@@ -289,7 +285,7 @@ class BotFrame extends React.Component {
   }
 }
 
-function mapStateToProps (state, ownProps) {
+function mapStateToProps (state) {
   return {
     isDesktop: state.Device.isDesktop,
     isBotActive: state.Conversation.isBotActive,

@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import cx from 'classnames'
 import Avatar from './Avatar'
 import Card from './Card'
@@ -8,7 +7,6 @@ import SlotOptions from './SlotOptions'
 import Geo from './Geo'
 import SearchResults from './SearchResults'
 import MessageFeedback from './MessageFeedback'
-import TopicSuggestions from './TopicSuggestions'
 import Loader from './Loader'
 import FailureButtons from './FailureButtons'
 import QuickReplies from './QuickReplies'
@@ -25,7 +23,7 @@ class Message extends React.Component {
   constructor (props) {
     super(props)
   }
-  shouldComponentUpdate (nextProps, nextState) {
+  shouldComponentUpdate (nextProps) {
     return (
       this.props.message !== nextProps.message ||
       this.props.isActive !== nextProps.isActive ||
@@ -36,7 +34,7 @@ class Message extends React.Component {
     showTimestamp: false,
     chatBotMessageTimeout: 600
   }
-  scrollIntoView = node => {
+  scrollIntoView = () => {
     this.props.scrollIntoView({ id: this.props.message.id })
   }
   render () {
@@ -73,12 +71,12 @@ class Message extends React.Component {
       search /* Search results */,
       totalResults /* Total search results */,
       page /* Current page */,
-      spellSuggestions /* Spell suggestions */,
+      // spellSuggestions /* Spell suggestions */,
       suggestedTerm /* Term that was searched for */,
       originalQuery,
       error,
       context = {},
-      payload,
+      // payload,
       quick_replies: quickReplies,
       sequence,
       stale

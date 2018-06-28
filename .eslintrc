@@ -1,0 +1,28 @@
+{  
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "quotes": [2, "single", {"avoidEscape": true}],
+    "strict": [2, "never"],
+    "generator-star-spacing": 1,
+    "new-cap": 0,
+    "object-shorthand": 1,
+    "arrow-parens": 0,
+    "no-await-in-loop": 1,
+    "no-unused-vars": 2,
+    "react/jsx-uses-react": 2,    
+    "react/jsx-uses-vars": 2,
+    "react/jsx-no-undef": 2,
+    "react/react-in-jsx-scope": 2,
+    "react/jsx-wrap-multilines": 2,
+    "react/jsx-no-bind": 0,
+    "react/prefer-stateless-function": 2
+  },
+  "plugins": [
+    "babel",
+    "react"
+  ]
+}

@@ -118,7 +118,7 @@ export function addMessage (payload) {
       ...payloadParams
     }
 
-    const { projectId, env = 'staging', searchInput } = query
+    const { searchInput } = query
     const api = 'search'
     const timestamp = new Date().getTime() / 1000
 
@@ -174,7 +174,7 @@ export function addMessage (payload) {
       )
     }
 
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       /* Simulate delay */
       setTimeout(() => {
         /* Update timestamp */
@@ -425,8 +425,8 @@ export function clearMessages () {
  */
 export function pollWhenIdle () {
   return (dispatch, getState) => {
-    let { shouldPoll } = getState().Conversation
-    if (!shouldRetry) return
+    const { shouldPoll } = getState().Conversation
+    if (!shouldPoll) return
     dispatch(addMessage({ intent: 'idle' }))
   }
 }
@@ -459,7 +459,7 @@ export function setFeedbackRating (rating) {
  */
 export function setBotStatus (status) {
   invariant(typeof status !== 'undefined', 'Status is required (Boolean)')
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch({
       type: types.SET_BOT_STATUS,
       status
@@ -493,7 +493,7 @@ export function markMessagesAsStale () {
  * ShowBot: Show
  */
 export function showBot () {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(setBotStatus(true))
   }
 }
@@ -502,7 +502,7 @@ export function showBot () {
  * Hidebot
  */
 export function hideBot () {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(setBotStatus(false))
   }
 }

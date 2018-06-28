@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import cx from 'classnames'
 import Voice from './Voice'
 import { Settings, Actions, Decorators, utilities } from '@olasearch/core'
@@ -9,10 +8,7 @@ import { connect } from 'react-redux'
 import HelpMenu from './HelpMenu'
 import listensToClickOutside from '@olasearch/react-onclickoutside'
 import Send from '@olasearch/icons/lib/material-send'
-import Menu from '@olasearch/icons/lib/menu'
-import SidebarIcon from '@olasearch/icons/lib/sidebar'
 import { GeoLocation } from '@olasearch/core'
-import { ThemeConsumer } from '@olasearch/core'
 import { getFacetSuggestions, getSuggestSlotType, createSlot } from './utils'
 
 const supportsVoice =
@@ -41,7 +37,7 @@ class Input extends React.Component {
     suggestionsLimit: 5,
     closeOnEscape: true
   }
-  handleClickOutside = event => {
+  handleClickOutside = () => {
     /* Check if its already closed */
     if (!this.state.suggestedTerm && !this.state.suggestions.length) return
     this.closeSuggestion()
@@ -59,12 +55,9 @@ class Input extends React.Component {
     const text = event && event.target ? event.target.value : event
     const { filterInAutoComplete } = this.props.config
     /* Get cursor position */
-    const {
-      word: partialWord,
-      leftPosition,
-      startToken,
-      endToken
-    } = getWordPosition(event.target)
+    const { word: partialWord, startToken, endToken } = getWordPosition(
+      event.target
+    )
 
     /* Update state */
     this.setState({ text, startToken, endToken })
@@ -175,7 +168,7 @@ class Input extends React.Component {
   getFullTerm = () => {
     const { suggestedTerm } = this.state
     const { startToken, endToken } = this.state
-    const { term, value, name, partial } = suggestedTerm
+    const { term, partial } = suggestedTerm
     const { text } = this.state
     const selection = partial
       ? text.substr(0, startToken) + term + text.substr(endToken)

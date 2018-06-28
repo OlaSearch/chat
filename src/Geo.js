@@ -27,7 +27,7 @@ class Geo extends Component {
       query: this.props.message.message
     })
   }
-  onIgnoreGeo = data => {
+  onIgnoreGeo = () => {
     this.props.ignoreLocation()
     /**
      * Send a empty query

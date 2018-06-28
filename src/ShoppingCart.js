@@ -1,7 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
 import { Decorators } from '@olasearch/core'
-import ClipBoard from '@olasearch/icons/lib/clipboard'
 import Trash from '@olasearch/icons/lib/trash-2'
 import Plus from '@olasearch/icons/lib/plus-circle'
 import Minus from '@olasearch/icons/lib/minus-circle'
@@ -184,7 +183,6 @@ class ShoppingCart extends React.Component {
     window.requestAnimationFrame(() => {
       if (!this.moduleEl) return
       const iframeTop = this.props.iframe.offsetTop
-      const moduleTop = this.moduleEl.offsetTop
       const scrollTop = this.doc.scrollTop
       this.moduleEl.style.marginTop =
         Math.max(0, scrollTop - iframeTop - initialTop) + 'px'
@@ -204,7 +202,7 @@ class ShoppingCart extends React.Component {
     this.moduleEl = el
   }
   render () {
-    const { cart, isVisible, theme, addMessage, config, isLoading } = this.props
+    const { cart, isVisible, addMessage, config, isLoading } = this.props
     if (!cart) return null
     const {
       chatBotCartEmptyTitle,

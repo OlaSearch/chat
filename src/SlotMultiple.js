@@ -46,7 +46,7 @@ class SlotMultiple extends React.Component {
     return (
       <div className='olachat-slots-multiple-group'>
         <div className='olachat-slots-multiple'>
-          {options.map(({ label, value, intent }, idx) => {
+          {options.map(({ label, value }, idx) => {
             const isChecked = selected.indexOf(value) !== -1
             return (
               <Checkbox

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Decorators, Arrow } from '@olasearch/core'
+import { Decorators } from '@olasearch/core'
 import { connect } from 'react-redux'
 import {
   addMessage,

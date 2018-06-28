@@ -1,11 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import ReactDOM from 'react-dom'
 import Message from './Message'
 import TypingIndicator from './TypingIndicator'
 import Loader from '@olasearch/icons/lib/loader'
 import scrollIntoView from 'dom-scroll-into-view'
-import { imagesLoaded } from './utils'
 import { SUPPORTS_PASSIVE } from './Settings'
 
 export default class Messages extends React.Component {
@@ -176,9 +173,9 @@ export default class Messages extends React.Component {
       (this.props.flipped
         ? this.messagesEl.scrollHeight - (this.scrollHeight || 0)
         : 0)
-    var scrollHeightDifference = this.scrollHeight
-      ? this.scrollHeight - this.messagesEl.scrollHeight
-      : 0
+    // var scrollHeightDifference = this.scrollHeight
+    //   ? this.scrollHeight - this.messagesEl.scrollHeight
+    //   : 0
     // if something was removed from list we need to include this difference in new scroll top
     // if (this.props.flipped && scrollHeightDifference > 0) {
     //   newScrollTop += scrollHeightDifference
@@ -193,7 +190,7 @@ export default class Messages extends React.Component {
   /**
    * Scroll in to view. Pass the message ID
    */
-  scrollIntoView = ({ id, position = 'start', force, ...rest }) => {
+  scrollIntoView = ({ id, position = 'start', force }) => {
     if (id !== this.props.newMessageId && !force) return
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
@@ -222,13 +219,13 @@ export default class Messages extends React.Component {
     )
   }
   render () {
-    const { flipped, messageComponent, theme } = this.props
+    const { flipped, theme } = this.props
     var { messages } = this.props
-    const { isInfiniteLoading } = this.state
+    // const { isInfiniteLoading } = this.state
     if (!flipped) {
       messages = messages.slice().reverse()
     }
-    const loadingSpinner = isInfiniteLoading ? <div>Loading</div> : null
+    // const loadingSpinner = isInfiniteLoading ? <div>Loading</div> : null
     return (
       <div className='olachat-messages' ref={this.registerRef}>
         {this.state.shouldRender ? (

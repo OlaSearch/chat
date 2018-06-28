@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Actions, Decorators } from '@olasearch/core'
+import { Decorators } from '@olasearch/core'
 import { setFeedbackMessage, setFeedbackRating } from './actions'
 import {
   IGNORE_FEEDBACK_INTENTS,
@@ -9,7 +9,6 @@ import {
   EMOJI_NEGATIVE,
   FEEDBACK_INTENT
 } from './Settings'
-import { checkIfAwaitingResponse } from './utils'
 
 /**
  * Shows a thumbs up/down feedback
@@ -19,7 +18,7 @@ class MessageFeedback extends React.Component {
   static propTypes = {
     isActive: PropTypes.bool
   }
-  handlePositive = e => {
+  handlePositive = () => {
     /* Update the query term */
     this.props.updateQueryTerm(EMOJI_POSITIVE)
     /* Set the message ID for later logging */

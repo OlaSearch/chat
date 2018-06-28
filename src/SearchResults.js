@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import { SearchFooter, SearchResults, Decorators } from '@olasearch/core'
@@ -30,11 +29,10 @@ class SearchResultsMessage extends React.Component {
       isActive,
       message,
       bookmarks,
-      isLoading,
-      translate
+      isLoading
     } = this.props
     var { results } = this.props
-    const { search, mc, showSearch } = message
+    const { search /*, showSearch */ } = message
     const maxResults = isPhone ? MAX_RESULTS_MOBILE : MAX_RESULTS_DESKTOP
 
     /* When showing CURRRENT message, do not stack */

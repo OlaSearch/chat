@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Decorators, Swipeable } from '@olasearch/core'
 import { EMPTY_ARRAY } from './Settings'
 

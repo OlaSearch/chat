@@ -28,7 +28,7 @@ export function createMessageMarkup (text, options = {}) {
   return createHTMLMarkup(t)
 }
 
-export function createMessage (text, userId) {
+export function createMessage (text) {
   return {
     message: text
   }
@@ -169,10 +169,9 @@ export function getSuggestSlotType (type) {
 }
 
 export function createMessageSequence (response) {
-  const { answer, results, suggestedTerm, payload, mc } = response
+  const { answer, results, mc } = response
   if (!answer) return []
-  const { reply, search } = answer
-  const { originalQuery } = payload
+  const { reply } = answer
   const isBot = !answer.userId
   const isSearchActive = isBot && results && results.length
   const sequence = {
@@ -181,19 +180,19 @@ export function createMessageSequence (response) {
     outer: []
   }
 
-  if (answer.reply) {
-    var isMultiple = Array.isArray(answer.reply)
+  if (reply) {
+    var isMultiple = Array.isArray(reply)
     if (isMultiple) {
-      for (let i = 0; i < answer.reply.length; i++) {
+      for (let i = 0; i < reply.length; i++) {
         sequence.message.push({
           type: 'text',
-          content: answer.reply[i]
+          content: reply[i]
         })
       }
     } else {
       sequence.message.push({
         type: 'text',
-        content: answer.reply
+        content: reply
       })
     }
   }

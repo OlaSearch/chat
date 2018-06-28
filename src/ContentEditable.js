@@ -1,3 +1,4 @@
+/*eslint-disable */
 import React from 'react'
 import PropTypes from 'prop-types'
 import Textarea from '@olasearch/textarea-elastic'
@@ -17,20 +18,20 @@ export default class ContentEditable extends React.PureComponent {
       ? this.props.formatValue(this.props.value)
       : this.props.value
   }
-  componentDidMount () {
+  componentDidMount() {
     this.updateFakeEl()
   }
   registerFakeRef = el => {
     this.fakeEl = el
   }
-  componentDidUpdate (prevProps) {
+  componentDidUpdate() {
     this.updateFakeEl()
   }
   registerRef = el => {
     this._input = el
     this.props.innerRef && this.props.innerRef(el)
   }
-  render () {
+  render() {
     const {
       formatValue,
       onMatchChange,
@@ -41,9 +42,9 @@ export default class ContentEditable extends React.PureComponent {
     } = this.props
     /* iOS 8 bug where placeholder is displayed even when value is not empty */
     return (
-      <div className='ContentEditableWrapper'>
+      <div className="ContentEditableWrapper">
         <Textarea
-          className='ola-text-input olachat-input-textarea'
+          className="ola-text-input olachat-input-textarea"
           ref={this.registerRef}
           {...rest}
           value={value}
@@ -53,7 +54,7 @@ export default class ContentEditable extends React.PureComponent {
           ref={this.registerFakeRef}
           contentEditable
           readOnly
-          className='ContentEditable-Fake'
+          className="ContentEditable-Fake"
           tabIndex={-1}
         />
       </div>

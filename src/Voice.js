@@ -6,7 +6,6 @@ import { checkIfAwaitingResponse } from './utils'
 import { connect } from 'react-redux'
 import { Decorators } from '@olasearch/core'
 import Mic from '@olasearch/icons/lib/mic'
-import MicOff from '@olasearch/icons/lib/mic-off'
 import { playPing } from './actions'
 import { bindActionCreators } from 'redux'
 
@@ -125,7 +124,7 @@ class Voice extends React.Component {
     /* Play ping voice */
     this.props.actions.playPing()
   }
-  onStop = e => {
+  onStop = () => {
     /* Die if has already stopped recording */
     if (!this.state.isRecording && !this.state.isSpeaking) return
 
@@ -205,7 +204,7 @@ function mapStateToProps (state) {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(
     {
       playPing
