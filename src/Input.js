@@ -365,16 +365,17 @@ class Input extends React.Component {
   onSuggestionChange = item => {
     const { startToken, endToken } = this.state
     const {
-      suggestion_raw: suggestionValue,
-      term: suggestionDisplayTerm,
+      suggestion_raw: suggestionRaw,
+      term: suggestionTerm,
       value,
       name,
       partial,
-      payload
+      taxo_label: slotLabel,
+      id
     } = item
 
     /* Term to be sent back as query */
-    const term = suggestionValue || suggestionDisplayTerm
+    const term = suggestionRaw || suggestionTerm
     const { text } = this.state
 
     var args = null
@@ -386,16 +387,15 @@ class Input extends React.Component {
      */
     const currentMessage = this.props.messages[this.props.messages.length - 1]
     if (currentMessage && currentMessage.slot) {
-      const jsonPayload = payload ? JSON.parse(payload) : {}
       currentSlotName =
         currentMessage.slot.suggest_name || currentMessage.slot.name
       currentIntent = currentMessage.intent
       args = {
         slots: [
           createSlot({
-            id: jsonPayload.id,
-            type: jsonPayload.label,
-            value: jsonPayload.suggestion_raw,
+            id,
+            type: slotLabel,
+            value: suggestionRaw,
             name: currentSlotName
           })
         ]

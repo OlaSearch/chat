@@ -34,21 +34,24 @@ function QuerySuggestions ({
 }
 
 function QuerySuggestionItem ({ queryTerm, item, onChange, isActive }) {
-  const { term, partial } = item
+  const { partial } = item
+  /* Fallback to term if display is empty */
+  const term = item.suggestion_display || item.term
   function handleChange () {
     onChange && onChange(item)
   }
-  const pattern =
-    '(' +
-    queryTerm
-      .replace(RE_ESCAPE, '\\$1')
-      .split(/\s/)
-      .join('|') +
-    ')'
+  const pattern = queryTerm
+    .replace(/\<|\>/gi, '')
+    .replace(RE_ESCAPE, '\\$1')
+    .split(/\s/)
+    .join('|')
+  const regEx = pattern
+    ? new RegExp('((?<!<)' + pattern + '(?!>))', 'gi')
+    : null // https://regex101.com/r/Ub6j6Q/1
   /* Create term */
   const value = partial
     ? `...${term}`
-    : term.replace(new RegExp(pattern, 'gi'), '<strong>$1</strong>')
+    : pattern ? term.replace(regEx, '<strong>$1</strong>') : term
   const classes = 'olachat-query-suggestion' + (isActive ? ' is-active' : '')
   return (
     <div className='olachat-query-suggestion-item'>
