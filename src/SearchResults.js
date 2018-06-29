@@ -29,7 +29,8 @@ class SearchResultsMessage extends React.Component {
       isActive,
       message,
       bookmarks,
-      isLoading
+      isLoading,
+      onSelect
     } = this.props
     var { results } = this.props
     const { search /*, showSearch */ } = message
@@ -62,6 +63,7 @@ class SearchResultsMessage extends React.Component {
             bookmarks={bookmarks}
             dispatch={dispatch}
             baseUrl={search && search.baseUrl}
+            onAddMessage={onSelect}
             passProps={{
               document: this.props.document
             }}
@@ -69,6 +71,7 @@ class SearchResultsMessage extends React.Component {
               bot: true,
               message
             }}
+            bot
             swipe={!isDesktop}
             isLoading={isLoading}
             pagination={

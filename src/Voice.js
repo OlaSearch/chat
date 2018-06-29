@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 import { Decorators } from '@olasearch/core'
 import Mic from '@olasearch/icons/lib/mic'
 import { playPing } from './actions'
-import { bindActionCreators } from 'redux'
 
 /* All voice events */
 const VOICE_EVENTS = ['onResult', 'onFinalResult', 'onStart', 'onEnd', 'onStop']
@@ -114,7 +113,7 @@ class Voice extends React.Component {
     })
 
     /* Play ping voice */
-    this.props.actions.playPing()
+    this.props.playPing()
   }
   onEnd = () => {
     this.setState({
@@ -122,7 +121,7 @@ class Voice extends React.Component {
     })
 
     /* Play ping voice */
-    this.props.actions.playPing()
+    this.props.playPing()
   }
   onStop = () => {
     /* Die if has already stopped recording */
@@ -134,7 +133,7 @@ class Voice extends React.Component {
     })
 
     /* Play ping voice */
-    this.props.actions.playPing()
+    this.props.playPing()
   }
   handleSpeechStart = () => {
     const { voiceAdapter } = this.props
@@ -204,15 +203,6 @@ function mapStateToProps (state) {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(
-    {
-      playPing
-    },
-    dispatch
-  )
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(mapStateToProps, { playPing })(
   Decorators.withTheme(Decorators.withTranslate(Voice))
 )

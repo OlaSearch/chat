@@ -331,6 +331,7 @@ class Message extends React.Component {
                       totalResults={totalResults}
                       document={this.props.document}
                       isDesktop={isDesktop}
+                      onSelect={addMessage}
                     />
                   ) : null}
                   {type === 'slot' ? (

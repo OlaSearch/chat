@@ -1,6 +1,6 @@
 {
   "name": "@olasearch/chat",
-  "version": "3.7.1",
+  "version": "3.7.3",
   "description": "Chat User Interface elements",
   "main": "lib/index.js",
   "scripts": {
@@ -76,26 +76,26 @@
     "sass-loader": "^7.0.3",
     "standard": "^11.0.1",
     "style-loader": "^0.21.0",
-    "webpack": "^4.12.1",
+    "webpack": "^4.13.0",
     "webpack-bundle-size-analyzer": "^2.7.0",
     "webpack-dev-middleware": "^3.1.3",
     "webpack-hot-middleware": "^2.22.2"
   },
   "dependencies": {
     "@olasearch/alite": "^1.0.5",
-    "@olasearch/core": "^3.8.11",
+    "@olasearch/core": "^3.9.2",
     "@olasearch/icons": "^1.0.2",
     "@olasearch/logger": "^1.4.1",
     "@olasearch/react-frame-portal": "^3.0.7",
     "@olasearch/react-onclickoutside": "^6.7.3",
-    "@olasearch/solr-adapter": "^2.0.3",
+    "@olasearch/solr-adapter": "^2.0.4",
     "@olasearch/styled-jsx": "^2.2.7",
     "@olasearch/textarea-elastic": "^1.0.2",
     "classnames": "^2.2.6",
     "dom-scroll-into-view": "^1.2.1",
     "invariant": "^2.2.4",
     "mitt": "^1.1.3",
-    "react-transition-group": "^2.3.1",
+    "react-transition-group": "^2.4.0",
     "watson-html5-speech-recognition": "^0.6.6"
   }
 }
