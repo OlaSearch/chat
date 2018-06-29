@@ -17,7 +17,8 @@ const supportsVoice =
     navigator.mozGetUserMedia) &&
   (window.SpeechRecognition || window.webkitSpeechRecognition)
 
-const { getWordPosition } = utilities
+/* Import from ola utilities */
+const { getWordPosition, getAutoCompleteResults } = utilities
 
 class Input extends React.Component {
   constructor (props) {
@@ -90,6 +91,7 @@ class Input extends React.Component {
           )
           .then(values => {
             if (!values || values === null) return
+            /* If no results */
             if (!values.length) {
               if (!filterInAutoComplete || slotType || !partialWord) {
                 return this.closeSuggestion()
@@ -124,6 +126,9 @@ class Input extends React.Component {
                   if (!suggestions.length) return this.closeSuggestion()
                 })
             } else {
+              /* Clean up values */
+              values = getAutoCompleteResults(values)
+
               this.setState({
                 suggestions: values, // values.map(item => ({ term: item.term, payload })),
                 suggestedTerm: null,
@@ -359,8 +364,19 @@ class Input extends React.Component {
    */
   onSuggestionChange = item => {
     const { startToken, endToken } = this.state
-    const { term, value, name, partial, payload } = item
+    const {
+      suggestion_raw: suggestionValue,
+      term: suggestionDisplayTerm,
+      value,
+      name,
+      partial,
+      payload
+    } = item
+
+    /* Term to be sent back as query */
+    const term = suggestionValue || suggestionDisplayTerm
     const { text } = this.state
+
     var args = null
     var currentSlotName = null
     var currentIntent = null
