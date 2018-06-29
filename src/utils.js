@@ -218,6 +218,7 @@ export function createMessageSequence (response) {
    * Check if answer card source === 'results' and if search results are empty and no reply
    */
   if (
+    results &&
     !results.length &&
     answer.card &&
     answer.card.source &&
