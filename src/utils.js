@@ -169,11 +169,11 @@ export function getSuggestSlotType (type) {
 }
 
 export function createMessageSequence (response) {
-  const { answer, results, mc } = response
+  const { answer, results = [], mc } = response
   if (!answer) return []
   const { reply } = answer
   const isBot = !answer.userId
-  const isSearchActive = isBot && results && results.length
+  const isSearchActive = isBot && results.length
   const sequence = {
     message: [],
     detached: [],
