@@ -43,11 +43,13 @@ function QuerySuggestionItem ({ queryTerm, item, onChange, isActive }) {
   const pattern = queryTerm
     .replace(/\<|\>/gi, '')
     .replace(RE_ESCAPE, '\\$1')
+    .trim()
     .split(/\s/)
     .join('|')
   const regEx = pattern
     ? new RegExp('((?<!<)' + pattern + '(?!>))', 'gi')
     : null // https://regex101.com/r/Ub6j6Q/1
+
   /* Create term */
   const value = partial
     ? `...${term}`
