@@ -106,14 +106,14 @@ class Input extends React.Component {
                */
               this.props
                 .dispatch(
-                  Actions.Search.executeFacetSearch(
-                    text,
-                    partialWord,
+                  Actions.Search.executeFacetSearch({
+                    fullTerm: text,
+                    term: partialWord,
                     startToken,
                     endToken,
-                    this.props.config.fieldTypeMapping,
-                    this.state.tokens
-                  )
+                    fieldTypeMapping: this.props.config.fieldTypeMapping,
+                    tokens: this.state.tokens
+                  })
                 )
                 .then(response => {
                   const suggestions = getFacetSuggestions(response)
