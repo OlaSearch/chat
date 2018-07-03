@@ -83,11 +83,12 @@ class Input extends React.Component {
       if (!slotHasOptions || this.props.isTyping) {
         this.props
           .dispatch(
-            Actions.AutoSuggest.executeFuzzyAutoSuggest(
-              text,
-              this.props.suggestionsLimit,
-              slotType
-            )
+            Actions.AutoSuggest.executeFuzzyAutoSuggest({
+              q: text,
+              limit: this.props.suggestionsLimit,
+              contextField: slotType,
+              config: this.props.config
+            })
           )
           .then(values => {
             if (!values || values === null) return
