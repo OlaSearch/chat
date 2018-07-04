@@ -22,7 +22,8 @@ export default {
       chat_search: 'Search',
       chat_type_a_message: 'Type a message...',
       chat_offline_message:
-        'It appears that your browser is offline. Are you connected to the internet?'
+        'It appears that your browser is offline. Are you connected to the internet?',
+      show_unfulfilled_convo: 'Unfulfilled conversations'
     }
   }
 }

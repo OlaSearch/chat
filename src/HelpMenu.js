@@ -62,7 +62,12 @@ class HelpMenu extends React.Component {
       'olachat-helpmenu-open': this.props.isCollapsed
     })
     const { translate, config, cart, enableCart } = this.props
-    const { botLinks = [], chatBotPrint = true, chatBotCartMenuText } = config
+    const {
+      botLinks = [],
+      chatBotPrint = true,
+      chatBotCartMenuText,
+      showUnfulfilledConversations = false
+    } = config
     const cartCount = cart && cart.elements ? cart.elements.length : null
     const menuTitle = translate('chat_menu')
     return (
@@ -108,6 +113,15 @@ class HelpMenu extends React.Component {
                 tabIndex={0}
               >
                 <Print /> {translate('chat_print')}
+              </a>
+            ) : null}
+            {showUnfulfilledConversations ? (
+              <a
+                onClick={this.handleClick}
+                className='olachat-menu-link'
+                tabIndex={0}
+              >
+                {translate('show_unfulfilled_convo')}
               </a>
             ) : null}
           </div>
