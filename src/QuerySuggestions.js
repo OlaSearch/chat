@@ -45,11 +45,10 @@ function QuerySuggestionItem ({ queryTerm, item, onChange, isActive }) {
     .replace(RE_ESCAPE, '\\$1')
     .trim()
     .split(/\s/)
-    .join('|')
+    .join('(?!>))|((?<!<)') /* Pattern */
   const regEx = pattern
     ? new RegExp('((?<!<)' + pattern + '(?!>))', 'gi')
-    : null // https://regex101.com/r/Ub6j6Q/1
-
+    : null // https://regex101.com/r/gIma8k/1
   /* Create term */
   const value = partial
     ? `...${term}`
